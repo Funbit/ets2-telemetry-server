@@ -10,8 +10,6 @@ For now there is only one method supported:
 
 It returns IEts2TelemetryData JSON object with the latest telemetry data read from the game. The state is updated upon every API call. You may use this REST API for your own Applications. 
 
-You can minimize the application to tray by clicking "Minimize" button. Double-click on the tray icon will restore it back.
-
 ### Telemetry HTML5 Mobile Application
     http://localhost:25555/apps/ets2/index.htm
 
