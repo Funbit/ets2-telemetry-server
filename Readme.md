@@ -32,7 +32,7 @@ Here is a screenshot of how your mobile gauge will look like:
 
 ## Usage
 
-1. Run Ets2Telemetry.exe (you have to run it **as Administrator** if you want to connect from other devices connected to your local network!). 
+1. Run **server/Ets2Telemetry.exe** (you have to run it **as Administrator** if you want to connect from other devices connected to your local network!). 
 2. Run the game.
 3. Connect your iPhone or Android to the same network as your PC (Wi-Fi for example), open *ETS2 App URL* in a browser and rotate device to landscape mode.
 4. Play the game!
