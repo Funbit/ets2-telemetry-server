@@ -1,0 +1,10 @@
+.hg
+/*.hgignore
+/Funbit.Ets.Telemetry.Server/Funbit.Ets.Telemetry.Server.csproj.user
+/Funbit.Ets.Telemetry.Server/bin
+/Funbit.Ets.Telemetry.Server/obj
+/packages
+/*.suo
+/Readme.txt
+/*.user
+/_WorkingFiles
