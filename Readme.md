@@ -8,6 +8,8 @@ This is a modern ETS2 Telemetry Web Server written in C# and WebApi. The server 
 
 It returns IEts2TelemetryData JSON object with the latest telemetry data read from the game. The state is updated upon every API call. You may use this REST API for your own Applications. 
 
+Please note that GET responses may be cached by your HTTP client. To avoid caching you may use some random query string parameter or use POST method instead.
+
 ### Telemetry HTML5 Mobile Application
     http://localhost:25555/apps/ets2/index.htm
 
