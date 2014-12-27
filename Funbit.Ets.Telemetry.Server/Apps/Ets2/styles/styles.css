@@ -203,7 +203,7 @@ body {
   background-image: url("../gfx/gauge-trailer-on.png");
 }
 .trailer-mass {
-  color: #222222;
+  color: #3e3b60;
   font-family: Courier New, Courier, monospace;
   font-weight: bold;
   font-size: 40px;
@@ -215,9 +215,10 @@ body {
   text-align: center;
 }
 .trailer-name {
-  color: #222222;
-  font-family: Courier New, Courier, monospace;
+  color: #222;
+  font-family: Arial, Tahoma;
   font-size: 28px;
+  font-weight: bold;
   position: absolute;
   left: 1742px;
   top: 984px;
@@ -251,10 +252,10 @@ body {
 }
 .info-table td.source,
 .info-table td.destination {
-  color: #DCB54F;
+  color: #efbd3a;
 }
 .info-table td.deadline {
-  color: #35b32e;
+  color: #54d9a8;
 }
 /* mobile helpers */
 .portrait-message {

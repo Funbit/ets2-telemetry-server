@@ -118,9 +118,16 @@ var Funbit;
                         }
                         $('.time').removeClass('error');
                         this.setIndicator('time', data.gameTime);
-                        this.setIndicator('source', data.sourceCity + ' (' + data.sourceCompany + ')');
-                        this.setIndicator('destination', data.destinationCity + ' (' + data.destinationCompany + ')');
-                        this.setIndicator('deadline', data.jobDeadlineTime);
+                        if (data.sourceCity.length > 0) {
+                            // we have job info set
+                            this.setIndicator('source', data.sourceCity + ' (' + data.sourceCompany + ')');
+                            this.setIndicator('destination', data.destinationCity + ' (' + data.destinationCompany + ')');
+                            this.setIndicator('deadline', data.jobDeadlineTime);
+                        } else {
+                            this.setIndicator('source', '');
+                            this.setIndicator('destination', '');
+                            this.setIndicator('deadline', '');
+                        }
                         if (data.trailerAttached) {
                             this.setIndicator('trailer-mass', (data.trailerMass / 1000) + 't');
                             this.setIndicator('trailer-name', data.trailerName);
