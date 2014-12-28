@@ -26,8 +26,8 @@ Here is a screenshot of how your mobile gauge will look like:
 
 ### Supported OS and Devices
 
-- Windows Vista, Windows 7 or Windows 8
-- Euro Truck Simulator 2 (32-bit version)
+- Windows Vista, Windows 7 or Windows 8 (32-bit or 64-bit)
+- Euro Truck Simulator 2 (32-bit only for now!)
 - .NET Framework 4.5 (pre-installed in Windows 8+)
 - iPhone OS 8+ (using built-in Mobile Safari) or Android 4+ devices (using Default or Chrome browser). It is recommended to create a shortcut for the application on the Home screen to automatically remove browser's navigation bar. **Warning:** since it is not possible to prevent Android device from going into sleep from a web page you must turn sleep mode off in the device's settings (or use third party apps that are capable of turning off sleep mode by application)
 
