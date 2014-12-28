@@ -1,4 +1,4 @@
-# ETS2 Telemetry Web Server
+## ETS2 Telemetry Web Server
 
 This is a modern ETS2 Telemetry Web Server written in C# and WebApi. The server exposes the following endpoints:
 
@@ -19,19 +19,23 @@ Here is a screenshot of how your mobile gauge will look like:
 
 ![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/Screenshot.png)
 
-## Installation and Pre-requisites
-
-1. Copy **plugins/ets2-telemetry.dll** to your **SteamApps\common\Euro Truck Simulator 2\bin\win_x86\plugins** directory. If **plugins** directory does not exist you must create it first. *Note: If you don't trust my compiled ets2-telemetry.dll you may compile it by yourself from [the official SDK](https://github.com/nlhans/ets2-sdk-plugin)*. 
-2. Make sure that **25555** (default) port in opened in your Firewall. You may change the port number inside Ets2Telemetry.exe.config. 
+## Installation and Usage
 
 ### Supported OS and Devices
 
 - Windows Vista, Windows 7 or Windows 8 (32-bit or 64-bit)
-- Euro Truck Simulator 2 (32-bit only for now!)
+- Euro Truck Simulator 2 (**32-bit only for now**!)
 - .NET Framework 4.5 (pre-installed in Windows 8+)
 - iPhone OS 8+ (using built-in Mobile Safari) or Android 4+ devices (using Default or Chrome browser). It is recommended to create a shortcut for the application on the Home screen to automatically remove browser's navigation bar. **Warning:** since it is not possible to prevent Android device from going into sleep from a web page you must turn sleep mode off in the device's settings (or use third party apps that are capable of turning off sleep mode by application)
 
-## Usage
+### Installation
+
+1. Copy **plugins/ets2-telemetry.dll** to your **SteamApps\common\Euro Truck Simulator 2\bin\win_x86\plugins** directory. If **plugins** directory does not exist you must create it first. *Note: If you don't trust my compiled ets2-telemetry.dll you may compile it by yourself from [the official SDK](https://github.com/nlhans/ets2-sdk-plugin)*. 
+2. Make sure that **25555** (default) port in opened in your Firewall (you may change the port number inside Ets2Telemetry.exe.config). If you are not sure how to configure the Firewall just run cmd.exe as Administrator and execute the following command: 
+
+	`netsh advfirewall firewall add rule name="ETS2 TELEMETRY SERVER" dir=in action=allow protocol=TCP localport=25555 remoteip=localsubnet`
+
+### Usage
 
 1. Run **server/Ets2Telemetry.exe** (you have to run it **as Administrator** if you want to connect from other devices connected to your local network!). 
 2. Run the game.
