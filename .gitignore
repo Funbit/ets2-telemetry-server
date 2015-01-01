@@ -3,8 +3,8 @@
 /source/Funbit.Ets.Telemetry.Server/Funbit.Ets.Telemetry.Server.csproj.user
 /source/Funbit.Ets.Telemetry.Server/bin
 /source/Funbit.Ets.Telemetry.Server/obj
-/packages
-/*.suo
+/source/packages
+/source/*.suo
 /Readme.txt
-/*.user
+/source/*.user
 /_WorkingFiles
