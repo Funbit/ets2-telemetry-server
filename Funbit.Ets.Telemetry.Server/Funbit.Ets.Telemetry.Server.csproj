@@ -54,6 +54,11 @@
   <PropertyGroup>
     <ApplicationIcon>Resources\app.ico</ApplicationIcon>
   </PropertyGroup>
+  <PropertyGroup />
+  <PropertyGroup />
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Owin, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -154,6 +159,7 @@
       <DependentUpon>styles.less</DependentUpon>
     </Content>
     <Content Include="Apps\Ets2\styles\styles.less" />
+    <None Include="app.manifest" />
     <None Include="Apps\Ets2\scripts\gauge.min.js.map">
       <DependentUpon>gauge.min.js</DependentUpon>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
