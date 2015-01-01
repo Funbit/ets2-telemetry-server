@@ -1,0 +1,274 @@
+﻿/* customization */
+body {
+  background-color: #1d1d1d;
+  width: 100%;
+  height: 100%;
+}
+/* common gauge stuff */
+.gauge {
+  background-image: url("../gfx/gauge-bg-off.png");
+  position: absolute;
+  left: 0px;
+  top: 1px;
+  width: 2048px;
+  height: 1152px;
+}
+.gauge.on {
+  background-image: url("../gfx/gauge-bg-on.png");
+}
+.error {
+  color: coral;
+}
+/* speedometer */
+.speedometer-arrow {
+  position: absolute;
+  left: 571px;
+  top: 121px;
+  width: 10px;
+  height: 110px;
+  background-color: #cd0000;
+  -webkit-transform: rotate(-114deg);
+  -moz-transform: rotate(-114deg);
+  -ms-transform: rotate(-114deg);
+  -o-transform: rotate(-114deg);
+  transform: rotate(-114deg);
+  -webkit-transform-origin: 50% 440px;
+  -moz-transform-origin: 50% 440px;
+  -ms-transform-origin: 50% 440px;
+  -o-transform-origin: 50% 440px;
+  transform-origin: 50% 440px;
+}
+/* tachometer */
+.tachometer-arrow {
+  position: absolute;
+  left: 1580px;
+  top: 105px;
+  width: 10px;
+  height: 110px;
+  background-color: #cd0000;
+  -webkit-transform: rotate(-97deg);
+  -moz-transform: rotate(-97deg);
+  -ms-transform: rotate(-97deg);
+  -o-transform: rotate(-97deg);
+  transform: rotate(-97deg);
+  -webkit-transform-origin: 50% 336px;
+  -moz-transform-origin: 50% 336px;
+  -ms-transform-origin: 50% 336px;
+  -o-transform-origin: 50% 336px;
+  transform-origin: 50% 336px;
+}
+/* fuel */
+.fuel-arrow {
+  position: absolute;
+  left: 1452px;
+  top: 546px;
+  width: 10px;
+  height: 60px;
+  background-color: #cd0000;
+  -webkit-transform: rotate(-96deg);
+  -moz-transform: rotate(-96deg);
+  -ms-transform: rotate(-96deg);
+  -o-transform: rotate(-96deg);
+  transform: rotate(-96deg);
+  -webkit-transform-origin: 50% 198px;
+  -moz-transform-origin: 50% 198px;
+  -ms-transform-origin: 50% 198px;
+  -o-transform-origin: 50% 198px;
+  transform-origin: 50% 198px;
+}
+/* temperature */
+.temperature-arrow {
+  position: absolute;
+  left: 1788px;
+  top: 546px;
+  width: 10px;
+  height: 60px;
+  background-color: #cd0000;
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transform-origin: 50% 198px;
+  -moz-transform-origin: 50% 198px;
+  -ms-transform-origin: 50% 198px;
+  -o-transform-origin: 50% 198px;
+  transform-origin: 50% 198px;
+}
+/* gear */
+.gear {
+  color: #35b32e;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 100px;
+  position: absolute;
+  left: 520px;
+  top: 678px;
+  width: 134px;
+  height: 100px;
+  text-align: center;
+}
+/* odometer */
+.odometer {
+  color: #1b87af;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 70px;
+  position: absolute;
+  left: 376px;
+  top: 476px;
+  width: 368px;
+  height: 70px;
+  text-align: right;
+}
+/* blinkers */
+.blinker-left {
+  background-image: url("../gfx/gauge-blinker-left-off.png");
+  position: absolute;
+  left: 98px;
+  top: 78px;
+  width: 102px;
+  height: 92px;
+}
+.blinker-left.on {
+  background-image: url("../gfx/gauge-blinker-left-on.png");
+}
+.blinker-right {
+  background-image: url("../gfx/gauge-blinker-right-off.png");
+  position: absolute;
+  left: 950px;
+  top: 78px;
+  width: 102px;
+  height: 92px;
+}
+.blinker-right.on {
+  background-image: url("../gfx/gauge-blinker-right-on.png");
+}
+/* cruise control indicator */
+.cruise {
+  background-image: url("../gfx/gauge-cruise-off.png");
+  position: absolute;
+  left: 710px;
+  top: 680px;
+  width: 114px;
+  height: 98px;
+}
+.cruise.on {
+  background-image: url("../gfx/gauge-cruise-on.png");
+}
+/* lights indicator */
+.highbeam {
+  background-image: url("../gfx/gauge-highbeam-off.png");
+  position: absolute;
+  left: 1326px;
+  top: 890px;
+  width: 120px;
+  height: 88px;
+}
+.highbeam.on {
+  background-image: url("../gfx/gauge-highbeam-on.png");
+}
+.lowbeam {
+  background-image: url("../gfx/gauge-lowbeam-off.png");
+  position: absolute;
+  left: 1326px;
+  top: 1010px;
+  width: 120px;
+  height: 88px;
+}
+.lowbeam.on {
+  background-image: url("../gfx/gauge-lowbeam-on.png");
+}
+.parking-lights {
+  background-image: url("../gfx/gauge-parklights-off.png");
+  position: absolute;
+  left: 1454px;
+  top: 950px;
+  width: 106px;
+  height: 96px;
+}
+.parking-lights.on {
+  background-image: url("../gfx/gauge-parklights-on.png");
+}
+/* trailer indicator */
+.trailer {
+  background-image: url("../gfx/gauge-trailer-off.png");
+  position: absolute;
+  left: 1726px;
+  top: 922px;
+  width: 278px;
+  height: 152px;
+}
+.trailer.on {
+  background-image: url("../gfx/gauge-trailer-on.png");
+}
+.trailer-mass {
+  color: #3e3b60;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 40px;
+  position: absolute;
+  left: 1770px;
+  top: 938px;
+  width: 200px;
+  height: 80px;
+  text-align: center;
+}
+.trailer-name {
+  color: #222;
+  font-family: Arial, Tahoma;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  left: 1742px;
+  top: 984px;
+  width: 242px;
+  height: 80px;
+  text-align: center;
+  overflow: hidden;
+}
+/* job info */
+.info-table {
+  border-collapse: collapse;
+  font-family: Courier New, Courier, monospace;
+  font-size: 40px;
+  position: absolute;
+  left: 46px;
+  top: 850px;
+  width: 1300px;
+  height: 280px;
+}
+.info-table th {
+  color: #aaa;
+  width: 260px;
+  text-align: right;
+}
+.info-table td {
+  padding-left: 20px;
+  text-align: left;
+}
+.info-table td.time {
+  color: #C2D8ED;
+}
+.info-table td.source,
+.info-table td.destination {
+  color: #efbd3a;
+}
+.info-table td.deadline {
+  color: #54d9a8;
+}
+/* mobile helpers */
+.portrait-message {
+  color: coral;
+  padding: 60px;
+  font-size: 60px;
+  display: none;
+}
+@media only screen and (orientation: portrait) {
+  .gauge {
+    display: none;
+  }
+  .portrait-message {
+    display: block;
+  }
+}
