@@ -140,7 +140,10 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
-    </Compile>    
+    </Compile>
+    <Content Include="Apps\Ets2\gfx\app-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\app.ico" />
     <Content Include="Apps\Ets2\gfx\gauge-parklights-off.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

@@ -52,7 +52,7 @@ Here is a screenshot of how your mobile gauge will look like:
 ### 1.0.1
 - Fixed bug with multiple network interfaces (thanks to thorerik)
 - Made application run under Administrator by default (thanks to thorerik)
-- Updated application icon
+- Updated application icon and added it to the HTML app
 - Minor refactoring
 
 ## External links
