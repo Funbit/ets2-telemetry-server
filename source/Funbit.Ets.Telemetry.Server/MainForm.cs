@@ -4,6 +4,7 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Windows.Forms;
 using Funbit.Ets.Telemetry.Server.Helpers;
 using Microsoft.Owin.Hosting;
@@ -17,6 +18,11 @@ namespace Funbit.Ets.Telemetry.Server
         public MainForm()
         {
             InitializeComponent();
+
+            Assembly assembly = Assembly.GetExecutingAssembly();
+            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
+            string version = fvi.FileVersion;
+            Text = String.Format("ETS 2 Telemetry Server {0}", version);
         }
 
         static string EndpointPort
