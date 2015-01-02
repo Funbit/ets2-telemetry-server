@@ -11,5 +11,9 @@
   <preference name="Orientation" value="landscape" />
   <preference name="Fullscreen" value="true" />
   <preference name="BackupWebStorage" value="none" />
+  <preference name="KeepRunning" value="False" />
+  <vs:plugin name="org.apache.cordova.network-information" version="0.2.12" />
+  <vs:plugin name="org.apache.cordova.splashscreen" version="0.3.3" />
+  <vs:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
   <vs:platformSpecificValues />
 </widget>

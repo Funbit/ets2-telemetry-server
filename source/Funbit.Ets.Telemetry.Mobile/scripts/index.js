@@ -12,10 +12,12 @@
 
     function onDeviceReady() {
 
-        // handle the Cordova pause and resume events
-        document.addEventListener( 'pause', onPause.bind( this ), false );
-        document.addEventListener( 'resume', onResume.bind( this ), false );
-        
+        document.addEventListener('pause', onPause.bind(this), false);
+        document.addEventListener('resume', onResume.bind(this), false);
+
+        // turn off sleep mode
+        window.plugins.insomnia.keepAwake();
+
     };
 
     function onPause() {

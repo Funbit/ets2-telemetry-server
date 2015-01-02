@@ -3,6 +3,7 @@
 /source/Funbit.Ets.Telemetry.Server/bin
 /source/Funbit.Ets.Telemetry.Server/obj
 /source/Funbit.Ets.Telemetry.Mobile/bld
+/source/Funbit.Ets.Telemetry.Mobile/bin
 /source/packages
 /source/*.suo
 /Readme.txt

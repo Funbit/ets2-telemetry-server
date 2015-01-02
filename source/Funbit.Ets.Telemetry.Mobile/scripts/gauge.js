@@ -1,4 +1,6 @@
-﻿var Funbit;
+﻿/// <reference path="typings/jquery.d.ts" />
+/// <reference path="typings/jqueryui.d.ts" />
+var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
@@ -69,10 +71,12 @@
                             });
                         };
                         if (Math.abs(prevAngle - angle) < (maxAngle - minAngle) * 0.005) {
+                            // fast update
                             updateTransform('rotate(' + angle + 'deg)');
                             return;
                         }
 
+                        // animated update
                         $({ a: prevAngle }).animate({ a: angle }, {
                             duration: this.refreshDelay * 1.1,
                             step: function (now) {
@@ -119,6 +123,7 @@
                         $('.time').removeClass('error');
                         this.setIndicator('time', data.gameTime);
                         if (data.sourceCity.length > 0) {
+                            // we have job info set
                             this.setIndicator('source', data.sourceCity + ' (' + data.sourceCompany + ')');
                             this.setIndicator('destination', data.destinationCity + ' (' + data.destinationCompany + ')');
                             this.setIndicator('deadline', data.jobDeadlineTime);
@@ -143,7 +148,7 @@
                         this.turnIndicator('parking-lights', data.lightsParkingOn);
                         this.turnIndicator('highbeam', data.lightsBeamHighOn);
                         this.turnIndicator('lowbeam', data.lightsBeamLowOn && !data.lightsBeamHighOn);
-                        this.setSpeedometer(data.truckSpeed * 3.6);
+                        this.setSpeedometer(data.truckSpeed * 3.6); // convert to km/h
                         this.setTachometer(data.engineRpm);
                         this.setFuel(data.fuel, data.fuelCapacity);
                         this.setTemperature(data.waterTemperature);
@@ -198,3 +203,4 @@
     })(Funbit.Ets || (Funbit.Ets = {}));
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
+//# sourceMappingURL=gauge.js.map
