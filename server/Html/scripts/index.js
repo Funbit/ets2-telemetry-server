@@ -1,0 +1,1 @@
+/* this is a dummy script that replaces cordova engine */

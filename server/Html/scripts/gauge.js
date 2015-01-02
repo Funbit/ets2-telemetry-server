@@ -1,6 +1,4 @@
-﻿/// <reference path="typings/jquery.d.ts" />
-/// <reference path="typings/jqueryui.d.ts" />
-var Funbit;
+﻿var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
@@ -71,12 +69,10 @@ var Funbit;
                             });
                         };
                         if (Math.abs(prevAngle - angle) < (maxAngle - minAngle) * 0.005) {
-                            // fast update
                             updateTransform('rotate(' + angle + 'deg)');
                             return;
                         }
 
-                        // animated update
                         $({ a: prevAngle }).animate({ a: angle }, {
                             duration: this.refreshDelay * 1.1,
                             step: function (now) {
@@ -107,8 +103,12 @@ var Funbit;
                     };
 
                     Gauge.prototype.dataRefreshSucceeded = function (data) {
+                        if (data.connected && data.gameTime.indexOf(Gauge.minDateValue) == 0) {
+                            this.dataRefreshFailed('Connected! Waiting for the drive!');
+                            return;
+                        }
                         if (!data.connected) {
-                            this.dataRefreshFailed('Simulator is not running');
+                            this.dataRefreshFailed('Server is not connected to the simulator');
                             return;
                         }
                         data.gameTime = this.isoToReadableDate(data.gameTime);
@@ -119,7 +119,6 @@ var Funbit;
                         $('.time').removeClass('error');
                         this.setIndicator('time', data.gameTime);
                         if (data.sourceCity.length > 0) {
-                            // we have job info set
                             this.setIndicator('source', data.sourceCity + ' (' + data.sourceCompany + ')');
                             this.setIndicator('destination', data.destinationCity + ' (' + data.destinationCompany + ')');
                             this.setIndicator('deadline', data.jobDeadlineTime);
@@ -144,18 +143,18 @@ var Funbit;
                         this.turnIndicator('parking-lights', data.lightsParkingOn);
                         this.turnIndicator('highbeam', data.lightsBeamHighOn);
                         this.turnIndicator('lowbeam', data.lightsBeamLowOn && !data.lightsBeamHighOn);
-                        this.setSpeedometer(data.truckSpeed * 3.6); // convert to km/h
+                        this.setSpeedometer(data.truckSpeed * 3.6);
                         this.setTachometer(data.engineRpm);
                         this.setFuel(data.fuel, data.fuelCapacity);
                         this.setTemperature(data.waterTemperature);
                     };
 
                     Gauge.prototype.dataRefreshFailed = function (reason) {
+                        this.setIndicator('time', reason);
                         if ($('.gauge').hasClass('on') || this.firstRun) {
                             this.firstRun = false;
                             $('.gauge').removeClass('on');
                             $('.time').addClass('error');
-                            this.setIndicator('time', reason);
                             this.setIndicator('source', '');
                             this.setIndicator('destination', '');
                             this.setIndicator('deadline', '');
@@ -186,6 +185,8 @@ var Funbit;
                         'Saturday'
                     ];
 
+                    Gauge.minDateValue = "0001-01-01T00:00:00";
+
                     Gauge.connectionTimeout = 5000;
                     return Gauge;
                 })();
@@ -197,4 +198,3 @@ var Funbit;
     })(Funbit.Ets || (Funbit.Ets = {}));
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
-//# sourceMappingURL=gauge.js.map

@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>ETS2 Gauge</title>
+    <link rel="stylesheet" href="css/styles.min.css" />
+    <link rel="apple-touch-icon" href="images/app-icon.png" />
+    <link rel="shortcut icon" href="images/app-icon.png">
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/jquery-ui.min.js"></script>
+    <script src="scripts/gauge.min.js"></script>
+    <meta id="viewport" name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no;" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <!-- ETS2 gauge component -->
+    <div class="gauge">
+        <!-- meters -->
+        <div class="speedometer-arrow" data-prev="-114"></div>
+        <div class="tachometer-arrow" data-prev="-97"></div>
+        <div class="fuel-arrow" data-prev="-96"></div>
+        <div class="temperature-arrow" data-prev="-96"></div>
+        <div class="odometer"></div>
+        <div class="gear"></div>
+        <!-- indicators -->
+        <div class="blinker-left"></div>
+        <div class="blinker-right"></div>
+        <div class="cruise"></div>
+        <div class="highbeam"></div>
+        <div class="lowbeam"></div>
+        <div class="parking-lights"></div>
+        <div class="trailer"></div>
+        <div class="trailer-mass"></div>
+        <div class="trailer-name"></div>
+        <!-- information -->
+        <table class="info-table">
+            <tr>
+                <th>Time:</th>
+                <td class="time"></td>
+            </tr>
+            <tr>
+                <th>Source:</th>
+                <td class="source"></td>
+            </tr>
+            <tr>
+                <th>Destination:</th>
+                <td class="destination"></td>
+            </tr>
+            <tr>
+                <th>Deadline:</th>
+                <td class="deadline"></td>
+            </tr>
+        </table>
+    </div>
+    <div class="portrait-message">
+        <img src="images/rotate-to-landscape.png" />
+        Please rotate your device
+    </div>
+    <script src="cordova.js"></script>
+    <script src="scripts/platformOverrides.js"></script>
+    <script src="scripts/index.js"></script>
+    <script>
+
+        // preload all resources
+        $(['images/gauge-bg-off.png', 'images/gauge-bg-on.png',
+            'images/gauge-blinker-left-off.png', 'images/gauge-blinker-left-on.png',
+            'images/gauge-blinker-right-off.png', 'images/gauge-blinker-right-on.png',
+            'images/gauge-cruise-off.png', 'images/gauge-cruise-on.png',
+            'images/gauge-highbeam-off.png', 'images/gauge-highbeam-on.png',
+            'images/gauge-lowbeam-off.png', 'images/gauge-lowbeam-on.png',
+            'images/gauge-parklights-off.png', 'images/gauge-parklights-on.png',
+            'images/gauge-trailer-off.png', 'images/gauge-trailer-on.png'
+        ]).each(function () {
+            $('<img/>')[0].src = this;
+        });
+
+        var ie = /Trident/.test(navigator.userAgent);
+        var firefox = /Firefox/i.test(navigator.userAgent);
+        var ios = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        $().ready(function () {
+            
+            // fit gauge into the screen
+            var gaugeHeight = parseFloat($('.gauge').css('height'));
+            var gaugeWidth = parseFloat($('.gauge').css('width'));
+            var windowHeight = $(window).height();
+            var windowWidth = $(window).width();
+            var ratio = windowHeight / gaugeHeight;
+            if ((windowHeight / gaugeHeight) > (windowWidth / gaugeWidth)) {
+                ratio = windowWidth / gaugeWidth;
+            }
+            var scale = 'scale(' + (ratio * 0.99) + ')'; // leave 1% padding
+            var $body = $('body');
+            $body.css('transform', scale);
+            if (firefox) {
+                $body.css('-moz-transform', scale);
+            } else if (ie) {
+                $body.css('-ms-transform', scale);
+            } else {
+                $body.css('-webkit-transform', scale);
+            }
+
+            // reload page when browser resizes (orientation changes)
+            $(window).on('orientationchange', function () {
+                window.location.reload();
+            });
+
+            // run the gauge when everything is ready
+            var endpointUrl = "/api/ets2/telemetry";
+            var refreshDelay = 250;
+            Window.gaugeInstance = new Funbit.Ets.Telemetry.Components.Gauge(endpointUrl, refreshDelay);
+
+            // prevent device from sleeping (works in iOS only)
+            if (ios) {
+                window.sleepPreventInterval = setInterval(function () {
+                    window.location.href = "/";
+                    window.setTimeout(function () {
+                        window.stop();
+                    }, 0);
+                }, 30000);
+            }
+
+        });
+        
+    </script>
+</body>
+</html>
