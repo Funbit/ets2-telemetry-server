@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="info.funbit.ets.telemetry" version="1.0.0.0" xmlns="http://www.w3.org/ns/widgets">
-  <name>ETS2 Telemetry</name>
-  <description>ETS2 Telemetry Gauge Application</description>
+  <name>ETS2 Gauge</name>
+  <description>Mobile gauge for Euro Truck Simulator 2.</description>
   <author href="http://cordova.io" email="dev@cordova.apache.org">Funbit</author>
   <content src="index.html" />
   <access origin="*" />
@@ -10,9 +10,9 @@
   <preference name="windows-phone-target-version" value="8.1" />
   <preference name="Orientation" value="landscape" />
   <preference name="Fullscreen" value="true" />
-  <preference name="BackupWebStorage" value="none" />
+  <preference name="BackupWebStorage" value="cloud" />
   <preference name="KeepRunning" value="False" />
-  <vs:plugin name="org.apache.cordova.network-information" version="0.2.12" />
+  <preference name="InAppBrowserStorageEnabled" value="True" />
   <vs:plugin name="org.apache.cordova.splashscreen" version="0.3.3" />
   <vs:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
   <vs:platformSpecificValues />

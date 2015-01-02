@@ -60,6 +60,9 @@
     <script src="scripts/platformOverrides.js"></script>
     <script src="scripts/index.js"></script>
     <script>
+        
+        // configuration parameters
+        var gaugeRefreshDelay = 250;
 
         // preload all resources
         $(['images/gauge-bg-off.png', 'images/gauge-bg-on.png',
@@ -77,6 +80,7 @@
         var ie = /Trident/.test(navigator.userAgent);
         var firefox = /Firefox/i.test(navigator.userAgent);
         var ios = /iPhone|iPad|iPod/i.test(navigator.userAgent);
+        var cordovaAvailable = document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1;
         $().ready(function () {
             
             // fit gauge into the screen
@@ -104,13 +108,8 @@
                 window.location.reload();
             });
 
-            // run the gauge when everything is ready
-            var endpointUrl = "/api/ets2/telemetry";
-            var refreshDelay = 250;
-            Window.gaugeInstance = new Funbit.Ets.Telemetry.Components.Gauge(endpointUrl, refreshDelay);
-
             // prevent device from sleeping (works in iOS only)
-            if (ios) {
+            if (ios && !cordovaAvailable) {
                 window.sleepPreventInterval = setInterval(function () {
                     window.location.href = "/";
                     window.setTimeout(function () {
@@ -119,8 +118,22 @@
                 }, 30000);
             }
 
+            // start the app!
+            if (cordovaAvailable) {
+                // Cordova will start our app inside index.js onDeviceReady
+            } else {
+                // start manually in a desktop mode
+                window.gaugeStarter("/api/ets2/telemetry");
+            }
+            
         });
-        
+
+        // register global gauge initializer
+        window.gaugeStarter = function (endpointUrl) {
+            alert('connecting to: ' + endpointUrl);
+            window.gaugeInstance = new Funbit.Ets.Telemetry.Components.Gauge(endpointUrl, gaugeRefreshDelay);
+        }
+
     </script>
 </body>
 </html>

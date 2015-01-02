@@ -18,6 +18,10 @@
         // turn off sleep mode
         window.plugins.insomnia.keepAwake();
 
+        // TODO: ask user for IP
+        var ip = "192.168.1.5";
+        window.gaugeStarter("http://" + ip + ":" + 25555 + "/api/ets2/telemetry");
+        
     };
 
     function onPause() {
