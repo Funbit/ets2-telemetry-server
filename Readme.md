@@ -57,7 +57,7 @@ Here is a screenshot of how your mobile gauge will look like:
 
 ## External links
 
-- [Server discussion on the official SCS forum.](http://forum.scssoft.com/viewtopic.php?f=41&t=171000)
+- [Server discussion on the official SCS forum](http://forum.scssoft.com/viewtopic.php?f=41&t=171000)
 - [Server discussion on the ets2mp.com forum](http://forum.ets2mp.com/index.php?/topic/3058-ets2-telemetry-web-server-mobile-gauge-for-all-phones/) 
 
 ## License
