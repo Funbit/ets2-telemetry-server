@@ -1,5 +1,4 @@
-.hg
-/*.hgignore
+/_hg
 /source/Funbit.Ets.Telemetry.Server/Funbit.Ets.Telemetry.Server.csproj.user
 /source/Funbit.Ets.Telemetry.Server/bin
 /source/Funbit.Ets.Telemetry.Server/obj
