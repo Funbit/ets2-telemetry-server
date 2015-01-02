@@ -120,8 +120,7 @@ namespace Funbit.Ets.Telemetry.Server
         {
             try
             {
-                bool ets2Running = Ets2ProcessHelper.IsEts2Running();
-                if (ets2Running)
+                if (Ets2ProcessHelper.IsEts2Running)
                 {
                     statusLabel.Text = @"Simulator is running";
                     statusLabel.ForeColor = Color.DarkGreen;

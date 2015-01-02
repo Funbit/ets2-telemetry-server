@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text;
 using Funbit.Ets.Telemetry.Server.Data.Reader;
+using Funbit.Ets.Telemetry.Server.Helpers;
 
 namespace Funbit.Ets.Telemetry.Server.Data
 {
@@ -30,7 +31,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
         public bool Connected
         {
-            get { return _rawData.timeAbsolute != 0; }
+            get { return _rawData.timeAbsolute != 0 && Ets2ProcessHelper.IsEts2Running; }
         }
 
         public DateTime GameTime
