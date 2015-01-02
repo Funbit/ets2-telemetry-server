@@ -1,4 +1,4 @@
-## ETS2 Telemetry Web Server
+## ETS2 Telemetry Web Server (Version 1.0.1)
 
 This is a modern ETS2 Telemetry Web Server written in C# and WebApi. The server exposes the following endpoints:
 
