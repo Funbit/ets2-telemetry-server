@@ -8,6 +8,8 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
     [RoutePrefix("api")]
     public class Ets2TelemetryController : ApiController
     {
+        public const string TelemetryApiUriPath = "/api/ets2/telemetry";
+
         [HttpGet]
         [HttpPost]
         [Route("ets2/telemetry", Name = "GetEts2Telemetry")]

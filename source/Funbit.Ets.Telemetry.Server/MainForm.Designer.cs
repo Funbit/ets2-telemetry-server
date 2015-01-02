@@ -153,7 +153,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ETS2 Telemetry Server 1.0";
+            this.Text = "ETS2 Telemetry Server";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TrayIconForm_FormClosed);
             this.Load += new System.EventHandler(this.TrayIconForm_Load);
             this.contextMenuStrip.ResumeLayout(false);

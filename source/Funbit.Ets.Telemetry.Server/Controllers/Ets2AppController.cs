@@ -6,6 +6,8 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
     [RoutePrefix("apps/ets2")]
     public class Ets2AppController : StaticFileController
     {
+        public const string TelemetryAppUriPath = "/apps/ets2/index.htm";
+
         const string AppName = "Ets2";
 
         [HttpGet]

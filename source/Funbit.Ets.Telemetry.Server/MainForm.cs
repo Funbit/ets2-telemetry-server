@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Reflection;
 using System.Windows.Forms;
+using Funbit.Ets.Telemetry.Server.Controllers;
 using Funbit.Ets.Telemetry.Server.Helpers;
 using Microsoft.Owin.Hosting;
 
@@ -18,11 +19,18 @@ namespace Funbit.Ets.Telemetry.Server
         public MainForm()
         {
             InitializeComponent();
+        }
 
-            Assembly assembly = Assembly.GetExecutingAssembly();
-            FileVersionInfo fvi = FileVersionInfo.GetVersionInfo(assembly.Location);
-            string version = fvi.FileVersion;
-            Text = String.Format("ETS 2 Telemetry Server {0}", version);
+        static string Version
+        {
+            get
+            {
+                Assembly assembly = Assembly.GetExecutingAssembly();
+                FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+                string version = string.Format("{0}.{1}.{2}", 
+                    versionInfo.FileMajorPart, versionInfo.FileMinorPart, versionInfo.ProductBuildPart);
+                return version;
+            }
         }
 
         static string EndpointPort
@@ -35,13 +43,14 @@ namespace Funbit.Ets.Telemetry.Server
             return string.Format("http://{0}:{1}", host, EndpointPort);
         }
 
-        private void TrayIconForm_Load(object sender, EventArgs e)
+        string StartServer()
         {
+            string bindUrl = string.Empty;
             try
             {
                 var options = new StartOptions();
                 options.Urls.Add(HostToEndpointUrl("localhost"));
-                apiEndpointUrlLabel.Text = options.Urls.First();
+                bindUrl = options.Urls.First();
                 try
                 {
                     if (Uac.IsProcessElevated())
@@ -52,11 +61,11 @@ namespace Funbit.Ets.Telemetry.Server
                         // bind to the default network IP as well
                         var defaultIp = NetworkHelper.GetDefaultIpAddress().ToString();
                         options.Urls.Add(HostToEndpointUrl(defaultIp));
-                        apiEndpointUrlLabel.Text = options.Urls.Last();
+                        bindUrl = options.Urls.Last();
                     }
                     else
                     {
-                        MessageBox.Show(this, @"The process was not run under Administrator " + 
+                        MessageBox.Show(this, @"The process was not run under Administrator " +
                             @"so you won't be able to access your telemetry API server remotely " +
                             @"(i.e. from iPhone or other devices connected to your network). " +
                             Environment.NewLine + Environment.NewLine +
@@ -66,18 +75,29 @@ namespace Funbit.Ets.Telemetry.Server
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(this, ex.Message, @"Network error", 
+                    MessageBox.Show(this, ex.Message, @"Network error",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
-                // show full URL to the telemetry data
-                appUrlLabel.Text = apiEndpointUrlLabel.Text + @"/apps/ets2/index.htm";
-                apiEndpointUrlLabel.Text += @"/api/ets2/telemetry";
                 _server = WebApp.Start<Startup>(options);
             }
             catch (Exception ex)
             {
                 MessageBox.Show(this, ex.Message, @"Server error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
+            return bindUrl;
+        }
+
+        private void TrayIconForm_Load(object sender, EventArgs e)
+        {
+            // start server
+            string bindUrl = StartServer();
+
+            // show full URLs to the telemetry data
+            appUrlLabel.Text = bindUrl + Ets2AppController.TelemetryAppUriPath;
+            apiEndpointUrlLabel.Text = bindUrl + Ets2TelemetryController.TelemetryApiUriPath;
+            
+            // show application version 
+            Text += @" " + Version;
         }
 
         private void TrayIconForm_FormClosed(object sender, FormClosedEventArgs e)

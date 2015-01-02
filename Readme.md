@@ -47,9 +47,17 @@ Here is a screenshot of how your mobile gauge will look like:
 - Sometimes due to browser bugs the gauge may not fit exactly in your mobile screen. If it happens to you the first thing you should try is to rotate the device to portrait mode and then back to landscape. Usually it fixes the problem.
 - Sometimes D1 gear is not properly displayed on the screen
 
+## Version history
+
+### 1.0.1
+- Fixed bug with multiple network interfaces (thanks to thorerik)
+- Made application run under Administrator by default (thanks to thorerik)
+- Minor refactoring
+
 ## External links
 
-- [Topic about this server on the official SCS forum.](http://forum.scssoft.com/viewtopic.php?f=41&t=171000)  
+- [Server discussion on the official SCS forum.](http://forum.scssoft.com/viewtopic.php?f=41&t=171000)
+- [Server discussion on the ets2mp.com forum](http://forum.ets2mp.com/index.php?/topic/3058-ets2-telemetry-web-server-mobile-gauge-for-all-phones/) 
 
 ## License
 
