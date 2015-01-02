@@ -26,7 +26,7 @@ Here is a screenshot of how your mobile gauge will look like:
 - Windows Vista, Windows 7 or Windows 8 (32-bit or 64-bit)
 - Euro Truck Simulator 2 (**32-bit only for now**!)
 - .NET Framework 4.5 (pre-installed in Windows 8+)
-- iPhone OS 8+ (using built-in Mobile Safari) or Android 4+ devices (using Default or Chrome browser). It is recommended to create a shortcut for the application on the Home screen to automatically remove browser's navigation bar. **Warning:** since it is not possible to prevent Android device from going into sleep from a web page you must turn sleep mode off in the device's settings (or use third party apps that are capable of turning off sleep mode by application)
+- iPhone OS 8+ (using built-in Mobile Safari) or Android 4+ devices (using Default or Chrome browser). **Warning:** since it is not possible to prevent Android device from going into sleep from a web page you must turn sleep mode off in the device's settings (or use third party apps that are capable of turning off sleep mode by application)
 
 ### Installation
 
@@ -49,6 +49,9 @@ Here is a screenshot of how your mobile gauge will look like:
 - [Sometimes day of the week displayed in the gauge is incorrect](https://github.com/Funbit/ets2-telemetry-server/issues/6)
 
 ## Version history
+
+### 1.0.2
+- Refactored gauge screen fitting algorithm, the app should work in any browser now (including desktop)
 
 ### 1.0.1
 - Fixed bug with multiple network interfaces (thanks to thorerik)

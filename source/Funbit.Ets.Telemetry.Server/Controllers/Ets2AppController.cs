@@ -3,39 +3,30 @@ using System.Web.Http;
 
 namespace Funbit.Ets.Telemetry.Server.Controllers
 {
-    [RoutePrefix("apps/ets2")]
+    [RoutePrefix("")]
     public class Ets2AppController : StaticFileController
     {
-        public const string TelemetryAppUriPath = "/apps/ets2/index.htm";
-
-        const string AppName = "Ets2";
+        public const string TelemetryAppUriPath = "/";
 
         [HttpGet]
-        [Route("{fileName}")]
+        [Route("", Name = "GetRoot")]
+        public HttpResponseMessage GetRoot()
+        {
+            return ServeStaticFile("", "index.html");
+        }
+
+        [HttpGet]
+        [Route("{fileName}", Name = "GetRootFile")]
         public HttpResponseMessage GetRootFile(string fileName)
         {
-            return ServeStaticFile(AppName, "", fileName);
+            return ServeStaticFile("", fileName);
         }
 
         [HttpGet]
-        [Route("gfx/{fileName}")]
-        public HttpResponseMessage GetGfxFile(string fileName)
+        [Route("{dirName}/{fileName}", Name = "GetResourceFile")]
+        public HttpResponseMessage GetResourceFile(string dirName, string fileName)
         {
-            return ServeStaticFile(AppName, "gfx", fileName);
-        }
-
-        [HttpGet]
-        [Route("styles/{fileName}")]
-        public HttpResponseMessage GetStyleFile(string fileName)
-        {
-            return ServeStaticFile(AppName, "styles", fileName);
-        }
-
-        [HttpGet]
-        [Route("scripts/{fileName}")]
-        public HttpResponseMessage GetScriptFile(string fileName)
-        {
-            return ServeStaticFile(AppName, "scripts", fileName);
+            return ServeStaticFile(dirName, fileName);
         }
     }
 }

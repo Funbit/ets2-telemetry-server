@@ -9,14 +9,14 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
 {
     public class StaticFileController : ApiController
     {
-        protected HttpResponseMessage ServeStaticFile(string appName, string directory, string fileName)
+        const string BaseDirectory = "Html";
+
+        protected HttpResponseMessage ServeStaticFile(string directory, string fileName)
         {
-            // basic safety check
-            if (fileName.Contains("..") || 
-                fileName.Contains(":") || 
-                fileName.Contains("//") || 
-                fileName.Contains(@"\\"))
-                throw new HttpResponseException(HttpStatusCode.BadRequest);
+            // basic safety check (do not serve files outside base www directory)
+            var path = directory + fileName;
+            if (path.Contains("..") || path.Contains(":") || path.Contains("//") || path.Contains(@"\\"))
+                return Request.CreateErrorResponse(HttpStatusCode.NotFound, "Page not found!");
 
             string extension = Path.GetExtension(fileName);
             string contentType;
@@ -57,16 +57,17 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
 
             try
             {
-                string absoluteFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, 
-                    "Apps", appName, directory, fileName);
+                string absoluteFileName = Path.Combine(AppDomain.CurrentDomain.BaseDirectory,
+                    BaseDirectory, directory, fileName);
                 var response = Request.CreateResponse(HttpStatusCode.OK);
-                response.Content = new StreamContent(File.Open(absoluteFileName, FileMode.Open));
+                response.Content = new StreamContent(
+                    File.Open(absoluteFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
                 return response;
             }
             catch 
             {
-                throw new HttpResponseException(HttpStatusCode.InternalServerError);
+                return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Server error.");
             }
         }
     }

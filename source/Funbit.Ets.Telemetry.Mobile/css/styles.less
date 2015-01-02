@@ -9,18 +9,29 @@ body {
     background-color: @bg-color;
     width: 100%;
     height: 100%;
+    -moz-transform-origin: left top;
+    -ms-transform-origin: left top;
+    -o-transform-origin: left top;
+    -webkit-transform-origin: left top;
+    transform-origin: left top;
+    -moz-transform: scale(1);
+    -ms-transform: scale(1);
+    -o-transform: scale(1);
+    -webkit-transform: scale(1);
+    transform: scale(1);
+    overflow: hidden;
 }
 
 /* common gauge stuff */
 
 .gauge {    
-    background-image: url("../gfx/gauge-bg-off.png");
+    background-image: url("../images/gauge-bg-off.png");
     position: absolute;
     left: 0px;
     top: 1px;
     width: 2048px;
     height: 1152px;    
-    &.on { background-image: url("../gfx/gauge-bg-on.png") }
+    &.on { background-image: url("../images/gauge-bg-on.png") }
 }
 
 .error {
@@ -144,79 +155,79 @@ body {
 /* blinkers */
 
 .blinker-left {
-    background-image: url("../gfx/gauge-blinker-left-off.png");
+    background-image: url("../images/gauge-blinker-left-off.png");
     position: absolute;
     left: 98px;
     top: 78px;
     width: 102px;
     height: 92px;
-    &.on { background-image: url("../gfx/gauge-blinker-left-on.png") }
+    &.on { background-image: url("../images/gauge-blinker-left-on.png") }
 }
 
 .blinker-right {
-    background-image: url("../gfx/gauge-blinker-right-off.png");
+    background-image: url("../images/gauge-blinker-right-off.png");
     position: absolute;
     left: 950px;
     top: 78px;
     width: 102px;
     height: 92px;
-    &.on { background-image: url("../gfx/gauge-blinker-right-on.png") }
+    &.on { background-image: url("../images/gauge-blinker-right-on.png") }
 }
 
 /* cruise control indicator */
 
 .cruise {
-    background-image: url("../gfx/gauge-cruise-off.png");
+    background-image: url("../images/gauge-cruise-off.png");
     position: absolute;
     left: 710px;
     top: 680px;
     width: 114px;
     height: 98px;
-    &.on { background-image: url("../gfx/gauge-cruise-on.png") }
+    &.on { background-image: url("../images/gauge-cruise-on.png") }
 }
 
 /* lights indicator */
 
 .highbeam {
-    background-image: url("../gfx/gauge-highbeam-off.png");
+    background-image: url("../images/gauge-highbeam-off.png");
     position: absolute;
     left: 1326px;
     top: 890px;
     width: 120px;
     height: 88px;
-    &.on { background-image: url("../gfx/gauge-highbeam-on.png") }
+    &.on { background-image: url("../images/gauge-highbeam-on.png") }
 }
 
 .lowbeam {
-    background-image: url("../gfx/gauge-lowbeam-off.png");
+    background-image: url("../images/gauge-lowbeam-off.png");
     position: absolute;
     left: 1326px;
     top: 1010px;
     width: 120px;
     height: 88px;
-    &.on { background-image: url("../gfx/gauge-lowbeam-on.png") }
+    &.on { background-image: url("../images/gauge-lowbeam-on.png") }
 }
 
 .parking-lights {
-    background-image: url("../gfx/gauge-parklights-off.png");
+    background-image: url("../images/gauge-parklights-off.png");
     position: absolute;
     left: 1454px;
     top: 950px;
     width: 106px;
     height: 96px;
-    &.on { background-image: url("../gfx/gauge-parklights-on.png") }
+    &.on { background-image: url("../images/gauge-parklights-on.png") }
 }
 
 /* trailer indicator */
 
 .trailer {
-    background-image: url("../gfx/gauge-trailer-off.png");
+    background-image: url("../images/gauge-trailer-off.png");
     position: absolute;
     left: 1726px;
     top: 922px;
     width: 278px;
     height: 152px;
-    &.on { background-image: url("../gfx/gauge-trailer-on.png") }
+    &.on { background-image: url("../images/gauge-trailer-on.png") }
 }
 
 .trailer-mass {
@@ -281,16 +292,32 @@ body {
 
 .portrait-message {
     color: coral;
-    padding: 60px;
-    font-size: 60px;
+    padding: 50px;
+    font-size: 30px;
     display: none;
 }
 
 @media only screen and (orientation : portrait) {
+    body {
+        -moz-transform: scale(1) !important;
+        -ms-transform: scale(1) !important;
+        -o-transform: scale(1) !important;
+        -webkit-transform: scale(1) !important;
+        transform: scale(1) !important;
+        background-color: black;
+    }
     .gauge {
         display: none;
     }
     .portrait-message { 
         display: block;
+        position: absolute;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+    }
+    img {
+        width: 100%;
     }
 }
