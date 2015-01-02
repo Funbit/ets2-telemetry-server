@@ -46,6 +46,7 @@ Here is a screenshot of how your mobile gauge will look like:
 
 - Sometimes due to browser bugs the gauge may not fit exactly in your mobile screen. If it happens to you the first thing you should try is to rotate the device to portrait mode and then back to landscape. Usually it fixes the problem.
 - Sometimes D1 gear is not properly displayed on the screen
+- [Sometimes day of the week displayed in the gauge is incorrect](https://github.com/Funbit/ets2-telemetry-server/issues/6)
 
 ## Version history
 
