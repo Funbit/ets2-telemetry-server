@@ -107,8 +107,12 @@ var Funbit;
                     };
 
                     Gauge.prototype.dataRefreshSucceeded = function (data) {
+                        if (data.connected && data.gameTime.indexOf(Gauge.minDateValue) == 0) {
+                            this.dataRefreshFailed('Connected! Waiting for the drive!');
+                            return;
+                        }
                         if (!data.connected) {
-                            this.dataRefreshFailed('Simulator is not running');
+                            this.dataRefreshFailed('Server is not connected to the simulator');
                             return;
                         }
                         data.gameTime = this.isoToReadableDate(data.gameTime);
@@ -151,11 +155,11 @@ var Funbit;
                     };
 
                     Gauge.prototype.dataRefreshFailed = function (reason) {
+                        this.setIndicator('time', reason);
                         if ($('.gauge').hasClass('on') || this.firstRun) {
                             this.firstRun = false;
                             $('.gauge').removeClass('on');
                             $('.time').addClass('error');
-                            this.setIndicator('time', reason);
                             this.setIndicator('source', '');
                             this.setIndicator('destination', '');
                             this.setIndicator('deadline', '');
@@ -185,6 +189,8 @@ var Funbit;
                         'Friday',
                         'Saturday'
                     ];
+
+                    Gauge.minDateValue = "0001-01-01T00:00:00";
 
                     Gauge.connectionTimeout = 5000;
                     return Gauge;

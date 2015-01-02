@@ -31,7 +31,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
         public bool Connected
         {
-            get { return _rawData.timeAbsolute != 0 && Ets2ProcessHelper.IsEts2Running; }
+            get { return _rawData.ets2_telemetry_plugin_revision != 0 && Ets2ProcessHelper.IsEts2Running; }
         }
 
         public DateTime GameTime

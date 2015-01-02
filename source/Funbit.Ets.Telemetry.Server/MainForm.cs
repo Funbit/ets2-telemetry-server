@@ -153,5 +153,10 @@ namespace Funbit.Ets.Telemetry.Server
             startInfo.UseShellExecute = true;
             Process.Start(startInfo);
         }
+
+        private void MainForm_Resize(object sender, EventArgs e)
+        {
+            ShowInTaskbar = WindowState != FormWindowState.Minimized;
+        }
     }
 }

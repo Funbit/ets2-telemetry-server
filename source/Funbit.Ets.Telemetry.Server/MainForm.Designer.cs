@@ -156,6 +156,7 @@
             this.Text = "ETS2 Telemetry Server";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TrayIconForm_FormClosed);
             this.Load += new System.EventHandler(this.TrayIconForm_Load);
+            this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();

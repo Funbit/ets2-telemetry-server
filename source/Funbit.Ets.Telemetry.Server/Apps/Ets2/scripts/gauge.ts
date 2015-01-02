@@ -112,6 +112,8 @@ module Funbit.Ets.Telemetry.Components {
             'Saturday'
         ];
 
+        private static minDateValue: string = "0001-01-01T00:00:00";
+
         private static connectionTimeout: number = 5000;
 
         constructor(telemetryEndpointUrl: string, telemetryRefreshDelay: number) {
@@ -215,8 +217,12 @@ module Funbit.Ets.Telemetry.Components {
         }
 
         private dataRefreshSucceeded(data: IEts2TelemetryData) {
+            if (data.connected && data.gameTime.indexOf(Gauge.minDateValue) == 0) {
+                this.dataRefreshFailed('Connected! Waiting for the drive!');
+                return;
+            }
             if (!data.connected) {
-                this.dataRefreshFailed('Simulator is not running');
+                this.dataRefreshFailed('Server is not connected to the simulator');
                 return;
             }
             data.gameTime = this.isoToReadableDate(data.gameTime);
@@ -260,11 +266,11 @@ module Funbit.Ets.Telemetry.Components {
         }
 
         private dataRefreshFailed(reason: string) {
+            this.setIndicator('time', reason);
             if ($('.gauge').hasClass('on') || this.firstRun) {
                 this.firstRun = false;
                 $('.gauge').removeClass('on');
                 $('.time').addClass('error');
-                this.setIndicator('time', reason);
                 this.setIndicator('source', '');
                 this.setIndicator('destination', '');
                 this.setIndicator('deadline', '');
