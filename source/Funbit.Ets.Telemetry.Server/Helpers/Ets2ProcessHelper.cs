@@ -13,7 +13,7 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
             {
                 try
                 {
-                    if (process.MainWindowTitle == "Euro Truck Simulator 2" && 
+                    if ((process.MainWindowTitle == "Euro Truck Simulator 2" || process.MainWindowTitle == "Euro Truck Simulator 2 Multiplayer" )&& 
                         process.ProcessName == "eurotrucks2")
                         return true;
                 }
