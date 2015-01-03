@@ -8,4 +8,5 @@
 /source/*.suo
 /Readme.txt
 *.user
+*.log
 /_WorkingFiles
