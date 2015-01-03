@@ -16,10 +16,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
         static DateTime MinutesToDate(int minutes)
         {
-            // since ETS2 does not support months, 
-            // we always use January 0001 year
-            return new DateTime(1, 1, Math.Max(1, 1 + (minutes / (60 * 24)) % 32),
-                (minutes / 60) % 24, minutes % 60, 0, DateTimeKind.Local);
+            return new DateTime((long)minutes * 10000000 * 60, DateTimeKind.Local);
         }
 
         static string BytesToString(byte[] bytes)
