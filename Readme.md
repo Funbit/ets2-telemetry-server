@@ -20,7 +20,7 @@ Please note that GET responses may be cached by your HTTP client. To avoid cachi
 
 This HTML5 gauge application is designed for mobile/desktop browsers running in landscape mode. You should be able to use the gauge just by navigating to the URL in your Mobile Safari (iOS 8+), Android 4+ browsers (Default or Chrome) or any modern desktop browser. **Android ETS2 mobile gauge application (APK) is also included!**  
 
-Here is a screenshot of how your mobile gauge will look like:
+Here is a screenshot of how your mobile gauge will look like in a browser:
 
 ![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/Screenshot.png)
 
