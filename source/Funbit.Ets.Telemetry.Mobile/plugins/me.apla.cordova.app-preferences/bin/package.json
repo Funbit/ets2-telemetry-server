@@ -1,0 +1,15 @@
+{
+  "name": "build-app-settings",
+  "version": "0.0.0",
+  "description": "Generate an iOS info.plist",
+  "main": "build-app-settings.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "plist": "~1.0.1",
+    "libxmljs": "~0.11.0"
+  }
+}

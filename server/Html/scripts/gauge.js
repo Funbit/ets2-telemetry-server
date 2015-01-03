@@ -104,11 +104,11 @@
 
                     Gauge.prototype.dataRefreshSucceeded = function (data) {
                         if (data.connected && data.gameTime.indexOf(Gauge.minDateValue) == 0) {
-                            this.dataRefreshFailed('Connected! Waiting for the drive!');
+                            this.dataRefreshFailed('Connected, waiting for the drive...');
                             return;
                         }
                         if (!data.connected) {
-                            this.dataRefreshFailed('Server is not connected to the simulator');
+                            this.dataRefreshFailed('Waiting for the simulator to run...');
                             return;
                         }
                         data.gameTime = this.isoToReadableDate(data.gameTime);

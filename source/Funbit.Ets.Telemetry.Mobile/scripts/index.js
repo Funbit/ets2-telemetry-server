@@ -18,9 +18,40 @@
         // turn off sleep mode
         window.plugins.insomnia.keepAwake();
 
-        // ask user for IP
-        var ip = prompt("Please enter Telemetry Api IP address");
-        window.gaugeStarter("http://" + ip + ":" + 25555 + "/api/ets2/telemetry");
+        // app preferences
+        var prefs = plugins.appPreferences;
+        function prefsOk(value) { }
+        function prefsFail(error) { }
+        function checkEndpoint(endpointUrl, done, fail) {
+            $.ajax({
+                url: endpointUrl,
+                async: true,
+                dataType: 'json',
+                timeout: 5000
+            }).done(function() { done(endpointUrl); }).fail(fail);
+        }
+        function askUserForEndpoint(prevEndpointUrl) {
+            var ip = prompt("Please enter Telemetry Api server IP address", prevEndpointUrl);
+            var endpointUrl = "http://" + ip + ":" + 25555 + "/api/ets2/telemetry";
+            prefs.store(prefsOk, prefsFail, 'endpointUrl', endpointUrl);
+            return endpointUrl;
+        }
+
+        // get saved endpoint and run the gauge
+        prefs.fetch(function (endpointUrl) {
+            checkEndpoint(endpointUrl, function (endpointUrl) {
+                // endpoint seems to be fine
+                window.gaugeStarter(endpointUrl);
+            }, function () {
+                // failed to connect, ask for a new endpoint
+                var endpointUrl = askUserForEndpoint(endpointUrl);
+                window.gaugeStarter(endpointUrl);
+            });
+        }, function () {
+            // first run, ask for a new endpoint
+            var endpointUrl = askUserForEndpoint();
+            window.gaugeStarter(endpointUrl);
+        }, 'endpointUrl');
         
     };
 

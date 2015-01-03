@@ -103,7 +103,7 @@
                 $body.css('-webkit-transform', scale);
             }
 
-            // reload page when browser resizes (orientation changes)
+            // reload page when orientation changes
             $(window).on('orientationchange', function () {
                 window.location.reload();
             });
@@ -122,7 +122,7 @@
             if (cordovaAvailable) {
                 // Cordova will start our app inside index.js onDeviceReady
             } else {
-                // start manually in a desktop mode
+                // start manually in desktop mode
                 window.gaugeStarter("/api/ets2/telemetry");
             }
             
