@@ -53,7 +53,7 @@ Here is a screenshot of how your mobile gauge will look like:
 ## Version history
 
 ### 1.0.2
-- Refactored gauge screen fitting algorithm, the app should work in any browser now (including desktop)
+- Refactored gauge screen fitting algorithm, the app should work in any modern browser now 
 - Added logging
 - Added support for binding on a particular network interface
 - Added Cordova mobile application (compiled Android APK is included in the bundle)
