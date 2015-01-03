@@ -48,9 +48,13 @@ Here is a screenshot of how your mobile gauge will look like:
 ### Known problems:
 
 - Sometimes D1 gear is not properly displayed on the screen
-- [Sometimes day of the week displayed in the gauge is incorrect](https://github.com/Funbit/ets2-telemetry-server/issues/6)
 
 ## Version history
+
+### 1.0.3
+
+- Fixed bug with invalid day of the week
+- Improved connection stability
 
 ### 1.0.2
 - Refactored gauge screen fitting algorithm, the app should work in any modern browser now 

@@ -1,4 +1,6 @@
-﻿var Funbit;
+﻿/// <reference path="typings/jquery.d.ts" />
+/// <reference path="typings/jqueryui.d.ts" />
+var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
@@ -6,6 +8,8 @@
                 var Gauge = (function () {
                     function Gauge(telemetryEndpointUrl, telemetryRefreshDelay) {
                         this.firstRun = true;
+                        this.failCount = 0;
+                        this.minFailCount = 2;
                         this.endpointUrl = telemetryEndpointUrl;
                         this.refreshDelay = telemetryRefreshDelay;
                         this.initialize();
@@ -22,9 +26,13 @@
                             dataType: 'json',
                             timeout: Gauge.connectionTimeout
                         }).done(function (d) {
-                            return _this.dataRefreshSucceeded(d);
+                            _this.dataRefreshSucceeded(d);
+                            _this.failCount = 0;
                         }).fail(function () {
-                            return _this.dataRefreshFailed('Could not connect to the server');
+                            _this.failCount++;
+                            if (_this.failCount > _this.minFailCount) {
+                                _this.dataRefreshFailed('Could not connect to the server');
+                            }
                         }).always(function () {
                             _this.timer = setTimeout(_this.refreshData.bind(_this), _this.refreshDelay);
                         });
@@ -69,10 +77,12 @@
                             });
                         };
                         if (Math.abs(prevAngle - angle) < (maxAngle - minAngle) * 0.005) {
+                            // fast update
                             updateTransform('rotate(' + angle + 'deg)');
                             return;
                         }
 
+                        // animated update
                         $({ a: prevAngle }).animate({ a: angle }, {
                             duration: this.refreshDelay * 1.1,
                             step: function (now) {
@@ -119,6 +129,7 @@
                         $('.time').removeClass('error');
                         this.setIndicator('time', data.gameTime);
                         if (data.sourceCity.length > 0) {
+                            // we have job info set
                             this.setIndicator('source', data.sourceCity + ' (' + data.sourceCompany + ')');
                             this.setIndicator('destination', data.destinationCity + ' (' + data.destinationCompany + ')');
                             this.setIndicator('deadline', data.jobDeadlineTime);
@@ -143,7 +154,7 @@
                         this.turnIndicator('parking-lights', data.lightsParkingOn);
                         this.turnIndicator('highbeam', data.lightsBeamHighOn);
                         this.turnIndicator('lowbeam', data.lightsBeamLowOn && !data.lightsBeamHighOn);
-                        this.setSpeedometer(data.truckSpeed * 3.6);
+                        this.setSpeedometer(data.truckSpeed * 3.6); // convert to km/h
                         this.setTachometer(data.engineRpm);
                         this.setFuel(data.fuel, data.fuelCapacity);
                         this.setTemperature(data.waterTemperature);
@@ -198,3 +209,4 @@
     })(Funbit.Ets || (Funbit.Ets = {}));
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
+//# sourceMappingURL=gauge.js.map

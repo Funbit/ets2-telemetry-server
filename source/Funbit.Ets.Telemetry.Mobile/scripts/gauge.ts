@@ -101,6 +101,8 @@ module Funbit.Ets.Telemetry.Components {
         private endpointUrl: string;
         private firstRun: boolean = true;
         private timer: any;
+        private failCount: number = 0;
+        private minFailCount: number = 2;
         
         private static dayOfTheWeek = [
             'Sunday',
@@ -133,12 +135,20 @@ module Funbit.Ets.Telemetry.Components {
                     dataType: 'json',
                     timeout: Gauge.connectionTimeout
                 })
-                .done(d => this.dataRefreshSucceeded(d))
-                .fail(() => this.dataRefreshFailed('Could not connect to the server'))
+                .done(d => {
+                    this.dataRefreshSucceeded(d);
+                    this.failCount = 0;
+                })
+                .fail(() => {
+                    this.failCount++;
+                    if (this.failCount > this.minFailCount) {
+                        this.dataRefreshFailed('Could not connect to the server');
+                    }
+                })
                 .always(() => {
-                    this.timer = setTimeout(
-                        this.refreshData.bind(this), this.refreshDelay)
-                    });
+                this.timer = setTimeout(
+                    this.refreshData.bind(this), this.refreshDelay);
+            });
         }
 
         private formatNumber(num: number, digits: number): string {
