@@ -25,6 +25,8 @@ namespace Funbit.Ets.Telemetry.Server
             bool bAnotherInstanceRunning = GetLastError() == ErrorAlreadyExists;
             if (bAnotherInstanceRunning) return;
 
+            log4net.Config.XmlConfigurator.Configure();
+
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new MainForm());

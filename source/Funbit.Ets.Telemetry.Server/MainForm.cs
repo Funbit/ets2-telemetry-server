@@ -15,6 +15,7 @@ namespace Funbit.Ets.Telemetry.Server
     public partial class MainForm : Form
     {
         IDisposable _server;
+        static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         public MainForm()
         {
@@ -59,7 +60,8 @@ namespace Funbit.Ets.Telemetry.Server
                         options.Urls.Add(HostToEndpointUrl("127.0.0.1"));
                         options.Urls.Add(HostToEndpointUrl(Environment.MachineName));
                         // bind to the default network IP as well
-                        var defaultIp = NetworkHelper.GetDefaultIpAddress().ToString();
+                        var defaultIp = NetworkHelper.GetDefaultIpAddress(
+                            ConfigurationManager.AppSettings["NetworkInterfaceId"]).ToString();
                         options.Urls.Add(HostToEndpointUrl(defaultIp));
                         bindUrl = options.Urls.Last();
                     }
@@ -72,17 +74,21 @@ namespace Funbit.Ets.Telemetry.Server
                             @"To fix this use right click context menu and select 'Run as Administrator'.", @"Warning",
                             MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                     }
+                    Log.InfoFormat("Binding WebApi server to the following URLs: {0}{1}", Environment.NewLine,
+                        string.Join(", " + Environment.NewLine, options.Urls.Select(u => "'" + u + "'")));
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show(this, ex.Message, @"Network error",
+                    Log.Error(ex);
+                    MessageBox.Show(this, ex.ToString(), @"Network error",
                         MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
                 }
                 _server = WebApp.Start<Startup>(options);
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, @"Server error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                Log.Error(ex);
+                MessageBox.Show(this, ex.ToString(), @"Server error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
             return bindUrl;
         }
@@ -133,7 +139,8 @@ namespace Funbit.Ets.Telemetry.Server
             }
             catch (Exception ex)
             {
-                MessageBox.Show(this, ex.Message, @"Process error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                Log.Error(ex);
+                MessageBox.Show(this, ex.ToString(), @"Process error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
         }
 
