@@ -26,16 +26,20 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
                     {
                         try
                         {
-                            _cachedRunningFlag = process.MainWindowTitle.StartsWith("Euro Truck Simulator 2") &&
-                                                 process.ProcessName == "eurotrucks2";
-                            if (_cachedRunningFlag)
+                            bool running = process.MainWindowTitle.StartsWith("Euro Truck Simulator 2") &&
+                                           process.ProcessName == "eurotrucks2";
+                            if (running)
+                            {
+                                _cachedRunningFlag = true;
                                 return _cachedRunningFlag;
+                            }
                         }
                         // ReSharper disable once EmptyGeneralCatchClause
                         catch
                         {
                         }
                     }
+                    _cachedRunningFlag = false;
                 }
                 return _cachedRunningFlag;
             }

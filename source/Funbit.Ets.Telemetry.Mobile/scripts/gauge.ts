@@ -146,9 +146,9 @@ module Funbit.Ets.Telemetry.Components {
                     }
                 })
                 .always(() => {
-                this.timer = setTimeout(
-                    this.refreshData.bind(this), this.refreshDelay);
-            });
+                    this.timer = setTimeout(
+                        this.refreshData.bind(this), this.refreshDelay);
+                });
         }
 
         private formatNumber(num: number, digits: number): string {
