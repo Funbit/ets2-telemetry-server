@@ -102,7 +102,7 @@
             $().ready(function () {
                 var endpointUrl = "/api/ets2/telemetry";
                 var refreshDelay = 250;
-                Window.gaugeInstance = new Funbit.Ets.Telemetry.Components.Gauge(endpointUrl, refreshDelay);
+                window.gaugeInstance = new Funbit.Ets.Telemetry.Components.Gauge(endpointUrl, refreshDelay);
             });
 
             // prevent device from sleeping (works in iOS only)
