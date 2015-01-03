@@ -1,4 +1,4 @@
-## ETS2 Telemetry Web Server (Version 1.0.1)
+## ETS2 Telemetry Web Server (Version 1.0.2)
 
 This is a modern ETS2 Telemetry Web Server written in C# and WebApi. The server exposes the following endpoints:
 
@@ -11,7 +11,7 @@ It returns IEts2TelemetryData JSON object with the latest telemetry data read fr
 Please note that GET responses may be cached by your HTTP client. To avoid caching you may use some random query string parameter or use POST method instead.
 
 ### Telemetry HTML5 Mobile Application
-    http://localhost:25555/apps/ets2/index.htm
+    http://localhost:25555/
 
 This application is designed for mobile browsers running in landscape mode. You should open the URL in your Mobile Safari (iPhone 8+) or Android 4+ Browsers (Default or Chrome).  
 
@@ -44,7 +44,6 @@ Here is a screenshot of how your mobile gauge will look like:
 
 ### Known problems:
 
-- Sometimes due to browser bugs the gauge may not fit exactly in your mobile screen. If it happens to you the first thing you should try is to rotate the device to portrait mode and then back to landscape. Usually it fixes the problem.
 - Sometimes D1 gear is not properly displayed on the screen
 - [Sometimes day of the week displayed in the gauge is incorrect](https://github.com/Funbit/ets2-telemetry-server/issues/6)
 
@@ -52,6 +51,10 @@ Here is a screenshot of how your mobile gauge will look like:
 
 ### 1.0.2
 - Refactored gauge screen fitting algorithm, the app should work in any browser now (including desktop)
+- Added logging
+- Added support for binding on a particular network interface
+- Added Cordova mobile application (compiled Android APK is included in the bundle)
+- Various fixes and improvements
 
 ### 1.0.1
 - Fixed bug with multiple network interfaces (thanks to thorerik)

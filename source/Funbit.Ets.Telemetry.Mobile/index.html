@@ -130,7 +130,6 @@
 
         // register global gauge initializer
         window.gaugeStarter = function (endpointUrl) {
-            alert('connecting to: ' + endpointUrl);
             window.gaugeInstance = new Funbit.Ets.Telemetry.Components.Gauge(endpointUrl, gaugeRefreshDelay);
         }
 
