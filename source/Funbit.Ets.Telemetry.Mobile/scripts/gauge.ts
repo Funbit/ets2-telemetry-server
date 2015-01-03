@@ -172,14 +172,17 @@ module Funbit.Ets.Telemetry.Components {
                 $(className).removeClass('on');
         }
 
-        private setMeter(name: string, value: number, minValue: number, maxValue: number,
-            minAngle: number, maxAngle: number) {
+        private setMeter(name: string, value: number, maxValue: number = null) {
             var className = '.' + name;
+            var $meter = $(className);
+            var minValue: number = $meter.data('min');
+            var maxValue: number = maxValue ? maxValue : $meter.data('max');
+            var minAngle: number = $meter.data('min-angle');
+            var maxAngle: number = $meter.data('max-angle');
             value = Math.min(value, maxValue);
             value = Math.max(value, minValue);
             var offset = (value - minValue) / (maxValue - minValue);
             var angle = (maxAngle - minAngle) * offset + minAngle;
-            var $meter = $(className);
             var prevAngle = parseInt($(className).data('prev'));
             $(className).data('prev', angle);
             var updateTransform = v => {
@@ -206,19 +209,19 @@ module Funbit.Ets.Telemetry.Components {
         }
 
         private setSpeedometer(value: number) {
-            this.setMeter('speedometer-arrow', value, 0, 140, -114, +114);
+            this.setMeter('speedometer-arrow', value);
         }
 
         private setTachometer(value: number) {
-            this.setMeter('tachometer-arrow', value / 100, 0, 24, -97, +97);
+            this.setMeter('tachometer-arrow', value / 100);
         }
 
         private setFuel(value: number, maxValue: number) {
-            this.setMeter('fuel-arrow', value, 0, maxValue, -96, 0);
+            this.setMeter('fuel-arrow', value, maxValue);
         }
 
         private setTemperature(value: number) {
-            this.setMeter('temperature-arrow', value, 0, 100, -96, 0);
+            this.setMeter('temperature-arrow', value);
         }
 
         private setIndicator(name: string, value: string) {

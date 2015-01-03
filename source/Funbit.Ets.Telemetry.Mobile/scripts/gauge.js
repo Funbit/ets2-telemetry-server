@@ -1,6 +1,4 @@
-﻿/// <reference path="typings/jquery.d.ts" />
-/// <reference path="typings/jqueryui.d.ts" />
-var Funbit;
+﻿var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
@@ -58,13 +56,18 @@ var Funbit;
                             $(className).removeClass('on');
                     };
 
-                    Gauge.prototype.setMeter = function (name, value, minValue, maxValue, minAngle, maxAngle) {
+                    Gauge.prototype.setMeter = function (name, value, maxValue) {
+                        if (typeof maxValue === "undefined") { maxValue = null; }
                         var className = '.' + name;
+                        var $meter = $(className);
+                        var minValue = $meter.data('min');
+                        var maxValue = maxValue ? maxValue : $meter.data('max');
+                        var minAngle = $meter.data('min-angle');
+                        var maxAngle = $meter.data('max-angle');
                         value = Math.min(value, maxValue);
                         value = Math.max(value, minValue);
                         var offset = (value - minValue) / (maxValue - minValue);
                         var angle = (maxAngle - minAngle) * offset + minAngle;
-                        var $meter = $(className);
                         var prevAngle = parseInt($(className).data('prev'));
                         $(className).data('prev', angle);
                         var updateTransform = function (v) {
@@ -77,12 +80,10 @@ var Funbit;
                             });
                         };
                         if (Math.abs(prevAngle - angle) < (maxAngle - minAngle) * 0.005) {
-                            // fast update
                             updateTransform('rotate(' + angle + 'deg)');
                             return;
                         }
 
-                        // animated update
                         $({ a: prevAngle }).animate({ a: angle }, {
                             duration: this.refreshDelay * 1.1,
                             step: function (now) {
@@ -92,19 +93,19 @@ var Funbit;
                     };
 
                     Gauge.prototype.setSpeedometer = function (value) {
-                        this.setMeter('speedometer-arrow', value, 0, 140, -114, +114);
+                        this.setMeter('speedometer-arrow', value);
                     };
 
                     Gauge.prototype.setTachometer = function (value) {
-                        this.setMeter('tachometer-arrow', value / 100, 0, 24, -97, +97);
+                        this.setMeter('tachometer-arrow', value / 100);
                     };
 
                     Gauge.prototype.setFuel = function (value, maxValue) {
-                        this.setMeter('fuel-arrow', value, 0, maxValue, -96, 0);
+                        this.setMeter('fuel-arrow', value, maxValue);
                     };
 
                     Gauge.prototype.setTemperature = function (value) {
-                        this.setMeter('temperature-arrow', value, 0, 100, -96, 0);
+                        this.setMeter('temperature-arrow', value);
                     };
 
                     Gauge.prototype.setIndicator = function (name, value) {
@@ -129,7 +130,6 @@ var Funbit;
                         $('.time').removeClass('error');
                         this.setIndicator('time', data.gameTime);
                         if (data.sourceCity.length > 0) {
-                            // we have job info set
                             this.setIndicator('source', data.sourceCity + ' (' + data.sourceCompany + ')');
                             this.setIndicator('destination', data.destinationCity + ' (' + data.destinationCompany + ')');
                             this.setIndicator('deadline', data.jobDeadlineTime);
@@ -154,7 +154,7 @@ var Funbit;
                         this.turnIndicator('parking-lights', data.lightsParkingOn);
                         this.turnIndicator('highbeam', data.lightsBeamHighOn);
                         this.turnIndicator('lowbeam', data.lightsBeamLowOn && !data.lightsBeamHighOn);
-                        this.setSpeedometer(data.truckSpeed * 3.6); // convert to km/h
+                        this.setSpeedometer(data.truckSpeed * 3.6);
                         this.setTachometer(data.engineRpm);
                         this.setFuel(data.fuel, data.fuelCapacity);
                         this.setTemperature(data.waterTemperature);
@@ -209,4 +209,3 @@ var Funbit;
     })(Funbit.Ets || (Funbit.Ets = {}));
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
-//# sourceMappingURL=gauge.js.map

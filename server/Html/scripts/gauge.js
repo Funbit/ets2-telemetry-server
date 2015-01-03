@@ -6,6 +6,8 @@
                 var Gauge = (function () {
                     function Gauge(telemetryEndpointUrl, telemetryRefreshDelay) {
                         this.firstRun = true;
+                        this.failCount = 0;
+                        this.minFailCount = 2;
                         this.endpointUrl = telemetryEndpointUrl;
                         this.refreshDelay = telemetryRefreshDelay;
                         this.initialize();
@@ -22,9 +24,13 @@
                             dataType: 'json',
                             timeout: Gauge.connectionTimeout
                         }).done(function (d) {
-                            return _this.dataRefreshSucceeded(d);
+                            _this.dataRefreshSucceeded(d);
+                            _this.failCount = 0;
                         }).fail(function () {
-                            return _this.dataRefreshFailed('Could not connect to the server');
+                            _this.failCount++;
+                            if (_this.failCount > _this.minFailCount) {
+                                _this.dataRefreshFailed('Could not connect to the server');
+                            }
                         }).always(function () {
                             _this.timer = setTimeout(_this.refreshData.bind(_this), _this.refreshDelay);
                         });
@@ -50,13 +56,18 @@
                             $(className).removeClass('on');
                     };
 
-                    Gauge.prototype.setMeter = function (name, value, minValue, maxValue, minAngle, maxAngle) {
+                    Gauge.prototype.setMeter = function (name, value, maxValue) {
+                        if (typeof maxValue === "undefined") { maxValue = null; }
                         var className = '.' + name;
+                        var $meter = $(className);
+                        var minValue = $meter.data('min');
+                        var maxValue = maxValue ? maxValue : $meter.data('max');
+                        var minAngle = $meter.data('min-angle');
+                        var maxAngle = $meter.data('max-angle');
                         value = Math.min(value, maxValue);
                         value = Math.max(value, minValue);
                         var offset = (value - minValue) / (maxValue - minValue);
                         var angle = (maxAngle - minAngle) * offset + minAngle;
-                        var $meter = $(className);
                         var prevAngle = parseInt($(className).data('prev'));
                         $(className).data('prev', angle);
                         var updateTransform = function (v) {
@@ -82,19 +93,19 @@
                     };
 
                     Gauge.prototype.setSpeedometer = function (value) {
-                        this.setMeter('speedometer-arrow', value, 0, 140, -114, +114);
+                        this.setMeter('speedometer-arrow', value);
                     };
 
                     Gauge.prototype.setTachometer = function (value) {
-                        this.setMeter('tachometer-arrow', value / 100, 0, 24, -97, +97);
+                        this.setMeter('tachometer-arrow', value / 100);
                     };
 
                     Gauge.prototype.setFuel = function (value, maxValue) {
-                        this.setMeter('fuel-arrow', value, 0, maxValue, -96, 0);
+                        this.setMeter('fuel-arrow', value, maxValue);
                     };
 
                     Gauge.prototype.setTemperature = function (value) {
-                        this.setMeter('temperature-arrow', value, 0, 100, -96, 0);
+                        this.setMeter('temperature-arrow', value);
                     };
 
                     Gauge.prototype.setIndicator = function (name, value) {

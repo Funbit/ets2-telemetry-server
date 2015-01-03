@@ -1,4 +1,7 @@
-﻿/* customization */
+﻿/*
+    To change the design of the gauge you should tweak the following CSS.
+    Also, you might need to tweak index.html as well (data attrs and text).
+*/
 body {
   background-color: #1d1d1d;
   width: 100%;

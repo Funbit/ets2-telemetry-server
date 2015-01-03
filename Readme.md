@@ -1,4 +1,4 @@
-## ETS2 Telemetry Web Server (Version 1.0.2)
+## ETS2 Telemetry Web Server (Version 1.0.3)
 
 This is a modern ETS2 Telemetry Web Server written in C# and WebApi. The server exposes the following endpoints:
 
@@ -55,6 +55,7 @@ Here is a screenshot of how your mobile gauge will look like:
 
 - Fixed bug with invalid day of the week
 - Improved connection stability
+- Completely decoupled gauge design and gauge update engine (coded in Typescript)
 
 ### 1.0.2
 - Refactored gauge screen fitting algorithm, the app should work in any modern browser now 
