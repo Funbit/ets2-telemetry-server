@@ -11,7 +11,7 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
         {
             var card = NetworkInterface.GetAllNetworkInterfaces().FirstOrDefault(a => a.OperationalStatus.ToString() == "Up");
             if (card == null)
-                throw new InvalidOperationException("System does not have any registered network interfaces.");
+                throw new InvalidOperationException("System does not have any registered network interfaces that are connected to a network.");
             return card;
         }
 
