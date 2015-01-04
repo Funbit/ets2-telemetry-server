@@ -58,7 +58,6 @@ namespace Funbit.Ets.Telemetry.Server
                     {
                         // bind to local IPs
                         options.Urls.Add(HostToEndpointUrl("127.0.0.1"));
-                        options.Urls.Add(HostToEndpointUrl(Environment.MachineName));
                         // bind to the default network IP as well
                         bindIp = NetworkHelper.GetDefaultIpAddress(
                             ConfigurationManager.AppSettings["NetworkInterfaceId"]).ToString();
