@@ -103,6 +103,7 @@ module Funbit.Ets.Telemetry.Components {
         private timer: any;
         private failCount: number = 0;
         private minFailCount: number = 2;
+        private endpointSeed: number = 0;
         
         private static dayOfTheWeek = [
             'Sunday',
@@ -129,8 +130,9 @@ module Funbit.Ets.Telemetry.Components {
         }
 
         private refreshData() {
+            var url: string = this.endpointUrl + "?seed=" + this.endpointSeed++;
             $.ajax({
-                    url: this.endpointUrl,
+                    url: url,
                     async: true,
                     dataType: 'json',
                     timeout: Gauge.connectionTimeout
