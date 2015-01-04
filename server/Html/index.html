@@ -8,6 +8,7 @@
     <script src="scripts/jquery.min.js"></script>
     <script src="scripts/jquery-ui.min.js"></script>
     <script src="scripts/gauge.min.js"></script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;" />
     <meta id="viewport" name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -17,6 +18,14 @@
         <!-- ETS2 gauge component START -->
         <div class="gauge">
             <!-- meters -->
+            <!-- 
+                Attributes:
+                data-min-angle: angle in degress for the arrow for data-min value (0 = vertical)
+                data-max-angle: angle in degress for the arrow for data-max value (0 = vertical)
+                data-min: minimal possible value (in JSON response)
+                data-max: maximum possible value (in JSON response)
+                data-prev: internal usage only                 
+                -->
             <div class="speedometer-arrow" data-prev="-114" data-min="0" data-max="140" data-min-angle="-114" data-max-angle="+114"></div>
             <div class="tachometer-arrow" data-prev="-97" data-min="0" data-max="24" data-min-angle="-97" data-max-angle="+97"></div>
             <div class="fuel-arrow" data-prev="-96" data-min="0" data-min-angle="-96" data-max-angle="0"></div>
