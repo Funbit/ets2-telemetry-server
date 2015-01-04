@@ -40,6 +40,8 @@
             this.statusUpdateTimer = new System.Windows.Forms.Timer(this.components);
             this.appUrlLabel = new System.Windows.Forms.LinkLabel();
             this.appUrlTitleLabel = new System.Windows.Forms.Label();
+            this.serverIpTitleLabel = new System.Windows.Forms.Label();
+            this.serverIpLabel = new System.Windows.Forms.Label();
             this.contextMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -81,7 +83,7 @@
             // 
             this.apiEndpointUrlTitleLabel.AutoSize = true;
             this.apiEndpointUrlTitleLabel.Font = new System.Drawing.Font("Segoe UI Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.apiEndpointUrlTitleLabel.Location = new System.Drawing.Point(18, 91);
+            this.apiEndpointUrlTitleLabel.Location = new System.Drawing.Point(17, 137);
             this.apiEndpointUrlTitleLabel.Name = "apiEndpointUrlTitleLabel";
             this.apiEndpointUrlTitleLabel.Size = new System.Drawing.Size(113, 17);
             this.apiEndpointUrlTitleLabel.TabIndex = 2;
@@ -101,7 +103,7 @@
             // 
             this.apiEndpointUrlLabel.AutoSize = true;
             this.apiEndpointUrlLabel.Font = new System.Drawing.Font("Segoe UI Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.apiEndpointUrlLabel.Location = new System.Drawing.Point(134, 91);
+            this.apiEndpointUrlLabel.Location = new System.Drawing.Point(133, 137);
             this.apiEndpointUrlLabel.Name = "apiEndpointUrlLabel";
             this.apiEndpointUrlLabel.Size = new System.Drawing.Size(101, 17);
             this.apiEndpointUrlLabel.TabIndex = 4;
@@ -119,7 +121,7 @@
             // 
             this.appUrlLabel.AutoSize = true;
             this.appUrlLabel.Font = new System.Drawing.Font("Segoe UI Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.appUrlLabel.Location = new System.Drawing.Point(134, 59);
+            this.appUrlLabel.Location = new System.Drawing.Point(134, 105);
             this.appUrlLabel.Name = "appUrlLabel";
             this.appUrlLabel.Size = new System.Drawing.Size(72, 17);
             this.appUrlLabel.TabIndex = 6;
@@ -131,17 +133,40 @@
             // 
             this.appUrlTitleLabel.AutoSize = true;
             this.appUrlTitleLabel.Font = new System.Drawing.Font("Segoe UI Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.appUrlTitleLabel.Location = new System.Drawing.Point(41, 60);
+            this.appUrlTitleLabel.Location = new System.Drawing.Point(28, 105);
             this.appUrlTitleLabel.Name = "appUrlTitleLabel";
-            this.appUrlTitleLabel.Size = new System.Drawing.Size(89, 17);
+            this.appUrlTitleLabel.Size = new System.Drawing.Size(102, 17);
             this.appUrlTitleLabel.TabIndex = 5;
-            this.appUrlTitleLabel.Text = "ETS2 App URL:";
+            this.appUrlTitleLabel.Text = "HTML5 App URL:";
+            // 
+            // serverIpTitleLabel
+            // 
+            this.serverIpTitleLabel.AutoSize = true;
+            this.serverIpTitleLabel.Font = new System.Drawing.Font("Segoe UI Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.serverIpTitleLabel.Location = new System.Drawing.Point(70, 72);
+            this.serverIpTitleLabel.Name = "serverIpTitleLabel";
+            this.serverIpTitleLabel.Size = new System.Drawing.Size(60, 17);
+            this.serverIpTitleLabel.TabIndex = 7;
+            this.serverIpTitleLabel.Text = "Server IP:";
+            // 
+            // serverIpLabel
+            // 
+            this.serverIpLabel.AutoSize = true;
+            this.serverIpLabel.Font = new System.Drawing.Font("Segoe UI Light", 9.75F);
+            this.serverIpLabel.ForeColor = System.Drawing.Color.Purple;
+            this.serverIpLabel.Location = new System.Drawing.Point(134, 72);
+            this.serverIpLabel.Name = "serverIpLabel";
+            this.serverIpLabel.Size = new System.Drawing.Size(81, 17);
+            this.serverIpLabel.TabIndex = 9;
+            this.serverIpLabel.Text = "serverIpLabel";
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(449, 134);
+            this.ClientSize = new System.Drawing.Size(449, 182);
+            this.Controls.Add(this.serverIpLabel);
+            this.Controls.Add(this.serverIpTitleLabel);
             this.Controls.Add(this.appUrlLabel);
             this.Controls.Add(this.appUrlTitleLabel);
             this.Controls.Add(this.apiEndpointUrlLabel);
@@ -175,6 +200,8 @@
         private System.Windows.Forms.Timer statusUpdateTimer;
         private System.Windows.Forms.LinkLabel appUrlLabel;
         private System.Windows.Forms.Label appUrlTitleLabel;
+        private System.Windows.Forms.Label serverIpTitleLabel;
+        private System.Windows.Forms.Label serverIpLabel;
     }
 }
 

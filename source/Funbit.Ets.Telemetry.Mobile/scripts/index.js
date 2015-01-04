@@ -20,7 +20,9 @@
 
         // app preferences
         var prefs = plugins.appPreferences;
+        // ReSharper disable once UnusedParameter
         function prefsOk(value) { }
+        // ReSharper disable once UnusedParameter
         function prefsFail(error) { }
         function checkEndpoint(endpointUrl, done, fail) {
             $.ajax({
@@ -31,20 +33,20 @@
             }).done(function() { done(endpointUrl); }).fail(fail);
         }
         function askUserForEndpoint(prevEndpointUrl) {
-            var ip = prompt("Please enter Telemetry Api server IP address", prevEndpointUrl);
+            var ip = prompt("Please enter server IP address (aa.bb.cc.dd)", prevEndpointUrl);
             var endpointUrl = "http://" + ip + ":" + 25555 + "/api/ets2/telemetry";
             prefs.store(prefsOk, prefsFail, 'endpointUrl', endpointUrl);
             return endpointUrl;
         }
 
         // get saved endpoint and run the gauge
-        prefs.fetch(function (endpointUrl) {
-            checkEndpoint(endpointUrl, function (endpointUrl) {
+        prefs.fetch(function (rememberedEndpointUrl) {
+            checkEndpoint(rememberedEndpointUrl, function (endpointUrl) {
                 // endpoint seems to be fine
                 window.gaugeStarter(endpointUrl);
             }, function () {
                 // failed to connect, ask for a new endpoint
-                var endpointUrl = askUserForEndpoint(endpointUrl);
+                var endpointUrl = askUserForEndpoint(rememberedEndpointUrl);
                 window.gaugeStarter(endpointUrl);
             });
         }, function () {

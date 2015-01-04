@@ -46,12 +46,12 @@ namespace Funbit.Ets.Telemetry.Server
 
         string StartServer()
         {
-            string bindUrl = string.Empty;
+            string bindIp = string.Empty;
             try
             {
                 var options = new StartOptions();
-                options.Urls.Add(HostToEndpointUrl("localhost"));
-                bindUrl = options.Urls.First();
+                bindIp = "localhost";
+                options.Urls.Add(HostToEndpointUrl(bindIp));
                 try
                 {
                     if (Uac.IsProcessElevated())
@@ -60,10 +60,9 @@ namespace Funbit.Ets.Telemetry.Server
                         options.Urls.Add(HostToEndpointUrl("127.0.0.1"));
                         options.Urls.Add(HostToEndpointUrl(Environment.MachineName));
                         // bind to the default network IP as well
-                        var defaultIp = NetworkHelper.GetDefaultIpAddress(
+                        bindIp = NetworkHelper.GetDefaultIpAddress(
                             ConfigurationManager.AppSettings["NetworkInterfaceId"]).ToString();
-                        options.Urls.Add(HostToEndpointUrl(defaultIp));
-                        bindUrl = options.Urls.Last();
+                        options.Urls.Add(HostToEndpointUrl(bindIp));
                         // raise priority to make server more responsive
                         Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.AboveNormal;
                     }
@@ -92,17 +91,18 @@ namespace Funbit.Ets.Telemetry.Server
                 Log.Error(ex);
                 MessageBox.Show(this, ex.ToString(), @"Server error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
             }
-            return bindUrl;
+            return bindIp;
         }
 
         private void TrayIconForm_Load(object sender, EventArgs e)
         {
             // start server
-            string bindUrl = StartServer();
+            string bindIp = StartServer();
 
             // show full URLs to the telemetry data
-            appUrlLabel.Text = bindUrl + Ets2AppController.TelemetryAppUriPath;
-            apiEndpointUrlLabel.Text = bindUrl + Ets2TelemetryController.TelemetryApiUriPath;
+            appUrlLabel.Text = HostToEndpointUrl(bindIp) + Ets2AppController.TelemetryAppUriPath;
+            apiEndpointUrlLabel.Text = HostToEndpointUrl(bindIp) + Ets2TelemetryController.TelemetryApiUriPath;
+            serverIpLabel.Text = bindIp;
             
             // show application version 
             Text += @" " + Version;
