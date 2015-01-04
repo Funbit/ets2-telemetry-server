@@ -95,6 +95,9 @@ namespace Funbit.Ets.Telemetry.Server
 
         private void TrayIconForm_Load(object sender, EventArgs e)
         {
+            Log.InfoFormat("Running server on {0} ({1})", Environment.OSVersion, 
+                Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit");
+
             // start server
             string bindIp = StartServer();
 

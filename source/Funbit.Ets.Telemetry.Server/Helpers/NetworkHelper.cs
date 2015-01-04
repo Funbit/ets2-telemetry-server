@@ -15,7 +15,8 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
             Log.InfoFormat("Available network interfaces: {0}{1}",
                 Environment.NewLine,
                 string.Join(", " + Environment.NewLine,
-                NetworkInterface.GetAllNetworkInterfaces().Select(a => string.Format("'{0}': '{1}'", a.Id, a.Name))));
+                NetworkInterface.GetAllNetworkInterfaces().Select(a => string.Format("'{0}': '{1}' ({2})", 
+                    a.Id, a.Name, a.OperationalStatus))));
 
             NetworkInterface card;
             if (string.IsNullOrWhiteSpace(networkInterfaceId))
