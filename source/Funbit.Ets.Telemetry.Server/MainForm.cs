@@ -61,7 +61,9 @@ namespace Funbit.Ets.Telemetry.Server
                         // bind to the default network IP as well
                         bindIp = NetworkHelper.GetDefaultIpAddress(
                             ConfigurationManager.AppSettings["NetworkInterfaceId"]).ToString();
-                        options.Urls.Add(HostToEndpointUrl(bindIp));
+                        var endpointUrl = HostToEndpointUrl(bindIp);
+                        if (!options.Urls.Contains(endpointUrl))
+                            options.Urls.Add(endpointUrl);
                         // raise priority to make server more responsive
                         Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.AboveNormal;
                     }
