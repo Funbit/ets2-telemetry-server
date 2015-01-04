@@ -1,4 +1,4 @@
-## ETS2 Telemetry Web Server + Mobile Gauge (Version 1.0.3)
+## ETS2 Telemetry Web Server 1.0.4 + Mobile Gauge App
 
 This is a modern ETS2 Telemetry Web Server written in C# and WebApi. The server exposes the following endpoints:
 
@@ -66,6 +66,12 @@ If you want to connect to your server from the Internet then use server\Add-2555
 - Sometimes D1 gear is not properly displayed on the screen
 
 ## Version history
+
+### 1.0.4
+
+- Added server IP to the server window
+- Minor logging improvements
+- Fixed IE behavior with ajax requests (should fix Windows Phone issues)
 
 ### 1.0.3
 
