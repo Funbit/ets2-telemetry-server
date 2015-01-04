@@ -50,14 +50,6 @@
                         return Gauge.dayOfTheWeek[d.getDay()] + ' ' + this.formatNumber(d.getHours(), 2) + ':' + this.formatNumber(d.getMinutes(), 2);
                     };
 
-                    Gauge.prototype.turnIndicator = function (name, condition) {
-                        var className = '.' + name;
-                        if (condition)
-                            $(className).addClass('on');
-                        else
-                            $(className).removeClass('on');
-                    };
-
                     Gauge.prototype.setMeter = function (name, value, maxValue) {
                         if (typeof maxValue === "undefined") { maxValue = null; }
                         var className = '.' + name;
@@ -94,23 +86,31 @@
                         });
                     };
 
-                    Gauge.prototype.setSpeedometer = function (value) {
+                    Gauge.prototype.setSpeedometerValue = function (value) {
                         this.setMeter('speedometer-arrow', value);
                     };
 
-                    Gauge.prototype.setTachometer = function (value) {
+                    Gauge.prototype.setTachometerValue = function (value) {
                         this.setMeter('tachometer-arrow', value / 100);
                     };
 
-                    Gauge.prototype.setFuel = function (value, maxValue) {
+                    Gauge.prototype.setFuelValue = function (value, maxValue) {
                         this.setMeter('fuel-arrow', value, maxValue);
                     };
 
-                    Gauge.prototype.setTemperature = function (value) {
+                    Gauge.prototype.setTemperatureValue = function (value) {
                         this.setMeter('temperature-arrow', value);
                     };
 
-                    Gauge.prototype.setIndicator = function (name, value) {
+                    Gauge.prototype.setIndicatorStatus = function (name, condition) {
+                        var className = '.' + name;
+                        if (condition)
+                            $(className).addClass('on');
+                        else
+                            $(className).removeClass('on');
+                    };
+
+                    Gauge.prototype.setIndicatorText = function (name, value) {
                         var className = '.' + name;
                         $(className).html(value);
                     };
@@ -130,62 +130,62 @@
                             $('.gauge').addClass('on');
                         }
                         $('.time').removeClass('error');
-                        this.setIndicator('time', data.gameTime);
+                        this.setIndicatorText('time', data.gameTime);
                         if (data.sourceCity.length > 0) {
-                            this.setIndicator('source', data.sourceCity + ' (' + data.sourceCompany + ')');
-                            this.setIndicator('destination', data.destinationCity + ' (' + data.destinationCompany + ')');
-                            this.setIndicator('deadline', data.jobDeadlineTime);
+                            this.setIndicatorText('source', data.sourceCity + ' (' + data.sourceCompany + ')');
+                            this.setIndicatorText('destination', data.destinationCity + ' (' + data.destinationCompany + ')');
+                            this.setIndicatorText('deadline', data.jobDeadlineTime);
                         } else {
-                            this.setIndicator('source', '');
-                            this.setIndicator('destination', '');
-                            this.setIndicator('deadline', '');
+                            this.setIndicatorText('source', '');
+                            this.setIndicatorText('destination', '');
+                            this.setIndicatorText('deadline', '');
                         }
                         if (data.trailerAttached) {
-                            this.setIndicator('trailer-mass', (data.trailerMass / 1000) + 't');
-                            this.setIndicator('trailer-name', data.trailerName);
+                            this.setIndicatorText('trailer-mass', (data.trailerMass / 1000) + 't');
+                            this.setIndicatorText('trailer-name', data.trailerName);
                         } else {
-                            this.setIndicator('trailer-mass', '');
-                            this.setIndicator('trailer-name', '');
+                            this.setIndicatorText('trailer-mass', '');
+                            this.setIndicatorText('trailer-name', '');
                         }
-                        this.setIndicator('odometer', (Math.round(data.truckOdometer * 10) / 10).toFixed(1));
-                        this.setIndicator('gear', data.gear > 0 ? 'D' + data.gear : (data.gear < 0 ? 'R' : 'N'));
-                        this.turnIndicator('trailer', data.trailerAttached);
-                        this.turnIndicator('blinker-left', data.blinkerLeftOn);
-                        this.turnIndicator('blinker-right', data.blinkerRightOn);
-                        this.turnIndicator('cruise', data.cruiseControlOn);
-                        this.turnIndicator('parking-lights', data.lightsParkingOn);
-                        this.turnIndicator('highbeam', data.lightsBeamHighOn);
-                        this.turnIndicator('lowbeam', data.lightsBeamLowOn && !data.lightsBeamHighOn);
-                        this.setSpeedometer(data.truckSpeed * 3.6);
-                        this.setTachometer(data.engineRpm);
-                        this.setFuel(data.fuel, data.fuelCapacity);
-                        this.setTemperature(data.waterTemperature);
+                        this.setIndicatorText('odometer', (Math.round(data.truckOdometer * 10) / 10).toFixed(1));
+                        this.setIndicatorText('gear', data.gear > 0 ? 'D' + data.gear : (data.gear < 0 ? 'R' : 'N'));
+                        this.setIndicatorStatus('trailer', data.trailerAttached);
+                        this.setIndicatorStatus('blinker-left', data.blinkerLeftOn);
+                        this.setIndicatorStatus('blinker-right', data.blinkerRightOn);
+                        this.setIndicatorStatus('cruise', data.cruiseControlOn);
+                        this.setIndicatorStatus('parking-lights', data.lightsParkingOn);
+                        this.setIndicatorStatus('highbeam', data.lightsBeamHighOn);
+                        this.setIndicatorStatus('lowbeam', data.lightsBeamLowOn && !data.lightsBeamHighOn);
+                        this.setSpeedometerValue(data.truckSpeed * 3.6);
+                        this.setTachometerValue(data.engineRpm);
+                        this.setFuelValue(data.fuel, data.fuelCapacity);
+                        this.setTemperatureValue(data.waterTemperature);
                     };
 
                     Gauge.prototype.dataRefreshFailed = function (reason) {
-                        this.setIndicator('time', reason);
+                        this.setIndicatorText('time', reason);
                         if ($('.gauge').hasClass('on') || this.firstRun) {
                             this.firstRun = false;
                             $('.gauge').removeClass('on');
                             $('.time').addClass('error');
-                            this.setIndicator('source', '');
-                            this.setIndicator('destination', '');
-                            this.setIndicator('deadline', '');
-                            this.setIndicator('trailer-mass', '');
-                            this.setIndicator('trailer-name', '');
-                            this.setIndicator('odometer', '');
-                            this.setIndicator('gear', '');
-                            this.turnIndicator('trailer', false);
-                            this.turnIndicator('blinker-left', false);
-                            this.turnIndicator('blinker-right', false);
-                            this.turnIndicator('cruise', false);
-                            this.turnIndicator('parking-lights', false);
-                            this.turnIndicator('highbeam', false);
-                            this.turnIndicator('lowbeam', false);
-                            this.setSpeedometer(0);
-                            this.setTachometer(0);
-                            this.setFuel(0, 1);
-                            this.setTemperature(0);
+                            this.setIndicatorText('source', '');
+                            this.setIndicatorText('destination', '');
+                            this.setIndicatorText('deadline', '');
+                            this.setIndicatorText('trailer-mass', '');
+                            this.setIndicatorText('trailer-name', '');
+                            this.setIndicatorText('odometer', '');
+                            this.setIndicatorText('gear', '');
+                            this.setIndicatorStatus('trailer', false);
+                            this.setIndicatorStatus('blinker-left', false);
+                            this.setIndicatorStatus('blinker-right', false);
+                            this.setIndicatorStatus('cruise', false);
+                            this.setIndicatorStatus('parking-lights', false);
+                            this.setIndicatorStatus('highbeam', false);
+                            this.setIndicatorStatus('lowbeam', false);
+                            this.setSpeedometerValue(0);
+                            this.setTachometerValue(0);
+                            this.setFuelValue(0, 1);
+                            this.setTemperatureValue(0);
                         }
                     };
                     Gauge.dayOfTheWeek = [
