@@ -16,6 +16,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             {
                 string port = ConfigurationManager.AppSettings["Port"];
                 string arguments = string.Format(@"http show urlacl url=http://+:{0}/", port);
+                Log.Info("Adding ACL rule status...");
                 string output = ProcessHelper.RunNetShell(arguments, "Failed to check URL ACL status");
                 _status = output.Contains(port) ? SetupStatus.Installed : SetupStatus.Uninstalled;
             }
@@ -43,6 +44,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
                     "S-1-1-0").Translate(typeof(System.Security.Principal.NTAccount)).ToString();
                 string port = ConfigurationManager.AppSettings["Port"];
                 string arguments = string.Format(@"http add urlacl url=http://+:{0}/ user=\{1}", port, everyone);
+                Log.Info("Adding ACL rule...");
                 ProcessHelper.RunNetShell(arguments, "Failed to add URL ACL");
                 _status = SetupStatus.Installed;
             }
@@ -62,6 +64,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             {
                 string port = ConfigurationManager.AppSettings["Port"];
                 string arguments = string.Format(@"http delete urlacl url=http://+:{0}/", port);
+                Log.Info("Deleting ACL rule...");
                 ProcessHelper.RunNetShell(arguments, "Failed to delete URL ACL");
                 status = SetupStatus.Uninstalled;
             }

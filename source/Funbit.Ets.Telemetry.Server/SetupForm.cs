@@ -125,6 +125,8 @@ namespace Funbit.Ets.Telemetry.Server
                                      ? @"Uninstallation has been successfully completed. Press OK to exit."
                                      : @"Installation has been successfully completed. Press OK to start the server.";
                 MessageBox.Show(this, message, @"Congratulations", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                if (Program.UninstallMode)
+                    Environment.Exit(0);
                 Close();
             }
         }

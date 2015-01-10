@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Reflection;
 using System.Text;
 using System.Threading;
 
@@ -7,6 +8,8 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
 {
     public static class ProcessHelper
     {
+        static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
         public static int RunAndWait(
             out string output, out string error,
             string exeFileName, string arguments,
@@ -25,9 +28,10 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
 
             var exited = false;
 
+            Log.InfoFormat("Running command line: \r\n{0} {1}", exeFileName, arguments);
+
             using (var outputWaitHandle = new AutoResetEvent(false))
             using (var errorWaitHandle = new AutoResetEvent(false))
-                
             using (var process = Process.Start(info))
             {
                 if (process == null || process.Handle == IntPtr.Zero)
@@ -78,6 +82,7 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
         {
             const string netShellExe = @"netsh";
             string output, error;
+
             int code = RunAndWait(out output, out error, netShellExe, arguments);
             if (code != 0)
                 throw new Exception(string.Format("{0}: {1}", errorMessage, output));

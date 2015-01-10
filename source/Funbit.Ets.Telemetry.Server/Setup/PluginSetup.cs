@@ -81,6 +81,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
         {
             try
             {
+                Log.Info("Checking plugin DLL files...");
                 bool pluginsExist = File.Exists(Ets2X86TelemetryPluginDllFileName) &&
                                     File.Exists(Ets2X64TelemetryPluginDllFileName);
                 _status = pluginsExist ? SetupStatus.Installed : SetupStatus.Uninstalled;
@@ -104,8 +105,11 @@ namespace Funbit.Ets.Telemetry.Server.Setup
 
             try
             {
+                Log.InfoFormat("Copying x86 plugin DLL file to: {0}", Ets2X86TelemetryPluginDllFileName);
                 if (!File.Exists(Ets2X86TelemetryPluginDllFileName))
                     File.Copy(LocalEts2X86TelemetryPluginDllFileName, Ets2X86TelemetryPluginDllFileName);
+                
+                Log.InfoFormat("Copying x64 plugin DLL file to: {0}", Ets2X64TelemetryPluginDllFileName);
                 if (!File.Exists(Ets2X64TelemetryPluginDllFileName))
                     File.Copy(LocalEts2X64TelemetryPluginDllFileName, Ets2X64TelemetryPluginDllFileName);
                 _status = SetupStatus.Installed;
@@ -126,6 +130,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             try
             {
                 // rename plugin dll files to .bak
+                Log.Info("Backing up plugin DLL files...");
                 string x86BakFileName = Path.ChangeExtension(Ets2X86TelemetryPluginDllFileName, ".bak");
                 string x64BakFileName = Path.ChangeExtension(Ets2X64TelemetryPluginDllFileName, ".bak");
                 if (File.Exists(x86BakFileName))

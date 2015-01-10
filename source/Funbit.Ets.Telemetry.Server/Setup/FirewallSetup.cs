@@ -18,6 +18,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             {
                 string port = ConfigurationManager.AppSettings["Port"];
                 string arguments = string.Format("advfirewall firewall show rule dir=in name=all");
+                Log.Info("Checking Firewall rule...");
                 string output = ProcessHelper.RunNetShell(arguments, "Failed to check Firewall rule status");
                 // this check is kind of lame, but it works in any locale...
                 _status = output.Contains(port) && output.Contains(FirewallRuleName) 
@@ -45,6 +46,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
                 string port = ConfigurationManager.AppSettings["Port"];
                 string arguments = string.Format("advfirewall firewall add rule name=\"{0}\" " +
                     "dir=in action=allow protocol=TCP localport={1} remoteip=localsubnet", FirewallRuleName, port);
+                Log.Info("Adding Firewall rule...");
                 ProcessHelper.RunNetShell(arguments, "Failed to add Firewall rule");
                 _status = SetupStatus.Installed;
             }
@@ -64,6 +66,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             try
             {
                 string arguments = string.Format("advfirewall firewall delete rule name=\"{0}\"", FirewallRuleName);
+                Log.Info("Deleting Firewall rule...");
                 ProcessHelper.RunNetShell(arguments, "Failed to delete Firewall rule");
                 status = SetupStatus.Uninstalled;
             }

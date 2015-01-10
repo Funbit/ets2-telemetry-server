@@ -62,8 +62,9 @@ namespace Funbit.Ets.Telemetry.Server
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            Log.InfoFormat("Running server on {0} ({1})", Environment.OSVersion, 
-                Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit");
+            Log.InfoFormat("Running application on {0} ({1}) {2}", Environment.OSVersion, 
+                Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit",
+                Program.UninstallMode ? "[UNINSTALL MODE]" : "");
             
             // show application version 
             Text += @" " + AssemblyHelper.Version;

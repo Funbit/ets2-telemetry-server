@@ -12,7 +12,7 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
 
         public static IPAddress GetDefaultIpAddress(string networkInterfaceId = null)
         {
-            Log.InfoFormat("Available network interfaces: {0}{1}",
+            Log.InfoFormat("Found following network interfaces: {0}{1}",
                 Environment.NewLine,
                 string.Join(", " + Environment.NewLine,
                 NetworkInterface.GetAllNetworkInterfaces().Select(a => string.Format("'{0}': '{1}' ({2})", 
