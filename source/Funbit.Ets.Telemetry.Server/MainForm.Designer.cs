@@ -115,8 +115,6 @@
             this.interfacesDropDown.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.interfacesDropDown.Font = new System.Drawing.Font("Segoe UI Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.interfacesDropDown.FormattingEnabled = true;
-            this.interfacesDropDown.Items.AddRange(new object[] {
-            "192.168.111.222"});
             this.interfacesDropDown.Location = new System.Drawing.Point(144, 91);
             this.interfacesDropDown.Name = "interfacesDropDown";
             this.interfacesDropDown.Size = new System.Drawing.Size(369, 25);

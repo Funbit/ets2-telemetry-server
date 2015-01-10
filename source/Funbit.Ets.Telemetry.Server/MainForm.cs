@@ -23,79 +23,60 @@ namespace Funbit.Ets.Telemetry.Server
             InitializeComponent();
         }
 
-        static string EndpointPort
-        {
-            get { return ConfigurationManager.AppSettings["Port"]; }
-        }
-
         static string IpToEndpointUrl(string host)
         {
-            return string.Format("http://{0}:{1}", host, EndpointPort);
+            return string.Format("http://{0}:{1}", host, ConfigurationManager.AppSettings["Port"]);
         }
 
-        void StartServer()
+        void Setup()
         {
-            try
-            {
-                _server = WebApp.Start<Startup>(IpToEndpointUrl("+"));
-            }
-            catch (Exception ex)
-            {
-                Log.Error(ex);
-                ex.ShowAsMessageBox(this, @"Server error");
-            }
-        }
-
-        private void MainForm_Load(object sender, EventArgs e)
-        {
-            Log.InfoFormat("Running application on {0} ({1}) {2}", Environment.OSVersion, 
-                Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit",
-                Program.UninstallMode ? "[UNINSTALL MODE]" : "");
-            
-            // show application version 
-            Text += @" " + AssemblyHelper.Version;
-
             try
             {
                 if (Program.UninstallMode && SetupManager.Steps.All(s => s.Status == SetupStatus.Uninstalled))
                 {
-                    MessageBox.Show(this, @"Server is not installed, nothing to uninstall.",  @"Done",
+                    MessageBox.Show(this, @"Server is not installed, nothing to uninstall.", @"Done",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Close();
-                    return;
+                    Environment.Exit(0);
                 }
+
                 if (Program.UninstallMode || SetupManager.Steps.Any(s => s.Status != SetupStatus.Installed))
+                {
                     // we wait here until setup is complete
-                    new SetupForm().ShowDialog(this);
-                
-                // start server
-                StartServer();
-
-                try
-                {
-                    // load list of available network interfaces
-                    var networkInterfaces = NetworkHelper.GetAllActiveNetworkInterfaces();
-                    interfacesDropDown.Items.Clear();
-                    foreach (var networkInterface in networkInterfaces)
-                        interfacesDropDown.Items.Add(networkInterface);
-                    // select remembered interface or default
-                    var rememberedInterface = networkInterfaces.FirstOrDefault(
-                        i => i.Id == Settings.Instance.DefaultNetworkInterfaceId);
-                    if (rememberedInterface != null)
-                        interfacesDropDown.SelectedItem = rememberedInterface;
-                    else
-                        interfacesDropDown.SelectedIndex = 0; // select default interface
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex);
-                    ex.ShowAsMessageBox(this, @"Network error", MessageBoxIcon.Exclamation);
+                    var result = new SetupForm().ShowDialog(this);
+                    if (result == DialogResult.Abort)
+                        Environment.Exit(0);
                 }
 
-                // raise priority to make server more responsive
+                // raise priority to make server more responsive (it does not eat CPU though!)
                 Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.AboveNormal;
+            }
+            catch (Exception ex)
+            {
+                ex.ShowAsMessageBox(this, @"Setup error");
+            }
+        }
 
-                // start ETS2 process status timer
+        void Start()
+        {
+            try
+            {
+                // load list of available network interfaces
+                var networkInterfaces = NetworkHelper.GetAllActiveNetworkInterfaces();
+                interfacesDropDown.Items.Clear();
+                foreach (var networkInterface in networkInterfaces)
+                    interfacesDropDown.Items.Add(networkInterface);
+                // select remembered interface or default
+                var rememberedInterface = networkInterfaces.FirstOrDefault(
+                    i => i.Id == Settings.Instance.DefaultNetworkInterfaceId);
+                if (rememberedInterface != null)
+                    interfacesDropDown.SelectedItem = rememberedInterface;
+                else
+                    interfacesDropDown.SelectedIndex = 0; // select default interface
+
+                // bind to all available interfaces
+                _server = WebApp.Start<Startup>(IpToEndpointUrl("+"));
+
+                // start ETS2 process watchdog timer
                 statusUpdateTimer.Enabled = true;
 
                 // show tray icon
@@ -103,8 +84,24 @@ namespace Funbit.Ets.Telemetry.Server
             }
             catch (Exception ex)
             {
-                ex.ShowAsMessageBox(this, @"Setup error");
-            } 
+                Log.Error(ex);
+                ex.ShowAsMessageBox(this, @"Network error", MessageBoxIcon.Exclamation);
+            }
+        }
+        
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            // log current version for debugging
+            Log.InfoFormat("Running application on {0} ({1}) {2}", Environment.OSVersion, 
+                Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit",
+                Program.UninstallMode ? "[UNINSTALL MODE]" : "");
+            Text += @" " + AssemblyHelper.Version;
+
+            // install or uninstall server if needed
+            Setup();
+
+            // start WebApi server
+            Start();
         }
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
@@ -149,19 +146,14 @@ namespace Funbit.Ets.Telemetry.Server
 
         private void apiUrlLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ExecuteLink(sender);
+            ProcessHelper.OpenUrl(((LinkLabel)sender).Text);
         }
 
         private void appUrlLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            ExecuteLink(sender);
+            ProcessHelper.OpenUrl(((LinkLabel)sender).Text);
         }
-
-        static void ExecuteLink(object sender)
-        {
-            ProcessHelper.OpenUrl(((LinkLabel) sender).Text);
-        }
-
+        
         private void MainForm_Resize(object sender, EventArgs e)
         {
             ShowInTaskbar = WindowState != FormWindowState.Minimized;

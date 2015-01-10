@@ -16,8 +16,6 @@ namespace Funbit.Ets.Telemetry.Server.Setup
 
         public SetupStatus Install()
         {
-            // ReSharper disable once UnusedVariable
-            var initializedSettings = Settings.Instance;
             return SetupStatus.Installed;
         }
 

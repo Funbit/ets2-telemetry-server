@@ -62,6 +62,9 @@ namespace Funbit.Ets.Telemetry.Server.Setup
 
         public SetupStatus Uninstall()
         {
+            if (_status == SetupStatus.Uninstalled)
+                return _status;
+
             SetupStatus status;
             try
             {

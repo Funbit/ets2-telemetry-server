@@ -23,6 +23,8 @@ namespace Funbit.Ets.Telemetry.Server
         {
             InitializeComponent();
 
+            DialogResult = DialogResult.OK;
+
             string port = ConfigurationManager.AppSettings["Port"];
             if (Program.UninstallMode)
             {
@@ -70,6 +72,16 @@ namespace Funbit.Ets.Telemetry.Server
             // show application version 
             Text += @" " + AssemblyHelper.Version;
 
+            // make sure that game is not running
+            if (Ets2ProcessHelper.IsEts2Running)
+            {
+                MessageBox.Show(this,
+                    @"In order to proceed the ETS2 game must not be running." + Environment.NewLine +
+                    @"Please exit the game and try again.", @"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                DialogResult = DialogResult.Abort;
+                return;
+            }
+
             // make sure that we have Administrator rights
             if (!Uac.IsProcessElevated())
             {
@@ -77,6 +89,7 @@ namespace Funbit.Ets.Telemetry.Server
                 {
                     // we have to restart the setup with Administrator privileges
                     Uac.RestartElevated();
+                    DialogResult = DialogResult.Abort;
                 }
                 catch (Exception ex)
                 {
@@ -89,17 +102,8 @@ namespace Funbit.Ets.Telemetry.Server
                     Environment.Exit(0);
                 }
             }
-
-            // make sure that game is not run
-            if (Ets2ProcessHelper.IsEts2Running)
-            {
-                MessageBox.Show(this,
-                    @"In order to proceed the ETS2 game must not be running." + Environment.NewLine +
-                    @"Please exit the game and try again.", @"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                Environment.Exit(0);
-            }
             
-            // initialize status mapping
+            // update UI 
             foreach (var step in SetupManager.Steps)
             {
                 if (step is PluginSetup)
@@ -133,15 +137,13 @@ namespace Funbit.Ets.Telemetry.Server
             if (_setupFinished)
             {
                 string message = Program.UninstallMode
-                                     ? @"Uninstallation has been successfully completed. " + 
+                                     ? @"Server has been successfully uninstalled. " + 
                                      Environment.NewLine +
                                      @"Press OK to exit."
-                                     : @"Installation has been successfully completed. " +
+                                     : @"Server has been successfully installed. " +
                                      Environment.NewLine +
                                      "Press OK to start the server.";
-                MessageBox.Show(this, message, @"Congratulations", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                if (Program.UninstallMode)
-                    Environment.Exit(0);
+                MessageBox.Show(this, message, @"Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 Close();
             }
 
@@ -150,9 +152,8 @@ namespace Funbit.Ets.Telemetry.Server
 
         private void SetupForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            // if form is closed by OS we just exit from the application
             if (e.CloseReason != CloseReason.UserClosing || !_setupFinished || Program.UninstallMode)
-                Environment.Exit(0);
+                DialogResult = DialogResult.Abort;
         }
 
         private void helpLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
