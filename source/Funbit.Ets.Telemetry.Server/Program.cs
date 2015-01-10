@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
+using Funbit.Ets.Telemetry.Server.Helpers;
 
 namespace Funbit.Ets.Telemetry.Server
 {
@@ -14,21 +15,28 @@ namespace Funbit.Ets.Telemetry.Server
         private static extern int GetLastError();
         private const int ErrorAlreadyExists = 183;
 
+        public static bool UninstallMode = false;
+
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             // check if another instance is running
-            CreateMutex(0, -1, "Ets2Telemetry_8F63CCBE353DE22BD1A86308AD675001");
+            CreateMutex(0, -1,
+                Uac.IsProcessElevated()
+                    ? "Ets2Telemetry_8F63CCBE353DE22BD1A86308AD675001_UAC"
+                    : "Ets2Telemetry_8F63CCBE353DE22BD1A86308AD675001");
             bool bAnotherInstanceRunning = GetLastError() == ErrorAlreadyExists;
             if (bAnotherInstanceRunning) return;
 
             log4net.Config.XmlConfigurator.Configure();
-
+            
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            UninstallMode = args.Length >= 1 && args.Any(a => a.Trim() == "-uninstall");
+
             Application.Run(new MainForm());
         }
     }

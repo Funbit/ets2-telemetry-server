@@ -8,6 +8,7 @@ using System.Reflection;
 using System.Windows.Forms;
 using Funbit.Ets.Telemetry.Server.Controllers;
 using Funbit.Ets.Telemetry.Server.Helpers;
+using Funbit.Ets.Telemetry.Server.Setup;
 using Microsoft.Owin.Hosting;
 
 namespace Funbit.Ets.Telemetry.Server
@@ -22,24 +23,12 @@ namespace Funbit.Ets.Telemetry.Server
             InitializeComponent();
         }
 
-        static string Version
-        {
-            get
-            {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
-                string version = string.Format("{0}.{1}.{2}", 
-                    versionInfo.FileMajorPart, versionInfo.FileMinorPart, versionInfo.ProductBuildPart);
-                return version;
-            }
-        }
-
         static string EndpointPort
         {
             get { return ConfigurationManager.AppSettings["Port"]; }
         }
 
-        static string HostToEndpointUrl(string host)
+        static string IpToEndpointUrl(string host)
         {
             return string.Format("http://{0}:{1}", host, EndpointPort);
         }
@@ -50,69 +39,62 @@ namespace Funbit.Ets.Telemetry.Server
             try
             {
                 var options = new StartOptions();
-                bindIp = "localhost";
-                options.Urls.Add(HostToEndpointUrl(bindIp));
+                options.Urls.Add(IpToEndpointUrl("+"));
                 try
                 {
-                    if (Uac.IsProcessElevated())
-                    {
-                        // bind to local IPs
-                        options.Urls.Add(HostToEndpointUrl("127.0.0.1"));
-                        // bind to the default network IP as well
-                        bindIp = NetworkHelper.GetDefaultIpAddress(
-                            ConfigurationManager.AppSettings["NetworkInterfaceId"]).ToString();
-                        var endpointUrl = HostToEndpointUrl(bindIp);
-                        if (!options.Urls.Contains(endpointUrl))
-                            options.Urls.Add(endpointUrl);
-                        // raise priority to make server more responsive
-                        Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.AboveNormal;
-                    }
-                    else
-                    {
-                        MessageBox.Show(this, @"The process was not run under Administrator " +
-                            @"so you won't be able to access your telemetry API server remotely " +
-                            @"(i.e. from iPhone or other devices connected to your network). " +
-                            Environment.NewLine + Environment.NewLine +
-                            @"To fix this use right click context menu and select 'Run as Administrator'.", @"Warning",
-                            MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    }
-                    Log.InfoFormat("Binding WebApi server to the following URLs: {0}{1}", Environment.NewLine,
-                        string.Join(", " + Environment.NewLine, options.Urls.Select(u => "'" + u + "'")));
+                    bindIp = NetworkHelper.GetDefaultIpAddress(
+                        ConfigurationManager.AppSettings["NetworkInterfaceId"]).ToString();
                 }
                 catch (Exception ex)
                 {
                     Log.Error(ex);
-                    MessageBox.Show(this, ex.ToString(), @"Network error",
-                        MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    ex.ShowAsMessageBox(this, @"Network error", MessageBoxIcon.Exclamation);
                 }
                 _server = WebApp.Start<Startup>(options);
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
-                MessageBox.Show(this, ex.ToString(), @"Server error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                ex.ShowAsMessageBox(this, @"Server error");
             }
             return bindIp;
         }
 
-        private void TrayIconForm_Load(object sender, EventArgs e)
+        private void MainForm_Load(object sender, EventArgs e)
         {
             Log.InfoFormat("Running server on {0} ({1})", Environment.OSVersion, 
                 Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit");
-
-            // start server
-            string bindIp = StartServer();
-
-            // show full URLs to the telemetry data
-            appUrlLabel.Text = HostToEndpointUrl(bindIp) + Ets2AppController.TelemetryAppUriPath;
-            apiEndpointUrlLabel.Text = HostToEndpointUrl(bindIp) + Ets2TelemetryController.TelemetryApiUriPath;
-            serverIpLabel.Text = bindIp;
             
             // show application version 
-            Text += @" " + Version;
+            Text += @" " + AssemblyHelper.Version;
+
+            try
+            {
+                if (Program.UninstallMode || SetupManager.Steps.Any(s => s.Status != SetupStatus.Installed))
+                    // we wait here until setup is complete
+                    new SetupForm().ShowDialog(this);
+                
+                // start server
+                string bindIp = StartServer();
+
+                // show full URLs to the telemetry data
+                appUrlLabel.Text = IpToEndpointUrl(bindIp) + Ets2AppController.TelemetryAppUriPath;
+                apiEndpointUrlLabel.Text = IpToEndpointUrl(bindIp) + Ets2TelemetryController.TelemetryApiUriPath;
+                serverIpLabel.Text = bindIp;
+
+                // raise priority to make server more responsive
+                Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.AboveNormal;
+
+                // start ETS2 process status timer
+                statusUpdateTimer.Enabled = true;
+            }
+            catch (Exception ex)
+            {
+                ex.ShowAsMessageBox(this, @"Setup error");
+            } 
         }
 
-        private void TrayIconForm_FormClosed(object sender, FormClosedEventArgs e)
+        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (_server != null)
                 _server.Dispose();
@@ -146,7 +128,8 @@ namespace Funbit.Ets.Telemetry.Server
             catch (Exception ex)
             {
                 Log.Error(ex);
-                MessageBox.Show(this, ex.ToString(), @"Process error", MessageBoxButtons.OK, MessageBoxIcon.Stop);
+                ex.ShowAsMessageBox(this, @"Process error");
+                statusUpdateTimer.Enabled = false;
             }
         }
 

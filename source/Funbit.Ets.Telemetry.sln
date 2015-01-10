@@ -89,7 +89,6 @@ Global
 		{2CB2E074-3458-4089-BC8F-56CCAB4C58A8}.Debug|iOS.Deploy.0 = Debug|iOS
 		{2CB2E074-3458-4089-BC8F-56CCAB4C58A8}.Debug|Mixed Platforms.ActiveCfg = Debug|Android
 		{2CB2E074-3458-4089-BC8F-56CCAB4C58A8}.Debug|Mixed Platforms.Build.0 = Debug|Android
-		{2CB2E074-3458-4089-BC8F-56CCAB4C58A8}.Debug|Mixed Platforms.Deploy.0 = Debug|Android
 		{2CB2E074-3458-4089-BC8F-56CCAB4C58A8}.Debug|Windows Phone (Universal).ActiveCfg = Debug|Windows Phone (Universal)
 		{2CB2E074-3458-4089-BC8F-56CCAB4C58A8}.Debug|Windows Phone (Universal).Build.0 = Debug|Windows Phone (Universal)
 		{2CB2E074-3458-4089-BC8F-56CCAB4C58A8}.Debug|Windows Phone (Universal).Deploy.0 = Debug|Windows Phone (Universal)

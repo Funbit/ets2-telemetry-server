@@ -56,9 +56,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup />
-  <PropertyGroup>
-    <ApplicationManifest>app.manifest</ApplicationManifest>
-  </PropertyGroup>
+  <PropertyGroup />
   <ItemGroup>
     <Reference Include="log4net">
       <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
@@ -114,14 +112,29 @@
     <Compile Include="Controllers\Ets2AppController.cs" />
     <Compile Include="Controllers\StaticFileController.cs" />
     <Compile Include="Controllers\Ets2TelemetryController.cs" />
+    <Compile Include="Helpers\AssemblyHelper.cs" />
     <Compile Include="Helpers\Ets2ProcessHelper.cs" />
     <Compile Include="Data\IEts2TelemetryData.cs" />
     <Compile Include="Data\Reader\Ets2TelemetryStructure.cs" />
     <Compile Include="Data\Ets2TelemetryDataReader.cs" />
     <Compile Include="Data\Ets2TelemetryData.cs" />
     <Compile Include="Data\Reader\SharedProcessMemory.cs" />
+    <Compile Include="Helpers\ExceptionExtensions.cs" />
+    <Compile Include="Helpers\ProcessHelper.cs" />
     <Compile Include="Helpers\Win32Uac.cs" />
     <Compile Include="Helpers\NetworkHelper.cs" />
+    <Compile Include="SetupForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetupForm.Designer.cs">
+      <DependentUpon>SetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Setup\FirewallSetup.cs" />
+    <Compile Include="Setup\ISetup.cs" />
+    <Compile Include="Setup\PluginSetup.cs" />
+    <Compile Include="Setup\SetupManager.cs" />
+    <Compile Include="Setup\SetupStatus.cs" />
+    <Compile Include="Setup\UrlReservationSetup.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="MainForm.cs">
       <SubType>Form</SubType>
@@ -131,6 +144,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <None Include="Resources\check-error.png" />
+    <None Include="Resources\check-on.png" />
+    <None Include="Resources\check-off.png" />
     <EmbeddedResource Include="MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -144,6 +160,14 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <Content Include="..\..\server\Ets2Plugins\win_x64\plugins\ets2-telemetry.dll">
+      <Link>Ets2Plugins\win_x64\plugins\ets2-telemetry.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\server\Ets2Plugins\win_x86\plugins\ets2-telemetry.dll">
+      <Link>Ets2Plugins\win_x86\plugins\ets2-telemetry.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\css\styles.css">
       <Link>Html\css\styles.css</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -254,7 +278,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\app.ico" />
-    <None Include="app.manifest" />
+    <EmbeddedResource Include="SetupForm.resx">
+      <DependentUpon>SetupForm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -265,6 +291,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Uninstall.bat">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -63,7 +63,7 @@
             // 
             // closeToolStripMenuItem
             // 
-            this.closeToolStripMenuItem.Image = global::Funbit.Ets.Telemetry.Server.Properties.Resources.close;
+            this.closeToolStripMenuItem.Image = global::Funbit.Ets.Telemetry.Server.Properties.Resources.CloseIcon;
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.closeToolStripMenuItem.Text = "Close";
@@ -113,7 +113,6 @@
             // 
             // statusUpdateTimer
             // 
-            this.statusUpdateTimer.Enabled = true;
             this.statusUpdateTimer.Interval = 1000;
             this.statusUpdateTimer.Tick += new System.EventHandler(this.statusUpdateTimer_Tick);
             // 
@@ -179,8 +178,8 @@
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ETS2 Telemetry Server";
-            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.TrayIconForm_FormClosed);
-            this.Load += new System.EventHandler(this.TrayIconForm_Load);
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
+            this.Load += new System.EventHandler(this.MainForm_Load);
             this.Resize += new System.EventHandler(this.MainForm_Resize);
             this.contextMenuStrip.ResumeLayout(false);
             this.ResumeLayout(false);

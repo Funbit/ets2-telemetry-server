@@ -17,6 +17,7 @@
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
+using System.IO;
 using System.Runtime.InteropServices;
 using Microsoft.Win32.SafeHandles;
 
@@ -26,6 +27,20 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
 {
     static class Uac
     {
+        public static void RestartElevated()
+        {
+            ProcessStartInfo startInfo = new ProcessStartInfo();
+            startInfo.UseShellExecute = true;
+            string processFileName = Process.GetCurrentProcess().MainModule.FileName;
+            // ReSharper disable once AssignNullToNotNullAttribute
+            startInfo.WorkingDirectory = Path.GetDirectoryName(processFileName);
+            startInfo.FileName = processFileName;
+            startInfo.Verb = "runas";
+            startInfo.Arguments = Environment.CommandLine.Substring(
+                Environment.CommandLine.IndexOf(' '));
+            Process.Start(startInfo);
+        }
+
         /// <summary>
         /// The function gets the elevation information of the current process. It 
         /// dictates whether the process is elevated or not. Token elevation is only 
