@@ -121,6 +121,7 @@
     <Compile Include="Data\Reader\SharedProcessMemory.cs" />
     <Compile Include="Helpers\ExceptionExtensions.cs" />
     <Compile Include="Helpers\ProcessHelper.cs" />
+    <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\Win32Uac.cs" />
     <Compile Include="Helpers\NetworkHelper.cs" />
     <Compile Include="SetupForm.cs">
@@ -132,6 +133,7 @@
     <Compile Include="Setup\FirewallSetup.cs" />
     <Compile Include="Setup\ISetup.cs" />
     <Compile Include="Setup\PluginSetup.cs" />
+    <Compile Include="Setup\SettingsSetup.cs" />
     <Compile Include="Setup\SetupManager.cs" />
     <Compile Include="Setup\SetupStatus.cs" />
     <Compile Include="Setup\UrlReservationSetup.cs" />

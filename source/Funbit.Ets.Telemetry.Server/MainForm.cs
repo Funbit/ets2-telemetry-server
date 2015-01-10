@@ -33,31 +33,17 @@ namespace Funbit.Ets.Telemetry.Server
             return string.Format("http://{0}:{1}", host, EndpointPort);
         }
 
-        string StartServer()
+        void StartServer()
         {
-            string bindIp = string.Empty;
             try
             {
-                var options = new StartOptions();
-                options.Urls.Add(IpToEndpointUrl("+"));
-                try
-                {
-                    bindIp = NetworkHelper.GetDefaultIpAddress(
-                        ConfigurationManager.AppSettings["NetworkInterfaceId"]).ToString();
-                }
-                catch (Exception ex)
-                {
-                    Log.Error(ex);
-                    ex.ShowAsMessageBox(this, @"Network error", MessageBoxIcon.Exclamation);
-                }
-                _server = WebApp.Start<Startup>(options);
+                _server = WebApp.Start<Startup>(IpToEndpointUrl("+"));
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
                 ex.ShowAsMessageBox(this, @"Server error");
             }
-            return bindIp;
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -71,23 +57,49 @@ namespace Funbit.Ets.Telemetry.Server
 
             try
             {
+                if (Program.UninstallMode && SetupManager.Steps.All(s => s.Status == SetupStatus.Uninstalled))
+                {
+                    MessageBox.Show(this, @"Server is not installed, nothing to uninstall.",  @"Done",
+                        MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    Close();
+                    return;
+                }
                 if (Program.UninstallMode || SetupManager.Steps.Any(s => s.Status != SetupStatus.Installed))
                     // we wait here until setup is complete
                     new SetupForm().ShowDialog(this);
                 
                 // start server
-                string bindIp = StartServer();
+                StartServer();
 
-                // show full URLs to the telemetry data
-                appUrlLabel.Text = IpToEndpointUrl(bindIp) + Ets2AppController.TelemetryAppUriPath;
-                apiEndpointUrlLabel.Text = IpToEndpointUrl(bindIp) + Ets2TelemetryController.TelemetryApiUriPath;
-                serverIpLabel.Text = bindIp;
+                try
+                {
+                    // load list of available network interfaces
+                    var networkInterfaces = NetworkHelper.GetAllActiveNetworkInterfaces();
+                    interfacesDropDown.Items.Clear();
+                    foreach (var networkInterface in networkInterfaces)
+                        interfacesDropDown.Items.Add(networkInterface);
+                    // select remembered interface or default
+                    var rememberedInterface = networkInterfaces.FirstOrDefault(
+                        i => i.Id == Settings.Instance.DefaultNetworkInterfaceId);
+                    if (rememberedInterface != null)
+                        interfacesDropDown.SelectedItem = rememberedInterface;
+                    else
+                        interfacesDropDown.SelectedIndex = 0; // select default interface
+                }
+                catch (Exception ex)
+                {
+                    Log.Error(ex);
+                    ex.ShowAsMessageBox(this, @"Network error", MessageBoxIcon.Exclamation);
+                }
 
                 // raise priority to make server more responsive
                 Process.GetCurrentProcess().PriorityClass = ProcessPriorityClass.AboveNormal;
 
                 // start ETS2 process status timer
                 statusUpdateTimer.Enabled = true;
+
+                // show tray icon
+                trayIcon.Visible = true;
             }
             catch (Exception ex)
             {
@@ -99,6 +111,7 @@ namespace Funbit.Ets.Telemetry.Server
         {
             if (_server != null)
                 _server.Dispose();
+            trayIcon.Visible = false;
         }
     
         private void closeToolStripMenuItem_Click(object sender, EventArgs e)
@@ -134,7 +147,7 @@ namespace Funbit.Ets.Telemetry.Server
             }
         }
 
-        private void endpointUrlLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void apiUrlLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             ExecuteLink(sender);
         }
@@ -146,14 +159,22 @@ namespace Funbit.Ets.Telemetry.Server
 
         static void ExecuteLink(object sender)
         {
-            ProcessStartInfo startInfo = new ProcessStartInfo(((LinkLabel)sender).Text);
-            startInfo.UseShellExecute = true;
-            Process.Start(startInfo);
+            ProcessHelper.OpenUrl(((LinkLabel) sender).Text);
         }
 
         private void MainForm_Resize(object sender, EventArgs e)
         {
             ShowInTaskbar = WindowState != FormWindowState.Minimized;
+        }
+
+        private void interfaceDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var selectedInterface = (NetworkInterfaceInfo) interfacesDropDown.SelectedItem;
+            appUrlLabel.Text = IpToEndpointUrl(selectedInterface.Ip) + Ets2AppController.TelemetryAppUriPath;
+            apiUrlLabel.Text = IpToEndpointUrl(selectedInterface.Ip) + Ets2TelemetryController.TelemetryApiUriPath;
+            ipAddressLabel.Text = selectedInterface.Ip;
+            Settings.Instance.DefaultNetworkInterfaceId = selectedInterface.Id;
+            Settings.Instance.Save();
         }
     }
 }

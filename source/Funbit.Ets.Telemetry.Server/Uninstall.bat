@@ -1,2 +1,2 @@
-rem Run Ets2Telemetry server in the UNINSTALL mode:
+echo Uninstalling Telemetry Server...
 Ets2Telemetry.exe -uninstall

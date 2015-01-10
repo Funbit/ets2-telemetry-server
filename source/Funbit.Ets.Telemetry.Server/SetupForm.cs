@@ -61,7 +61,8 @@ namespace Funbit.Ets.Telemetry.Server
                                      : (inverseStatus == SetupStatus.Installed
                                             ? Resources.SuccessStatusIcon
                                             : Resources.FailureStatusIcon);
-            _setupStatusImages[step].Image = statusImage;
+            if (_setupStatusImages.ContainsKey(step))
+                _setupStatusImages[step].Image = statusImage;
         }
         
         private void SetupForm_Load(object sender, EventArgs e)
@@ -88,6 +89,15 @@ namespace Funbit.Ets.Telemetry.Server
                     Environment.Exit(0);
                 }
             }
+
+            // make sure that game is not run
+            if (Ets2ProcessHelper.IsEts2Running)
+            {
+                MessageBox.Show(this,
+                    @"In order to proceed the ETS2 game must not be running." + Environment.NewLine +
+                    @"Please exit the game and try again.", @"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Environment.Exit(0);
+            }
             
             // initialize status mapping
             foreach (var step in SetupManager.Steps)
@@ -104,6 +114,7 @@ namespace Funbit.Ets.Telemetry.Server
 
         private void okButton_Click(object sender, EventArgs e)
         {
+            okButton.Enabled = false;
             _setupFinished = true;
 
             foreach (var step in SetupManager.Steps)
@@ -122,13 +133,19 @@ namespace Funbit.Ets.Telemetry.Server
             if (_setupFinished)
             {
                 string message = Program.UninstallMode
-                                     ? @"Uninstallation has been successfully completed. Press OK to exit."
-                                     : @"Installation has been successfully completed. Press OK to start the server.";
+                                     ? @"Uninstallation has been successfully completed. " + 
+                                     Environment.NewLine +
+                                     @"Press OK to exit."
+                                     : @"Installation has been successfully completed. " +
+                                     Environment.NewLine +
+                                     "Press OK to start the server.";
                 MessageBox.Show(this, message, @"Congratulations", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 if (Program.UninstallMode)
                     Environment.Exit(0);
                 Close();
             }
+
+            okButton.Enabled = true;
         }
 
         private void SetupForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -136,6 +153,11 @@ namespace Funbit.Ets.Telemetry.Server
             // if form is closed by OS we just exit from the application
             if (e.CloseReason != CloseReason.UserClosing || !_setupFinished || Program.UninstallMode)
                 Environment.Exit(0);
+        }
+
+        private void helpLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ProcessHelper.OpenUrl("https://github.com/Funbit/ets2-telemetry-server");
         }
     }
 }
