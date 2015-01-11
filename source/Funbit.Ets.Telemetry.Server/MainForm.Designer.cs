@@ -119,6 +119,7 @@
             this.interfacesDropDown.Name = "interfacesDropDown";
             this.interfacesDropDown.Size = new System.Drawing.Size(369, 25);
             this.interfacesDropDown.TabIndex = 20;
+            this.interfacesDropDown.TabStop = false;
             this.interfacesDropDown.SelectedIndexChanged += new System.EventHandler(this.interfaceDropDown_SelectedIndexChanged);
             // 
             // networkInterfaceTitleLabel
@@ -149,7 +150,6 @@
             this.appUrlLabel.Name = "appUrlLabel";
             this.appUrlLabel.Size = new System.Drawing.Size(72, 17);
             this.appUrlLabel.TabIndex = 16;
-            this.appUrlLabel.TabStop = true;
             this.appUrlLabel.Text = "appUrlLabel";
             this.toolTip.SetToolTip(this.appUrlLabel, "Use this URL to view HTML5 mobile gauge in desktop or mobile browsers (click to o" +
         "pen)");
@@ -173,7 +173,6 @@
             this.apiUrlLabel.Name = "apiUrlLabel";
             this.apiUrlLabel.Size = new System.Drawing.Size(68, 17);
             this.apiUrlLabel.TabIndex = 14;
-            this.apiUrlLabel.TabStop = true;
             this.apiUrlLabel.Text = "apiUrlLabel";
             this.toolTip.SetToolTip(this.apiUrlLabel, "Use this URL to develop your own applications based on the REST API (click to ope" +
         "n)");

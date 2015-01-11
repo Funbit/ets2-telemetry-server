@@ -130,6 +130,7 @@ namespace Funbit.Ets.Telemetry.Server
                 catch (Exception ex)
                 {
                     _setupFinished = false;
+                    Log.Error(ex);
                     ex.ShowAsMessageBox(this, @"Setup error");
                 }
             }

@@ -30,8 +30,8 @@ namespace Funbit.Ets.Telemetry.Server.Setup
                     }
                     if (string.IsNullOrWhiteSpace(gamePath))
                         throw new Exception("Could not detect game directory. " +
-                        "Please make sure that you have a Steam version " + 
-                        "or Ets2GamePath defined in the app.config file.");
+                        "Please make sure that you have a Steam version, " + 
+                        "otherwise Ets2GamePath must be defined in the app.config file.");
                 }
                 return gamePath;
             }
