@@ -8,7 +8,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
     public class FirewallSetup : ISetup
     {
         static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        const string FirewallRuleName = "ETS2 TELEMETRY SERVER";
+        const string FirewallRuleName = "ETS2 TELEMETRY SERVER (PORT 25555)";
 
         SetupStatus _status = SetupStatus.Uninstalled;
 
