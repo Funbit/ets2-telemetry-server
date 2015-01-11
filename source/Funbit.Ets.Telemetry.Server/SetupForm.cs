@@ -70,7 +70,7 @@ namespace Funbit.Ets.Telemetry.Server
         private void SetupForm_Load(object sender, EventArgs e)
         {
             // show application version 
-            Text += @" " + AssemblyHelper.Version;
+            Text += @" " + AssemblyHelper.Version + @" - Setup";
 
             // make sure that game is not running
             if (Ets2ProcessHelper.IsEts2Running)
