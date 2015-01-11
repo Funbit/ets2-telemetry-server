@@ -1,5 +1,7 @@
-﻿using System.Net;
+﻿using System;
+using System.Net;
 using System.Net.Http;
+using System.Net.Http.Headers;
 using System.Web.Http;
 using Funbit.Ets.Telemetry.Server.Data;
 
@@ -17,6 +19,7 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
         {
             var response = Request.CreateResponse(HttpStatusCode.OK, 
                 Ets2TelemetryDataReader.Instance.Read());
+            response.Headers.CacheControl = new CacheControlHeaderValue { NoCache = true };
             return response;
         }
     }

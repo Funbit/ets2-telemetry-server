@@ -1,0 +1,15 @@
+{
+    "comments": [
+        "==============================",
+        "MOBILE DASHBOARD CONFIGURATION",
+        "==============================",
+        "The following skins array defines all available skins and their configurations.",
+        "All properties are required to be defined."
+    ],
+    "skins": [
+        {
+            "name": "default",
+            "refreshDelay": 250
+        }
+    ]
+}

@@ -110,31 +110,8 @@
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="css\styles.css">
-      <DependentUpon>styles.less</DependentUpon>
-    </Content>
-    <Content Include="css\styles.less" />
-    <Content Include="css\styles.min.css">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <DependentUpon>styles.css</DependentUpon>
-    </Content>
+    <Content Include="config.json" />
     <Content Include="images\app-icon.png" />
-    <Content Include="images\gauge-bg-off.png" />
-    <Content Include="images\gauge-bg-on.png" />
-    <Content Include="images\gauge-blinker-left-off.png" />
-    <Content Include="images\gauge-blinker-left-on.png" />
-    <Content Include="images\gauge-blinker-right-off.png" />
-    <Content Include="images\gauge-blinker-right-on.png" />
-    <Content Include="images\gauge-cruise-off.png" />
-    <Content Include="images\gauge-cruise-on.png" />
-    <Content Include="images\gauge-highbeam-off.png" />
-    <Content Include="images\gauge-highbeam-on.png" />
-    <Content Include="images\gauge-lowbeam-off.png" />
-    <Content Include="images\gauge-lowbeam-on.png" />
-    <Content Include="images\gauge-parklights-off.png" />
-    <Content Include="images\gauge-parklights-on.png" />
-    <Content Include="images\gauge-trailer-off.png" />
-    <Content Include="images\gauge-trailer-on.png" />
     <Content Include="images\rotate-to-landscape.png" />
     <Content Include="merges\android\scripts\android2.3-jscompat.js" />
     <Content Include="merges\android\scripts\platformOverrides.js" />
@@ -200,15 +177,53 @@
     <Content Include="plugins\org.apache.cordova.splashscreen\tests\tests.js" />
     <Content Include="plugins\org.apache.cordova.splashscreen\www\splashscreen.js" />
     <Content Include="plugins\org.apache.cordova.splashscreen\www\windows8\SplashScreenProxy.js" />
-    <Content Include="scripts\gauge.min.js">
+    <Content Include="scripts\dashboard.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <DependentUpon>gauge.js</DependentUpon>
+      <DependentUpon>dashboard.js</DependentUpon>
+    </Content>
+    <Content Include="scripts\dashboard.min.js.map">
+      <DependentUpon>dashboard.min.js</DependentUpon>
     </Content>
     <Content Include="scripts\jquery-ui.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="scripts\jquery.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="scripts\app.js" />
+    <Content Include="skins\base.css">
+      <DependentUpon>base.less</DependentUpon>
+    </Content>
+    <Content Include="skins\base.less" />
+    <Content Include="skins\base.min.css">
+      <DependentUpon>base.css</DependentUpon>
+    </Content>
+    <Content Include="skins\default\dashboard.css">
+      <DependentUpon>dashboard.less</DependentUpon>
+    </Content>
+    <Content Include="skins\default\dashboard.html" />
+    <Content Include="skins\default\dashboard.less" />
+    <Content Include="skins\default\dashboard.min.css">
+      <DependentUpon>dashboard.css</DependentUpon>
+    </Content>
+    <Content Include="skins\default\images\bg-off.png" />
+    <Content Include="skins\default\images\bg-on.png" />
+    <Content Include="skins\default\images\blinker-left-off.png" />
+    <Content Include="skins\default\images\blinker-left-on.png" />
+    <Content Include="skins\default\images\blinker-right-off.png" />
+    <Content Include="skins\default\images\blinker-right-on.png" />
+    <Content Include="skins\default\images\cruise-off.png" />
+    <Content Include="skins\default\images\cruise-on.png" />
+    <Content Include="skins\default\images\highbeam-off.png" />
+    <Content Include="skins\default\images\highbeam-on.png" />
+    <Content Include="skins\default\images\lowbeam-off.png" />
+    <Content Include="skins\default\images\lowbeam-on.png" />
+    <Content Include="skins\default\images\parklights-off.png" />
+    <Content Include="skins\default\images\parklights-on.png" />
+    <Content Include="skins\default\images\trailer-off.png" />
+    <Content Include="skins\default\images\trailer-on.png" />
+    <Content Include="skins\default\index.min.css">
+      <DependentUpon>index.css</DependentUpon>
     </Content>
     <Folder Include="merges\ios\" />
     <Content Include="merges\windows\scripts\platformOverrides.js" />
@@ -228,8 +243,8 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="index.html" />
-    <Content Include="scripts\gauge.js" />
-    <Content Include="scripts\index.js" />
+    <Content Include="scripts\dashboard.js" />
+    <Content Include="scripts\cordova-app.js" />
     <Content Include="scripts\platformOverrides.js" />
     <Content Include="res\icons\android\icon-36-ldpi.png" />
     <Content Include="res\icons\android\icon-48-mdpi.png" />
@@ -280,7 +295,7 @@
     <Content Include="res\screens\wp8\screen-portrait.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <TypeScriptCompile Include="scripts\gauge.ts" />
+    <TypeScriptCompile Include="scripts\dashboard.ts" />
     <TypeScriptCompile Include="scripts\typings\jquery.d.ts" />
     <TypeScriptCompile Include="scripts\typings\jqueryui.d.ts" />
   </ItemGroup>

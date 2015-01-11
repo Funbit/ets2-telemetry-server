@@ -48,6 +48,11 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
                         contentType = "application/javascript";
                         break;
                     }
+                case ".json":
+                    {
+                        contentType = "application/json";
+                        break;
+                    }
                 default:
                 {
                     contentType = "application/octet-stream";

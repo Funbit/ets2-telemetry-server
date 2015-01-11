@@ -1,4 +1,10 @@
-﻿/// <reference path="typings/jquery.d.ts" />
+﻿/* 
+    *** DO NOT CHANGE THIS SCRIPT ***
+
+    Dashboard engine script that works with the telemetry REST API.
+*/
+
+/// <reference path="typings/jquery.d.ts" />
 /// <reference path="typings/jqueryui.d.ts" />
 
 module Funbit.Ets.Telemetry.Components {
@@ -95,16 +101,21 @@ module Funbit.Ets.Telemetry.Components {
         truckOdometer: number;
     }
 
-    export class Gauge {
+    export interface ISkinConfig {
+        name: string;
+        refreshDelay: number;
+    }
 
-        private refreshDelay: number;
+    export class Dashboard {
+
         private endpointUrl: string;
         private firstRun: boolean = true;
         private timer: any;
         private failCount: number = 0;
         private minFailCount: number = 2;
         private endpointSeed: number = 0;
-        
+        private skinConfig: ISkinConfig;
+
         private static dayOfTheWeek = [
             'Sunday',
             'Monday',
@@ -119,9 +130,9 @@ module Funbit.Ets.Telemetry.Components {
 
         private static connectionTimeout: number = 5000;
 
-        constructor(telemetryEndpointUrl: string, telemetryRefreshDelay: number) {
+        constructor(telemetryEndpointUrl: string, skinConfig: ISkinConfig) {
             this.endpointUrl = telemetryEndpointUrl;
-            this.refreshDelay = telemetryRefreshDelay;
+            this.skinConfig = skinConfig;
             this.initialize();
         }
 
@@ -135,7 +146,7 @@ module Funbit.Ets.Telemetry.Components {
                     url: url,
                     async: true,
                     dataType: 'json',
-                    timeout: Gauge.connectionTimeout
+                timeout: Dashboard.connectionTimeout
                 })
                 .done(d => {
                     this.dataRefreshSucceeded(d);
@@ -149,7 +160,7 @@ module Funbit.Ets.Telemetry.Components {
                 })
                 .always(() => {
                     this.timer = setTimeout(
-                        this.refreshData.bind(this), this.refreshDelay);
+                        this.refreshData.bind(this), this.skinConfig.refreshDelay);
                 });
         }
 
@@ -161,7 +172,7 @@ module Funbit.Ets.Telemetry.Components {
 
         private isoToReadableDate(date: string): string {
             var d = new Date(date);
-            return Gauge.dayOfTheWeek[d.getDay()] + ' '
+            return Dashboard.dayOfTheWeek[d.getDay()] + ' '
                 + this.formatNumber(d.getHours(), 2) + ':'
                 + this.formatNumber(d.getMinutes(), 2);
         }
@@ -195,7 +206,7 @@ module Funbit.Ets.Telemetry.Components {
             }
             // animated update
             $({ a: prevAngle }).animate({ a: angle }, {
-                duration: this.refreshDelay * 1.1,
+                duration: this.skinConfig.refreshDelay * 1.1,
                 step: now => {
                     updateTransform('rotate(' + now + 'deg)');
                 }
@@ -232,7 +243,7 @@ module Funbit.Ets.Telemetry.Components {
         }
 
         private dataRefreshSucceeded(data: IEts2TelemetryData) {
-            if (data.connected && data.gameTime.indexOf(Gauge.minDateValue) == 0) {
+            if (data.connected && data.gameTime.indexOf(Dashboard.minDateValue) == 0) {
                 this.dataRefreshFailed('Connected, waiting for the drive...');
                 return;
             }
@@ -242,8 +253,8 @@ module Funbit.Ets.Telemetry.Components {
             }
             data.gameTime = this.isoToReadableDate(data.gameTime);
             data.jobDeadlineTime = this.isoToReadableDate(data.jobDeadlineTime);
-            if (!$('.gauge').hasClass('on')) {
-                $('.gauge').addClass('on');
+            if (!$('.dashboard').hasClass('on')) {
+                $('.dashboard').addClass('on');
             }
             $('.time').removeClass('error');
             this.setIndicatorText('time', data.gameTime);
@@ -282,9 +293,9 @@ module Funbit.Ets.Telemetry.Components {
 
         private dataRefreshFailed(reason: string) {
             this.setIndicatorText('time', reason);
-            if ($('.gauge').hasClass('on') || this.firstRun) {
+            if ($('.dashboard').hasClass('on') || this.firstRun) {
                 this.firstRun = false;
-                $('.gauge').removeClass('on');
+                $('.dashboard').removeClass('on');
                 $('.time').addClass('error');
                 this.setIndicatorText('source', '');
                 this.setIndicatorText('destination', '');

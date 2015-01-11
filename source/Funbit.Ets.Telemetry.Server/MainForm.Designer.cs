@@ -151,7 +151,7 @@
             this.appUrlLabel.Size = new System.Drawing.Size(72, 17);
             this.appUrlLabel.TabIndex = 16;
             this.appUrlLabel.Text = "appUrlLabel";
-            this.toolTip.SetToolTip(this.appUrlLabel, "Use this URL to view HTML5 mobile gauge in desktop or mobile browsers (click to o" +
+            this.toolTip.SetToolTip(this.appUrlLabel, "Use this URL to view HTML5 mobile dashboard in desktop or mobile browsers (click to o" +
         "pen)");
             this.appUrlLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.appUrlLabel_LinkClicked);
             // 

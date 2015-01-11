@@ -1,1 +1,5 @@
-﻿// Platform specific overrides will be placed in the merges folder versions of this file
+﻿/* 
+    *** DO NOT CHANGE THIS SCRIPT ***
+*/
+
+// Platform specific overrides will be placed in the merges folder versions of this file

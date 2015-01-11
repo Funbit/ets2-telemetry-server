@@ -1,0 +1,48 @@
+﻿<!-- ETS2 dashboard component START -->
+<div class="dashboard">
+    <!-- meters -->
+    <!--
+        Attributes:
+        data-min-angle: angle in degress for the arrow for data-min value (0 = vertical)
+        data-max-angle: angle in degress for the arrow for data-max value (0 = vertical)
+        data-min: minimal possible value (in JSON response)
+        data-max: maximum possible value (in JSON response)
+        data-prev: internal usage only
+        -->
+    <div class="speedometer-arrow" data-prev="-114" data-min="0" data-max="140" data-min-angle="-114" data-max-angle="+114"></div>
+    <div class="tachometer-arrow" data-prev="-97" data-min="0" data-max="24" data-min-angle="-97" data-max-angle="+97"></div>
+    <div class="fuel-arrow" data-prev="-96" data-min="0" data-min-angle="-96" data-max-angle="0"></div>
+    <div class="temperature-arrow" data-prev="-96" data-min="0" data-max="100" data-min-angle="-96" data-max-angle="0"></div>
+    <div class="odometer"></div>
+    <div class="gear"></div>
+    <!-- indicators -->
+    <div class="blinker-left"></div>
+    <div class="blinker-right"></div>
+    <div class="cruise"></div>
+    <div class="highbeam"></div>
+    <div class="lowbeam"></div>
+    <div class="parking-lights"></div>
+    <div class="trailer"></div>
+    <div class="trailer-mass"></div>
+    <div class="trailer-name"></div>
+    <!-- information -->
+    <table class="info-table">
+        <tr>
+            <th>Time:</th>
+            <td class="time">Connecting...</td>
+        </tr>
+        <tr>
+            <th>Source:</th>
+            <td class="source"></td>
+        </tr>
+        <tr>
+            <th>Destination:</th>
+            <td class="destination"></td>
+        </tr>
+        <tr>
+            <th>Deadline:</th>
+            <td class="deadline"></td>
+        </tr>
+    </table>
+</div>
+<!-- ETS2 dashboard component END -->

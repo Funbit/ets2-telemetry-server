@@ -1,7 +1,8 @@
-﻿// For an introduction to the Blank template, see the following documentation:
-// http://go.microsoft.com/fwlink/?LinkID=397704
-// To debug code on page load in Ripple or on Android devices/emulators: launch your app, set breakpoints, 
-// and then run "window.location.reload()" in the JavaScript Console.
+﻿/* 
+    *** DO NOT CHANGE THIS SCRIPT ***
+
+    Cordova based mobile application wrapper script.
+*/
 
 // ReSharper disable Html.EventNotResolved
 (function () {
@@ -34,26 +35,32 @@
         }
         function askUserForEndpoint(prevEndpointUrl) {
             var ip = prompt("Please enter server IP address (aa.bb.cc.dd)", prevEndpointUrl);
-            var endpointUrl = "http://" + ip + ":" + 25555 + "/api/ets2/telemetry";
+            var endpointUrl = "http://" + ip + ":" + globalConfig.port + globalConfig.endpointPath;
             prefs.store(prefsOk, prefsFail, 'endpointUrl', endpointUrl);
             return endpointUrl;
         }
+        function startDashboard(endpointUrl) {
+            $(document).trigger('dashboard-ready', endpointUrl);
+        }
 
-        // get saved endpoint and run the gauge
+        startDashboard('http://192.168.1.5:25555/api/ets2/telemetry');
+        /*
+
+        // get saved endpoint and run the dashboard
         prefs.fetch(function (rememberedEndpointUrl) {
             checkEndpoint(rememberedEndpointUrl, function (endpointUrl) {
                 // endpoint seems to be fine
-                window.gaugeStarter(endpointUrl);
+                startDashboard(endpointUrl);
             }, function () {
                 // failed to connect, ask for a new endpoint
                 var endpointUrl = askUserForEndpoint(rememberedEndpointUrl);
-                window.gaugeStarter(endpointUrl);
+                startDashboard(endpointUrl);
             });
         }, function () {
             // first run, ask for a new endpoint
             var endpointUrl = askUserForEndpoint();
-            window.gaugeStarter(endpointUrl);
-        }, 'endpointUrl');
+            startDashboard(endpointUrl);
+        }, 'endpointUrl');*/
         
     };
 

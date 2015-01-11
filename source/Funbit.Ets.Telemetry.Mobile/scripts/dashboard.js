@@ -1,32 +1,36 @@
-﻿/// <reference path="typings/jquery.d.ts" />
-/// <reference path="typings/jqueryui.d.ts" />
+﻿/*
+*** DO NOT CHANGE THIS SCRIPT ***
+Dashboard engine script that works with the telemetry REST API.
+*/
 var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
+            /// <reference path="typings/jquery.d.ts" />
+            /// <reference path="typings/jqueryui.d.ts" />
             (function (Components) {
-                var Gauge = (function () {
-                    function Gauge(telemetryEndpointUrl, telemetryRefreshDelay) {
+                var Dashboard = (function () {
+                    function Dashboard(telemetryEndpointUrl, skinConfig) {
                         this.firstRun = true;
                         this.failCount = 0;
                         this.minFailCount = 2;
                         this.endpointSeed = 0;
                         this.endpointUrl = telemetryEndpointUrl;
-                        this.refreshDelay = telemetryRefreshDelay;
+                        this.skinConfig = skinConfig;
                         this.initialize();
                     }
-                    Gauge.prototype.initialize = function () {
+                    Dashboard.prototype.initialize = function () {
                         this.refreshData();
                     };
 
-                    Gauge.prototype.refreshData = function () {
+                    Dashboard.prototype.refreshData = function () {
                         var _this = this;
                         var url = this.endpointUrl + "?seed=" + this.endpointSeed++;
                         $.ajax({
                             url: url,
                             async: true,
                             dataType: 'json',
-                            timeout: Gauge.connectionTimeout
+                            timeout: Dashboard.connectionTimeout
                         }).done(function (d) {
                             _this.dataRefreshSucceeded(d);
                             _this.failCount = 0;
@@ -36,23 +40,23 @@ var Funbit;
                                 _this.dataRefreshFailed('Could not connect to the server');
                             }
                         }).always(function () {
-                            _this.timer = setTimeout(_this.refreshData.bind(_this), _this.refreshDelay);
+                            _this.timer = setTimeout(_this.refreshData.bind(_this), _this.skinConfig.refreshDelay);
                         });
                     };
 
-                    Gauge.prototype.formatNumber = function (num, digits) {
+                    Dashboard.prototype.formatNumber = function (num, digits) {
                         var output = num + "";
                         while (output.length < digits)
                             output = "0" + output;
                         return output;
                     };
 
-                    Gauge.prototype.isoToReadableDate = function (date) {
+                    Dashboard.prototype.isoToReadableDate = function (date) {
                         var d = new Date(date);
-                        return Gauge.dayOfTheWeek[d.getDay()] + ' ' + this.formatNumber(d.getHours(), 2) + ':' + this.formatNumber(d.getMinutes(), 2);
+                        return Dashboard.dayOfTheWeek[d.getDay()] + ' ' + this.formatNumber(d.getHours(), 2) + ':' + this.formatNumber(d.getMinutes(), 2);
                     };
 
-                    Gauge.prototype.setMeter = function (name, value, maxValue) {
+                    Dashboard.prototype.setMeter = function (name, value, maxValue) {
                         if (typeof maxValue === "undefined") { maxValue = null; }
                         var className = '.' + name;
                         var $meter = $(className);
@@ -83,30 +87,30 @@ var Funbit;
 
                         // animated update
                         $({ a: prevAngle }).animate({ a: angle }, {
-                            duration: this.refreshDelay * 1.1,
+                            duration: this.skinConfig.refreshDelay * 1.1,
                             step: function (now) {
                                 updateTransform('rotate(' + now + 'deg)');
                             }
                         });
                     };
 
-                    Gauge.prototype.setSpeedometerValue = function (value) {
+                    Dashboard.prototype.setSpeedometerValue = function (value) {
                         this.setMeter('speedometer-arrow', value);
                     };
 
-                    Gauge.prototype.setTachometerValue = function (value) {
+                    Dashboard.prototype.setTachometerValue = function (value) {
                         this.setMeter('tachometer-arrow', value / 100);
                     };
 
-                    Gauge.prototype.setFuelValue = function (value, maxValue) {
+                    Dashboard.prototype.setFuelValue = function (value, maxValue) {
                         this.setMeter('fuel-arrow', value, maxValue);
                     };
 
-                    Gauge.prototype.setTemperatureValue = function (value) {
+                    Dashboard.prototype.setTemperatureValue = function (value) {
                         this.setMeter('temperature-arrow', value);
                     };
 
-                    Gauge.prototype.setIndicatorStatus = function (name, condition) {
+                    Dashboard.prototype.setIndicatorStatus = function (name, condition) {
                         var className = '.' + name;
                         if (condition)
                             $(className).addClass('on');
@@ -114,13 +118,13 @@ var Funbit;
                             $(className).removeClass('on');
                     };
 
-                    Gauge.prototype.setIndicatorText = function (name, value) {
+                    Dashboard.prototype.setIndicatorText = function (name, value) {
                         var className = '.' + name;
                         $(className).html(value);
                     };
 
-                    Gauge.prototype.dataRefreshSucceeded = function (data) {
-                        if (data.connected && data.gameTime.indexOf(Gauge.minDateValue) == 0) {
+                    Dashboard.prototype.dataRefreshSucceeded = function (data) {
+                        if (data.connected && data.gameTime.indexOf(Dashboard.minDateValue) == 0) {
                             this.dataRefreshFailed('Connected, waiting for the drive...');
                             return;
                         }
@@ -130,8 +134,8 @@ var Funbit;
                         }
                         data.gameTime = this.isoToReadableDate(data.gameTime);
                         data.jobDeadlineTime = this.isoToReadableDate(data.jobDeadlineTime);
-                        if (!$('.gauge').hasClass('on')) {
-                            $('.gauge').addClass('on');
+                        if (!$('.dashboard').hasClass('on')) {
+                            $('.dashboard').addClass('on');
                         }
                         $('.time').removeClass('error');
                         this.setIndicatorText('time', data.gameTime);
@@ -167,11 +171,11 @@ var Funbit;
                         this.setTemperatureValue(data.waterTemperature);
                     };
 
-                    Gauge.prototype.dataRefreshFailed = function (reason) {
+                    Dashboard.prototype.dataRefreshFailed = function (reason) {
                         this.setIndicatorText('time', reason);
-                        if ($('.gauge').hasClass('on') || this.firstRun) {
+                        if ($('.dashboard').hasClass('on') || this.firstRun) {
                             this.firstRun = false;
-                            $('.gauge').removeClass('on');
+                            $('.dashboard').removeClass('on');
                             $('.time').addClass('error');
                             this.setIndicatorText('source', '');
                             this.setIndicatorText('destination', '');
@@ -193,7 +197,7 @@ var Funbit;
                             this.setTemperatureValue(0);
                         }
                     };
-                    Gauge.dayOfTheWeek = [
+                    Dashboard.dayOfTheWeek = [
                         'Sunday',
                         'Monday',
                         'Tuesday',
@@ -203,12 +207,12 @@ var Funbit;
                         'Saturday'
                     ];
 
-                    Gauge.minDateValue = "0001-01-01T00:00:00";
+                    Dashboard.minDateValue = "0001-01-01T00:00:00";
 
-                    Gauge.connectionTimeout = 5000;
-                    return Gauge;
+                    Dashboard.connectionTimeout = 5000;
+                    return Dashboard;
                 })();
-                Components.Gauge = Gauge;
+                Components.Dashboard = Dashboard;
             })(Telemetry.Components || (Telemetry.Components = {}));
             var Components = Telemetry.Components;
         })(Ets.Telemetry || (Ets.Telemetry = {}));
@@ -216,4 +220,4 @@ var Funbit;
     })(Funbit.Ets || (Funbit.Ets = {}));
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
-//# sourceMappingURL=gauge.js.map
+//# sourceMappingURL=dashboard.js.map
