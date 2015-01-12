@@ -177,6 +177,20 @@
     <Content Include="plugins\org.apache.cordova.splashscreen\tests\tests.js" />
     <Content Include="plugins\org.apache.cordova.splashscreen\www\splashscreen.js" />
     <Content Include="plugins\org.apache.cordova.splashscreen\www\windows8\SplashScreenProxy.js" />
+    <Content Include="scripts\app.js" />
+    <Content Include="scripts\app.min.js">
+      <DependentUpon>app.js</DependentUpon>
+    </Content>
+    <Content Include="scripts\app.min.js.map">
+      <DependentUpon>app.min.js</DependentUpon>
+    </Content>
+    <Content Include="scripts\config.js" />
+    <Content Include="scripts\config.min.js">
+      <DependentUpon>config.js</DependentUpon>
+    </Content>
+    <Content Include="scripts\config.min.js.map">
+      <DependentUpon>config.min.js</DependentUpon>
+    </Content>
     <Content Include="scripts\dashboard.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <DependentUpon>dashboard.js</DependentUpon>
@@ -190,7 +204,13 @@
     <Content Include="scripts\jquery.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="scripts\app.js" />
+    <Content Include="scripts\menu.js" />
+    <Content Include="scripts\menu.min.js">
+      <DependentUpon>menu.js</DependentUpon>
+    </Content>
+    <Content Include="scripts\menu.min.js.map">
+      <DependentUpon>menu.min.js</DependentUpon>
+    </Content>
     <Content Include="skins\base.css">
       <DependentUpon>base.less</DependentUpon>
     </Content>
@@ -222,9 +242,6 @@
     <Content Include="skins\default\images\parklights-on.png" />
     <Content Include="skins\default\images\trailer-off.png" />
     <Content Include="skins\default\images\trailer-on.png" />
-    <Content Include="skins\default\index.min.css">
-      <DependentUpon>index.css</DependentUpon>
-    </Content>
     <Folder Include="merges\ios\" />
     <Content Include="merges\windows\scripts\platformOverrides.js" />
     <Content Include="merges\windows\scripts\winstore-jscompat.js" />
@@ -295,15 +312,12 @@
     <Content Include="res\screens\wp8\screen-portrait.jpg" />
   </ItemGroup>
   <ItemGroup>
+    <TypeScriptCompile Include="scripts\app.ts" />
+    <TypeScriptCompile Include="scripts\config.ts" />
     <TypeScriptCompile Include="scripts\dashboard.ts" />
+    <TypeScriptCompile Include="scripts\menu.ts" />
     <TypeScriptCompile Include="scripts\typings\jquery.d.ts" />
     <TypeScriptCompile Include="scripts\typings\jqueryui.d.ts" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="scripts\gauge.min.js.map">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <DependentUpon>gauge.min.js</DependentUpon>
-    </None>
   </ItemGroup>
   <PropertyGroup>
     <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>

@@ -16,5 +16,9 @@
   <vs:plugin name="org.apache.cordova.splashscreen" version="0.3.3" />
   <vs:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
   <vs:plugin name="me.apla.cordova.app-preferences" version="0.4.2" />
-  <vs:platformSpecificValues />
+  <vs:platformSpecificValues>
+    <vs:platformSpecificWidget platformName="windows">
+      <vs:name>ETS2 Dashboard</vs:name>
+    </vs:platformSpecificWidget>
+  </vs:platformSpecificValues>
 </widget>

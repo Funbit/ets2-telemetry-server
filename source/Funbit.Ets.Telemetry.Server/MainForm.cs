@@ -82,6 +82,9 @@ namespace Funbit.Ets.Telemetry.Server
 
                 // show tray icon
                 trayIcon.Visible = true;
+
+                // make sure that form is visible
+                Activate();
             }
             catch (Exception ex)
             {

@@ -1,13 +1,13 @@
 ﻿/* 
     *** DO NOT CHANGE THIS SCRIPT ***
 
-    Dashboard engine script that works with the telemetry REST API.
+    Dashboard engine core that uses telemetry REST API.
 */
 
 /// <reference path="typings/jquery.d.ts" />
 /// <reference path="typings/jqueryui.d.ts" />
 
-module Funbit.Ets.Telemetry.Components {
+module Funbit.Ets.Telemetry {
 
     interface IEts2TelemetryData {
         connected: boolean;
@@ -101,11 +101,6 @@ module Funbit.Ets.Telemetry.Components {
         truckOdometer: number;
     }
 
-    export interface ISkinConfig {
-        name: string;
-        refreshDelay: number;
-    }
-
     export class Dashboard {
 
         private endpointUrl: string;
@@ -114,7 +109,7 @@ module Funbit.Ets.Telemetry.Components {
         private failCount: number = 0;
         private minFailCount: number = 2;
         private endpointSeed: number = 0;
-        private skinConfig: ISkinConfig;
+        private skinConfig: ISkinConfiguration;
 
         private static dayOfTheWeek = [
             'Sunday',
@@ -130,7 +125,7 @@ module Funbit.Ets.Telemetry.Components {
 
         private static connectionTimeout: number = 5000;
 
-        constructor(telemetryEndpointUrl: string, skinConfig: ISkinConfig) {
+        constructor(telemetryEndpointUrl: string, skinConfig: ISkinConfiguration) {
             this.endpointUrl = telemetryEndpointUrl;
             this.skinConfig = skinConfig;
             this.initialize();
