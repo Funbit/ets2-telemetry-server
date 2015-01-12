@@ -1,10 +1,4 @@
-﻿/* 
-    *** DO NOT CHANGE THIS SCRIPT ***
-
-    Dashboard engine core that uses telemetry REST API.
-*/
-
-/// <reference path="typings/jquery.d.ts" />
+﻿/// <reference path="typings/jquery.d.ts" />
 /// <reference path="typings/jqueryui.d.ts" />
 
 module Funbit.Ets.Telemetry {

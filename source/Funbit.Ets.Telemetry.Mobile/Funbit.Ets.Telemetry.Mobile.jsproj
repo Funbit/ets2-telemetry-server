@@ -119,6 +119,7 @@
       <DependentUpon>dashboard-host.css</DependentUpon>
     </Content>
     <Content Include="images\app-icon.png" />
+    <Content Include="images\disclosure.png" />
     <Content Include="images\rotate-to-landscape.png" />
     <Content Include="index.html" />
     <Content Include="index.css">
@@ -230,6 +231,7 @@
       <DependentUpon>dashboard.less</DependentUpon>
     </Content>
     <Content Include="skins\default\dashboard.html" />
+    <Content Include="skins\default\dashboard.jpg" />
     <Content Include="skins\default\dashboard.less" />
     <Content Include="skins\default\dashboard.min.css">
       <DependentUpon>dashboard.css</DependentUpon>

@@ -1,12 +1,8 @@
-﻿/*
-*** DO NOT CHANGE THIS SCRIPT ***
-Dashboard engine core that uses telemetry REST API.
-*/
+﻿/// <reference path="typings/jquery.d.ts" />
+/// <reference path="typings/jqueryui.d.ts" />
 var Funbit;
 (function (Funbit) {
     (function (Ets) {
-        /// <reference path="typings/jquery.d.ts" />
-        /// <reference path="typings/jqueryui.d.ts" />
         (function (Telemetry) {
             var Dashboard = (function () {
                 function Dashboard(telemetryEndpointUrl, skinConfig) {

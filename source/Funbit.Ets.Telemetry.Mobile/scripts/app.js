@@ -1,28 +1,13 @@
-﻿/*
-*** DO NOT CHANGE THIS SCRIPT ***
-HTML5 application.
-*/
-var Funbit;
+﻿var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
             var App = (function () {
-                function App(serverIp) {
-                    this.serverIp = serverIp;
-                    this.config = Funbit.Ets.Telemetry.ConfigurationManager.getConfiguration(this.getUrl('/config.json'));
-                    this.skinConfig = this.config.skins[0];
+                function App() {
+                    this.skinConfig = Telemetry.Configuration.getInstance().getSkinConfiguration();
                     this.initializeViewport();
-                    this.loadDashboard();
+                    this.loadDashboardResources();
                 }
-                App.isCordovaAvailable = function () {
-                    return document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1;
-                };
-
-                App.prototype.getUrl = function (path) {
-                    var serverPort = 25555;
-                    return "http://" + this.serverIp + ":" + serverPort + path;
-                };
-
                 App.prototype.initializeViewport = function () {
                     var ie = /Trident/.test(navigator.userAgent);
                     var firefox = /Firefox/i.test(navigator.userAgent);
@@ -54,7 +39,7 @@ var Funbit;
                     });
 
                     // prevent iOS device from sleeping
-                    if (ios && !App.isCordovaAvailable()) {
+                    if (ios && !Telemetry.Configuration.isCordovaAvailable()) {
                         // the technique is very simple:
                         // we just tell the browser that we are going to change the url
                         // and at the last moment we abort the operation
@@ -67,10 +52,10 @@ var Funbit;
                     }
                 };
 
-                App.prototype.loadDashboard = function () {
-                    var skinConfig = this.config.skins[0];
-                    var skinCssUrl = this.getUrl('/skins/' + skinConfig.name + '/dashboard.css');
-                    var skinHtmlUrl = this.getUrl('/skins/' + skinConfig.name + '/dashboard.html');
+                App.prototype.loadDashboardResources = function () {
+                    var _this = this;
+                    var skinCssUrl = Telemetry.Configuration.getUrl('/skins/' + this.skinConfig.name + '/dashboard.css');
+                    var skinHtmlUrl = Telemetry.Configuration.getUrl('/skins/' + this.skinConfig.name + '/dashboard.html');
 
                     // preload skin css (synchronously)
                     $("head link[rel='stylesheet']").last().after('<link rel="stylesheet" href="' + skinCssUrl + '" type="text/css">');
@@ -85,13 +70,13 @@ var Funbit;
                     }).done(function (html) {
                         $('body').append(html);
                     }).fail(function () {
-                        alert('Failed to load dashboard.html for skin: ' + skinConfig.name);
+                        alert('Failed to load dashboard.html for skin: ' + _this.skinConfig.name);
                     });
                 };
 
                 App.prototype.connectDashboard = function () {
                     if (!this.dashboard)
-                        this.dashboard = new Funbit.Ets.Telemetry.Dashboard(this.getUrl('/api/ets2/telemetry'), this.skinConfig);
+                        this.dashboard = new Funbit.Ets.Telemetry.Dashboard(Telemetry.Configuration.getUrl('/api/ets2/telemetry'), this.skinConfig);
                 };
                 return App;
             })();
@@ -105,10 +90,9 @@ var Funbit;
 //
 // Application "entry-point"
 //
-if (Funbit.Ets.Telemetry.App.isCordovaAvailable()) {
+if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
     // Cordova will call connectDashboard inside cordova-app.js onDeviceReady
 } else {
-    // start manually in desktop mode using relative endpoint URL
-    (new Funbit.Ets.Telemetry.App(window.location.hostname)).connectDashboard();
+    (new Funbit.Ets.Telemetry.App()).connectDashboard();
 }
 //# sourceMappingURL=app.js.map

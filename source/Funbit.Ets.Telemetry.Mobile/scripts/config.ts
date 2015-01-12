@@ -2,6 +2,7 @@
 
     export interface IConfiguration {
         skins: ISkinConfiguration[];
+        serverIp: string;
     } 
 
     export interface ISkinConfiguration {
@@ -13,31 +14,79 @@
         height: number;
     } 
 
-    export class ConfigurationManager {
+    export class Configuration implements IConfiguration {
         
-        private static instance: ConfigurationManager;
-        private configuration: IConfiguration;
+        public skins: ISkinConfiguration[];
+        public serverIp: string;
 
-        public static getConfiguration(url: string): IConfiguration {
-            if (!ConfigurationManager.instance) {
-                ConfigurationManager.instance = new Funbit.Ets.Telemetry.ConfigurationManager(url);
+        private static instance: Configuration;
+        public static getInstance(): Configuration {
+            if (!Configuration.instance) {
+                Configuration.instance = new Configuration();
+                Configuration.instance.reload();
             }
-            return ConfigurationManager.instance.configuration;
+            return Configuration.instance;
+        }
+
+        public static getParameter(name: string) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)");
+            var results = regex.exec(location.search);
+            return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+
+        public getSkinConfiguration(): ISkinConfiguration {
+            var skinName = Configuration.getParameter('skin');
+            if (skinName) {
+                for (var i = 0; i < this.skins.length; i++) {
+                    if (this.skins[i].name == skinName)
+                        return this.skins[i];
+                }
+            }
+            return null;
         }
         
-        constructor(url: string) {
-            if (!this.configuration) {
-                $.ajax({
-                    url: url,
-                    async: false,
-                    cache: true,
-                    dataType: 'json',
-                    timeout: 5000
-                }).done(json => {
-                    this.configuration = json;
-                }).fail(() => {
-                    alert('Failed to load config.json');
-                });
+        public reload(): boolean {
+            if (!this.serverIp)
+                return false;
+            var result: boolean = true;
+            $.ajax({
+                url: this.getUrlInternal('/config.json'),
+                async: false,
+                cache: true,
+                dataType: 'json',
+                timeout: 3000
+            }).done(json => {
+                this.skins = json.skins;
+            }).fail(() => {
+                alert('Failed to load config.json');
+                result = false;
+            });
+            // ReSharper disable once ExpressionIsAlwaysConst
+            return result;
+        }
+        
+        public static isCordovaAvailable(): boolean {
+            return document.URL.indexOf('http://') === -1 && document.URL.indexOf('https://') === -1;
+        }
+
+        private getUrlInternal(path: string): string {
+            var serverPort: number = 25555;
+            return "http://" + this.serverIp + ":" + serverPort + path;
+        }
+        
+        public static getUrl(path: string): string {
+            return Configuration.getInstance().getUrlInternal(path);
+        }
+        
+        constructor() {
+            this.skins = [];
+            this.serverIp = '';
+            if (!Configuration.isCordovaAvailable()) {
+                // if cordova is not available then 
+                // we are in desktop environment 
+                // so we use current host name as our IP
+                this.serverIp = window.location.hostname;
             }
         }
         

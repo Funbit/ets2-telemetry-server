@@ -1,3 +1,71 @@
 ﻿body {
-    
+  background-color: #F9F9F9;
+  font-family: Segoe UI, Consolas, Arial;
+  color: #444;
+}
+h1 {
+  font-size: 16pt;
+  color: #4e66c3;
+  text-align: center;
+}
+table {
+  width: 100%;
+  background-color: white;
+  border-bottom: 1px solid #E0E0E0;
+}
+table td,
+table th {
+  border-top: 1px solid #E0E0E0;
+  border-bottom: 1px solid white;
+  font-size: 12pt;
+}
+table td {
+  width: 70%;
+  padding-left: 12pt;
+  height: 52px;
+}
+table th {
+  text-align: right;
+  width: 30%;
+}
+.server-ip {
+  background-color: #FAFAFA;
+  border: 1px solid #CCC;
+  width: 90%;
+  height: 60%;
+  font-size: 12pt;
+  padding: 5px;
+  margin-top: 3px;
+}
+.server-status.connected {
+  color: #1ea41e;
+}
+.server-status.disconnected {
+  color: coral;
+}
+table.skins img {
+  width: 100%;
+}
+table.skins td {
+  padding-left: 0;
+  vertical-align: top;
+  background-image: url('images/disclosure.png');
+  background-position: right center;
+  background-repeat: no-repeat;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+table.skins tr:hover {
+  background-color: #f6f6f6;
+}
+table.skins td.skin-image {
+  width: 30%;
+}
+table.skins td.skin-desc {
+  width: 70%;
+  padding-right: 40px;
+}
+table.skins td.skin-desc div {
+  font-size: 12pt;
+  margin-left: 12pt;
 }

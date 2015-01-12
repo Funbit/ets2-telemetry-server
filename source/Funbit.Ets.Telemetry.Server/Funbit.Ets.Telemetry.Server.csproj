@@ -186,6 +186,10 @@
       <Link>Html\images\app-icon.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\images\disclosure.png">
+      <Link>Html\images\disclosure.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\images\rotate-to-landscape.png">
       <Link>Html\images\rotate-to-landscape.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -244,6 +248,10 @@
     </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\default\dashboard.html">
       <Link>Html\skins\default\dashboard.html</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\default\dashboard.jpg">
+      <Link>Html\skins\default\dashboard.jpg</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\default\images\bg-off.png">

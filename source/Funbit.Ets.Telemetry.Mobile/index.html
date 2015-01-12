@@ -17,9 +17,47 @@
     <link rel="stylesheet" href="index.css" />
     <meta id="viewport" name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
-    <div>Content goes here.</div>
+    <h1>ETS2 Mobile Dashboard</h1>
+    <table class="settings">
+        <tr>
+            <th>Server IP:</th>
+            <td><input class="server-ip" type="text" placeholder="Server IP address" /></td>
+        </tr>
+        <tr>
+            <th>Status:</th>
+            <td class="server-status connected">Connected</td>
+        </tr>
+    </table>
+    <h1>Select a skin to start</h1>
+    <table class="skins">
+        <tr>
+            <td class="skin-image">
+                <img src="skins/default/dashboard.jpg" />
+            </td>
+            <td class="skin-desc">
+                <div><strong>Title</strong>: Default Dashboard</div>
+                <div><strong>Author</strong>: Funbit</div>
+                <div><strong>Size</strong>: 2048 x 1152</div>
+            </td>
+        </tr>
+        <tr>
+            <td class="skin-image">
+                <img src="skins/default/dashboard.jpg" />
+            </td>
+            <td class="skin-desc">
+                <div><strong>Title</strong>: Default Dashboard</div>
+                <div><strong>Author</strong>: Funbit</div>
+                <div><strong>Size</strong>: 2048 x 1152</div>
+            </td>
+        </tr>
+    </table>
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/jquery-ui.min.js"></script>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/menu.js"></script>
 </body>
 </html>
