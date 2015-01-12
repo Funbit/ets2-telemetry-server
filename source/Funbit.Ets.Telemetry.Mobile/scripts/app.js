@@ -28,7 +28,7 @@ var Funbit;
                     var firefox = /Firefox/i.test(navigator.userAgent);
                     var ios = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-                    // fit dashboard into the screen
+                    // fit viewport into the screen
                     var dashboardWidth = this.skinConfig.width * 1.0;
                     var dashboardHeight = this.skinConfig.height * 1.0;
                     var windowWidth = $(window).width();

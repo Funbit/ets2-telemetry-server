@@ -174,12 +174,24 @@
       <Link>Ets2Plugins\win_x86\plugins\ets2-telemetry.dll</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\dashboard-host.css">
+      <Link>Html\dashboard-host.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\dashboard-host.html">
+      <Link>Html\dashboard-host.html</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\images\app-icon.png">
       <Link>Html\images\app-icon.png</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\images\rotate-to-landscape.png">
       <Link>Html\images\rotate-to-landscape.png</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\index.css">
+      <Link>Html\index.css</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\index.html">
@@ -224,10 +236,6 @@
     </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\scripts\menu.min.js">
       <Link>Html\scripts\menu.min.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\base.css">
-      <Link>Html\skins\base.css</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\default\dashboard.css">

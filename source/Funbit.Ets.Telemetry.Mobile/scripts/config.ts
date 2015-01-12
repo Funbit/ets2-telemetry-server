@@ -18,7 +18,6 @@
         private static instance: ConfigurationManager;
         private configuration: IConfiguration;
 
-        // ReSharper disable once InconsistentNaming
         public static getConfiguration(url: string): IConfiguration {
             if (!ConfigurationManager.instance) {
                 ConfigurationManager.instance = new Funbit.Ets.Telemetry.ConfigurationManager(url);

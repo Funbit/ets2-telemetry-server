@@ -19,7 +19,6 @@
                         });
                     }
                 }
-                // ReSharper disable once InconsistentNaming
                 ConfigurationManager.getConfiguration = function (url) {
                     if (!ConfigurationManager.instance) {
                         ConfigurationManager.instance = new Funbit.Ets.Telemetry.ConfigurationManager(url);

@@ -110,9 +110,24 @@
     <VisualStudioVersion>12.0</VisualStudioVersion>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="dashboard-host.css">
+      <DependentUpon>dashboard-host.less</DependentUpon>
+    </Content>
+    <Content Include="dashboard-host.less" />
     <Content Include="config.json" />
+    <Content Include="dashboard-host.min.css">
+      <DependentUpon>dashboard-host.css</DependentUpon>
+    </Content>
     <Content Include="images\app-icon.png" />
     <Content Include="images\rotate-to-landscape.png" />
+    <Content Include="index.html" />
+    <Content Include="index.css">
+      <DependentUpon>index.less</DependentUpon>
+    </Content>
+    <Content Include="index.less" />
+    <Content Include="index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
     <Content Include="merges\android\scripts\android2.3-jscompat.js" />
     <Content Include="merges\android\scripts\platformOverrides.js" />
     <Content Include="plugins\me.apla.cordova.app-preferences\.fetch.json" />
@@ -211,13 +226,6 @@
     <Content Include="scripts\menu.min.js.map">
       <DependentUpon>menu.min.js</DependentUpon>
     </Content>
-    <Content Include="skins\base.css">
-      <DependentUpon>base.less</DependentUpon>
-    </Content>
-    <Content Include="skins\base.less" />
-    <Content Include="skins\base.min.css">
-      <DependentUpon>base.css</DependentUpon>
-    </Content>
     <Content Include="skins\default\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>
     </Content>
@@ -259,7 +267,7 @@
     <Content Include="config.xml">
       <SubType>Designer</SubType>
     </Content>
-    <Content Include="index.html" />
+    <Content Include="dashboard-host.html" />
     <Content Include="scripts\dashboard.js" />
     <Content Include="scripts\cordova-app.js" />
     <Content Include="scripts\platformOverrides.js" />

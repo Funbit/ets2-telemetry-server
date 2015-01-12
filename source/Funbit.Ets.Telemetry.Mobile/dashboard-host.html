@@ -1,6 +1,6 @@
 ﻿<!DOCTYPE html>
-<html>
-    <!----------------------------------------------------------------
+<html xmlns="http://www.w3.org/1999/xhtml">
+<!----------------------------------------------------------------
     *** DO NOT CHANGE THIS HTML FILE *** 
 
     If you want to create your own dashboard skin (or tweak something)
@@ -10,16 +10,30 @@
     it inside "/config.json" file, otherwise it won't appear in the app!
 ------------------------------------------------------------------>
 <head>
-    <title>ETS2 Dashboard Menu</title>
+    <title>ETS2 Dashboard</title>
     <link rel="apple-touch-icon" href="images/app-icon.png" />
     <link rel="shortcut icon" href="images/app-icon.png">
     <meta http-equiv="X-UA-Compatible" content="IE=edge;" />
-    <link rel="stylesheet" href="index.css" />
+    <link rel="stylesheet" href="dashboard-host.css" />
     <meta id="viewport" name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 </head>
 <body>
-    <div>Content goes here.</div>
+    <!-- dashboard.html skin file will be inserted right here at runtime -->
+    <!-- jQuery -->
+    <script src="scripts/jquery.min.js"></script>
+    <script src="scripts/jquery-ui.min.js"></script>
+    <!-- Dashboard core -->
+    <script src="scripts/config.js"></script>
+    <script src="scripts/menu.js"></script>
+    <script src="scripts/dashboard.min.js"></script>
+    <!-- Cordova base stuff -->
+    <script src="cordova.js"></script>
+    <script src="scripts/platformOverrides.js"></script>
+    <!-- App entry point -->
+    <script src="scripts/app.js"></script>
+    <!-- Cordova app entry point -->
+    <script src="scripts/cordova-app.js"></script>
 </body>
 </html>

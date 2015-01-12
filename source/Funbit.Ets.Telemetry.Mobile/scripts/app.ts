@@ -37,7 +37,7 @@ module Funbit.Ets.Telemetry {
             var firefox = /Firefox/i.test(navigator.userAgent);
             var ios = /iPhone|iPad|iPod/i.test(navigator.userAgent);
             
-            // fit dashboard into the screen
+            // fit viewport into the screen
             var dashboardWidth: number = this.skinConfig.width * 1.0;
             var dashboardHeight: number = this.skinConfig.height * 1.0;
             var windowWidth = $(window).width();
