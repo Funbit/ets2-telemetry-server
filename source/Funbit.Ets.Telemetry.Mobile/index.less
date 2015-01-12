@@ -4,12 +4,12 @@
 body {
     background-color: #F9F9F9;
     font-family: Segoe UI, Consolas, Arial;
-    color: #444;
+    color: #444;    
 }
 
 h1 {
     font-size: @large-font-size;
-    color: #4e66c3;
+    color: #269be4;
     text-align: center;
 }
 
@@ -33,14 +33,43 @@ table {
     }
 }
 
-.server-ip {
+span.server-ip {
     background-color: #FAFAFA;
-    border: 1px solid #CCC;
-    width: 90%;
-    height: 60%;
+    border: 1px solid #e0e0e0;
+    width: 90pt;
+    height: 30px;
     font-size: @font-size;
-    padding: 5px;
-    margin-top: 3px;
+    line-height: @font-size;
+    padding: 5px;    
+    display: inline-block;
+}
+
+input.edit-server-ip {    
+    width: 32pt;
+    height: 40px;
+    font-size: @font-size;
+    line-height: @font-size;
+    -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	-webkit-box-shadow:inset 0px 1px 0px 0px #ffffff;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
+	background:-moz-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+	background:-webkit-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+	background:-o-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+	background:-ms-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+	background:linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f6f6f6',GradientType=0);
+	background-color:#ffffff;
+	-moz-border-radius:3px;
+	-webkit-border-radius:6px;
+	border-radius:3px;
+	border:1px solid #cfcfcf;
+	display:inline-block;
+	cursor:pointer;
+	color:#666666;
+	padding: 3px;
+	text-decoration:none;
+	text-shadow:0px 1px 0px #ffffff;
 }
 
 .server-status {
@@ -58,27 +87,36 @@ table.skins {
     }
     td {
         padding-left: 0;
-        vertical-align: top;
-        background-image: url('images/disclosure.png');
-        background-position: right center;
-        background-repeat: no-repeat;
+        vertical-align: top;        
         padding-top: 10px;
         padding-bottom: 10px;        
     }
     tr {
         &:hover {
             background-color: #f6f6f6;
+            cursor: default;
         }
     }
     td.skin-image {
+        cursor: pointer;
         width: 30%;
     }
     td.skin-desc {
+        cursor: pointer;
         width: 70%;
+        background-image: url('images/disclosure.png');
+        background-position: right center;
+        background-repeat: no-repeat;
         padding-right: 40px;
         div {
             font-size: @font-size;
             margin-left: @font-size;
         }
+    }
+    td.skin-empty {
+        padding-top: 12pt;
+        text-align: center;
+        font-size: @font-size;
+        color: #f27a4e;
     }
 }

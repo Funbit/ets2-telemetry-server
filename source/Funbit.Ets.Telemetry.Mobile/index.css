@@ -5,7 +5,7 @@
 }
 h1 {
   font-size: 16pt;
-  color: #4e66c3;
+  color: #269be4;
   text-align: center;
 }
 table {
@@ -28,14 +28,42 @@ table th {
   text-align: right;
   width: 30%;
 }
-.server-ip {
+span.server-ip {
   background-color: #FAFAFA;
-  border: 1px solid #CCC;
-  width: 90%;
-  height: 60%;
+  border: 1px solid #e0e0e0;
+  width: 90pt;
+  height: 30px;
   font-size: 12pt;
+  line-height: 12pt;
   padding: 5px;
-  margin-top: 3px;
+  display: inline-block;
+}
+input.edit-server-ip {
+  width: 32pt;
+  height: 40px;
+  font-size: 12pt;
+  line-height: 12pt;
+  -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+  box-shadow: inset 0px 1px 0px 0px #ffffff;
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #ffffff), color-stop(1, #f6f6f6));
+  background: -moz-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+  background: -webkit-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+  background: -o-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+  background: -ms-linear-gradient(top, #ffffff 5%, #f6f6f6 100%);
+  background: linear-gradient(to bottom, #ffffff 5%, #f6f6f6 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#f6f6f6', GradientType=0);
+  background-color: #ffffff;
+  -moz-border-radius: 3px;
+  -webkit-border-radius: 6px;
+  border-radius: 3px;
+  border: 1px solid #cfcfcf;
+  display: inline-block;
+  cursor: pointer;
+  color: #666666;
+  padding: 3px;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px #ffffff;
 }
 .server-status.connected {
   color: #1ea41e;
@@ -49,23 +77,32 @@ table.skins img {
 table.skins td {
   padding-left: 0;
   vertical-align: top;
-  background-image: url('images/disclosure.png');
-  background-position: right center;
-  background-repeat: no-repeat;
   padding-top: 10px;
   padding-bottom: 10px;
 }
 table.skins tr:hover {
   background-color: #f6f6f6;
+  cursor: default;
 }
 table.skins td.skin-image {
+  cursor: pointer;
   width: 30%;
 }
 table.skins td.skin-desc {
+  cursor: pointer;
   width: 70%;
+  background-image: url('images/disclosure.png');
+  background-position: right center;
+  background-repeat: no-repeat;
   padding-right: 40px;
 }
 table.skins td.skin-desc div {
   font-size: 12pt;
   margin-left: 12pt;
+}
+table.skins td.skin-empty {
+  padding-top: 12pt;
+  text-align: center;
+  font-size: 12pt;
+  color: #f27a4e;
 }

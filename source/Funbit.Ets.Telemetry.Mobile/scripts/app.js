@@ -1,4 +1,6 @@
-﻿var Funbit;
+﻿/// <reference path="typings/jquery.d.ts" />
+/// <reference path="typings/jqueryui.d.ts" />
+var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
@@ -32,6 +34,11 @@
                     } else {
                         $body.css('-webkit-transform', scale);
                     }
+
+                    // return to menu by a click
+                    $(document).add($body).on('click', function () {
+                        window.location.href = "/index.html";
+                    });
 
                     // reload page when orientation changes
                     $(window).on('orientationchange', function () {

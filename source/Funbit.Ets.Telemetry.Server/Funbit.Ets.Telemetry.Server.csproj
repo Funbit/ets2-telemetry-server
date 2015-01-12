@@ -226,6 +226,10 @@
       <Link>Html\scripts\dashboard.min.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\scripts\doT.js">
+      <Link>Html\scripts\doT.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\scripts\jquery-ui.min.js">
       <Link>Html\scripts\jquery-ui.min.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

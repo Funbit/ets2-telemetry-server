@@ -16,7 +16,7 @@
                 Configuration.getInstance = function () {
                     if (!Configuration.instance) {
                         Configuration.instance = new Configuration();
-                        Configuration.instance.reload();
+                        Configuration.instance.reload(Configuration.instance.serverIp);
                     }
                     return Configuration.instance;
                 };
@@ -39,22 +39,29 @@
                     return null;
                 };
 
-                Configuration.prototype.reload = function () {
+                Configuration.prototype.reload = function (newServerIp, done, fail) {
                     var _this = this;
+                    if (typeof done === "undefined") { done = null; }
+                    if (typeof fail === "undefined") { fail = null; }
                     if (!this.serverIp)
                         return false;
+                    this.serverIp = newServerIp;
                     var result = true;
                     $.ajax({
                         url: this.getUrlInternal('/config.json'),
-                        async: false,
+                        async: (done != null),
                         cache: true,
                         dataType: 'json',
-                        timeout: 3000
+                        timeout: 5000
                     }).done(function (json) {
                         _this.skins = json.skins;
+                        if (done)
+                            done();
                     }).fail(function () {
-                        alert('Failed to load config.json');
+                        _this.skins = [];
                         result = false;
+                        if (fail)
+                            fail();
                     });
 
                     // ReSharper disable once ExpressionIsAlwaysConst

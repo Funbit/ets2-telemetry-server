@@ -25,38 +25,38 @@
     <table class="settings">
         <tr>
             <th>Server IP:</th>
-            <td><input class="server-ip" type="text" placeholder="Server IP address" /></td>
+            <td>
+                <span class="server-ip"></span>
+                <input class="edit-server-ip" type="button" value="Edit"/>
+            </td>
         </tr>
         <tr>
             <th>Status:</th>
-            <td class="server-status connected">Connected</td>
+            <td class="server-status disconnected">Connecting...</td>
         </tr>
     </table>
     <h1>Select a skin to start</h1>
-    <table class="skins">
+    <table class="skins"></table>
+    <script id="skin-empty-row-template" type="text/html">
         <tr>
+            <td class="skin-empty">Not available.<br/>Please connect to the server first.</td>
+        </tr>
+    </script>
+    <script id="skin-row-template" type="text/html">
+        <tr data-name="{{=it.name}}">
             <td class="skin-image">
-                <img src="skins/default/dashboard.jpg" />
+                <img src="skins/{{=it.name}}/dashboard.jpg" />
             </td>
             <td class="skin-desc">
-                <div><strong>Title</strong>: Default Dashboard</div>
-                <div><strong>Author</strong>: Funbit</div>
-                <div><strong>Size</strong>: 2048 x 1152</div>
+                <div><strong>Title</strong>: {{=it.title}}</div>
+                <div><strong>Author</strong>: {{=it.author}}</div>
+                <div><strong>Size</strong>: {{=it.width}} x {{=it.height}}</div>
             </td>
         </tr>
-        <tr>
-            <td class="skin-image">
-                <img src="skins/default/dashboard.jpg" />
-            </td>
-            <td class="skin-desc">
-                <div><strong>Title</strong>: Default Dashboard</div>
-                <div><strong>Author</strong>: Funbit</div>
-                <div><strong>Size</strong>: 2048 x 1152</div>
-            </td>
-        </tr>
-    </table>
+    </script>
     <script src="scripts/jquery.min.js"></script>
     <script src="scripts/jquery-ui.min.js"></script>
+    <script src="scripts/doT.js"></script>
     <script src="scripts/config.js"></script>
     <script src="scripts/menu.js"></script>
 </body>

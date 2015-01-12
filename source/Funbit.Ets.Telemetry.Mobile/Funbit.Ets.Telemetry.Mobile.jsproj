@@ -214,6 +214,7 @@
     <Content Include="scripts\dashboard.min.js.map">
       <DependentUpon>dashboard.min.js</DependentUpon>
     </Content>
+    <Content Include="scripts\doT.js" />
     <Content Include="scripts\jquery-ui.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -326,6 +327,7 @@
     <TypeScriptCompile Include="scripts\config.ts" />
     <TypeScriptCompile Include="scripts\dashboard.ts" />
     <TypeScriptCompile Include="scripts\menu.ts" />
+    <TypeScriptCompile Include="scripts\typings\dot.d.ts" />
     <TypeScriptCompile Include="scripts\typings\jquery.d.ts" />
     <TypeScriptCompile Include="scripts\typings\jqueryui.d.ts" />
   </ItemGroup>

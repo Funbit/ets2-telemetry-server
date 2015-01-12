@@ -1,4 +1,7 @@
-﻿module Funbit.Ets.Telemetry {
+﻿/// <reference path="typings/jquery.d.ts" />
+/// <reference path="typings/jqueryui.d.ts" />
+
+module Funbit.Ets.Telemetry {
 
     export class App {
 
@@ -36,6 +39,11 @@
             } else {
                 $body.css('-webkit-transform', scale);
             }
+
+            // return to menu by a click
+            $(document).add($body).on('click', () => {
+                window.location.href = "/index.html";
+            });
 
             // reload page when orientation changes
             $(window).on('orientationchange', () => {

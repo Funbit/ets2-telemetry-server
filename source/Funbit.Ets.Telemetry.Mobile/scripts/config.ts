@@ -23,7 +23,7 @@
         public static getInstance(): Configuration {
             if (!Configuration.instance) {
                 Configuration.instance = new Configuration();
-                Configuration.instance.reload();
+                Configuration.instance.reload(Configuration.instance.serverIp);
             }
             return Configuration.instance;
         }
@@ -46,21 +46,24 @@
             return null;
         }
         
-        public reload(): boolean {
+        public reload(newServerIp: string, done: Function = null, fail: Function = null): boolean {
             if (!this.serverIp)
                 return false;
+            this.serverIp = newServerIp;
             var result: boolean = true;
             $.ajax({
                 url: this.getUrlInternal('/config.json'),
-                async: false,
+                async: (done != null),
                 cache: true,
                 dataType: 'json',
-                timeout: 3000
+                timeout: 5000
             }).done(json => {
                 this.skins = json.skins;
+                if (done) done();
             }).fail(() => {
-                alert('Failed to load config.json');
+                this.skins = [];
                 result = false;
+                if (fail) fail();
             });
             // ReSharper disable once ExpressionIsAlwaysConst
             return result;
