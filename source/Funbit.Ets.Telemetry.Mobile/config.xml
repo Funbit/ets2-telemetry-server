@@ -8,7 +8,7 @@
   <preference name="SplashScreen" value="screen" />
   <preference name="windows-target-version" value="8.0" />
   <preference name="windows-phone-target-version" value="8.1" />
-  <preference name="Orientation" value="landscape" />
+  <preference name="Orientation" value="default" />
   <preference name="Fullscreen" value="true" />
   <preference name="BackupWebStorage" value="cloud" />
   <preference name="KeepRunning" value="False" />

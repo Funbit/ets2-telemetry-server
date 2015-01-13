@@ -2,8 +2,11 @@
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
+            
+
             var Configuration = (function () {
                 function Configuration() {
+                    var _this = this;
                     this.skins = [];
                     this.serverIp = '';
                     if (!Configuration.isCordovaAvailable()) {
@@ -11,7 +14,32 @@
                         // we are in desktop environment
                         // so we use current host name as our IP
                         this.serverIp = window.location.hostname;
+                        this.insomnia = {
+                            keepAwake: function () {
+                            }
+                        };
+                        this.prefs = {
+                            fetch: function () {
+                            },
+                            store: function () {
+                            }
+                        };
+                    } else {
+                        var plugins = window['plugins'];
+                        this.insomnia = plugins.insomnia;
+                        this.prefs = plugins.appPreferences;
+
+                        // turn off sleep mode
+                        this.insomnia.keepAwake();
+
+                        // load saved prefs
+                        this.prefs.fetch(function (savedIp) {
+                            _this.serverIp = savedIp;
+                        }, function () {
+                        }, 'serverIp');
                     }
+
+                    // if ip was passed in the query string user it then
                     var ip = Configuration.getParameter('ip');
                     if (ip)
                         this.serverIp = ip;
@@ -57,6 +85,9 @@
                         dataType: 'json',
                         timeout: 3000
                     }).done(function (json) {
+                        _this.prefs.store(function () {
+                        }, function () {
+                        }, 'serverIp', _this.serverIp);
                         _this.skins = json.skins;
                         if (done)
                             done();

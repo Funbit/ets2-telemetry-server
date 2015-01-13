@@ -14,10 +14,24 @@
         height: number;
     } 
 
+    // TODO: add more detailed signatures for plugin interfaces
+
+    interface IPrefsPlugin {
+        fetch: Function;
+        store: Function;
+    }
+
+    interface IInsomniaPlugin {
+        keepAwake: Function;
+    }
+
     export class Configuration implements IConfiguration {
         
         public skins: ISkinConfiguration[];
         public serverIp: string;
+
+        private prefs: IPrefsPlugin;
+        private insomnia: IInsomniaPlugin;
 
         private static instance: Configuration;
         public static getInstance(): Configuration {
@@ -58,6 +72,7 @@
                 dataType: 'json',
                 timeout: 3000
             }).done(json => {
+                this.prefs.store(() => {}, () => {}, 'serverIp', this.serverIp);
                 this.skins = json.skins;
                 if (done) done();
             }).fail(() => {
@@ -90,7 +105,25 @@
                 // we are in desktop environment 
                 // so we use current host name as our IP
                 this.serverIp = window.location.hostname;
+                this.insomnia = {
+                    keepAwake: () => {}
+                };
+                this.prefs = {
+                    fetch: () => {},
+                    store: () => {}
+                };
+            } else {
+                var plugins = window['plugins'];
+                this.insomnia = <IInsomniaPlugin>plugins.insomnia;
+                this.prefs = <IPrefsPlugin>plugins.appPreferences;
+                // turn off sleep mode
+                this.insomnia.keepAwake();
+                // load saved prefs
+                this.prefs.fetch(savedIp => {
+                    this.serverIp = savedIp;
+                }, () => {}, 'serverIp');
             }
+            // if ip was passed in the query string user it then
             var ip = Configuration.getParameter('ip');
             if (ip)
                 this.serverIp = ip;
