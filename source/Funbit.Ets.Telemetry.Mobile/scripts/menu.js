@@ -49,7 +49,11 @@ var Funbit;
 
                 Menu.prototype.promptServerIp = function () {
                     var ip = prompt("Please enter " + "server IP address (aa.bb.cc.dd)", this.config.serverIp);
-                    this.connectToServer(ip);
+                    var correct = /^[a-zA-Z0-9\.\-]+$/.test(ip);
+                    if (!correct)
+                        alert('Entered server IP or hostname has incorrect format.');
+                    else
+                        this.connectToServer(ip);
                 };
 
                 Menu.prototype.initializeEvents = function () {
@@ -57,7 +61,7 @@ var Funbit;
                     $(document).on('click', 'td.skin-image,td.skin-desc', function (e) {
                         var $this = $(e.currentTarget);
                         var skinName = $this.closest('tr').data('name');
-                        window.location.href = "/dashboard-host.html?skin=" + skinName;
+                        window.location.href = "/dashboard-host.html?skin=" + skinName + "&ip=" + _this.config.serverIp;
                     });
                     $('.edit-server-ip').click(function () {
                         _this.promptServerIp();

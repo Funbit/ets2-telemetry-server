@@ -56,7 +56,7 @@
                 async: (done != null),
                 cache: true,
                 dataType: 'json',
-                timeout: 5000
+                timeout: 3000
             }).done(json => {
                 this.skins = json.skins;
                 if (done) done();
@@ -91,6 +91,9 @@
                 // so we use current host name as our IP
                 this.serverIp = window.location.hostname;
             }
+            var ip = Configuration.getParameter('ip');
+            if (ip)
+                this.serverIp = ip;
         }
         
     }

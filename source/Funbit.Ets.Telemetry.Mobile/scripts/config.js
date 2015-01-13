@@ -12,6 +12,9 @@
                         // so we use current host name as our IP
                         this.serverIp = window.location.hostname;
                     }
+                    var ip = Configuration.getParameter('ip');
+                    if (ip)
+                        this.serverIp = ip;
                 }
                 Configuration.getInstance = function () {
                     if (!Configuration.instance) {
@@ -52,7 +55,7 @@
                         async: (done != null),
                         cache: true,
                         dataType: 'json',
-                        timeout: 5000
+                        timeout: 3000
                     }).done(function (json) {
                         _this.skins = json.skins;
                         if (done)

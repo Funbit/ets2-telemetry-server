@@ -57,14 +57,19 @@ module Funbit.Ets.Telemetry {
         private promptServerIp() {
             var ip = prompt("Please enter " +
                 "server IP address (aa.bb.cc.dd)", this.config.serverIp);
-            this.connectToServer(ip);
+            var correct = /^[a-zA-Z0-9\.\-]+$/.test(ip);
+            if (!correct)
+                alert('Entered server IP or hostname has incorrect format.');
+            else
+                this.connectToServer(ip);
         }
 
         private initializeEvents() {
             $(document).on('click', 'td.skin-image,td.skin-desc', e => {
                 var $this = $(e.currentTarget);
                 var skinName = $this.closest('tr').data('name');
-                window.location.href = "/dashboard-host.html?skin=" + skinName;
+                window.location.href = "/dashboard-host.html?skin=" + skinName +
+                    "&ip=" + this.config.serverIp;
             });
             $('.edit-server-ip').click(() => {
                 this.promptServerIp();
