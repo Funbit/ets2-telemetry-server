@@ -41,6 +41,7 @@ module Funbit.Ets.Telemetry {
                 .addClass('disconnected')
                 .html('Connecting...');
             $('.server-ip').html(serverIp);
+            $('table.skins').empty();
             this.config.reload(serverIp, () => {
                 $serverStatus.removeClass('disconnected')
                     .addClass('connected')
@@ -79,5 +80,14 @@ module Funbit.Ets.Telemetry {
     }
 }
 
-// initialize menu
-(new Funbit.Ets.Telemetry.Menu());
+//
+// Menu "entry-point"
+//
+
+if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
+    $(document).on('deviceready', () => {
+        (new Funbit.Ets.Telemetry.Menu());
+    });
+} else {
+    (new Funbit.Ets.Telemetry.Menu());
+}

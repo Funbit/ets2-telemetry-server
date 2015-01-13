@@ -38,6 +38,7 @@ var Funbit;
                     var $serverStatus = $('.server-status');
                     $serverStatus.removeClass('connected').addClass('disconnected').html('Connecting...');
                     $('.server-ip').html(serverIp);
+                    $('table.skins').empty();
                     this.config.reload(serverIp, function () {
                         $serverStatus.removeClass('disconnected').addClass('connected').html('Connected');
                         _this.buildSkinTable();
@@ -76,6 +77,14 @@ var Funbit;
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
 
-// initialize menu
-(new Funbit.Ets.Telemetry.Menu());
+//
+// Menu "entry-point"
+//
+if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
+    $(document).on('deviceready', function () {
+        (new Funbit.Ets.Telemetry.Menu());
+    });
+} else {
+    (new Funbit.Ets.Telemetry.Menu());
+}
 //# sourceMappingURL=menu.js.map

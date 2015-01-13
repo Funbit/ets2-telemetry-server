@@ -25,7 +25,6 @@
                             }
                         };
                     } else {
-                        var plugins = window['plugins'];
                         this.insomnia = plugins.insomnia;
                         this.prefs = plugins.appPreferences;
 
@@ -75,9 +74,8 @@
                     if (typeof done === "undefined") { done = null; }
                     if (typeof fail === "undefined") { fail = null; }
                     if (!this.serverIp)
-                        return false;
+                        return;
                     this.serverIp = newServerIp;
-                    var result = true;
                     $.ajax({
                         url: this.getUrlInternal('/config.json'),
                         async: (done != null),
@@ -93,13 +91,9 @@
                             done();
                     }).fail(function () {
                         _this.skins = [];
-                        result = false;
                         if (fail)
                             fail();
                     });
-
-                    // ReSharper disable once ExpressionIsAlwaysConst
-                    return result;
                 };
 
                 Configuration.isCordovaAvailable = function () {

@@ -272,7 +272,6 @@
     </Content>
     <Content Include="dashboard-host.html" />
     <Content Include="scripts\dashboard.js" />
-    <Content Include="scripts\cordova-app.js" />
     <Content Include="scripts\platformOverrides.js" />
     <Content Include="res\icons\android\icon-36-ldpi.png" />
     <Content Include="res\icons\android\icon-48-mdpi.png" />

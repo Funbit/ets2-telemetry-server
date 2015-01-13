@@ -100,7 +100,9 @@ module Funbit.Ets.Telemetry {
 //
 
 if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
-    // Cordova will call connectDashboard inside cordova-app.js onDeviceReady
+    $(document).on('deviceready', () => {
+        (new Funbit.Ets.Telemetry.App()).connectDashboard();
+    });
 } else {
     (new Funbit.Ets.Telemetry.App()).connectDashboard();
 }

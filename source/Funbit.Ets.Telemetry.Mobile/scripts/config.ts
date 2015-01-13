@@ -1,4 +1,6 @@
-﻿module Funbit.Ets.Telemetry {
+﻿declare var plugins: any; // cordova plugins
+
+module Funbit.Ets.Telemetry {
 
     export interface IConfiguration {
         skins: ISkinConfiguration[];
@@ -60,11 +62,10 @@
             return null;
         }
         
-        public reload(newServerIp: string, done: Function = null, fail: Function = null): boolean {
+        public reload(newServerIp: string, done: Function = null, fail: Function = null) {
             if (!this.serverIp)
-                return false;
+                return;
             this.serverIp = newServerIp;
-            var result: boolean = true;
             $.ajax({
                 url: this.getUrlInternal('/config.json'),
                 async: (done != null),
@@ -77,11 +78,8 @@
                 if (done) done();
             }).fail(() => {
                 this.skins = [];
-                result = false;
                 if (fail) fail();
             });
-            // ReSharper disable once ExpressionIsAlwaysConst
-            return result;
         }
         
         public static isCordovaAvailable(): boolean {
@@ -113,7 +111,6 @@
                     store: () => {}
                 };
             } else {
-                var plugins = window['plugins'];
                 this.insomnia = <IInsomniaPlugin>plugins.insomnia;
                 this.prefs = <IPrefsPlugin>plugins.appPreferences;
                 // turn off sleep mode

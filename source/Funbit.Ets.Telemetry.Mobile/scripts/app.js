@@ -98,7 +98,9 @@ var Funbit;
 // Application "entry-point"
 //
 if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
-    // Cordova will call connectDashboard inside cordova-app.js onDeviceReady
+    $(document).on('deviceready', function () {
+        (new Funbit.Ets.Telemetry.App()).connectDashboard();
+    });
 } else {
     (new Funbit.Ets.Telemetry.App()).connectDashboard();
 }
