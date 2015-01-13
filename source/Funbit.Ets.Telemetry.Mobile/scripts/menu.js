@@ -7,13 +7,16 @@ var Funbit;
         (function (Telemetry) {
             var Menu = (function () {
                 function Menu() {
+                    var _this = this;
                     this.config = Telemetry.Configuration.getInstance();
                     this.initializeEvents();
                     this.buildSkinTable();
-                    if (!this.config.serverIp)
-                        this.promptServerIp();
-                    else
-                        this.connectToServer(this.config.serverIp);
+                    $.when(this.config.initialized).done(function (config) {
+                        if (!config.serverIp)
+                            _this.promptServerIp();
+                        else
+                            _this.connectToServer(config.serverIp);
+                    });
                 }
                 Menu.prototype.buildSkinTable = function () {
                     var $tableSkins = $('table.skins');
@@ -62,7 +65,7 @@ var Funbit;
                     $(document).on('click', 'td.skin-image,td.skin-desc', function (e) {
                         var $this = $(e.currentTarget);
                         var skinName = $this.closest('tr').data('name');
-                        window.location.href = "/dashboard-host.html?skin=" + skinName + "&ip=" + _this.config.serverIp;
+                        window.location.href = "dashboard-host.html?skin=" + skinName + "&ip=" + _this.config.serverIp;
                     });
                     $('.edit-server-ip').click(function () {
                         _this.promptServerIp();

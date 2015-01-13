@@ -42,7 +42,7 @@ module Funbit.Ets.Telemetry {
 
             // return to menu by a click
             $(document).add($body).on('click', () => {
-                window.location.href = "/index.html";
+                window.history.back();
             });
 
             // reload page when orientation changes

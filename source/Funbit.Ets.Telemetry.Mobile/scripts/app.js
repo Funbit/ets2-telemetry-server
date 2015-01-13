@@ -37,7 +37,7 @@ var Funbit;
 
                     // return to menu by a click
                     $(document).add($body).on('click', function () {
-                        window.location.href = "/index.html";
+                        window.history.back();
                     });
 
                     // reload page when orientation changes

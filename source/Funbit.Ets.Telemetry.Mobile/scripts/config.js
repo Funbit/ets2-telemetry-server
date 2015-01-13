@@ -7,6 +7,7 @@
             var Configuration = (function () {
                 function Configuration() {
                     var _this = this;
+                    this.initialized = $.Deferred();
                     this.skins = [];
                     this.serverIp = '';
                     if (!Configuration.isCordovaAvailable()) {
@@ -24,6 +25,7 @@
                             store: function () {
                             }
                         };
+                        this.initialized.resolve(this);
                     } else {
                         this.insomnia = plugins.insomnia;
                         this.prefs = plugins.appPreferences;
@@ -34,14 +36,17 @@
                         // load saved prefs
                         this.prefs.fetch(function (savedIp) {
                             _this.serverIp = savedIp;
+                            _this.initialized.resolve(_this);
                         }, function () {
                         }, 'serverIp');
                     }
 
                     // if ip was passed in the query string user it then
                     var ip = Configuration.getParameter('ip');
-                    if (ip)
+                    if (ip) {
                         this.serverIp = ip;
+                        this.initialized.resolve(this);
+                    }
                 }
                 Configuration.getInstance = function () {
                     if (!Configuration.instance) {
@@ -73,7 +78,7 @@
                     var _this = this;
                     if (typeof done === "undefined") { done = null; }
                     if (typeof fail === "undefined") { fail = null; }
-                    if (!this.serverIp)
+                    if (!newServerIp)
                         return;
                     this.serverIp = newServerIp;
                     $.ajax({
@@ -81,7 +86,7 @@
                         async: (done != null),
                         cache: true,
                         dataType: 'json',
-                        timeout: 3000
+                        timeout: 5000
                     }).done(function (json) {
                         _this.prefs.store(function () {
                         }, function () {

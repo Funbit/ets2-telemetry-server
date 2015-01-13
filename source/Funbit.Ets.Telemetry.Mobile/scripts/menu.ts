@@ -12,10 +12,12 @@ module Funbit.Ets.Telemetry {
             this.config = Configuration.getInstance();
             this.initializeEvents();
             this.buildSkinTable();
-            if (!this.config.serverIp)
-                this.promptServerIp();
-            else
-                this.connectToServer(this.config.serverIp);
+            $.when(this.config.initialized).done(config => {
+                if (!config.serverIp)
+                    this.promptServerIp();
+                else
+                    this.connectToServer(config.serverIp);
+            });
         }
 
         private buildSkinTable() {
@@ -69,7 +71,7 @@ module Funbit.Ets.Telemetry {
             $(document).on('click', 'td.skin-image,td.skin-desc', e => {
                 var $this = $(e.currentTarget);
                 var skinName = $this.closest('tr').data('name');
-                window.location.href = "/dashboard-host.html?skin=" + skinName +
+                window.location.href = "dashboard-host.html?skin=" + skinName +
                     "&ip=" + this.config.serverIp;
             });
             $('.edit-server-ip').click(() => {

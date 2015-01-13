@@ -31,7 +31,8 @@ module Funbit.Ets.Telemetry {
         
         public skins: ISkinConfiguration[];
         public serverIp: string;
-
+        public initialized: JQueryDeferred<Configuration>;
+        
         private prefs: IPrefsPlugin;
         private insomnia: IInsomniaPlugin;
 
@@ -63,7 +64,7 @@ module Funbit.Ets.Telemetry {
         }
         
         public reload(newServerIp: string, done: Function = null, fail: Function = null) {
-            if (!this.serverIp)
+            if (!newServerIp)
                 return;
             this.serverIp = newServerIp;
             $.ajax({
@@ -71,7 +72,7 @@ module Funbit.Ets.Telemetry {
                 async: (done != null),
                 cache: true,
                 dataType: 'json',
-                timeout: 3000
+                timeout: 5000
             }).done(json => {
                 this.prefs.store(() => {}, () => {}, 'serverIp', this.serverIp);
                 this.skins = json.skins;
@@ -96,6 +97,7 @@ module Funbit.Ets.Telemetry {
         }
         
         constructor() {
+            this.initialized = $.Deferred<Configuration>();
             this.skins = [];
             this.serverIp = '';
             if (!Configuration.isCordovaAvailable()) {
@@ -110,6 +112,7 @@ module Funbit.Ets.Telemetry {
                     fetch: () => {},
                     store: () => {}
                 };
+                this.initialized.resolve(this);
             } else {
                 this.insomnia = <IInsomniaPlugin>plugins.insomnia;
                 this.prefs = <IPrefsPlugin>plugins.appPreferences;
@@ -118,12 +121,15 @@ module Funbit.Ets.Telemetry {
                 // load saved prefs
                 this.prefs.fetch(savedIp => {
                     this.serverIp = savedIp;
+                    this.initialized.resolve(this);
                 }, () => {}, 'serverIp');
             }
             // if ip was passed in the query string user it then
             var ip = Configuration.getParameter('ip');
-            if (ip)
+            if (ip) {
                 this.serverIp = ip;
+                this.initialized.resolve(this);
+            }
         }
         
     }
