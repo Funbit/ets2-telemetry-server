@@ -26,6 +26,7 @@ table {
         width: 70%;
         padding-left: @font-size;
         height: 52px;        
+        padding-top: 3px;
     }
     th {
         text-align: right;
@@ -39,14 +40,15 @@ span.server-ip {
     width: 90pt;
     height: 30px;
     font-size: @font-size;
-    line-height: @font-size;
+    line-height: 30px;
     padding: 5px;    
-    display: inline-block;
+    float: left;
 }
 
 input.edit-server-ip {    
+    margin-left: 3px;
     width: 32pt;
-    height: 40px;
+    height: 42px;
     font-size: @font-size;
     line-height: @font-size;
     -moz-box-shadow:inset 0px 1px 0px 0px #ffffff;
@@ -64,12 +66,12 @@ input.edit-server-ip {
 	-webkit-border-radius:6px;
 	border-radius:3px;
 	border:1px solid #cfcfcf;
-	display:inline-block;
 	cursor:pointer;
 	color:#666666;
 	padding: 3px;
 	text-decoration:none;
 	text-shadow:0px 1px 0px #ffffff;
+    float: left;
 }
 
 .server-status {
