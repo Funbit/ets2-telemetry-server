@@ -4,9 +4,11 @@ using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Reflection;
 using System.Windows.Forms;
 using Funbit.Ets.Telemetry.Server.Controllers;
+using Funbit.Ets.Telemetry.Server.Data;
 using Funbit.Ets.Telemetry.Server.Helpers;
 using Funbit.Ets.Telemetry.Server.Setup;
 using Microsoft.Owin.Hosting;
@@ -17,6 +19,10 @@ namespace Funbit.Ets.Telemetry.Server
     {
         IDisposable _server;
         static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
+
+        static readonly string BroardcastUrl = ConfigurationManager.AppSettings["BroardcastUrl"];
+        static readonly int BroardcastRateInSeconds = Math.Min(Math.Max(1, 
+            Convert.ToInt32(ConfigurationManager.AppSettings["BroardcastRate"])), 86400);
 
         public MainForm()
         {
@@ -79,6 +85,13 @@ namespace Funbit.Ets.Telemetry.Server
 
                 // start ETS2 process watchdog timer
                 statusUpdateTimer.Enabled = true;
+
+                // turn on broardcasting if set
+                if (!string.IsNullOrEmpty(BroardcastUrl))
+                {
+                    broardcastTimer.Interval = BroardcastRateInSeconds * 1000;
+                    broardcastTimer.Enabled = true;
+                }
 
                 // show tray icon
                 trayIcon.Visible = true;
@@ -171,6 +184,21 @@ namespace Funbit.Ets.Telemetry.Server
             ipAddressLabel.Text = selectedInterface.Ip;
             Settings.Instance.DefaultNetworkInterfaceId = selectedInterface.Id;
             Settings.Instance.Save();
+        }
+
+        private async void broardcastTimer_Tick(object sender, EventArgs e)
+        {
+            try
+            {
+                broardcastTimer.Enabled = false;
+                using (var client = new HttpClient())
+                    await client.PostAsJsonAsync(BroardcastUrl, Ets2TelemetryDataReader.Instance.Read());
+            }
+            catch (Exception ex)
+            {
+                Log.Error(ex);
+            }
+            broardcastTimer.Enabled = true;
         }
     }
 }

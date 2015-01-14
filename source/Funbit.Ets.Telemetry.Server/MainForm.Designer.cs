@@ -46,6 +46,7 @@
             this.apiEndpointUrlTitleLabel = new System.Windows.Forms.Label();
             this.statusTitleLabel = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
+            this.broardcastTimer = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -150,9 +151,10 @@
             this.appUrlLabel.Name = "appUrlLabel";
             this.appUrlLabel.Size = new System.Drawing.Size(72, 17);
             this.appUrlLabel.TabIndex = 16;
+            this.appUrlLabel.TabStop = true;
             this.appUrlLabel.Text = "appUrlLabel";
-            this.toolTip.SetToolTip(this.appUrlLabel, "Use this URL to view HTML5 mobile dashboard in desktop or mobile browsers (click to o" +
-        "pen)");
+            this.toolTip.SetToolTip(this.appUrlLabel, "Use this URL to view HTML5 mobile dashboard in desktop or mobile browsers (click " +
+        "to open)");
             this.appUrlLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.appUrlLabel_LinkClicked);
             // 
             // appUrlTitleLabel
@@ -173,6 +175,7 @@
             this.apiUrlLabel.Name = "apiUrlLabel";
             this.apiUrlLabel.Size = new System.Drawing.Size(68, 17);
             this.apiUrlLabel.TabIndex = 14;
+            this.apiUrlLabel.TabStop = true;
             this.apiUrlLabel.Text = "apiUrlLabel";
             this.toolTip.SetToolTip(this.apiUrlLabel, "Use this URL to develop your own applications based on the REST API (click to ope" +
         "n)");
@@ -217,6 +220,11 @@
             this.toolTip.ReshowDelay = 50;
             this.toolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
+            // broardcastTimer
+            // 
+            this.broardcastTimer.Interval = 1000;
+            this.broardcastTimer.Tick += new System.EventHandler(this.broardcastTimer_Tick);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -257,6 +265,7 @@
         private System.Windows.Forms.ComboBox interfacesDropDown;
         private System.Windows.Forms.Label networkInterfaceTitleLabel;
         private System.Windows.Forms.ToolTip toolTip;
+        private System.Windows.Forms.Timer broardcastTimer;
     }
 }
 
