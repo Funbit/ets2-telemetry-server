@@ -120,6 +120,7 @@
     </Content>
     <Content Include="images\app-icon.png" />
     <Content Include="images\disclosure.png" />
+    <Content Include="images\menu-background.png" />
     <Content Include="images\rotate-to-landscape.png" />
     <Content Include="index.html" />
     <Content Include="index.css">

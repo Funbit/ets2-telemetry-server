@@ -8,7 +8,6 @@
                     this.initialized = $.Deferred();
                     this.skins = [];
 
-                    // initialize structures
                     if (!Configuration.isCordovaAvailable()) {
                         this.insomnia = {
                             keepAwake: function () {
@@ -24,11 +23,9 @@
                         this.insomnia = plugins.insomnia;
                         this.prefs = plugins.appPreferences;
 
-                        // turn off sleep mode
                         this.insomnia.keepAwake();
                     }
 
-                    // if server IP was passed in the query string use it then
                     var ip = Configuration.getParameter('ip');
                     if (ip) {
                         this.serverIp = ip;
@@ -37,9 +34,6 @@
                     }
                     this.serverIp = '';
                     if (!Configuration.isCordovaAvailable()) {
-                        // if cordova is not available then
-                        // we are in desktop environment
-                        // so we use current host name as our IP
                         this.serverIp = window.location.hostname;
                         this.initialized.resolve(this);
                     } else {
@@ -124,4 +118,3 @@
     })(Funbit.Ets || (Funbit.Ets = {}));
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
-//# sourceMappingURL=config.js.map

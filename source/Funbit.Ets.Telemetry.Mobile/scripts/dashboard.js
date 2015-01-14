@@ -1,6 +1,4 @@
-﻿/// <reference path="typings/jquery.d.ts" />
-/// <reference path="typings/jqueryui.d.ts" />
-var Funbit;
+﻿var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
@@ -75,12 +73,10 @@ var Funbit;
                         });
                     };
                     if (Math.abs(prevAngle - angle) < (maxAngle - minAngle) * 0.005) {
-                        // fast update
                         updateTransform('rotate(' + angle + 'deg)');
                         return;
                     }
 
-                    // animated update
                     $({ a: prevAngle }).animate({ a: angle }, {
                         duration: this.skinConfig.refreshDelay * 1.1,
                         step: function (now) {
@@ -135,7 +131,6 @@ var Funbit;
                     $('.time').removeClass('error');
                     this.setIndicatorText('time', data.gameTime);
                     if (data.sourceCity.length > 0) {
-                        // we have job info set
                         this.setIndicatorText('source', data.sourceCity + ' (' + data.sourceCompany + ')');
                         this.setIndicatorText('destination', data.destinationCity + ' (' + data.destinationCompany + ')');
                         this.setIndicatorText('deadline', data.jobDeadlineTime);
@@ -160,7 +155,7 @@ var Funbit;
                     this.setIndicatorStatus('parking-lights', data.lightsParkingOn);
                     this.setIndicatorStatus('highbeam', data.lightsBeamHighOn);
                     this.setIndicatorStatus('lowbeam', data.lightsBeamLowOn && !data.lightsBeamHighOn);
-                    this.setSpeedometerValue(data.truckSpeed * 3.6); // convert to km/h
+                    this.setSpeedometerValue(data.truckSpeed * 3.6);
                     this.setTachometerValue(data.engineRpm);
                     this.setFuelValue(data.fuel, data.fuelCapacity);
                     this.setTemperatureValue(data.waterTemperature);
@@ -213,4 +208,3 @@ var Funbit;
     })(Funbit.Ets || (Funbit.Ets = {}));
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
-//# sourceMappingURL=dashboard.js.map

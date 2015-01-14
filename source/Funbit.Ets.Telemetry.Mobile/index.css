@@ -1,5 +1,7 @@
 ﻿body {
   background-color: #F9F9F9;
+  background-image: url("images/menu-background.png");
+  background-attachment: fixed;
   font-family: Segoe UI, Consolas, Arial;
   color: #444;
 }
@@ -8,7 +10,25 @@ h1 {
   color: #269be4;
   text-align: center;
 }
+h2 {
+  font-size: 14pt;
+  color: #464646;
+  text-align: center;
+}
+img.app-icon {
+  width: 48px;
+  height: 48px;
+  vertical-align: middle;
+  margin-top: -2px;
+}
+footer {
+  margin-top: 12pt;
+  font-size: 8pt;
+  text-align: center;
+  color: #c7c7c7;
+}
 table {
+  border-spacing: 0px;
   width: 100%;
   background-color: white;
   border-bottom: 1px solid #E0E0E0;
@@ -67,6 +87,9 @@ input.edit-server-ip {
   text-shadow: 0px 1px 0px #ffffff;
   float: left;
 }
+input.edit-server-ip:hover {
+  border: 1px solid #b1b1b1;
+}
 .server-status.connected {
   color: #1ea41e;
 }
@@ -83,7 +106,7 @@ table.skins td {
   padding-bottom: 10px;
 }
 table.skins tr:hover {
-  background-color: #f6f6f6;
+  background-color: #f1f7fa;
   cursor: default;
 }
 table.skins td.skin-image {

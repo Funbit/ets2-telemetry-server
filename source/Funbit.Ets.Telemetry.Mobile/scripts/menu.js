@@ -1,7 +1,4 @@
-﻿/// <reference path="typings/jquery.d.ts" />
-/// <reference path="typings/jqueryui.d.ts" />
-/// <reference path="typings/dot.d.ts" />
-var Funbit;
+﻿var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
@@ -80,9 +77,6 @@ var Funbit;
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
 
-//
-// Menu "entry-point"
-//
 if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
     $(document).on('deviceready', function () {
         (new Funbit.Ets.Telemetry.Menu());
@@ -90,4 +84,3 @@ if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
 } else {
     (new Funbit.Ets.Telemetry.Menu());
 }
-//# sourceMappingURL=menu.js.map
