@@ -16,15 +16,13 @@ module Funbit.Ets.Telemetry {
         height: number;
     } 
 
-    // TODO: add more detailed signatures for plugin interfaces
-
     interface IPrefsPlugin {
-        fetch: Function;
-        store: Function;
+        fetch(ok: Function, fail: Function, key: string);
+        store(ok: Function, fail: Function, key: string, value: string);
     }
 
     interface IInsomniaPlugin {
-        keepAwake: Function;
+        keepAwake();
     }
 
     export class Configuration implements IConfiguration {
@@ -99,38 +97,43 @@ module Funbit.Ets.Telemetry {
         constructor() {
             this.initialized = $.Deferred<Configuration>();
             this.skins = [];
+            // initialize structures
+            if (!Configuration.isCordovaAvailable()) {
+                this.insomnia = {
+                    keepAwake: () => { }
+                };
+                this.prefs = {
+                    fetch: () => { },
+                    store: () => { }
+                };
+            } else {
+                this.insomnia = <IInsomniaPlugin>plugins.insomnia;
+                this.prefs = <IPrefsPlugin>plugins.appPreferences;
+                // turn off sleep mode
+                this.insomnia.keepAwake();
+            }
+            // if server IP was passed in the query string use it then
+            var ip = Configuration.getParameter('ip');
+            if (ip) {
+                this.serverIp = ip;
+                this.initialized.resolve(this);
+                return;
+            }
             this.serverIp = '';
             if (!Configuration.isCordovaAvailable()) {
                 // if cordova is not available then 
                 // we are in desktop environment 
                 // so we use current host name as our IP
                 this.serverIp = window.location.hostname;
-                this.insomnia = {
-                    keepAwake: () => {}
-                };
-                this.prefs = {
-                    fetch: () => {},
-                    store: () => {}
-                };
                 this.initialized.resolve(this);
             } else {
-                this.insomnia = <IInsomniaPlugin>plugins.insomnia;
-                this.prefs = <IPrefsPlugin>plugins.appPreferences;
-                // turn off sleep mode
-                this.insomnia.keepAwake();
-                // load saved prefs
                 this.prefs.fetch(savedIp => {
                     this.serverIp = savedIp;
                     this.initialized.resolve(this);
-                }, () => {}, 'serverIp');
-            }
-            // if ip was passed in the query string user it then
-            var ip = Configuration.getParameter('ip');
-            if (ip) {
-                this.serverIp = ip;
-                this.initialized.resolve(this);
+                }, () => {
+                    this.initialized.resolve(this);
+                }, 'serverIp');
             }
         }
-        
     }
 }

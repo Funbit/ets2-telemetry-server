@@ -10,18 +10,18 @@ var Funbit;
                     var _this = this;
                     this.config = Telemetry.Configuration.getInstance();
                     this.initializeEvents();
-                    this.buildSkinTable();
+                    this.buildSkinTable([]);
                     $.when(this.config.initialized).done(function (config) {
-                        if (!config.serverIp)
+                        if (!config.serverIp) {
                             _this.promptServerIp();
-                        else
+                        } else {
                             _this.connectToServer(config.serverIp);
+                        }
                     });
                 }
-                Menu.prototype.buildSkinTable = function () {
+                Menu.prototype.buildSkinTable = function (skins) {
                     var $tableSkins = $('table.skins');
                     $tableSkins.empty();
-                    var skins = this.config.skins;
                     if (skins.length == 0) {
                         $tableSkins.append(doT.template($('#skin-empty-row-template').html())({}));
                     } else {
@@ -41,13 +41,13 @@ var Funbit;
                     var $serverStatus = $('.server-status');
                     $serverStatus.removeClass('connected').addClass('disconnected').html('Connecting...');
                     $('.server-ip').html(serverIp);
-                    $('table.skins').empty();
+                    this.buildSkinTable([]);
                     this.config.reload(serverIp, function () {
                         $serverStatus.removeClass('disconnected').addClass('connected').html('Connected');
-                        _this.buildSkinTable();
+                        _this.buildSkinTable(_this.config.skins);
                     }, function () {
                         $serverStatus.removeClass('connected').addClass('disconnected').html('Disconnected');
-                        _this.buildSkinTable();
+                        _this.buildSkinTable(_this.config.skins);
                     });
                 };
 

@@ -2,19 +2,14 @@
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
-            
-
             var Configuration = (function () {
                 function Configuration() {
                     var _this = this;
                     this.initialized = $.Deferred();
                     this.skins = [];
-                    this.serverIp = '';
+
+                    // initialize structures
                     if (!Configuration.isCordovaAvailable()) {
-                        // if cordova is not available then
-                        // we are in desktop environment
-                        // so we use current host name as our IP
-                        this.serverIp = window.location.hostname;
                         this.insomnia = {
                             keepAwake: function () {
                             }
@@ -25,27 +20,35 @@
                             store: function () {
                             }
                         };
-                        this.initialized.resolve(this);
                     } else {
                         this.insomnia = plugins.insomnia;
                         this.prefs = plugins.appPreferences;
 
                         // turn off sleep mode
                         this.insomnia.keepAwake();
-
-                        // load saved prefs
-                        this.prefs.fetch(function (savedIp) {
-                            _this.serverIp = savedIp;
-                            _this.initialized.resolve(_this);
-                        }, function () {
-                        }, 'serverIp');
                     }
 
-                    // if ip was passed in the query string user it then
+                    // if server IP was passed in the query string use it then
                     var ip = Configuration.getParameter('ip');
                     if (ip) {
                         this.serverIp = ip;
                         this.initialized.resolve(this);
+                        return;
+                    }
+                    this.serverIp = '';
+                    if (!Configuration.isCordovaAvailable()) {
+                        // if cordova is not available then
+                        // we are in desktop environment
+                        // so we use current host name as our IP
+                        this.serverIp = window.location.hostname;
+                        this.initialized.resolve(this);
+                    } else {
+                        this.prefs.fetch(function (savedIp) {
+                            _this.serverIp = savedIp;
+                            _this.initialized.resolve(_this);
+                        }, function () {
+                            _this.initialized.resolve(_this);
+                        }, 'serverIp');
                     }
                 }
                 Configuration.getInstance = function () {

@@ -11,19 +11,19 @@ module Funbit.Ets.Telemetry {
         constructor() {
             this.config = Configuration.getInstance();
             this.initializeEvents();
-            this.buildSkinTable();
+            this.buildSkinTable([]);
             $.when(this.config.initialized).done(config => {
-                if (!config.serverIp)
+                if (!config.serverIp) {
                     this.promptServerIp();
-                else
+                } else {
                     this.connectToServer(config.serverIp);
+                }
             });
         }
 
-        private buildSkinTable() {
+        private buildSkinTable(skins: ISkinConfiguration[]) {
             var $tableSkins = $('table.skins');
             $tableSkins.empty();
-            var skins = this.config.skins;
             if (skins.length == 0) {
                 $tableSkins.append(doT.template($('#skin-empty-row-template').html())({}));
             } else {
@@ -43,17 +43,17 @@ module Funbit.Ets.Telemetry {
                 .addClass('disconnected')
                 .html('Connecting...');
             $('.server-ip').html(serverIp);
-            $('table.skins').empty();
+            this.buildSkinTable([]);
             this.config.reload(serverIp, () => {
                 $serverStatus.removeClass('disconnected')
                     .addClass('connected')
                     .html('Connected');
-                this.buildSkinTable();
+                this.buildSkinTable(this.config.skins);
             }, () => {
                 $serverStatus.removeClass('connected')
                     .addClass('disconnected')
                     .html('Disconnected');
-                this.buildSkinTable();
+                this.buildSkinTable(this.config.skins);
             });
         }
 
