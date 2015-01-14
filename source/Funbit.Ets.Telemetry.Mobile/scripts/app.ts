@@ -7,6 +7,7 @@ module Funbit.Ets.Telemetry {
 
         private skinConfig: ISkinConfiguration;
         private dashboard: Dashboard;
+        private anticacheSeed: number = 0;
 
         constructor() {
             this.skinConfig = Configuration.getInstance().getSkinConfiguration();
@@ -66,8 +67,10 @@ module Funbit.Ets.Telemetry {
         }
         
         public loadDashboardResources() {
-            var skinCssUrl = Configuration.getUrl('/skins/' + this.skinConfig.name + '/dashboard.css');
-            var skinHtmlUrl = Configuration.getUrl('/skins/' + this.skinConfig.name + '/dashboard.html');
+            var skinCssUrl = Configuration.getUrl('/skins/' +
+                this.skinConfig.name + '/dashboard.css?seed=' + this.anticacheSeed++);
+            var skinHtmlUrl = Configuration.getUrl('/skins/' +
+                this.skinConfig.name + '/dashboard.html?seed=' + this.anticacheSeed++);
             // preload skin css (synchronously)
             $("head link[rel='stylesheet']").last()
                 .after('<link rel="stylesheet" href="' + skinCssUrl + '" type="text/css">');
@@ -75,7 +78,6 @@ module Funbit.Ets.Telemetry {
             $.ajax({
                 url: skinHtmlUrl,
                 async: false,
-                cache: true,
                 dataType: 'html',
                 timeout: 5000
             }).done(html => {

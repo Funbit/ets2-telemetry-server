@@ -30,7 +30,8 @@ module Funbit.Ets.Telemetry {
         public skins: ISkinConfiguration[];
         public serverIp: string;
         public initialized: JQueryDeferred<Configuration>;
-        
+        private anticacheSeed: number = 0;
+
         private prefs: IPrefsPlugin;
         private insomnia: IInsomniaPlugin;
 
@@ -65,14 +66,13 @@ module Funbit.Ets.Telemetry {
             if (!newServerIp)
                 return;
             this.serverIp = newServerIp;
+            this.prefs.store(() => { }, () => { }, 'serverIp', this.serverIp);
             $.ajax({
-                url: this.getUrlInternal('/config.json'),
+                url: this.getUrlInternal('/config.json?seed=' + this.anticacheSeed++),
                 async: (done != null),
-                cache: true,
                 dataType: 'json',
-                timeout: 5000
+                timeout: 3000
             }).done(json => {
-                this.prefs.store(() => {}, () => {}, 'serverIp', this.serverIp);
                 this.skins = json.skins;
                 if (done) done();
             }).fail(() => {

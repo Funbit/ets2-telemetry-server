@@ -102,7 +102,7 @@ module Funbit.Ets.Telemetry {
         private timer: any;
         private failCount: number = 0;
         private minFailCount: number = 2;
-        private endpointSeed: number = 0;
+        private anticacheSeed: number = 0;
         private skinConfig: ISkinConfiguration;
 
         private static dayOfTheWeek = [
@@ -130,7 +130,7 @@ module Funbit.Ets.Telemetry {
         }
 
         private refreshData() {
-            var url: string = this.endpointUrl + "?seed=" + this.endpointSeed++;
+            var url: string = this.endpointUrl + "?seed=" + this.anticacheSeed++;
             $.ajax({
                     url: url,
                     async: true,

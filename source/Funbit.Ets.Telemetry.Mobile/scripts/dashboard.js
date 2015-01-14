@@ -7,7 +7,7 @@
                     this.firstRun = true;
                     this.failCount = 0;
                     this.minFailCount = 2;
-                    this.endpointSeed = 0;
+                    this.anticacheSeed = 0;
                     this.endpointUrl = telemetryEndpointUrl;
                     this.skinConfig = skinConfig;
                     this.initialize();
@@ -18,7 +18,7 @@
 
                 Dashboard.prototype.refreshData = function () {
                     var _this = this;
-                    var url = this.endpointUrl + "?seed=" + this.endpointSeed++;
+                    var url = this.endpointUrl + "?seed=" + this.anticacheSeed++;
                     $.ajax({
                         url: url,
                         async: true,

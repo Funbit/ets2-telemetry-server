@@ -12,7 +12,8 @@
                         if (!config.serverIp) {
                             _this.promptServerIp();
                         } else {
-                            _this.connectToServer(config.serverIp);
+                            $('.server-ip').html(config.serverIp);
+                            _this.connectToServer();
                         }
                     });
                 }
@@ -31,13 +32,13 @@
                     }
                 };
 
-                Menu.prototype.connectToServer = function (serverIp) {
+                Menu.prototype.connectToServer = function () {
                     var _this = this;
+                    var serverIp = $('.server-ip').html();
                     if (!serverIp)
                         return;
                     var $serverStatus = $('.server-status');
                     $serverStatus.removeClass('connected').addClass('disconnected').html('Connecting...');
-                    $('.server-ip').html(serverIp);
                     this.buildSkinTable([]);
                     this.config.reload(serverIp, function () {
                         $serverStatus.removeClass('disconnected').addClass('connected').html('Connected');
@@ -45,16 +46,21 @@
                     }, function () {
                         $serverStatus.removeClass('connected').addClass('disconnected').html('Disconnected');
                         _this.buildSkinTable(_this.config.skins);
+                        _this.reconnectTimer = setTimeout(_this.connectToServer.bind(_this, [$('.server-ip').html()]), 3000);
                     });
                 };
 
                 Menu.prototype.promptServerIp = function () {
                     var ip = prompt("Please enter " + "server IP address (aa.bb.cc.dd)", this.config.serverIp);
+                    if (!ip)
+                        return;
                     var correct = /^[a-zA-Z0-9\.\-]+$/.test(ip);
-                    if (!correct)
+                    if (!correct) {
                         alert('Entered server IP or hostname has incorrect format.');
-                    else
-                        this.connectToServer(ip);
+                    } else {
+                        $('.server-ip').html(ip);
+                        this.connectToServer();
+                    }
                 };
 
                 Menu.prototype.initializeEvents = function () {

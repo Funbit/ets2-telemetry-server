@@ -5,6 +5,7 @@
             var Configuration = (function () {
                 function Configuration() {
                     var _this = this;
+                    this.anticacheSeed = 0;
                     this.initialized = $.Deferred();
                     this.skins = [];
 
@@ -78,16 +79,15 @@
                     if (!newServerIp)
                         return;
                     this.serverIp = newServerIp;
+                    this.prefs.store(function () {
+                    }, function () {
+                    }, 'serverIp', this.serverIp);
                     $.ajax({
-                        url: this.getUrlInternal('/config.json'),
+                        url: this.getUrlInternal('/config.json?seed=' + this.anticacheSeed++),
                         async: (done != null),
-                        cache: true,
                         dataType: 'json',
-                        timeout: 5000
+                        timeout: 3000
                     }).done(function (json) {
-                        _this.prefs.store(function () {
-                        }, function () {
-                        }, 'serverIp', _this.serverIp);
                         _this.skins = json.skins;
                         if (done)
                             done();

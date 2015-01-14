@@ -4,6 +4,7 @@
         (function (Telemetry) {
             var App = (function () {
                 function App() {
+                    this.anticacheSeed = 0;
                     this.skinConfig = Telemetry.Configuration.getInstance().getSkinConfiguration();
                     this.initializeViewport();
                     this.loadDashboardResources();
@@ -52,15 +53,14 @@
 
                 App.prototype.loadDashboardResources = function () {
                     var _this = this;
-                    var skinCssUrl = Telemetry.Configuration.getUrl('/skins/' + this.skinConfig.name + '/dashboard.css');
-                    var skinHtmlUrl = Telemetry.Configuration.getUrl('/skins/' + this.skinConfig.name + '/dashboard.html');
+                    var skinCssUrl = Telemetry.Configuration.getUrl('/skins/' + this.skinConfig.name + '/dashboard.css?seed=' + this.anticacheSeed++);
+                    var skinHtmlUrl = Telemetry.Configuration.getUrl('/skins/' + this.skinConfig.name + '/dashboard.html?seed=' + this.anticacheSeed++);
 
                     $("head link[rel='stylesheet']").last().after('<link rel="stylesheet" href="' + skinCssUrl + '" type="text/css">');
 
                     $.ajax({
                         url: skinHtmlUrl,
                         async: false,
-                        cache: true,
                         dataType: 'html',
                         timeout: 5000
                     }).done(function (html) {
