@@ -16,7 +16,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
         static DateTime MinutesToDate(int minutes)
         {
-            return new DateTime((long)minutes * 10000000 * 60, DateTimeKind.Local);
+            return new DateTime((long)minutes * 10000000 * 60, DateTimeKind.Utc);
         }
 
         static string BytesToString(byte[] bytes)
@@ -56,9 +56,12 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return _rawData.trailerMass > 0; }
         }
 
+        /// <summary>
+        /// Truck speed in km/h.
+        /// </summary>
         public float TruckSpeed
         {
-            get { return _rawData.speed; }
+            get { return _rawData.speed * 3.6f; }
         }
 
         public float AccelerationX
@@ -191,6 +194,9 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return _rawData.gameClutch; }
         }
 
+        /// <summary>
+        /// Truck mass in kilograms.
+        /// </summary>
         public float TruckMass
         {
             get { return _rawData.TruckMass; }
@@ -206,6 +212,9 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return _rawData.modelOffset; }
         }
 
+        /// <summary>
+        /// Trailer mass in kilograms.
+        /// </summary>
         public float TrailerMass
         {
             get { return _rawData.trailerMass; }
@@ -229,6 +238,11 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public DateTime JobDeadlineTime
         {
             get { return MinutesToDate(_rawData.jobDeadline); }
+        }
+
+        public DateTime JobRemainingTime
+        {
+            get { return MinutesToDate(_rawData.jobDeadline - _rawData.timeAbsolute); }
         }
 
         public string SourceCity
