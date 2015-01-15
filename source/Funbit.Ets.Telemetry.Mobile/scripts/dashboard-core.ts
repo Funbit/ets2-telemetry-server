@@ -45,6 +45,7 @@ module Funbit.Ets.Telemetry {
         trailerName: string;
         jobIncome: number;
         jobDeadlineTime: string;
+        jobRemainingTime: string;
         sourceCity: string;
         destinationCity: string;
         sourceCompany: string;
@@ -104,28 +105,15 @@ module Funbit.Ets.Telemetry {
         private minFailCount: number = 2;
         private anticacheSeed: number = 0;
         private skinConfig: ISkinConfiguration;
-
-        private static dayOfTheWeek = [
-            'Sunday',
-            'Monday',
-            'Tuesday',
-            'Wednesday',
-            'Thursday',
-            'Friday',
-            'Saturday'
-        ];
-
+        
         private static minDateValue: string = "0001-01-01T00:00:00";
 
-        private static connectionTimeout: number = 5000;
+        private static connectionTimeout: number = 3000;
 
         constructor(telemetryEndpointUrl: string, skinConfig: ISkinConfiguration) {
             this.endpointUrl = telemetryEndpointUrl;
             this.skinConfig = skinConfig;
-            this.initialize();
-        }
-
-        private initialize() {
+            // here we are going into infinite refresh timer cycle
             this.refreshData();
         }
 
@@ -135,7 +123,7 @@ module Funbit.Ets.Telemetry {
                     url: url,
                     async: true,
                     dataType: 'json',
-                timeout: Dashboard.connectionTimeout
+                    timeout: Dashboard.connectionTimeout
                 })
                 .done(d => {
                     this.dataRefreshSucceeded(d);
@@ -144,13 +132,18 @@ module Funbit.Ets.Telemetry {
                 .fail(() => {
                     this.failCount++;
                     if (this.failCount > this.minFailCount) {
-                        this.dataRefreshFailed('Could not connect to the server');
+                        this.dataRefreshFailed(Strings.couldNotConnectToServer);
                     }
                 })
                 .always(() => {
                     this.timer = setTimeout(
                         this.refreshData.bind(this), this.skinConfig.refreshDelay);
                 });
+        } 
+        
+        // define default data filter (if dashboard skin does not have its own)
+        private filter(data: IEts2TelemetryData): IEts2TelemetryData {
+            return data;
         }
 
         private formatNumber(num: number, digits: number): string {
@@ -159,11 +152,21 @@ module Funbit.Ets.Telemetry {
             return output;
         }
 
-        private isoToReadableDate(date: string): string {
-            var d = new Date(date);
-            return Dashboard.dayOfTheWeek[d.getDay()] + ' '
-                + this.formatNumber(d.getHours(), 2) + ':'
-                + this.formatNumber(d.getMinutes(), 2);
+        private timeToReadableString(date: string): string {
+            // if we have ISO8601 (in UTC) then make it readable
+            // in the following default format: Wednesday 08:26
+            if (/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date)) {
+                var d = new Date(date);
+                return Strings.dayOfTheWeek[d.getUTCDay()] + ' '
+                    + this.formatNumber(d.getUTCHours(), 2) + ':'
+                    + this.formatNumber(d.getUTCMinutes(), 2);
+            }
+            // otherwise return as is (useful in custom data filters)
+            return date;
+        }
+
+        private timeDifferenceToReadableString(date: string): string {
+            return date; // TODO: implement
         }
         
         private setMeter(name: string, value: number, maxValue: number = null) {
@@ -232,16 +235,20 @@ module Funbit.Ets.Telemetry {
         }
 
         private dataRefreshSucceeded(data: IEts2TelemetryData) {
+            data = this.filter(data);
+            // check if we are connected and/or game is started
             if (data.connected && data.gameTime.indexOf(Dashboard.minDateValue) == 0) {
-                this.dataRefreshFailed('Connected, waiting for the drive...');
+                this.dataRefreshFailed(Strings.connectedAndWaitingForDrive);
                 return;
             }
             if (!data.connected) {
-                this.dataRefreshFailed('Waiting for the simulator to run...');
+                this.dataRefreshFailed(Strings.connectedAndWaitingForSimulator);
                 return;
             }
-            data.gameTime = this.isoToReadableDate(data.gameTime);
-            data.jobDeadlineTime = this.isoToReadableDate(data.jobDeadlineTime);
+            // now we can update the dashboard 
+            data.gameTime = this.timeToReadableString(data.gameTime);
+            data.jobDeadlineTime = this.timeToReadableString(data.jobDeadlineTime);
+            data.jobRemainingTime = this.timeDifferenceToReadableString(data.jobRemainingTime);
             if (!$('.dashboard').hasClass('on')) {
                 $('.dashboard').addClass('on');
             }
@@ -274,7 +281,7 @@ module Funbit.Ets.Telemetry {
             this.setIndicatorStatus('parking-lights', data.lightsParkingOn);
             this.setIndicatorStatus('highbeam', data.lightsBeamHighOn);
             this.setIndicatorStatus('lowbeam', data.lightsBeamLowOn && !data.lightsBeamHighOn);
-            this.setSpeedometerValue(data.truckSpeed * 3.6); // convert to km/h
+            this.setSpeedometerValue(data.truckSpeed);
             this.setTachometerValue(data.engineRpm);
             this.setFuelValue(data.fuel, data.fuelCapacity);
             this.setTemperatureValue(data.waterTemperature);

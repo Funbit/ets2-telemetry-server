@@ -60,12 +60,17 @@ var Funbit;
                     }
                 };
 
+                App.prototype.getSkinResourceUrl = function (name) {
+                    return Telemetry.Configuration.getUrl('/skins/' + this.skinConfig.name + '/' + name + '?seed=' + this.anticacheSeed++);
+                };
+
                 App.prototype.loadDashboardResources = function () {
                     var _this = this;
-                    var skinCssUrl = Telemetry.Configuration.getUrl('/skins/' + this.skinConfig.name + '/dashboard.css?seed=' + this.anticacheSeed++);
-                    var skinHtmlUrl = Telemetry.Configuration.getUrl('/skins/' + this.skinConfig.name + '/dashboard.html?seed=' + this.anticacheSeed++);
+                    var skinCssUrl = this.getSkinResourceUrl('dashboard.css');
+                    var skinHtmlUrl = this.getSkinResourceUrl('dashboard.html');
+                    var skinJsUrl = this.getSkinResourceUrl('dashboard.js');
 
-                    // preload skin css (synchronously)
+                    // preload skin css
                     $("head link[rel='stylesheet']").last().after('<link rel="stylesheet" href="' + skinCssUrl + '" type="text/css">');
 
                     // load skin html (synchronously)
@@ -73,11 +78,13 @@ var Funbit;
                         url: skinHtmlUrl,
                         async: false,
                         dataType: 'html',
-                        timeout: 5000
+                        timeout: 3000
                     }).done(function (html) {
+                        // include dashboard custom script
+                        html += '<script src="' + skinJsUrl + '"></script>';
                         $('body').append(html);
                     }).fail(function () {
-                        alert('Failed to load dashboard.html for skin: ' + _this.skinConfig.name);
+                        alert(Telemetry.Strings.dashboardHtmlLoadFailed + _this.skinConfig.name);
                     });
                 };
 

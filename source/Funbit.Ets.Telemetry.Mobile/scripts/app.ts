@@ -8,7 +8,7 @@ module Funbit.Ets.Telemetry {
         private skinConfig: ISkinConfiguration;
         private dashboard: Dashboard;
         private anticacheSeed: number = 0;
-
+        
         constructor() {
             this.skinConfig = Configuration.getInstance().getSkinConfiguration();
             this.initializeViewport();
@@ -65,13 +65,17 @@ module Funbit.Ets.Telemetry {
             }
             
         }
+
+        private getSkinResourceUrl(name: string): string {
+            return Configuration.getUrl('/skins/' +
+                this.skinConfig.name + '/' + name + '?seed=' + this.anticacheSeed++);
+        }
         
         public loadDashboardResources() {
-            var skinCssUrl = Configuration.getUrl('/skins/' +
-                this.skinConfig.name + '/dashboard.css?seed=' + this.anticacheSeed++);
-            var skinHtmlUrl = Configuration.getUrl('/skins/' +
-                this.skinConfig.name + '/dashboard.html?seed=' + this.anticacheSeed++);
-            // preload skin css (synchronously)
+            var skinCssUrl = this.getSkinResourceUrl('dashboard.css');
+            var skinHtmlUrl = this.getSkinResourceUrl('dashboard.html');
+            var skinJsUrl = this.getSkinResourceUrl('dashboard.js');
+            // preload skin css
             $("head link[rel='stylesheet']").last()
                 .after('<link rel="stylesheet" href="' + skinCssUrl + '" type="text/css">');
             // load skin html (synchronously)
@@ -79,11 +83,13 @@ module Funbit.Ets.Telemetry {
                 url: skinHtmlUrl,
                 async: false,
                 dataType: 'html',
-                timeout: 5000
+                timeout: 3000
             }).done(html => {
+                // include dashboard custom script
+                html += '<script src="' + skinJsUrl + '"></script>';
                 $('body').append(html);
             }).fail(() => {
-                alert('Failed to load dashboard.html for skin: ' + this.skinConfig.name);
+                alert(Strings.dashboardHtmlLoadFailed + this.skinConfig.name);
             });
         }
 

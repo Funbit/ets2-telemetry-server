@@ -25,6 +25,30 @@ module Funbit.Ets.Telemetry {
         keepAwake();
     }
 
+    export class Strings {
+        // app.ts
+        public static dashboardHtmlLoadFailed: string = 'Failed to load dashboard.html for skin: ';
+        // menu.ts
+        public static connecting = 'Connecting...';
+        public static connected = 'Connected';
+        public static disconnected = 'Disconnected';
+        public static enterServerIpMessage = 'Please enter server IP address (aa.bb.cc.dd)';
+        public static incorrectServerIpFormat = 'Entered server IP or hostname has incorrect format.';
+        // dashboard.ts
+        public static dayOfTheWeek = [
+            'Sunday',
+            'Monday',
+            'Tuesday',
+            'Wednesday',
+            'Thursday',
+            'Friday',
+            'Saturday'
+        ];
+        public static couldNotConnectToServer = 'Could not connect to the server';
+        public static connectedAndWaitingForDrive = 'Connected, waiting for the drive...';
+        public static connectedAndWaitingForSimulator = 'Waiting for the simulator to run...';
+    }
+
     export class Configuration implements IConfiguration {
         
         public skins: ISkinConfiguration[];

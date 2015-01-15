@@ -115,9 +115,6 @@
     </Content>
     <Content Include="dashboard-host.less" />
     <Content Include="config.json" />
-    <Content Include="dashboard-host.min.css">
-      <DependentUpon>dashboard-host.css</DependentUpon>
-    </Content>
     <Content Include="images\app-icon.png" />
     <Content Include="images\disclosure.png" />
     <Content Include="images\menu-background.png" />
@@ -127,9 +124,6 @@
       <DependentUpon>index.less</DependentUpon>
     </Content>
     <Content Include="index.less" />
-    <Content Include="index.min.css">
-      <DependentUpon>index.css</DependentUpon>
-    </Content>
     <Content Include="merges\android\scripts\android2.3-jscompat.js" />
     <Content Include="merges\android\scripts\platformOverrides.js" />
     <Content Include="plugins\me.apla.cordova.app-preferences\.fetch.json" />
@@ -195,26 +189,7 @@
     <Content Include="plugins\org.apache.cordova.splashscreen\www\splashscreen.js" />
     <Content Include="plugins\org.apache.cordova.splashscreen\www\windows8\SplashScreenProxy.js" />
     <Content Include="scripts\app.js" />
-    <Content Include="scripts\app.min.js">
-      <DependentUpon>app.js</DependentUpon>
-    </Content>
-    <Content Include="scripts\app.min.js.map">
-      <DependentUpon>app.min.js</DependentUpon>
-    </Content>
     <Content Include="scripts\config.js" />
-    <Content Include="scripts\config.min.js">
-      <DependentUpon>config.js</DependentUpon>
-    </Content>
-    <Content Include="scripts\config.min.js.map">
-      <DependentUpon>config.min.js</DependentUpon>
-    </Content>
-    <Content Include="scripts\dashboard.min.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <DependentUpon>dashboard.js</DependentUpon>
-    </Content>
-    <Content Include="scripts\dashboard.min.js.map">
-      <DependentUpon>dashboard.min.js</DependentUpon>
-    </Content>
     <Content Include="scripts\doT.js" />
     <Content Include="scripts\jquery-ui.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -223,21 +198,13 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="scripts\menu.js" />
-    <Content Include="scripts\menu.min.js">
-      <DependentUpon>menu.js</DependentUpon>
-    </Content>
-    <Content Include="scripts\menu.min.js.map">
-      <DependentUpon>menu.min.js</DependentUpon>
-    </Content>
     <Content Include="skins\default\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>
     </Content>
     <Content Include="skins\default\dashboard.html" />
     <Content Include="skins\default\dashboard.jpg" />
+    <Content Include="skins\default\dashboard.js" />
     <Content Include="skins\default\dashboard.less" />
-    <Content Include="skins\default\dashboard.min.css">
-      <DependentUpon>dashboard.css</DependentUpon>
-    </Content>
     <Content Include="skins\default\images\bg-off.png" />
     <Content Include="skins\default\images\bg-on.png" />
     <Content Include="skins\default\images\blinker-left-off.png" />
@@ -272,7 +239,7 @@
       <SubType>Designer</SubType>
     </Content>
     <Content Include="dashboard-host.html" />
-    <Content Include="scripts\dashboard.js" />
+    <Content Include="scripts\dashboard-core.js" />
     <Content Include="scripts\platformOverrides.js" />
     <Content Include="res\icons\android\icon-36-ldpi.png" />
     <Content Include="res\icons\android\icon-48-mdpi.png" />
@@ -325,7 +292,7 @@
   <ItemGroup>
     <TypeScriptCompile Include="scripts\app.ts" />
     <TypeScriptCompile Include="scripts\config.ts" />
-    <TypeScriptCompile Include="scripts\dashboard.ts" />
+    <TypeScriptCompile Include="scripts\dashboard-core.ts" />
     <TypeScriptCompile Include="scripts\menu.ts" />
     <TypeScriptCompile Include="scripts\typings\dot.d.ts" />
     <TypeScriptCompile Include="scripts\typings\jquery.d.ts" />

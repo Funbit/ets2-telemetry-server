@@ -12,12 +12,10 @@ var Funbit;
                     this.anticacheSeed = 0;
                     this.endpointUrl = telemetryEndpointUrl;
                     this.skinConfig = skinConfig;
-                    this.initialize();
-                }
-                Dashboard.prototype.initialize = function () {
-                    this.refreshData();
-                };
 
+                    // here we are going into infinite refresh timer cycle
+                    this.refreshData();
+                }
                 Dashboard.prototype.refreshData = function () {
                     var _this = this;
                     var url = this.endpointUrl + "?seed=" + this.anticacheSeed++;
@@ -32,11 +30,16 @@ var Funbit;
                     }).fail(function () {
                         _this.failCount++;
                         if (_this.failCount > _this.minFailCount) {
-                            _this.dataRefreshFailed('Could not connect to the server');
+                            _this.dataRefreshFailed(Telemetry.Strings.couldNotConnectToServer);
                         }
                     }).always(function () {
                         _this.timer = setTimeout(_this.refreshData.bind(_this), _this.skinConfig.refreshDelay);
                     });
+                };
+
+                // define default data filter (if dashboard skin does not have its own)
+                Dashboard.prototype.filter = function (data) {
+                    return data;
                 };
 
                 Dashboard.prototype.formatNumber = function (num, digits) {
@@ -46,9 +49,20 @@ var Funbit;
                     return output;
                 };
 
-                Dashboard.prototype.isoToReadableDate = function (date) {
-                    var d = new Date(date);
-                    return Dashboard.dayOfTheWeek[d.getDay()] + ' ' + this.formatNumber(d.getHours(), 2) + ':' + this.formatNumber(d.getMinutes(), 2);
+                Dashboard.prototype.timeToReadableString = function (date) {
+                    // if we have ISO8601 (in UTC) then make it readable
+                    // in the following default format: Wednesday 08:26
+                    if (/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date)) {
+                        var d = new Date(date);
+                        return Telemetry.Strings.dayOfTheWeek[d.getUTCDay()] + ' ' + this.formatNumber(d.getUTCHours(), 2) + ':' + this.formatNumber(d.getUTCMinutes(), 2);
+                    }
+
+                    // otherwise return as is (useful in custom data filters)
+                    return date;
+                };
+
+                Dashboard.prototype.timeDifferenceToReadableString = function (date) {
+                    return date;
                 };
 
                 Dashboard.prototype.setMeter = function (name, value, maxValue) {
@@ -119,16 +133,22 @@ var Funbit;
                 };
 
                 Dashboard.prototype.dataRefreshSucceeded = function (data) {
+                    data = this.filter(data);
+
+                    // check if we are connected and/or game is started
                     if (data.connected && data.gameTime.indexOf(Dashboard.minDateValue) == 0) {
-                        this.dataRefreshFailed('Connected, waiting for the drive...');
+                        this.dataRefreshFailed(Telemetry.Strings.connectedAndWaitingForDrive);
                         return;
                     }
                     if (!data.connected) {
-                        this.dataRefreshFailed('Waiting for the simulator to run...');
+                        this.dataRefreshFailed(Telemetry.Strings.connectedAndWaitingForSimulator);
                         return;
                     }
-                    data.gameTime = this.isoToReadableDate(data.gameTime);
-                    data.jobDeadlineTime = this.isoToReadableDate(data.jobDeadlineTime);
+
+                    // now we can update the dashboard
+                    data.gameTime = this.timeToReadableString(data.gameTime);
+                    data.jobDeadlineTime = this.timeToReadableString(data.jobDeadlineTime);
+                    data.jobRemainingTime = this.timeDifferenceToReadableString(data.jobRemainingTime);
                     if (!$('.dashboard').hasClass('on')) {
                         $('.dashboard').addClass('on');
                     }
@@ -160,7 +180,7 @@ var Funbit;
                     this.setIndicatorStatus('parking-lights', data.lightsParkingOn);
                     this.setIndicatorStatus('highbeam', data.lightsBeamHighOn);
                     this.setIndicatorStatus('lowbeam', data.lightsBeamLowOn && !data.lightsBeamHighOn);
-                    this.setSpeedometerValue(data.truckSpeed * 3.6); // convert to km/h
+                    this.setSpeedometerValue(data.truckSpeed);
                     this.setTachometerValue(data.engineRpm);
                     this.setFuelValue(data.fuel, data.fuelCapacity);
                     this.setTemperatureValue(data.waterTemperature);
@@ -192,19 +212,9 @@ var Funbit;
                         this.setTemperatureValue(0);
                     }
                 };
-                Dashboard.dayOfTheWeek = [
-                    'Sunday',
-                    'Monday',
-                    'Tuesday',
-                    'Wednesday',
-                    'Thursday',
-                    'Friday',
-                    'Saturday'
-                ];
-
                 Dashboard.minDateValue = "0001-01-01T00:00:00";
 
-                Dashboard.connectionTimeout = 5000;
+                Dashboard.connectionTimeout = 3000;
                 return Dashboard;
             })();
             Telemetry.Dashboard = Dashboard;
@@ -213,4 +223,4 @@ var Funbit;
     })(Funbit.Ets || (Funbit.Ets = {}));
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
-//# sourceMappingURL=dashboard.js.map
+//# sourceMappingURL=dashboard-core.js.map

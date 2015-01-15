@@ -10,7 +10,7 @@
         "           name: name of the skin (directory name: /skins/name)",
         "          title: human readable skin title",
         "         author: author name",
-        "   refreshDelay: dashboard refresh delay (API call delay) in milliseconds",
+        "   refreshDelay: dashboard refresh delay (between API calls) in milliseconds",
         "          width: width of the skin in pixels (same as defined in the CSS for .dashboard class)",
         "         height: height of the skin in pixels (same as defined in the CSS for .dashboard class)"
     ],
@@ -19,7 +19,7 @@
             "name": "default",
             "title": "Generic Dashboard",
             "author": "Funbit",
-            "refreshDelay": 250,
+            "refreshDelay": 100,
             "width": 2048,
             "height": 1152
         }

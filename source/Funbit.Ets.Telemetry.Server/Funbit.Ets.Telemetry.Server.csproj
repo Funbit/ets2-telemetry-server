@@ -210,24 +210,12 @@
       <Link>Html\scripts\app.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Funbit.Ets.Telemetry.Mobile\scripts\app.min.js">
-      <Link>Html\scripts\app.min.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\scripts\config.js">
       <Link>Html\scripts\config.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Funbit.Ets.Telemetry.Mobile\scripts\config.min.js">
-      <Link>Html\scripts\config.min.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Funbit.Ets.Telemetry.Mobile\scripts\dashboard.js">
-      <Link>Html\scripts\dashboard.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\Funbit.Ets.Telemetry.Mobile\scripts\dashboard.min.js">
-      <Link>Html\scripts\dashboard.min.js</Link>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\scripts\dashboard-core.js">
+      <Link>Html\scripts\dashboard-core.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\scripts\doT.js">
@@ -246,10 +234,6 @@
       <Link>Html\scripts\menu.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="..\Funbit.Ets.Telemetry.Mobile\scripts\menu.min.js">
-      <Link>Html\scripts\menu.min.js</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\default\dashboard.css">
       <Link>Html\skins\default\dashboard.css</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -260,6 +244,10 @@
     </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\default\dashboard.jpg">
       <Link>Html\skins\default\dashboard.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\default\dashboard.js">
+      <Link>Html\skins\default\dashboard.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\default\images\bg-off.png">

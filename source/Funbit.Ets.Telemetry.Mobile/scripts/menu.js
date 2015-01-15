@@ -41,25 +41,25 @@ var Funbit;
                     if (!serverIp)
                         return;
                     var $serverStatus = $('.server-status');
-                    $serverStatus.removeClass('connected').addClass('disconnected').html('Connecting...');
+                    $serverStatus.removeClass('connected').addClass('disconnected').html(Telemetry.Strings.connecting);
                     this.buildSkinTable([]);
                     this.config.reload(serverIp, function () {
-                        $serverStatus.removeClass('disconnected').addClass('connected').html('Connected');
+                        $serverStatus.removeClass('disconnected').addClass('connected').html(Telemetry.Strings.connected);
                         _this.buildSkinTable(_this.config.skins);
                     }, function () {
-                        $serverStatus.removeClass('connected').addClass('disconnected').html('Disconnected');
+                        $serverStatus.removeClass('connected').addClass('disconnected').html(Telemetry.Strings.disconnected);
                         _this.buildSkinTable(_this.config.skins);
                         _this.reconnectTimer = setTimeout(_this.connectToServer.bind(_this, [$('.server-ip').html()]), 3000);
                     });
                 };
 
                 Menu.prototype.promptServerIp = function () {
-                    var ip = prompt("Please enter " + "server IP address (aa.bb.cc.dd)", this.config.serverIp);
+                    var ip = prompt(Telemetry.Strings.enterServerIpMessage, this.config.serverIp);
                     if (!ip)
                         return;
                     var correct = /^[a-zA-Z0-9\.\-]+$/.test(ip);
                     if (!correct) {
-                        alert('Entered server IP or hostname has incorrect format.');
+                        alert(Telemetry.Strings.incorrectServerIpFormat);
                     } else {
                         $('.server-ip').html(ip);
                         this.connectToServer();

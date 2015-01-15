@@ -2,6 +2,33 @@
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
+            var Strings = (function () {
+                function Strings() {
+                }
+                Strings.dashboardHtmlLoadFailed = 'Failed to load dashboard.html for skin: ';
+
+                Strings.connecting = 'Connecting...';
+                Strings.connected = 'Connected';
+                Strings.disconnected = 'Disconnected';
+                Strings.enterServerIpMessage = 'Please enter server IP address (aa.bb.cc.dd)';
+                Strings.incorrectServerIpFormat = 'Entered server IP or hostname has incorrect format.';
+
+                Strings.dayOfTheWeek = [
+                    'Sunday',
+                    'Monday',
+                    'Tuesday',
+                    'Wednesday',
+                    'Thursday',
+                    'Friday',
+                    'Saturday'
+                ];
+                Strings.couldNotConnectToServer = 'Could not connect to the server';
+                Strings.connectedAndWaitingForDrive = 'Connected, waiting for the drive...';
+                Strings.connectedAndWaitingForSimulator = 'Waiting for the simulator to run...';
+                return Strings;
+            })();
+            Telemetry.Strings = Strings;
+
             var Configuration = (function () {
                 function Configuration() {
                     var _this = this;
