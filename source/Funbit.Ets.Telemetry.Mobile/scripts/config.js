@@ -22,6 +22,7 @@
                     'Friday',
                     'Saturday'
                 ];
+                Strings.noTimeLeft = 'Overdue';
                 Strings.couldNotConnectToServer = 'Could not connect to the server';
                 Strings.connectedAndWaitingForDrive = 'Connected, waiting for the drive...';
                 Strings.connectedAndWaitingForSimulator = 'Waiting for the simulator to run...';

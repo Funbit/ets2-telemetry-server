@@ -44,6 +44,7 @@ module Funbit.Ets.Telemetry {
             'Friday',
             'Saturday'
         ];
+        public static noTimeLeft = 'Overdue';
         public static couldNotConnectToServer = 'Could not connect to the server';
         public static connectedAndWaitingForDrive = 'Connected, waiting for the drive...';
         public static connectedAndWaitingForSimulator = 'Waiting for the simulator to run...';

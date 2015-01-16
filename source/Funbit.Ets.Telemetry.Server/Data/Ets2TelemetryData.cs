@@ -16,6 +16,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
         static DateTime MinutesToDate(int minutes)
         {
+            if (minutes < 0) minutes = 0;
             return new DateTime((long)minutes * 10000000 * 60, DateTimeKind.Utc);
         }
 

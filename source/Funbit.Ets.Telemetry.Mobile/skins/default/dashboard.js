@@ -12,6 +12,15 @@
 
 Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
     // convert kilometers per hour to miles per hour
-    //data.truckSpeed = data.truckSpeed * 0.621371;
+    data.truckSpeed *= 0.621371;
+    // convert kg to t
+    data.trailerMass = (data.trailerMass / 1000.0) + 't';
+    // format odometer data as: 00000.0
+    data.truckOdometer = (Math.round(data.truckOdometer * 10) / 10).toFixed(1);
+    // convert gear to readable format
+    data.gear = data.gear > 0 ? 'D' + data.gear : (data.gear < 0 ? 'R' : 'N');
+    // convert rpm to rpm * 100
+    data.engineRpm = data.engineRpm / 100;
+    // return changed data to the core for rendering
     return data;
 };

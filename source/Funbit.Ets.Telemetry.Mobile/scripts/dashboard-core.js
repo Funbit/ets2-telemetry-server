@@ -42,26 +42,44 @@ var Funbit;
                     return data;
                 };
 
-                Dashboard.prototype.formatNumber = function (num, digits) {
+                Dashboard.formatNumber = function (num, digits) {
                     var output = num + "";
                     while (output.length < digits)
                         output = "0" + output;
                     return output;
                 };
 
-                Dashboard.prototype.timeToReadableString = function (date) {
+                Dashboard.timeToReadableString = function (date) {
                     // if we have ISO8601 (in UTC) then make it readable
                     // in the following default format: Wednesday 08:26
                     if (/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date)) {
                         var d = new Date(date);
-                        return Telemetry.Strings.dayOfTheWeek[d.getUTCDay()] + ' ' + this.formatNumber(d.getUTCHours(), 2) + ':' + this.formatNumber(d.getUTCMinutes(), 2);
+                        return Telemetry.Strings.dayOfTheWeek[d.getUTCDay()] + ' ' + Dashboard.formatNumber(d.getUTCHours(), 2) + ':' + Dashboard.formatNumber(d.getUTCMinutes(), 2);
                     }
 
                     // otherwise return as is (useful in custom data filters)
                     return date;
                 };
 
-                Dashboard.prototype.timeDifferenceToReadableString = function (date) {
+                Dashboard.timeDifferenceToReadableString = function (date) {
+                    // if we have ISO8601 (in UTC) then make it readable
+                    // in the following default format: 1 day 8 hours 26 minutes
+                    if (/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date)) {
+                        var d = new Date(date);
+                        var dys = d.getUTCDate();
+                        var hrs = d.getUTCHours();
+                        var mnt = d.getUTCMinutes();
+                        var o = dys > 1 ? dys + ' days ' : (dys != 0 ? dys + ' day ' : '');
+                        if (hrs > 0)
+                            o += hrs > 1 ? hrs + ' hours ' : hrs + ' hour ';
+                        if (mnt > 0)
+                            o += mnt > 1 ? mnt + ' minutes' : mnt + ' minute';
+                        if (!o)
+                            o = Telemetry.Strings.noTimeLeft;
+                        return o;
+                    }
+
+                    // otherwise return as is (useful in custom data filters)
                     return date;
                 };
 
@@ -108,7 +126,7 @@ var Funbit;
                 };
 
                 Dashboard.prototype.setTachometerValue = function (value) {
-                    this.setMeter('tachometer-arrow', value / 100);
+                    this.setMeter('tachometer-arrow', value);
                 };
 
                 Dashboard.prototype.setFuelValue = function (value, maxValue) {
@@ -146,9 +164,9 @@ var Funbit;
                     }
 
                     // now we can update the dashboard
-                    data.gameTime = this.timeToReadableString(data.gameTime);
-                    data.jobDeadlineTime = this.timeToReadableString(data.jobDeadlineTime);
-                    data.jobRemainingTime = this.timeDifferenceToReadableString(data.jobRemainingTime);
+                    data.gameTime = Dashboard.timeToReadableString(data.gameTime);
+                    data.jobDeadlineTime = Dashboard.timeToReadableString(data.jobDeadlineTime);
+                    data.jobRemainingTime = Dashboard.timeDifferenceToReadableString(data.jobRemainingTime);
                     if (!$('.dashboard').hasClass('on')) {
                         $('.dashboard').addClass('on');
                     }
@@ -165,14 +183,14 @@ var Funbit;
                         this.setIndicatorText('deadline', '');
                     }
                     if (data.trailerAttached) {
-                        this.setIndicatorText('trailer-mass', (data.trailerMass / 1000) + 't');
+                        this.setIndicatorText('trailer-mass', data.trailerMass);
                         this.setIndicatorText('trailer-name', data.trailerName);
                     } else {
                         this.setIndicatorText('trailer-mass', '');
                         this.setIndicatorText('trailer-name', '');
                     }
-                    this.setIndicatorText('odometer', (Math.round(data.truckOdometer * 10) / 10).toFixed(1));
-                    this.setIndicatorText('gear', data.gear > 0 ? 'D' + data.gear : (data.gear < 0 ? 'R' : 'N'));
+                    this.setIndicatorText('odometer', data.truckOdometer);
+                    this.setIndicatorText('gear', data.gear);
                     this.setIndicatorStatus('trailer', data.trailerAttached);
                     this.setIndicatorStatus('blinker-left', data.blinkerLeftOn);
                     this.setIndicatorStatus('blinker-right', data.blinkerRightOn);
