@@ -60,8 +60,10 @@ namespace Funbit.Ets.Telemetry.Server.Data
         string TrailerId { get; }
         string TrailerName { get; }
 
+        bool HasJob { get; }
         int JobIncome { get; }
         DateTime JobDeadlineTime { get; }
+        DateTime JobRemainingTime { get; }
 
         string SourceCity { get; }
         string DestinationCity { get; }

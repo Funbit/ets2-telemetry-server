@@ -3,115 +3,118 @@
 
 module Funbit.Ets.Telemetry {
 
-    interface IEts2TelemetryData {
+    class Ets2TelemetryData {
         // dates
-        gameTime: string;                   // absolute time in ISO8601
-        jobDeadlineTime: string;            // absolute time in ISO8601
-        jobRemainingTime: string;           // time difference in ISO8601
+        gameTime: string = '';                   // absolute time in ISO8601
+        jobDeadlineTime: string = '';            // absolute time in ISO8601
+        jobRemainingTime: string = '';           // time difference in ISO8601
         // booleans
-        connected: boolean;
-        gamePaused: boolean;
-        trailerAttached: boolean;
-        cruiseControlOn: boolean;
-        wipersOn: boolean;
-        parkBrakeOn: boolean;
-        motorBrakeOn: boolean;
-        electricOn: boolean;
-        engineOn: boolean;
-        blinkerLeftActive: boolean;
-        blinkerRightActive: boolean;
-        blinkerLeftOn: boolean;
-        blinkerRightOn: boolean;
-        lightsParkingOn: boolean;
-        lightsBeamLowOn: boolean;
-        lightsBeamHighOn: boolean;
-        lightsAuxFrontOn: boolean;
-        lightsAuxRoofOn: boolean;
-        lightsBeaconOn: boolean;
-        lightsBrakeOn: boolean;
-        lightsReverseOn: boolean;
-        batteryVoltageWarning: boolean;
-        airPressureWarning: boolean;
-        airPressureEmergency: boolean;
-        adblueWarning: boolean;
-        oilPressureWarning: boolean;
-        waterTemperatureWarning: boolean;
+        connected: boolean = false;
+        gamePaused: boolean = false;
+        hasJob: boolean = false;
+        trailerAttached: boolean = false;
+        cruiseControlOn: boolean = false;
+        wipersOn: boolean = false;
+        parkBrakeOn: boolean = false;
+        motorBrakeOn: boolean = false;
+        electricOn: boolean = false;
+        engineOn: boolean = false;
+        blinkerLeftActive: boolean = false;
+        blinkerRightActive: boolean = false;
+        blinkerLeftOn: boolean = false;
+        blinkerRightOn: boolean = false;
+        lightsParkingOn: boolean = false;
+        lightsBeamLowOn: boolean = false;
+        lightsBeamHighOn: boolean = false;
+        lightsAuxFrontOn: boolean = false;
+        lightsAuxRoofOn: boolean = false;
+        lightsBeaconOn: boolean = false;
+        lightsBrakeOn: boolean = false;
+        lightsReverseOn: boolean = false;
+        batteryVoltageWarning: boolean = false;
+        airPressureWarning: boolean = false;
+        airPressureEmergency: boolean = false;
+        adblueWarning: boolean = false;
+        oilPressureWarning: boolean = false;
+        waterTemperatureWarning: boolean = false;
         // strings
-        telemetryPluginVersion: string;
-        gameVersion: string;
-        trailerId: string;
-        trailerName: string;
-        jobIncome: number;
-        sourceCity: string;
-        destinationCity: string;
-        sourceCompany: string;
-        destinationCompany: string;
+        telemetryPluginVersion: string = '';
+        gameVersion: string = '';
+        trailerId: string = '';
+        trailerName: string = '';
+        sourceCity: string = '';
+        destinationCity: string = '';
+        sourceCompany: string = '';
+        destinationCompany: string = '';
         // numbers
-        truckSpeed: number;
-        accelerationX: number;
-        accelerationY: number;
-        accelerationZ: number;
-        coordinateX: number;
-        coordinateY: number;
-        coordinateZ: number;
-        rotationX: number;
-        rotationY: number;
-        rotationZ: number;
-        gear: number;
-        gears: number;
-        gearRanges: number;
-        gearRangeActive: number;
-        engineRpm: number;
-        engineRpmMax: number;
-        fuel: number;
-        fuelCapacity: number;
-        fuelAverageConsumption: number;
-        userSteer: number;
-        userThrottle: number;
-        userBrake: number;
-        userClutch: number;
-        gameSteer: number;
-        gameThrottle: number;
-        gameBrake: number;
-        gameClutch: number;
-        truckMass: number;
-        truckModelLength: number;
-        truckModelOffset: number;
-        trailerMass: number;
-        retarderBrake: number;
-        shifterSlot: number;
-        shifterToggle: number;
-        airPressure: number;
-        brakeTemperature: number;
-        fuelWarning: number;
-        adblue: number;
-        adblueConsumpton: number;
-        oilPressure: number;
-        oilTemperature: number;
-        waterTemperature: number;
-        batteryVoltage: number;
-        lightsDashboard: number;
-        wearEngine: number;
-        wearTransmission: number;
-        wearCabin: number;
-        wearChassis: number;
-        wearWheels: number;
-        wearTrailer: number;
-        truckOdometer: number;
+        jobIncome: number = 0;
+        truckSpeed: number = 0;
+        accelerationX: number = 0;
+        accelerationY: number = 0;
+        accelerationZ: number = 0;
+        coordinateX: number = 0;
+        coordinateY: number = 0;
+        coordinateZ: number = 0;
+        rotationX: number = 0;
+        rotationY: number = 0;
+        rotationZ: number = 0;
+        gear: number = 0;
+        gears: number = 1;
+        gearRanges: number = 0;
+        gearRangeActive: number = 0;
+        engineRpm: number = 0;
+        engineRpmMax: number = 1;
+        fuel: number = 0;
+        fuelCapacity: number = 1;
+        fuelAverageConsumption: number = 0;
+        userSteer: number = 0;
+        userThrottle: number = 0;
+        userBrake: number = 0;
+        userClutch: number = 0;
+        gameSteer: number = 0;
+        gameThrottle: number = 0;
+        gameBrake: number = 0;
+        gameClutch: number = 0;
+        truckMass: number = 0;
+        truckModelLength: number = 0;
+        truckModelOffset: number = 0;
+        trailerMass: number = 0;
+        retarderBrake: number = 0;
+        shifterSlot: number = 0;
+        shifterToggle: number = 0;
+        airPressure: number = 0;
+        brakeTemperature: number = 0;
+        fuelWarning: number = 0;
+        adblue: number = 0;
+        adblueConsumpton: number = 0;
+        oilPressure: number = 0;
+        oilTemperature: number = 0;
+        waterTemperature: number = 0;
+        batteryVoltage: number = 0;
+        lightsDashboard: number = 0;
+        wearEngine: number = 0;
+        wearTransmission: number = 0;
+        wearCabin: number = 0;
+        wearChassis: number = 0;
+        wearWheels: number = 0;
+        wearTrailer: number = 0;
+        truckOdometer: number = 0;
     }
 
     export class Dashboard {
 
         private endpointUrl: string;
-        private firstRun: boolean = true;
         private timer: any;
+
         private failCount: number = 0;
+        // minimum number of fails before turning dashboard off
         private minFailCount: number = 2;
+
         private anticacheSeed: number = 0;
         private skinConfig: ISkinConfiguration;
+        // jquery element cache
+        private $cache: any[] = [];
         
-        private static minDateValue: string = "0001-01-01T00:00:00";
-
         private static connectionTimeout: number = 3000;
 
         constructor(telemetryEndpointUrl: string, skinConfig: ISkinConfiguration) {
@@ -130,13 +133,17 @@ module Funbit.Ets.Telemetry {
                     timeout: Dashboard.connectionTimeout
                 })
                 .done(d => {
-                    this.dataRefreshSucceeded(d);
+                    if (!d.connected) {
+                        this.process(null, Strings.connectedAndWaitingForDrive);
+                        return;
+                    }
+                    this.process(d);
                     this.failCount = 0;
                 })
                 .fail(() => {
                     this.failCount++;
                     if (this.failCount > this.minFailCount) {
-                        this.dataRefreshFailed(Strings.couldNotConnectToServer);
+                        this.process(null, Strings.couldNotConnectToServer);
                     }
                 })
                 .always(() => {
@@ -145,11 +152,6 @@ module Funbit.Ets.Telemetry {
                 });
         } 
         
-        // define default data filter (if dashboard skin does not have its own)
-        private filter(data: IEts2TelemetryData): IEts2TelemetryData {
-            return data;
-        }
-
         public static formatNumber(num: number, digits: number): string {
             var output = num + "";
             while (output.length < digits) output = "0" + output;
@@ -158,20 +160,19 @@ module Funbit.Ets.Telemetry {
 
         public static timeToReadableString(date: string): string {
             // if we have ISO8601 (in UTC) then make it readable
-            // in the following default format: Wednesday 08:26
+            // in the following default format: "Wednesday 08:26"
             if (/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date)) {
                 var d = new Date(date);
                 return Strings.dayOfTheWeek[d.getUTCDay()] + ' '
                     + Dashboard.formatNumber(d.getUTCHours(), 2) + ':'
                     + Dashboard.formatNumber(d.getUTCMinutes(), 2);
             }
-            // otherwise return as is (useful in custom data filters)
             return date;
         }
 
         public static timeDifferenceToReadableString(date: string): string {
             // if we have ISO8601 (in UTC) then make it readable
-            // in the following default format: 1 day 8 hours 26 minutes
+            // in the following default format: "1 day 8 hours 26 minutes"
             if (/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date)) {
                 var d = new Date(date);
                 var dys = d.getUTCDate();
@@ -186,7 +187,6 @@ module Funbit.Ets.Telemetry {
                     o = Strings.noTimeLeft;
                 return o;
             }
-            // otherwise return as is (useful in custom data filters)
             return date;
         }
         
@@ -225,113 +225,81 @@ module Funbit.Ets.Telemetry {
                 }
             });
         }
-
-        private setSpeedometerValue(value: number) {
-            this.setMeter('speedometer-arrow', value);
-        }
-
-        private setTachometerValue(value: number) {
-            this.setMeter('tachometer-arrow', value);
-        }
-
-        private setFuelValue(value: number, maxValue: number) {
-            this.setMeter('fuel-arrow', value, maxValue);
-        }
-
-        private setTemperatureValue(value: number) {
-            this.setMeter('temperature-arrow', value);
-        }
-
-        private setIndicatorStatus(name: string, condition: boolean) {
-            var className = '.' + name;
-            if (condition)
-                $(className).addClass('on');
-            else
-                $(className).removeClass('on');
-        }
-
-        private setIndicatorText(name: string, value: any) {
-            var className = '.' + name;
-            $(className).html(value);
-        }
-
-        private dataRefreshSucceeded(data: IEts2TelemetryData) {
+        
+        private process(data: Ets2TelemetryData, reason: string = '') {
+            // update status message with failure reason
+            $('.statusMessage').html(reason);
+            // if we don't have real data we use default values
+            var data = data === null ? new Ets2TelemetryData() : data;
+            // tweak data using custom skin based filter
             data = this.filter(data);
-            // check if we are connected and/or game is started
-            if (data.connected && data.gameTime.indexOf(Dashboard.minDateValue) == 0) {
-                this.dataRefreshFailed(Strings.connectedAndWaitingForDrive);
-                return;
-            }
-            if (!data.connected) {
-                this.dataRefreshFailed(Strings.connectedAndWaitingForSimulator);
-                return;
-            }
-            // now we can update the dashboard 
+            // tweak data using default internal filter
+            data = this.internalFilter(data);
+            // render data using internal method first
+            this.internalRender(data);
+            // then use skin based renderer if defined
+            this.render(data);
+        }
+
+        private internalFilter(data: Ets2TelemetryData): Ets2TelemetryData {
+            // convert ISO8601 to default readable format
             data.gameTime = Dashboard.timeToReadableString(data.gameTime);
             data.jobDeadlineTime = Dashboard.timeToReadableString(data.jobDeadlineTime);
             data.jobRemainingTime = Dashboard.timeDifferenceToReadableString(data.jobRemainingTime);
-            if (!$('.dashboard').hasClass('on')) {
-                $('.dashboard').addClass('on');
-            }
-            $('.time').removeClass('error');
-            this.setIndicatorText('time', data.gameTime);
-            if (data.sourceCity.length > 0) {
-                // we have job info set
-                this.setIndicatorText('source', data.sourceCity + ' (' + data.sourceCompany + ')');
-                this.setIndicatorText('destination', data.destinationCity + ' (' + data.destinationCompany + ')');
-                this.setIndicatorText('deadline', data.jobDeadlineTime);
-            } else {
-                this.setIndicatorText('source', '');
-                this.setIndicatorText('destination', '');
-                this.setIndicatorText('deadline', '');
-            }
-            if (data.trailerAttached) {
-                this.setIndicatorText('trailer-mass', data.trailerMass);
-                this.setIndicatorText('trailer-name', data.trailerName);
-            } else {
-                this.setIndicatorText('trailer-mass', '');
-                this.setIndicatorText('trailer-name', '');
-            }
-            this.setIndicatorText('odometer', data.truckOdometer);
-            this.setIndicatorText('gear', data.gear);
-            this.setIndicatorStatus('trailer', data.trailerAttached);
-            this.setIndicatorStatus('blinker-left', data.blinkerLeftOn);
-            this.setIndicatorStatus('blinker-right', data.blinkerRightOn);
-            this.setIndicatorStatus('cruise', data.cruiseControlOn);
-            this.setIndicatorStatus('parking-lights', data.lightsParkingOn);
-            this.setIndicatorStatus('highbeam', data.lightsBeamHighOn);
-            this.setIndicatorStatus('lowbeam', data.lightsBeamLowOn && !data.lightsBeamHighOn);
-            this.setSpeedometerValue(data.truckSpeed);
-            this.setTachometerValue(data.engineRpm);
-            this.setFuelValue(data.fuel, data.fuelCapacity);
-            this.setTemperatureValue(data.waterTemperature);
+            return data;
         }
 
-        private dataRefreshFailed(reason: string) {
-            this.setIndicatorText('time', reason);
-            if ($('.dashboard').hasClass('on') || this.firstRun) {
-                this.firstRun = false;
-                $('.dashboard').removeClass('on');
-                $('.time').addClass('error');
-                this.setIndicatorText('source', '');
-                this.setIndicatorText('destination', '');
-                this.setIndicatorText('deadline', '');
-                this.setIndicatorText('trailer-mass', '');
-                this.setIndicatorText('trailer-name', '');
-                this.setIndicatorText('odometer', '');
-                this.setIndicatorText('gear', '');
-                this.setIndicatorStatus('trailer', false);
-                this.setIndicatorStatus('blinker-left', false);
-                this.setIndicatorStatus('blinker-right', false);
-                this.setIndicatorStatus('cruise', false);
-                this.setIndicatorStatus('parking-lights', false);
-                this.setIndicatorStatus('highbeam', false);
-                this.setIndicatorStatus('lowbeam', false);
-                this.setSpeedometerValue(0);
-                this.setTachometerValue(0);
-                this.setFuelValue(0, 1);
-                this.setTemperatureValue(0);
+        private internalRender(data: any) {
+            // handle all telemetry properties by type
+            for (var name in data) {
+                var value = data[name];
+                var $e = this.$cache[name] !== undefined
+                    ? this.$cache[name]
+                   : this.$cache[name] = $('.' + name);
+                if (typeof value == "boolean") {
+                    // all booleans will have "on" class 
+                    // attached if value is true
+                    if (value) {
+                        $e.addClass('on');
+                    } else {
+                        $e.removeClass('on');
+                    }
+                } else if (typeof value == "number") {
+                    if ($e.data('type') == 'meter') {
+                        // if type is set to meter 
+                        // then we use this HTML element 
+                        // as a rotating meter "arrow"
+                        var maxValue = $e.data('max');
+                        if (/[a-z]/i.test(maxValue)) {
+                            // if data-max attribute points
+                            // to a property name then we use its value
+                            maxValue = data[maxValue];
+                        }
+                        this.setMeter(name, value, parseFloat(maxValue));
+                    } else {
+                        // just display the number
+                        $e.html(value);    
+                    }
+                } else if (typeof value == "string") {
+                    // just display string as is
+                    $e.html(value);
+                }
+                // set data-value attribute 
+                // to allow attribute based custom CSS selectors 
+                $e.attr('data-value', value);
             }
+        }
+
+        // "forward" declarations for custom skins:
+
+        // define custom data filter method for skins
+        private filter(data: Ets2TelemetryData): Ets2TelemetryData {
+            return data;
+        }
+
+        // define custom data render method for skins
+        private render(data: Ets2TelemetryData) {
+            return;
         }
         
     }

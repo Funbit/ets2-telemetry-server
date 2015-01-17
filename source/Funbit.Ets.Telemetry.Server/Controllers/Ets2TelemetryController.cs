@@ -14,22 +14,23 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
     public class Ets2TelemetryController : ApiController
     {
         public const string TelemetryApiUriPath = "/api/ets2/telemetry";
+        const string TestTelemetryJsonFileName = "Ets2TestTelemetry.json";
 
-        static readonly string TelemetryDebugData =
-            File.Exists(ConfigurationManager.AppSettings["Ets2TelemetryDebugJsonDataFileName"])
-                ? File.ReadAllText(ConfigurationManager.AppSettings["Ets2TelemetryDebugJsonDataFileName"], Encoding.UTF8)
-                : null;
-
+        static readonly bool UseTestTelemetryData = !string.IsNullOrWhiteSpace(
+            ConfigurationManager.AppSettings["UseEts2TestTelemetryData"]);
+        
         [HttpGet]
         [HttpPost]
         [Route("ets2/telemetry", Name = "GetEts2Telemetry")]
         public HttpResponseMessage GetEts2Telemetry()
         {
-            // if we have debug data defined in the config - lets return it then
-            if (!string.IsNullOrEmpty(TelemetryDebugData))
+            // if we have test data defined in the app.config then use it
+            if (UseTestTelemetryData)
             {
+                string testJsonData = File.ReadAllText(Path.Combine(
+                    AppDomain.CurrentDomain.BaseDirectory, TestTelemetryJsonFileName), Encoding.UTF8);
                 var sampleResponse = Request.CreateResponse(HttpStatusCode.OK);
-                sampleResponse.Content = new StringContent(TelemetryDebugData, Encoding.UTF8, "application/json");
+                sampleResponse.Content = new StringContent(testJsonData, Encoding.UTF8, "application/json");
                 return sampleResponse;
             }
 

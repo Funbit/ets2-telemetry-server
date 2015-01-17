@@ -21,23 +21,16 @@
     top: 1px;
     width: 2048px;
     height: 1152px;
-    &.on { background-image: url("images/bg-on.png") }
+    &.connected.on { 
+        background-image: url("images/bg-on.png");        
+    }
 }
 
-.error {
+.statusMessage {
     color: coral;
 }
 
-/* speedometer */
-
-/* 
-    Information for skin makers:
-        transform-origin is very important for custom skins,
-        it defines the central point of your analog meter
-        (starting from the top-left point of your arrow)        
-*/
-
-.speedometer-arrow {
+.truckSpeed {
     position: absolute;
     left: 571px;
     top: 121px;
@@ -56,9 +49,7 @@
     transform-origin: 50% 440px;    
 }
 
-/* tachometer */
-
-.tachometer-arrow {
+.engineRpm {
     position: absolute;
     left: 1580px;
     top: 105px;
@@ -77,9 +68,7 @@
     transform-origin: 50% 336px;
 }
 
-/* fuel */
-
-.fuel-arrow {
+.fuel {
     position: absolute;
     left: 1452px;
     top: 546px;
@@ -98,9 +87,7 @@
     transform-origin: 50% 198px;
 }
 
-/* temperature */
-
-.temperature-arrow {
+.waterTemperature {
     position: absolute;
     left: 1788px;
     top: 546px;
@@ -119,24 +106,28 @@
     transform-origin: 50% 198px;
 }
 
-/* gear */
-
 .gear {
     color: #35b32e;
     font-family: Courier New, Courier, monospace;
     font-weight: bold;
     font-size: 100px;
     position: absolute;
-    left: 520px;
+    left: 516px;
     top: 678px;
     width: 134px;
     height: 100px;
     text-align: center;
 }
 
-/* odometer */
+.gear[data-value="N"] {
+    color: white;
+}
 
-.odometer {
+.gear[data-value="R"] {
+    color: yellow;
+}
+
+.truckOdometer {
     color: #1b87af;
     font-family: Courier New, Courier, monospace;
     font-weight: bold;
@@ -149,9 +140,7 @@
     text-align: right;
 }
 
-/* blinkers */
-
-.blinker-left {
+.blinkerLeftOn {
     background-image: url("images/blinker-left-off.png");
     position: absolute;
     left: 98px;
@@ -161,7 +150,7 @@
     &.on { background-image: url("images/blinker-left-on.png") }
 }
 
-.blinker-right {
+.blinkerRightOn {
     background-image: url("images/blinker-right-off.png");
     position: absolute;
     left: 950px;
@@ -171,9 +160,7 @@
     &.on { background-image: url("images/blinker-right-on.png") }
 }
 
-/* cruise control indicator */
-
-.cruise {
+.cruiseControlOn {
     background-image: url("images/cruise-off.png");
     position: absolute;
     left: 710px;
@@ -183,9 +170,7 @@
     &.on { background-image: url("images/cruise-on.png") }
 }
 
-/* lights indicator */
-
-.highbeam {
+.lightsBeamHighOn {
     background-image: url("images/highbeam-off.png");
     position: absolute;
     left: 1326px;
@@ -195,7 +180,7 @@
     &.on { background-image: url("images/highbeam-on.png") }
 }
 
-.lowbeam {
+.lightsBeamLowOn {
     background-image: url("images/lowbeam-off.png");
     position: absolute;
     left: 1326px;
@@ -205,7 +190,7 @@
     &.on { background-image: url("images/lowbeam-on.png") }
 }
 
-.parking-lights {
+.lightsParkingOn {
     background-image: url("images/parklights-off.png");
     position: absolute;
     left: 1454px;
@@ -215,9 +200,7 @@
     &.on { background-image: url("images/parklights-on.png") }
 }
 
-/* trailer indicator */
-
-.trailer {
+.trailerAttached {
     background-image: url("images/trailer-off.png");
     position: absolute;
     left: 1726px;
@@ -227,7 +210,7 @@
     &.on { background-image: url("images/trailer-on.png") }
 }
 
-.trailer-mass {
+.trailerMass {
     color: #3e3b60;
     font-family: Courier New, Courier, monospace;
     font-weight: bold;
@@ -237,10 +220,26 @@
     top: 938px;
     width: 200px;
     height: 80px;
-    text-align: center;
+    text-align: center;    
 }
 
-.trailer-name {
+._jobSource, ._jobDestionation {
+    color: #efbd3a;
+}
+
+.trailerMass, ._jobSource, ._jobDestionation {
+    visibility: hidden;
+}
+
+.hasJob {    
+    &.on {
+        .trailerMass, ._jobSource, ._jobDestionation {
+            visibility: visible;
+        }    
+    }
+}
+
+.trailerName {
     color: #222;
     font-family: Arial, Tahoma;    
     font-size: 28px;
@@ -254,9 +253,17 @@
     overflow: hidden;
 }
 
-/* job info */
+.gameTime  {
+    color: #C2D8ED;
+}
 
-.info-table {
+.jobRemainingTime {
+    color: #54d9a8;
+}
+
+
+
+table {
     border-collapse: collapse;
     font-family: Courier New, Courier, monospace;
     font-size: 40px;
@@ -273,14 +280,5 @@
     td {
         padding-left: 20px;
         text-align: left;
-        &.time {
-            color: #C2D8ED;
-        }
-        &.source, &.destination {
-            color: #efbd3a;
-        }
-        &.deadline {
-            color: #54d9a8;
-        }
     }
 }

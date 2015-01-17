@@ -12,7 +12,7 @@
 
 Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
     // convert kilometers per hour to miles per hour
-    data.truckSpeed *= 0.621371;
+    data.truckSpeedMph = data.truckSpeed * 0.621371;
     // convert kg to t
     data.trailerMass = (data.trailerMass / 1000.0) + 't';
     // format odometer data as: 00000.0
@@ -24,3 +24,7 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
     // return changed data to the core for rendering
     return data;
 };
+
+Funbit.Ets.Telemetry.Dashboard.prototype.render = function (data) {
+    // we don't have anything custom to render in this skin    
+}

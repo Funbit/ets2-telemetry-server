@@ -150,6 +150,9 @@
       <Link>Html\config.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Ets2TestTelemetry.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\check-error.png" />
     <None Include="Resources\check-on.png" />
     <None Include="Resources\check-off.png" />

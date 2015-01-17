@@ -29,7 +29,9 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
         public bool Connected
         {
-            get { return _rawData.ets2_telemetry_plugin_revision != 0 && Ets2ProcessHelper.IsEts2Running; }
+            get { return _rawData.ets2_telemetry_plugin_revision != 0 && 
+                Ets2ProcessHelper.IsEts2Running && 
+                _rawData.timeAbsolute != 0; }
         }
 
         public DateTime GameTime
@@ -229,6 +231,11 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public string TrailerName
         {
             get { return BytesToString(_rawData.trailerName); }
+        }
+
+        public bool HasJob
+        {
+            get { return _rawData.jobIncome > 0; }
         }
 
         public int JobIncome
