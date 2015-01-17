@@ -18,7 +18,7 @@
   width: 2048px;
   height: 1152px;
 }
-.dashboard.connected.on {
+.dashboard.connected.yes {
   background-image: url("images/bg-on.png");
 }
 .statusMessage {
@@ -107,12 +107,16 @@
   width: 134px;
   height: 100px;
   text-align: center;
+  visibility: hidden;
+}
+.dashboard.connected.yes .gear {
+  visibility: visible;
 }
 .gear[data-value="N"] {
-  color: white;
+  color: #2c8a26;
 }
 .gear[data-value="R"] {
-  color: yellow;
+  color: #ddff00;
 }
 .truckOdometer {
   color: #1b87af;
@@ -125,6 +129,10 @@
   width: 368px;
   height: 70px;
   text-align: right;
+  visibility: hidden;
+}
+.dashboard.connected.yes .truckOdometer {
+  visibility: visible;
 }
 .blinkerLeftOn {
   background-image: url("images/blinker-left-off.png");
@@ -134,7 +142,7 @@
   width: 102px;
   height: 92px;
 }
-.blinkerLeftOn.on {
+.blinkerLeftOn.yes {
   background-image: url("images/blinker-left-on.png");
 }
 .blinkerRightOn {
@@ -145,7 +153,7 @@
   width: 102px;
   height: 92px;
 }
-.blinkerRightOn.on {
+.blinkerRightOn.yes {
   background-image: url("images/blinker-right-on.png");
 }
 .cruiseControlOn {
@@ -156,7 +164,7 @@
   width: 114px;
   height: 98px;
 }
-.cruiseControlOn.on {
+.cruiseControlOn.yes {
   background-image: url("images/cruise-on.png");
 }
 .lightsBeamHighOn {
@@ -167,7 +175,7 @@
   width: 120px;
   height: 88px;
 }
-.lightsBeamHighOn.on {
+.lightsBeamHighOn.yes {
   background-image: url("images/highbeam-on.png");
 }
 .lightsBeamLowOn {
@@ -178,7 +186,7 @@
   width: 120px;
   height: 88px;
 }
-.lightsBeamLowOn.on {
+.lightsBeamLowOn.yes {
   background-image: url("images/lowbeam-on.png");
 }
 .lightsParkingOn {
@@ -189,7 +197,7 @@
   width: 106px;
   height: 96px;
 }
-.lightsParkingOn.on {
+.lightsParkingOn.yes {
   background-image: url("images/parklights-on.png");
 }
 .trailerAttached {
@@ -200,7 +208,7 @@
   width: 278px;
   height: 152px;
 }
-.trailerAttached.on {
+.trailerAttached.yes {
   background-image: url("images/trailer-on.png");
 }
 .trailerMass {
@@ -220,13 +228,17 @@
   color: #efbd3a;
 }
 .trailerMass,
+.trailerName,
+.jobRemainingTime,
 ._jobSource,
 ._jobDestionation {
   visibility: hidden;
 }
-.hasJob.on .trailerMass,
-.hasJob.on ._jobSource,
-.hasJob.on ._jobDestionation {
+.hasJob.yes .trailerMass,
+.hasJob.yes .trailerName,
+.hasJob.yes .jobRemainingTime,
+.hasJob.yes ._jobSource,
+.hasJob.yes ._jobDestionation {
   visibility: visible;
 }
 .trailerName {

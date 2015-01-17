@@ -16,7 +16,7 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
         public const string TelemetryApiUriPath = "/api/ets2/telemetry";
         const string TestTelemetryJsonFileName = "Ets2TestTelemetry.json";
 
-        static readonly bool UseTestTelemetryData = !string.IsNullOrWhiteSpace(
+        static readonly bool UseTestTelemetryData = Convert.ToBoolean(
             ConfigurationManager.AppSettings["UseEts2TestTelemetryData"]);
         
         [HttpGet]

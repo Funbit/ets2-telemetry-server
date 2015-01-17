@@ -20,6 +20,7 @@
             "title": "Generic Dashboard",
             "author": "Funbit",
             "refreshDelay": 100,
+            "animationFps": 60,
             "width": 2048,
             "height": 1152
         }

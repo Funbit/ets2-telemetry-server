@@ -115,6 +115,7 @@ var Funbit;
                     this.$cache = [];
                     this.endpointUrl = telemetryEndpointUrl;
                     this.skinConfig = skinConfig;
+                    jQuery.fx.interval = 1000 / this.skinConfig.animationFps; // default animation interval
 
                     // here we are going into infinite refresh timer cycle
                     this.refreshData();
@@ -204,7 +205,7 @@ var Funbit;
                             '-o-transform': v
                         });
                     };
-                    if (Math.abs(prevAngle - angle) < (maxAngle - minAngle) * 0.005) {
+                    if (Math.abs(prevAngle - angle) < (maxAngle - minAngle) * 0.01) {
                         // fast update
                         updateTransform('rotate(' + angle + 'deg)');
                         return;
@@ -212,7 +213,8 @@ var Funbit;
 
                     // animated update
                     $({ a: prevAngle }).animate({ a: angle }, {
-                        duration: this.skinConfig.refreshDelay * 1.1,
+                        duration: this.skinConfig.refreshDelay,
+                        queue: false,
                         step: function (now) {
                             updateTransform('rotate(' + now + 'deg)');
                         }
@@ -253,12 +255,12 @@ var Funbit;
                         var value = data[name];
                         var $e = this.$cache[name] !== undefined ? this.$cache[name] : this.$cache[name] = $('.' + name);
                         if (typeof value == "boolean") {
-                            // all booleans will have "on" class
+                            // all booleans will have "yes" class
                             // attached if value is true
                             if (value) {
-                                $e.addClass('on');
+                                $e.addClass('yes');
                             } else {
-                                $e.removeClass('on');
+                                $e.removeClass('yes');
                             }
                         } else if (typeof value == "number") {
                             if ($e.data('type') == 'meter') {

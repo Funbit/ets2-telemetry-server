@@ -191,9 +191,6 @@
     <Content Include="scripts\app.js" />
     <Content Include="scripts\config.js" />
     <Content Include="scripts\doT.js" />
-    <Content Include="scripts\jquery-ui.min.js">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="scripts\jquery.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -205,6 +202,9 @@
     <Content Include="skins\default\dashboard.jpg" />
     <Content Include="skins\default\dashboard.js" />
     <Content Include="skins\default\dashboard.less" />
+    <Content Include="skins\default\dashboard.min.css">
+      <DependentUpon>dashboard.css</DependentUpon>
+    </Content>
     <Content Include="skins\default\images\bg-off.png" />
     <Content Include="skins\default\images\bg-on.png" />
     <Content Include="skins\default\images\blinker-left-off.png" />

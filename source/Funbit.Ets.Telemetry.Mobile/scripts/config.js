@@ -34,6 +34,7 @@
                     var _this = this;
                     this.anticacheSeed = 0;
                     this.initialized = $.Deferred();
+
                     this.skins = [];
 
                     // initialize structures

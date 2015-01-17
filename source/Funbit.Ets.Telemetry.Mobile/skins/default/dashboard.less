@@ -21,7 +21,7 @@
     top: 1px;
     width: 2048px;
     height: 1152px;
-    &.connected.on { 
+    &.connected.yes { 
         background-image: url("images/bg-on.png");        
     }
 }
@@ -117,14 +117,21 @@
     width: 134px;
     height: 100px;
     text-align: center;
+    visibility: hidden;
+}
+
+.dashboard.connected.yes {
+    .gear {
+        visibility: visible;
+    }
 }
 
 .gear[data-value="N"] {
-    color: white;
+    color: #2c8a26;
 }
 
 .gear[data-value="R"] {
-    color: yellow;
+    color: #ddff00;
 }
 
 .truckOdometer {
@@ -138,6 +145,13 @@
     width: 368px;
     height: 70px;
     text-align: right;
+    visibility: hidden;
+}
+
+.dashboard.connected.yes {
+    .truckOdometer {
+        visibility: visible;
+    }
 }
 
 .blinkerLeftOn {
@@ -147,7 +161,7 @@
     top: 78px;
     width: 102px;
     height: 92px;
-    &.on { background-image: url("images/blinker-left-on.png") }
+    &.yes { background-image: url("images/blinker-left-on.png") }
 }
 
 .blinkerRightOn {
@@ -157,7 +171,7 @@
     top: 78px;
     width: 102px;
     height: 92px;
-    &.on { background-image: url("images/blinker-right-on.png") }
+    &.yes { background-image: url("images/blinker-right-on.png") }
 }
 
 .cruiseControlOn {
@@ -167,7 +181,7 @@
     top: 680px;
     width: 114px;
     height: 98px;
-    &.on { background-image: url("images/cruise-on.png") }
+    &.yes { background-image: url("images/cruise-on.png") }
 }
 
 .lightsBeamHighOn {
@@ -177,7 +191,7 @@
     top: 890px;
     width: 120px;
     height: 88px;
-    &.on { background-image: url("images/highbeam-on.png") }
+    &.yes { background-image: url("images/highbeam-on.png") }
 }
 
 .lightsBeamLowOn {
@@ -187,7 +201,7 @@
     top: 1010px;
     width: 120px;
     height: 88px;
-    &.on { background-image: url("images/lowbeam-on.png") }
+    &.yes { background-image: url("images/lowbeam-on.png") }
 }
 
 .lightsParkingOn {
@@ -197,7 +211,7 @@
     top: 950px;
     width: 106px;
     height: 96px;
-    &.on { background-image: url("images/parklights-on.png") }
+    &.yes { background-image: url("images/parklights-on.png") }
 }
 
 .trailerAttached {
@@ -207,7 +221,7 @@
     top: 922px;
     width: 278px;
     height: 152px;
-    &.on { background-image: url("images/trailer-on.png") }
+    &.yes { background-image: url("images/trailer-on.png") }
 }
 
 .trailerMass {
@@ -227,13 +241,13 @@
     color: #efbd3a;
 }
 
-.trailerMass, ._jobSource, ._jobDestionation {
+.trailerMass, .trailerName, .jobRemainingTime, ._jobSource, ._jobDestionation {
     visibility: hidden;
 }
 
 .hasJob {    
-    &.on {
-        .trailerMass, ._jobSource, ._jobDestionation {
+    &.yes {
+        .trailerMass, .trailerName, .jobRemainingTime, ._jobSource, ._jobDestionation {
             visibility: visible;
         }    
     }
@@ -260,8 +274,6 @@
 .jobRemainingTime {
     color: #54d9a8;
 }
-
-
 
 table {
     border-collapse: collapse;

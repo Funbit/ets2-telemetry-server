@@ -12,6 +12,7 @@ module Funbit.Ets.Telemetry {
         title: string;
         author: string;
         refreshDelay: number;
+        animationFps: number;
         width: number;
         height: number;
     } 
@@ -120,6 +121,7 @@ module Funbit.Ets.Telemetry {
         
         constructor() {
             this.initialized = $.Deferred<Configuration>();
+            
             this.skins = [];
             // initialize structures
             if (!Configuration.isCordovaAvailable()) {
