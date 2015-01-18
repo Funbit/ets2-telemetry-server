@@ -182,11 +182,8 @@ var Funbit;
                     return date;
                 };
 
-                Dashboard.prototype.setMeter = function (name, value, maxValue) {
-                    if (typeof maxValue === "undefined") { maxValue = null; }
+                Dashboard.prototype.setMeter = function ($meter, name, value, minValue, maxValue) {
                     var className = '.' + name;
-                    var $meter = $(className);
-                    var minValue = $meter.data('min');
                     var maxValue = maxValue ? maxValue : $meter.data('max');
                     var minAngle = $meter.data('min-angle');
                     var maxAngle = $meter.data('max-angle');
@@ -267,13 +264,19 @@ var Funbit;
                                 // if type is set to meter
                                 // then we use this HTML element
                                 // as a rotating meter "arrow"
+                                var minValue = $e.data('min');
+                                if (/[a-z]/i.test(minValue)) {
+                                    // if data-min attribute points
+                                    // to a property name then we use its value
+                                    minValue = data[minValue];
+                                }
                                 var maxValue = $e.data('max');
                                 if (/[a-z]/i.test(maxValue)) {
                                     // if data-max attribute points
                                     // to a property name then we use its value
                                     maxValue = data[maxValue];
                                 }
-                                this.setMeter(name, value, parseFloat(maxValue));
+                                this.setMeter($e, name, value, parseFloat(minValue), parseFloat(maxValue));
                             } else {
                                 // just display the number
                                 $e.html(value);

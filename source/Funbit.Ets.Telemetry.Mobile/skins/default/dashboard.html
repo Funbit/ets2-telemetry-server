@@ -3,16 +3,15 @@
         <!-- meters -->
         <!--
             Attributes:
-            data-min-angle: angle in degress for the arrow for data-min value (0 = vertical)
-            data-max-angle: angle in degress for the arrow for data-max value (0 = vertical)
-            data-min: minimal possible value (in JSON response)
-            data-max: maximum possible value (in JSON response)
-            data-prev: internal usage only
+            data-min-angle: angle in degress for the arrow for data-min value (0 = vertical, negative = left, positive = right)
+            data-max-angle: angle in degress for the arrow for data-max value (0 = vertical, negative = left, positive = right)
+            data-min: minimal possible value (as in JSON response), you may also use any telemetry property name for dynamic values
+            data-max: maximum possible value (as in JSON response), you may also use any telemetry property name for dynamic values
             -->
-        <div class="truckSpeed" data-type="meter" data-prev="-114" data-min="0" data-max="140" data-min-angle="-114" data-max-angle="+114"></div>
-        <div class="engineRpm" data-type="meter" data-prev="-97" data-min="0" data-max="24" data-min-angle="-97" data-max-angle="+97"></div>
-        <div class="fuel" data-type="meter" data-prev="-96" data-min="0" data-max="fuelCapacity" data-min-angle="-96" data-max-angle="0"></div>
-        <div class="waterTemperature" data-type="meter" data-prev="-96" data-min="0" data-max="100" data-min-angle="-96" data-max-angle="0"></div>
+        <div class="truckSpeed" data-type="meter" data-min="0" data-max="140" data-min-angle="-114" data-max-angle="+114"></div>
+        <div class="engineRpm" data-type="meter" data-min="0" data-max="24" data-min-angle="-97" data-max-angle="+97"></div>
+        <div class="fuel" data-type="meter" data-min="0" data-max="fuelCapacity" data-min-angle="-96" data-max-angle="0"></div>
+        <div class="waterTemperature" data-type="meter" data-min="0" data-max="100" data-min-angle="-96" data-max-angle="0"></div>
         <div class="truckOdometer"></div>
         <div class="gear"></div>
         <!-- indicators -->
@@ -26,7 +25,7 @@
         <div class="trailerMass"><span class="ton">t</span></div>
         <div class="trailerName"></div>
         <!-- job information -->
-        <table>
+        <table class="_job">
             <tr>
                 <th>Time:</th>
                 <td><span class="gameTime"></span><span class="statusMessage"></span></td>

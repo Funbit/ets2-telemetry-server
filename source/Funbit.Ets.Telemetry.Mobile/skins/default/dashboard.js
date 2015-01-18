@@ -4,14 +4,14 @@
     ======================================    
 */
 
-// This filter may be used to change telemetry data 
+// This filter is used to change telemetry data 
 // before it is displayed on the dashboard.
 // For example, you may convert km/h to mph, kilograms to tons, etc.
-// "data" parameter has all properties defined in
-// IEts2TelemetryData interface in dashboard-core.ts
+// "data" object is an instance of the Ets2TelemetryData class 
+// defined in dashboard-core.ts (or see JSON response in the server's API).
 
 Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
-    // convert kilometers per hour to miles per hour
+    // convert kilometers per hour to miles per hour (just an example)
     data.truckSpeedMph = data.truckSpeed * 0.621371;
     // convert kg to t
     data.trailerMass = (data.trailerMass / 1000.0) + 't';
@@ -26,5 +26,7 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
 };
 
 Funbit.Ets.Telemetry.Dashboard.prototype.render = function (data) {
-    // we don't have anything custom to render in this skin    
+    // we don't have anything custom to render in this skin,
+    // but you may use jQuery here to update any element
+    // with any custom animation, logic or style
 }

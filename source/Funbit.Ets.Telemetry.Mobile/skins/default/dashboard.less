@@ -4,15 +4,59 @@
     *** DO NOT CHANGE THIS STYLESHEET *** 
 
     If you want to create your own dashboard skin (or tweak something)
-    create dashboard.html and dashboard.css files inside
-    "/skins/your_skin_name" directory and use them to override default styles.
-    When you create a new skin please do not forget to register
-    it inside "/config.json" file, otherwise it won't appear in the app!
+    create a copy of the "/skins/default" directory and rename it
+    to something like: "/skins/your_skin_name".
+    Edit "/config.json" file and add a new object to the skins array.
+    Please note that the "name" property must be equal to "your_skin_name" defined above.
+    Refresh your application/browser to see the new skin.
+
+    CSS naming convention:
+
+    - Dashboard core script maps all telemetry data properties to respective class names,
+      so truck's speed will be .truckSpeed and current gear is .gear (see JSON).
+    - All boolean telemetry properties will have a special ".yes" class added 
+      when the value is true (will be removed if value is false).
+    - When dashboard core script updates DOM it will always add 
+      data-value attribute containing current value, so you 
+      can use it to have custom css selectors based on the actual data 
+      (for example, this skin uses .gear[data-value="N"] to define
+      different style for neutral or reverse gear, see below).
+    - If you need to define your own style related classes.
+      I stronly recommend to use underscore prefix ("._job" for example) to distinguish names,
+      so you will never forget which classes are dynamic and which are static.
 */
+
+
+
+// useful LESS mixins and variables
 
 @arrow-color: #cd0000;
 
-/* common dashboard stuff */
+.setRotation(@angle) {
+    -webkit-transform: rotate(@angle);
+    -moz-transform: rotate(@angle);
+    -ms-transform: rotate(@angle);
+    -o-transform: rotate(@angle);
+    transform: rotate(@angle);
+}
+
+.setOrigin(@width, @height) {
+    -webkit-transform-origin: @width @height;
+    -moz-transform-origin: @width @height;
+    -ms-transform-origin: @width @height;
+    -o-transform-origin: @width @height;
+    transform-origin: @width @height;  
+}
+
+.hidden {
+    visibility: hidden;
+}
+
+.visible {
+    visibility: visible;
+}
+
+// dashboard background
 
 .dashboard {    
     background-image: url("images/bg-off.png");
@@ -22,13 +66,11 @@
     width: 2048px;
     height: 1152px;
     &.connected.yes { 
-        background-image: url("images/bg-on.png");        
+        background-image: url("images/bg-on.png");
     }
 }
 
-.statusMessage {
-    color: coral;
-}
+// meters
 
 .truckSpeed {
     position: absolute;
@@ -37,16 +79,8 @@
     width: 10px;
     height: 110px;
     background-color: @arrow-color;
-    -webkit-transform: rotate(-114deg);
-    -moz-transform: rotate(-114deg);
-    -ms-transform: rotate(-114deg);
-    -o-transform: rotate(-114deg);
-    transform: rotate(-114deg);
-    -webkit-transform-origin: 50% 440px;
-    -moz-transform-origin: 50% 440px;
-    -ms-transform-origin: 50% 440px;
-    -o-transform-origin: 50% 440px;
-    transform-origin: 50% 440px;    
+    .setRotation(-114deg);
+    .setOrigin(50%, 440px);
 }
 
 .engineRpm {
@@ -56,16 +90,8 @@
     width: 10px;
     height: 110px;
     background-color: @arrow-color;
-    -webkit-transform: rotate(-97deg);
-    -moz-transform: rotate(-97deg);
-    -ms-transform: rotate(-97deg);
-    -o-transform: rotate(-97deg);
-    transform: rotate(-97deg);
-    -webkit-transform-origin: 50% 336px;
-    -moz-transform-origin: 50% 336px;
-    -ms-transform-origin: 50% 336px;
-    -o-transform-origin: 50% 336px;
-    transform-origin: 50% 336px;
+    .setRotation(-97deg);
+    .setOrigin(50%, 336px);    
 }
 
 .fuel {
@@ -75,16 +101,8 @@
     width: 10px;
     height: 60px;
     background-color: @arrow-color;
-    -webkit-transform: rotate(-96deg);
-    -moz-transform: rotate(-96deg);
-    -ms-transform: rotate(-96deg);
-    -o-transform: rotate(-96deg);
-    transform: rotate(-96deg);
-    -webkit-transform-origin: 50% 198px;
-    -moz-transform-origin: 50% 198px;
-    -ms-transform-origin: 50% 198px;
-    -o-transform-origin: 50% 198px;
-    transform-origin: 50% 198px;
+    .setRotation(-96deg);
+    .setOrigin(50%, 198px);    
 }
 
 .waterTemperature {
@@ -94,17 +112,11 @@
     width: 10px;
     height: 60px;
     background-color: @arrow-color;
-    -webkit-transform: rotate(-0deg);
-    -moz-transform: rotate(-0deg);
-    -ms-transform: rotate(-0deg);
-    -o-transform: rotate(-0deg);
-    transform: rotate(-0deg);
-    -webkit-transform-origin: 50% 198px;
-    -moz-transform-origin: 50% 198px;
-    -ms-transform-origin: 50% 198px;
-    -o-transform-origin: 50% 198px;
-    transform-origin: 50% 198px;
+    .setRotation(0deg);
+    .setOrigin(50%, 198px);    
 }
+
+// other elements
 
 .gear {
     color: #35b32e;
@@ -117,13 +129,6 @@
     width: 134px;
     height: 100px;
     text-align: center;
-    visibility: hidden;
-}
-
-.dashboard.connected.yes {
-    .gear {
-        visibility: visible;
-    }
 }
 
 .gear[data-value="N"] {
@@ -145,13 +150,6 @@
     width: 368px;
     height: 70px;
     text-align: right;
-    visibility: hidden;
-}
-
-.dashboard.connected.yes {
-    .truckOdometer {
-        visibility: visible;
-    }
 }
 
 .blinkerLeftOn {
@@ -237,22 +235,6 @@
     text-align: center;    
 }
 
-._jobSource, ._jobDestionation {
-    color: #efbd3a;
-}
-
-.trailerMass, .trailerName, .jobRemainingTime, ._jobSource, ._jobDestionation {
-    visibility: hidden;
-}
-
-.hasJob {    
-    &.yes {
-        .trailerMass, .trailerName, .jobRemainingTime, ._jobSource, ._jobDestionation {
-            visibility: visible;
-        }    
-    }
-}
-
 .trailerName {
     color: #222;
     font-family: Arial, Tahoma;    
@@ -275,7 +257,44 @@
     color: #54d9a8;
 }
 
-table {
+// elements which are hidden by default
+
+.gear,
+.truckOdometer,
+.trailerMass, 
+.trailerName, 
+.jobRemainingTime, 
+._jobSource, 
+._jobDestionation {
+    .hidden;
+}
+
+// elements which are visible only when dashboard is connected
+
+.dashboard.connected.yes {    
+    .gear,
+    .truckOdometer {
+        .visible;
+    }
+}
+
+// elements which are visible only when user has a job  
+
+.hasJob {    
+    &.yes {
+        .trailerMass, 
+        .trailerName, 
+        .jobRemainingTime, 
+        ._jobSource, 
+        ._jobDestionation {
+            .visible;
+        }    
+    }
+}
+
+// job info table
+
+table._job {
     border-collapse: collapse;
     font-family: Courier New, Courier, monospace;
     font-size: 40px;
@@ -292,5 +311,14 @@ table {
     td {
         padding-left: 20px;
         text-align: left;
-    }
+    }    
+}
+
+._jobSource, 
+._jobDestionation {
+    color: #efbd3a;
+}
+
+.statusMessage {
+    color: coral;
 }
