@@ -211,7 +211,7 @@ module Funbit.Ets.Telemetry {
                     '-o-transform': v
                 });
             }
-            if (Math.abs(prevAngle - angle) < (maxAngle - minAngle) * 0.01) {
+            if (Math.abs(prevAngle - angle) < (maxAngle - minAngle) * 0.001) {
                 // fast update
                 updateTransform('rotate(' + angle + 'deg)');
                 return;

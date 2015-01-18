@@ -84,6 +84,7 @@
     height: 66px;
     text-align: right;
     &[data-type="meter"] {
+        .visible;
         position: absolute;
         left: 571px;
         top: 121px;
@@ -273,6 +274,7 @@
 
 .gear,
 .truckOdometer,
+.truckSpeed,
 .trailerMass, 
 .trailerName, 
 .jobRemainingTime, 
@@ -285,7 +287,8 @@
 
 .dashboard.connected.yes {    
     .gear,
-    .truckOdometer {
+    .truckOdometer,
+    .truckSpeed {
         .visible;
     }
 }

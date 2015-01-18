@@ -55,6 +55,7 @@
   text-align: right;
 }
 .truckSpeed[data-type="meter"] {
+  visibility: visible;
   position: absolute;
   left: 571px;
   top: 121px;
@@ -266,6 +267,7 @@
 }
 .gear,
 .truckOdometer,
+.truckSpeed,
 .trailerMass,
 .trailerName,
 .jobRemainingTime,
@@ -274,7 +276,8 @@
   visibility: hidden;
 }
 .dashboard.connected.yes .gear,
-.dashboard.connected.yes .truckOdometer {
+.dashboard.connected.yes .truckOdometer,
+.dashboard.connected.yes .truckSpeed {
   visibility: visible;
 }
 .hasJob.yes .trailerMass,
