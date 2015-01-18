@@ -1,30 +1,38 @@
-## ETS2 Telemetry Web Server 1.0.4 + Mobile Gauge App
+## ETS2 Telemetry Web Server 2.0.0 + Mobile Dashboard
 
-This is a modern ETS2 Telemetry Web Server written in C# and WebApi. The server exposes the following endpoints:
+This is a free Telemetry Web Server for Euro Truck Simulator 2 written in C#. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
+
+## Main Features
+
+- Free and open source
+- Automated installation
+- REST API for ETS2 telemetry data 
+- Support for custom dashboard skins
+- Telemetry data broadcasting to a given URL via HTTP protocol
 
 ### Telemetry REST API
   
     GET http://localhost:25555/api/ets2/telemetry
 
-It returns IEts2TelemetryData JSON object with the latest telemetry data read from the game. The state is updated upon every API call. You may use this REST API for your own Applications. Here is a short explanation of some IEts2TelemetryData properties:
+Returns JSON object with the latest telemetry data read from the game. The state is updated upon every API call. You may use this REST API for your own Applications. Here is a short explanation of some telemetry properties:
 
-- DateTime values are serialized to ISO 8601 strings relative to the server's timezone. Dates always start from 0001 year when 1st January is Monday.    
+- DateTime values are serialized to ISO 8601 strings in UTC time zone. Dates always start from 0001 year when 1st January is Monday.    
 - Gear values: -1 = R, 0 = N, 1 = D1, 2 = D2, etc.
 - Mass is expressed in kilograms
-- Speed is expressed in m/sec (to convert it to km/sec just multiply it by 3.6)
+- Speed is expressed in km/sec
 
 Please note that GET responses may be cached by your HTTP client. To avoid caching you may use some random query string parameter or POST method which returns exactly the same result.
 
-### Telemetry HTML5 Mobile Application
+### HTML5 Mobile Dashboard Application
     http://localhost:25555/
 
-This HTML5 gauge application is designed for mobile/desktop browsers running in landscape mode. You should be able to use the gauge just by navigating to the URL in your Mobile Safari (iOS 8+), Android 4+ browsers (Default or Chrome) or any modern desktop browser. **Android ETS2 mobile gauge application (APK) is also included!**  
+This HTML5 dashboard application is designed for mobile and desktop browsers. You should be able to use the dashboard just by navigating to the URL in your Mobile Safari (iOS 8+), Android 4+ browsers (Default or Chrome) or any modern desktop browser. 
 
-Here is a screenshot of how your mobile gauge will look like in a browser:
+Here is a screenshot of how your mobile dashboard will look like in a browser:
 
-![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/Screenshot.png)
+![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/source/Funbit.Ets.Telemetry.Mobile/skins/default/dashboard.jpg)
 
-The gauge design is pretty customizable. All you have to do is to change style.less (and compile it to styles.min.css), index.html (there are some strings there and data attributes) and PNG files. No javascript changes required!
+Dashboard design is very customizable. All you have to do is to change dashboard.css, dashboard.html and dashboard.js (if needed). 
 
 ## Installation and Usage
 
@@ -35,9 +43,9 @@ The gauge design is pretty customizable. All you have to do is to change style.l
 
 ### Supported games
 
-- Euro Truck Simulator 2 (32-bit or 64-bit). Multiplayer versions are supported as well. Steam version is preferred. 
+- Euro Truck Simulator 2 (32-bit or 64-bit). Multiplayer versions are supported as well. Steam version is preferred (non Steam users must edit configuration file prior to the installation). 
 
-### Supported browsers
+### Tested browsers
 
 - iOS 8+ running Mobile Safari
 - Android 4+ Default or Chrome browsers
@@ -45,27 +53,61 @@ The gauge design is pretty customizable. All you have to do is to change style.l
 
 ### Installation
 
-**The following steps must be done only once! The installation is easy and will not take more than a couple of minutes!**
-
-1. Download server bundle by clicking **Download ZIP** button at the right side of this page. 
+1. Download bundle by clicking **Download ZIP** button at the right side of this page. 
 2. **Unpack downloaded ZIP** file *anywhere* you want.
-3. If you use Steam version of the ETS2 then run **plugins\Install-For-Steam-Ets2.bat** by right-clicking it and selecting "*Run as Administrator*" to install the telemetry plugin DLL to your game directory. *Proceed to the next step*. If you are a non-steam user or the installation script didn't work for you then you should copy ets2-telemetry.dll manually to your game's plugins directory: "Euro Truck Simulator 2\bin\win_x86\plugins" (win_x64 for 64-bit version). If plugins directory does not exist you must create it first. *Note: If you don't trust my compiled ets2-telemetry.dll you may compile it by yourself from [the official telemetry SDK](https://github.com/nlhans/ets2-sdk-plugin)*.
-4. If you are going to connect to your server via Wi-Fi (from iOS or Android for example) then run **server\Add-25555-Rule-Local** shortcut to add an exception to your firewall to open 25555 port restricted to the local network (more secure). 
-If you want to connect to your server from the Internet then use server\Add-25555-Rule-Internet shortcut instead.
-5. Android users should install the provided "Ets2 Gauge" application. The APK file is located in **mobile/Android/Ets2Gauge.apk**. Copy it to your device and install via Android's File Manager. The main benefit of using the application instead of a browser is that it will prevent your device from going into sleep mode. Also, the application will remember entered server's IP address which is very useful if you use it frequently.
+3. Run **server\Ets2Telemetry.exe** 
+4. Click "**Install**" button to perform the installation (see below for details) 
+5. When installation finishes click "**OK**", select your network interface and click "**HTML5 App URL**" link to open your dashboard!
+
+If installer reports that it can't find your ETS2 game directory (when you don't use Steam for example) you must set it manually inside **server\Ets2Telemetry.exe.config** file (search for *Ets2GamePath* setting). 
+
+Android users should install the provided "Ets2 Dashboard" application. The APK file is located in **mobile/Android/Ets2Dashboard.apk**. Copy it to your device and install via Android's File Manager. The application will prevent your device from going into sleep mode and will remember server IP address which is very useful if you are going to use the app frequently.
+
+***Security notes***: The installation must be done only once and requires Administrator privileges. If you mind what exactly server does to the system at this point here is the detailed information:
+
+1. Tries to find your ETS2 game directory and copy ets2-telemetry.dll plugin there (avoiding overwrites)
+2. Creates a new Firewall rule for 25555 port named "ETS2 TELEMETRY SERVER (PORT 25555)" opened only for local subnet (i.e. it won't be visible from Internet, so you are safe)
+3. Creates a new ACL rule for HTTP URL bound on 25555 port for OWIN's HttpListener ([more details](http://msdn.microsoft.com/en-us/library/ms733768%28v=vs.110%29.aspx))
+4. Creates a new file for storing application settings inside "\Users\USERNAME\AppData\Local\Ets2 Telemetry Server".
+
+Also, if you don't trust my compiled ets2-telemetry.dll you may compile it by yourself from [the official telemetry SDK](https://github.com/nlhans/ets2-sdk-plugin).
 
 ### Usage
 
-1. Run **server/Ets2Telemetry.exe** (you have to run it *as Administrator* if you want to connect from other devices connected to your network). 
-2. Run the game (the order is not important though).
-3. **iOS users**: connect your iPhone or iPad to the same Wi-Fi network as your PC, open Safari and navigate to the "*ETS2 App URL*" displayed by the server. **Android users**: run "*Ets2 Gauge*" application, enter server IP (*without http part*) and press OK. If IP address is correct it will be remembered for the next time.
-4. Enjoy your mobile gauge while playing your favorite simulator! ;)
+1. Run **server/Ets2Telemetry.exe**  
+2. Run Euro Truck Simulator 2 (the order is not important though).
+3. **iOS users**: connect your iPhone or iPad to the same Wi-Fi network as your PC, open Safari and navigate to the "*HTML5 App URL*" displayed by the server. **Android users**: run "*Ets2 Dashboard*" application, enter server IP (*without http and port*) and press OK. If IP address is correct it will be remembered for the next time.
+4. Enjoy your mobile dashboard while playing your favorite simulator! ;)
+
+### Uninstallation
+
+If server hasn't fulfilled your expectations and you decide to uninstall it, then:
+
+1. Exit from the Euro Truck Simulator
+1. Run **server\Uninstall.bat**
+2. Click "**Uninstall**" button
+3. Done
+
+At this moment your system will be in exactly the same state as it were before the installation. The only difference is that ets2-telemetry.dll plugin files are not deleted but renamed to .bak.
 
 ### Known problems:
 
-- Sometimes D1 gear is not properly displayed on the screen
+- Sometimes D1 gear is not properly displayed on the screen (telemetry SDK limitation)
+- Cruise control is not properly updated (telemetry SDK limitation)
+
+## Dashboard skin tutorial
+
+Not yet available. Please stay tuned.
 
 ## Version history
+
+### 2.0.0
+
+- Completely rewritten client side application. All code is now written in Typescript. 
+- Full support for custom skins
+- Automated server installer
+- Telemetry broadcasting to external URLs (see Ets2Telemetry.exe.config)
+- Updated default dashboard skin
 
 ### 1.0.4
 
