@@ -1,0 +1,29 @@
+{
+    "comments": [
+        "==============================",
+        "MOBILE DASHBOARD CONFIGURATION",
+        "==============================",
+        "The following skins array defines all available skins and their configuration.",
+        
+        "Required properties:",
+
+        "           name: name of the skin (directory name: /skins/name)",
+        "          title: human readable skin title",
+        "         author: author name",
+        "   refreshDelay: dashboard refresh delay (between API calls) in milliseconds",
+        "   animationFps: desired dashboard animation in frames per second (if your device is capable you may set higher values)",
+        "          width: width of the skin in pixels (same as defined in the CSS)",
+        "         height: height of the skin in pixels (same as defined in the CSS)"
+    ],
+    "skins": [
+        {
+            "name": "default",
+            "title": "Generic Dashboard",
+            "author": "Funbit",
+            "refreshDelay": 100,
+            "animationFps": 45,
+            "width": 2048,
+            "height": 1152
+        }
+    ]
+}

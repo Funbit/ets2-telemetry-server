@@ -1,0 +1,48 @@
+﻿<div class="dashboard connected">
+    <div class="hasJob">
+        <!-- meters -->
+        <!--
+            Attributes:
+            data-min-angle: angle in degress for the arrow for data-min value (0 = vertical, negative = left, positive = right)
+            data-max-angle: angle in degress for the arrow for data-max value (0 = vertical, negative = left, positive = right)
+            data-min: minimal possible value (as in JSON response), you may also use any telemetry property name for dynamic values
+            data-max: maximum possible value (as in JSON response), you may also use any telemetry property name for dynamic values
+            -->
+        <div class="truckSpeed" data-type="meter" data-min="0" data-max="140" data-min-angle="-114" data-max-angle="+114"></div>
+        <div class="truckSpeed"></div>
+        <div class="engineRpm" data-type="meter" data-min="0" data-max="24" data-min-angle="-97" data-max-angle="+97"></div>
+        <div class="fuel" data-type="meter" data-min="0" data-max="fuelCapacity" data-min-angle="-96" data-max-angle="0"></div>
+        <div class="waterTemperature" data-type="meter" data-min="0" data-max="100" data-min-angle="-96" data-max-angle="0"></div>
+        <div class="truckOdometer"></div>
+        <div class="gear"></div>
+        <!-- indicators -->
+        <div class="blinkerLeftOn"></div>
+        <div class="blinkerRightOn"></div>
+        <div class="cruiseControlOn"></div>
+        <div class="lightsBeamHighOn"></div>
+        <div class="lightsBeamLowOn"></div>
+        <div class="lightsParkingOn"></div>
+        <div class="trailerAttached"></div>
+        <div class="trailerMass"><span class="ton">t</span></div>
+        <div class="trailerName"></div>
+        <!-- job information -->
+        <table class="_job">
+            <tr>
+                <th>Time:</th>
+                <td><span class="gameTime"></span><span class="statusMessage"></span></td>
+            </tr>
+            <tr>
+                <th>Source:</th>
+                <td><span class="hasJob _jobSource"><span class="sourceCity"></span> (<span class="sourceCompany"></span>)</span></td>
+            </tr>
+            <tr>
+                <th>Destination:</th>
+                <td><span class="hasJob _jobDestionation"><span class="destinationCity"></span> (<span class="destinationCompany"></span>)</span></td>
+            </tr>
+            <tr>
+                <th>Deadline in:</th>
+                <td><span class="jobRemainingTime"></span></td>
+            </tr>
+        </table>
+    </div>
+</div>
