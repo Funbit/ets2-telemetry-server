@@ -266,27 +266,30 @@ module Funbit.Ets.Telemetry {
                         $e.removeClass('yes');
                     }
                 } else if (typeof value == "number") {
-                    if ($e.data('type') == 'meter') {
+                    var $meter = $e.filter('[data-type="meter"]');
+                    if ($meter.length > 0) {
                         // if type is set to meter 
                         // then we use this HTML element 
                         // as a rotating meter "arrow"
-                        var minValue = $e.data('min');
+                        var minValue = $meter.data('min');
                         if (/[a-z]/i.test(minValue)) {
                             // if data-min attribute points
                             // to a property name then we use its value
                             minValue = data[minValue];
                         }
-                        var maxValue = $e.data('max');
+                        var maxValue = $meter.data('max');
                         if (/[a-z]/i.test(maxValue)) {
                             // if data-max attribute points
                             // to a property name then we use its value
                             maxValue = data[maxValue];
                         }
-                        this.setMeter($e, name, value,
+                        this.setMeter($meter, name, value,
                             parseFloat(minValue), parseFloat(maxValue));
-                    } else {
+                    }
+                    var $value = $e.not('[data-type="meter"]');
+                    if ($value.length > 0) {
                         // just display the number
-                        $e.html(value);    
+                        $value.html(value);
                     }
                 } else if (typeof value == "string") {
                     // just display string as is

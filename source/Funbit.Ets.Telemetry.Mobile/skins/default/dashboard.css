@@ -43,6 +43,18 @@
   background-image: url("images/bg-on.png");
 }
 .truckSpeed {
+  color: #2491b9;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 70px;
+  position: absolute;
+  left: 460px;
+  top: 280px;
+  width: 190px;
+  height: 66px;
+  text-align: right;
+}
+.truckSpeed[data-type="meter"] {
   position: absolute;
   left: 571px;
   top: 121px;
@@ -133,13 +145,13 @@
   color: #ddff00;
 }
 .truckOdometer {
-  color: #1b87af;
+  color: #1a6783;
   font-family: Courier New, Courier, monospace;
   font-weight: bold;
   font-size: 70px;
   position: absolute;
   left: 376px;
-  top: 476px;
+  top: 516px;
   width: 368px;
   height: 70px;
   text-align: right;

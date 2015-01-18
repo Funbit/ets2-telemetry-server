@@ -11,6 +11,8 @@
 // defined in dashboard-core.ts (or see JSON response in the server's API).
 
 Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
+    // round truck speed
+    data.truckSpeed = Math.round(data.truckSpeed);
     // convert kilometers per hour to miles per hour (just an example)
     data.truckSpeedMph = data.truckSpeed * 0.621371;
     // convert kg to t

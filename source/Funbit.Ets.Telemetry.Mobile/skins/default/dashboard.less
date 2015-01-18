@@ -73,14 +73,26 @@
 // meters
 
 .truckSpeed {
+    color: #2491b9;
+    font-family: Courier New, Courier, monospace;
+    font-weight: bold;
+    font-size: 70px;
     position: absolute;
-    left: 571px;
-    top: 121px;
-    width: 10px;
-    height: 110px;
-    background-color: @arrow-color;
-    .setRotation(-114deg);
-    .setOrigin(50%, 440px);
+    left: 460px;
+    top: 280px;
+    width: 190px;
+    height: 66px;
+    text-align: right;
+    &[data-type="meter"] {
+        position: absolute;
+        left: 571px;
+        top: 121px;
+        width: 10px;
+        height: 110px;
+        background-color: @arrow-color;
+        .setRotation(-114deg);
+        .setOrigin(50%, 440px);
+    }
 }
 
 .engineRpm {
@@ -140,13 +152,13 @@
 }
 
 .truckOdometer {
-    color: #1b87af;
+    color: #1a6783;
     font-family: Courier New, Courier, monospace;
     font-weight: bold;
     font-size: 70px;
     position: absolute;
     left: 376px;
-    top: 476px;
+    top: 516px;
     width: 368px;
     height: 70px;
     text-align: right;
