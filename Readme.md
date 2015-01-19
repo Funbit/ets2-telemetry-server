@@ -70,6 +70,8 @@ Android users should install the provided "Ets2 Dashboard" application. The APK 
 3. Creates a new ACL rule for HTTP URL bound on 25555 port for OWIN's HttpListener ([more details](http://msdn.microsoft.com/en-us/library/ms733768%28v=vs.110%29.aspx))
 4. Creates a new file for storing application settings inside "\Users\USERNAME\AppData\Local\Ets2 Telemetry Server".
 
+The server also reports everything to the log file (Ets2Telemetry.log), so you may see the details there as well.
+
 Also, if you don't trust my compiled ets2-telemetry.dll you may compile it by yourself from [the official telemetry SDK](https://github.com/nlhans/ets2-sdk-plugin).
 
 ### Usage
