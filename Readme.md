@@ -108,6 +108,7 @@ Not yet available. Please stay tuned.
 - Automated server installer
 - Telemetry broadcasting to external URLs (see Ets2Telemetry.exe.config)
 - Updated default dashboard skin
+- Administrator rights are now required only for installation. Server starts under user privileges.
 
 ### 1.0.4
 
