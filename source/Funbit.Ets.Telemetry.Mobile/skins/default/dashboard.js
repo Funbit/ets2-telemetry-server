@@ -28,7 +28,19 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
 };
 
 Funbit.Ets.Telemetry.Dashboard.prototype.render = function (data) {
+    //
+    // data - same data object as in the filter function
+    //
+
     // we don't have anything custom to render in this skin,
     // but you may use jQuery here to update any element
     // with any custom animation, logic or style
+}
+
+Funbit.Ets.Telemetry.Dashboard.prototype.initialize = function (skinConfig) {
+    //
+    // skinConfig - a copy of the skin configuration from config.json
+    //
+    // this function is called before everything else, 
+    // so you may perform any DOM or resource initializations here
 }

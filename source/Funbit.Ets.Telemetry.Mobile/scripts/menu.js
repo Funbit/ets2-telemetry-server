@@ -1,4 +1,7 @@
-﻿var Funbit;
+﻿/// <reference path="typings/jquery.d.ts" />
+/// <reference path="typings/jqueryui.d.ts" />
+/// <reference path="typings/dot.d.ts" />
+var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
@@ -68,7 +71,8 @@
                     $(document).on('click', 'td.skin-image,td.skin-desc', function (e) {
                         var $this = $(e.currentTarget);
                         var skinName = $this.closest('tr').data('name');
-                        window.location.href = "dashboard-host.html?skin=" + skinName + "&ip=" + _this.config.serverIp;
+                        var dashboardHostUrl = Telemetry.Configuration.getUrl("/dashboard-host.html?skin=" + skinName + "&ip=" + _this.config.serverIp);
+                        window.location.href = dashboardHostUrl;
                     });
                     $('.edit-server-ip').click(function () {
                         _this.promptServerIp();
@@ -83,6 +87,9 @@
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
 
+//
+// Menu "entry-point"
+//
 if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
     $(document).on('deviceready', function () {
         (new Funbit.Ets.Telemetry.Menu());
@@ -90,3 +97,4 @@ if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
 } else {
     (new Funbit.Ets.Telemetry.Menu());
 }
+//# sourceMappingURL=menu.js.map

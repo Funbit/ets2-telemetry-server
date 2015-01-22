@@ -12,7 +12,7 @@ module Funbit.Ets.Telemetry {
         title: string;
         author: string;
         refreshDelay: number;
-        animationFps: number;
+        useCssAnimation: boolean;
         width: number;
         height: number;
     } 

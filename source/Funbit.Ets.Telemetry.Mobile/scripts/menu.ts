@@ -78,8 +78,10 @@ module Funbit.Ets.Telemetry {
             $(document).on('click', 'td.skin-image,td.skin-desc', e => {
                 var $this = $(e.currentTarget);
                 var skinName = $this.closest('tr').data('name');
-                window.location.href = "dashboard-host.html?skin=" + skinName +
-                    "&ip=" + this.config.serverIp;
+                var dashboardHostUrl = Configuration.getUrl(
+                    "/dashboard-host.html?skin=" + skinName +
+                    "&ip=" + this.config.serverIp);
+                window.location.href = dashboardHostUrl;
             });
             $('.edit-server-ip').click(() => {
                 this.promptServerIp();

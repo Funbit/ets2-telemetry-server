@@ -1,5 +1,6 @@
 ﻿/// <reference path="typings/jquery.d.ts" />
 /// <reference path="typings/jqueryui.d.ts" />
+/// <reference path="typings/velocity-animate.d.ts" />
 
 module Funbit.Ets.Telemetry {
 
@@ -120,7 +121,8 @@ module Funbit.Ets.Telemetry {
         constructor(telemetryEndpointUrl: string, skinConfig: ISkinConfiguration) {
             this.endpointUrl = telemetryEndpointUrl;
             this.skinConfig = skinConfig;
-            jQuery.fx.interval = 1000 / this.skinConfig.animationFps; // default animation interval
+            // call custom skin initialization function
+            this.initialize(skinConfig);
             // here we are going into infinite refresh timer cycle
             this.refreshData();
         }
@@ -191,8 +193,7 @@ module Funbit.Ets.Telemetry {
             return date;
         }
         
-        private setMeter($meter: any, name: string, value: number, minValue: number, maxValue: number) {
-            var className = '.' + name;
+        private setMeter($meter: any, value: number, minValue: number, maxValue: number) {
             var maxValue: number = maxValue ? maxValue : $meter.data('max');
             var minAngle: number = $meter.data('min-angle');
             var maxAngle: number = $meter.data('max-angle');
@@ -200,31 +201,31 @@ module Funbit.Ets.Telemetry {
             value = Math.max(value, minValue);
             var offset = (value - minValue) / (maxValue - minValue);
             var angle = (maxAngle - minAngle) * offset + minAngle;
-            var prevAngle = parseInt($(className).data('prev'));
-            $(className).data('prev', angle);
-            var updateTransform = v => {
-                $meter.css({
-                    'transform': v,
-                    '-webkit-transform': v,
-                    '-moz-transform': v,
-                    '-ms-transform': v,
-                    '-o-transform': v
-                });
+            if (this.skinConfig.useCssAnimation) {
+                // use fast CSS animations instead of deprecated jQuery
+                // (good for new browsers)
+                $meter.velocity({ rotateZ: angle }, { duration: this.skinConfig.refreshDelay });
+            } else {
+                // use slower jQuery animation for old devices
+                var prevAngle = parseInt($meter.data('prev'));
+                $meter.data('prev', angle);
+                var updateTransform = v => {
+                    $meter.css({
+                        'transform': v,
+                        '-webkit-transform': v,
+                        '-moz-transform': v,
+                        '-ms-transform': v
+                    });
+                }
+                $({ a: prevAngle })
+                    .animate({ a: angle }, {
+                        duration: this.skinConfig.refreshDelay,
+                        queue: false,
+                        step: now => {
+                            updateTransform('rotate(' + now + 'deg)');
+                        }
+                    });
             }
-            if (Math.abs(prevAngle - angle) < (maxAngle - minAngle) * 0.001) {
-                // fast update
-                updateTransform('rotate(' + angle + 'deg)');
-                return;
-            }
-            // animated update
-            $({ a: prevAngle })
-                .animate({ a: angle }, {
-                    duration: this.skinConfig.refreshDelay,
-                    queue: false,
-                    step: now => {
-                        updateTransform('rotate(' + now + 'deg)');
-                    }
-                });
         }
         
         private process(data: Ets2TelemetryData, reason: string = '') {
@@ -283,7 +284,7 @@ module Funbit.Ets.Telemetry {
                             // to a property name then we use its value
                             maxValue = data[maxValue];
                         }
-                        this.setMeter($meter, name, value,
+                        this.setMeter($meter, value,
                             parseFloat(minValue), parseFloat(maxValue));
                     }
                     var $value = $e.not('[data-type="meter"]');
@@ -310,6 +311,11 @@ module Funbit.Ets.Telemetry {
 
         // define custom data render method for skins
         private render(data: Ets2TelemetryData) {
+            return;
+        }
+
+        // define custom initialization function
+        private initialize(skinConfig: ISkinConfiguration) {
             return;
         }
         

@@ -150,6 +150,10 @@
       <Link>Html\config.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\scripts\velocity.min.js">
+      <Link>Html\scripts\velocity.min.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Ets2TestTelemetry.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
