@@ -206,9 +206,7 @@ module Funbit.Ets.Telemetry {
                 // (good for new browsers)
                 $meter.velocity({ rotateZ: angle }, { duration: this.skinConfig.refreshDelay });
             } else {
-                // use slower jQuery animation for old devices
-                var prevAngle = parseInt($meter.data('prev'));
-                $meter.data('prev', angle);
+                // use slower transform animation for old devices
                 var updateTransform = v => {
                     $meter.css({
                         'transform': v,
@@ -216,15 +214,8 @@ module Funbit.Ets.Telemetry {
                         '-moz-transform': v,
                         '-ms-transform': v
                     });
-                }
-                $({ a: prevAngle })
-                    .animate({ a: angle }, {
-                        duration: this.skinConfig.refreshDelay,
-                        queue: false,
-                        step: now => {
-                            updateTransform('rotate(' + now + 'deg)');
-                        }
-                    });
+                };
+                updateTransform('rotate(' + angle + 'deg)');
             }
         }
         

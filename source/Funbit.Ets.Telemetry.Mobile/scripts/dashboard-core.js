@@ -209,13 +209,15 @@ var Funbit;
                                 '-ms-transform': v
                             });
                         };
-                        $({ a: prevAngle }).animate({ a: angle }, {
-                            duration: this.skinConfig.refreshDelay,
-                            queue: false,
-                            step: function (now) {
-                                updateTransform('rotate(' + now + 'deg)');
-                            }
-                        });
+                        updateTransform('rotate(' + angle + 'deg)');
+                        /*$({ a: prevAngle })
+                        .animate({ a: angle }, {
+                        duration: this.skinConfig.refreshDelay,
+                        queue: false,
+                        step: now => {
+                        updateTransform('rotate(' + now + 'deg)');
+                        }
+                        });*/
                     }
                 };
 
