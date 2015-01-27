@@ -1,9 +1,9 @@
-﻿using System.Net.Http.Formatting;
+﻿using System;
+using System.Net.Http.Formatting;
 using System.Web.Http;
+using Funbit.Ets.Telemetry.Server.Helpers;
+using Microsoft.AspNet.SignalR;
 using Microsoft.Owin.Cors;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-using Newtonsoft.Json.Serialization;
 using Owin;
 
 namespace Funbit.Ets.Telemetry.Server
@@ -13,20 +13,20 @@ namespace Funbit.Ets.Telemetry.Server
         public void Configuration(IAppBuilder appBuilder)
         {
             HttpConfiguration config = new HttpConfiguration();
-
-            var restJsonSettings = new JsonSerializerSettings();
-            restJsonSettings.Converters.Add(new StringEnumConverter());
-            restJsonSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
-            restJsonSettings.ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor;
-
+            
             config.Formatters.Clear();
             config.Formatters.Add(new JsonMediaTypeFormatter());
             config.Formatters
                   .JsonFormatter
-                  .SerializerSettings = restJsonSettings;
+                  .SerializerSettings = JsonHelper.RestSettings;
             
             config.MapHttpAttributeRoutes();
             config.EnsureInitialized();
+
+            GlobalHost.Configuration.ConnectionTimeout = TimeSpan.FromSeconds(12);
+            GlobalHost.Configuration.DisconnectTimeout = TimeSpan.FromSeconds(9);
+            GlobalHost.Configuration.KeepAlive = TimeSpan.FromSeconds(3);
+            appBuilder.MapSignalR();
 
             appBuilder.UseWebApi(config);
             appBuilder.UseCors(CorsOptions.AllowAll);

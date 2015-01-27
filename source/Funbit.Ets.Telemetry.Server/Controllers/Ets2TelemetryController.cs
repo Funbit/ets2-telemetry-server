@@ -7,6 +7,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Web.Http;
 using Funbit.Ets.Telemetry.Server.Data;
+using Funbit.Ets.Telemetry.Server.Helpers;
+using Newtonsoft.Json;
 
 namespace Funbit.Ets.Telemetry.Server.Controllers
 {
@@ -18,26 +20,34 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
 
         static readonly bool UseTestTelemetryData = Convert.ToBoolean(
             ConfigurationManager.AppSettings["UseEts2TestTelemetryData"]);
-        
-        [HttpGet]
-        [HttpPost]
-        [Route("ets2/telemetry", Name = "GetEts2Telemetry")]
-        public HttpResponseMessage GetEts2Telemetry()
+
+        public static string GetEts2TelemetryJson()
         {
             // if we have test data defined in the app.config then use it
             if (UseTestTelemetryData)
             {
-                string testJsonData = File.ReadAllText(Path.Combine(
-                    AppDomain.CurrentDomain.BaseDirectory, TestTelemetryJsonFileName), Encoding.UTF8);
-                var sampleResponse = Request.CreateResponse(HttpStatusCode.OK);
-                sampleResponse.Content = new StringContent(testJsonData, Encoding.UTF8, "application/json");
-                return sampleResponse;
+                using (var file = File.Open(
+                        Path.Combine(AppDomain.CurrentDomain.BaseDirectory, TestTelemetryJsonFileName), 
+                        FileMode.Open,
+                        FileAccess.Read, 
+                        FileShare.ReadWrite))
+                using (var reader = new StreamReader(file, Encoding.UTF8))
+                    return reader.ReadToEnd();
             }
 
             // otherwise return real data from the simulator
-            var response = Request.CreateResponse(HttpStatusCode.OK, 
-                Ets2TelemetryDataReader.Instance.Read());
-            response.Headers.CacheControl = new CacheControlHeaderValue { NoCache = true };
+            return JsonConvert.SerializeObject(Ets2TelemetryDataReader.Instance.Read(), JsonHelper.RestSettings);
+        }
+        
+        [HttpGet]
+        [HttpPost]
+        [Route("ets2/telemetry", Name = "Get")]
+        public HttpResponseMessage Get()
+        {
+            var telemetryJson = GetEts2TelemetryJson();
+            var response = Request.CreateResponse(HttpStatusCode.OK);
+            response.Content = new StringContent(telemetryJson, Encoding.UTF8, "application/json");
+            response.Headers.CacheControl = new CacheControlHeaderValue { NoCache = true };    
             return response;
         }
     }

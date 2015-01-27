@@ -199,8 +199,8 @@
     <Content Include="scripts\jquery.min.js">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="scripts\menu.js" />
-    <Content Include="scripts\velocity.min.js" />
     <Content Include="skins\default\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>
     </Content>
@@ -303,7 +303,7 @@
     <TypeScriptCompile Include="scripts\typings\dot.d.ts" />
     <TypeScriptCompile Include="scripts\typings\jquery.d.ts" />
     <TypeScriptCompile Include="scripts\typings\jqueryui.d.ts" />
-    <TypeScriptCompile Include="scripts\typings\velocity-animate.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\signalr.d.ts" />
   </ItemGroup>
   <PropertyGroup>
     <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>

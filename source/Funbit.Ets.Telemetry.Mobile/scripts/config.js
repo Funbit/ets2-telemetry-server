@@ -25,6 +25,7 @@
                 Strings.noTimeLeft = 'Overdue';
                 Strings.couldNotConnectToServer = 'Could not connect to the server';
                 Strings.connectedAndWaitingForDrive = 'Connected, waiting for the drive...';
+                Strings.connectingToServer = 'Connecting to the server...';
                 return Strings;
             })();
             Telemetry.Strings = Strings;
@@ -32,9 +33,8 @@
             var Configuration = (function () {
                 function Configuration() {
                     var _this = this;
-                    this.anticacheSeed = 0;
+                    this.anticacheSeed = Date.now();
                     this.initialized = $.Deferred();
-
                     this.skins = [];
 
                     // initialize structures

@@ -1,6 +1,6 @@
 ﻿/// <reference path="typings/jquery.d.ts" />
 /// <reference path="typings/jqueryui.d.ts" />
-/// <reference path="typings/velocity-animate.d.ts" />
+/// <reference path="typings/signalr.d.ts" />
 var Funbit;
 (function (Funbit) {
     (function (Ets) {
@@ -108,46 +108,172 @@ var Funbit;
 
             var Dashboard = (function () {
                 function Dashboard(telemetryEndpointUrl, skinConfig) {
-                    this.failCount = 0;
-                    // minimum number of fails before turning dashboard off
-                    this.minFailCount = 2;
-                    this.anticacheSeed = 0;
                     // jquery element cache
                     this.$cache = [];
                     this.endpointUrl = telemetryEndpointUrl;
                     this.skinConfig = skinConfig;
 
+                    // prepare animated meters
+                    this.initializeMeters();
+
                     // call custom skin initialization function
                     this.initialize(skinConfig);
 
-                    // here we are going into infinite refresh timer cycle
-                    this.refreshData();
+                    // initialize SignalR based sync (using WebSockets)
+                    this.initializeSignalR();
                 }
-                Dashboard.prototype.refreshData = function () {
-                    var _this = this;
-                    var url = this.endpointUrl + "?seed=" + this.anticacheSeed++;
-                    $.ajax({
-                        url: url,
-                        async: true,
-                        dataType: 'json',
-                        timeout: Dashboard.connectionTimeout
-                    }).done(function (d) {
-                        if (!d.connected) {
-                            _this.process(null, Telemetry.Strings.connectedAndWaitingForDrive);
-                            return;
-                        }
-                        _this.process(d);
-                        _this.failCount = 0;
-                    }).fail(function () {
-                        _this.failCount++;
-                        if (_this.failCount > _this.minFailCount) {
-                            _this.process(null, Telemetry.Strings.couldNotConnectToServer);
-                        }
-                    }).always(function () {
-                        _this.timer = setTimeout(_this.refreshData.bind(_this), _this.skinConfig.refreshDelay);
+                Dashboard.prototype.initializeMeters = function () {
+                    var $meters = $('[data-type="meter"]');
+                    var dataLatency = 20;
+                    var value = ((this.skinConfig.refreshRate + dataLatency) / 1000.0) + 's linear';
+                    $meters.css({
+                        '-webkit-transition': value,
+                        '-moz-transition': value,
+                        '-o-transition': value,
+                        'transition': value
                     });
                 };
 
+                Dashboard.prototype.initializeSignalR = function () {
+                    var _this = this;
+                    $.connection.hub.url = Telemetry.Configuration.getUrl('/signalr');
+                    this.ets2TelemetryHub = $.connection['ets2TelemetryHub'];
+                    this.ets2TelemetryHub.client['updateData'] = function (data) {
+                        var $processed = _this.process(JSON.parse(data));
+                        $.when.apply($, $processed).done(function () {
+                            _this.ets2TelemetryHub.server['requestData']();
+                        });
+                    };
+                    $.connection.hub.reconnecting(function () {
+                        _this.process(null, Telemetry.Strings.connectingToServer);
+                    });
+                    $.connection.hub.disconnected(function () {
+                        _this.process(null, Telemetry.Strings.couldNotConnectToServer);
+                        setTimeout(function () {
+                            $.connection.hub.start();
+                        }, Dashboard.reconnectDelay);
+                    });
+                    $.connection.hub.start().done(function () {
+                        _this.ets2TelemetryHub.server['requestData']();
+                    }).fail(function () {
+                        _this.process(null, Telemetry.Strings.couldNotConnectToServer);
+                    });
+                };
+
+                Dashboard.prototype.process = function (data, reason) {
+                    if (typeof reason === "undefined") { reason = ''; }
+                    if (data != null && !data.connected) {
+                        // if we're not connected we reset the data
+                        reason = Telemetry.Strings.connectedAndWaitingForDrive;
+                        data = null;
+                    }
+
+                    // update status message with failure reason
+                    $('.statusMessage').html(reason);
+
+                    // if we don't have real data we use default values
+                    var data = data === null ? new Ets2TelemetryData() : data;
+
+                    // tweak data using custom skin based filter
+                    data = this.filter(data);
+
+                    // tweak data using default internal filter
+                    data = this.internalFilter(data);
+
+                    // render data using internal method first
+                    var $renderFinished = this.internalRender(data);
+
+                    // then use skin based renderer if defined
+                    this.render(data);
+
+                    // return deferred object that resolves when animation finishes
+                    return $renderFinished;
+                };
+
+                Dashboard.prototype.internalFilter = function (data) {
+                    // convert ISO8601 to default readable format
+                    data.gameTime = Dashboard.timeToReadableString(data.gameTime);
+                    data.jobDeadlineTime = Dashboard.timeToReadableString(data.jobDeadlineTime);
+                    data.jobRemainingTime = Dashboard.timeDifferenceToReadableString(data.jobRemainingTime);
+                    return data;
+                };
+
+                Dashboard.prototype.internalRender = function (data) {
+                    var $animations = [];
+
+                    for (var name in data) {
+                        var value = data[name];
+                        var $e = this.$cache[name] !== undefined ? this.$cache[name] : this.$cache[name] = $('.' + name);
+                        if (typeof value == "boolean") {
+                            // all booleans will have "yes" class
+                            // attached if value is true
+                            if (value) {
+                                $e.addClass('yes');
+                            } else {
+                                $e.removeClass('yes');
+                            }
+                        } else if (typeof value == "number") {
+                            var $meter = $e.filter('[data-type="meter"]');
+                            if ($meter.length > 0) {
+                                // if type is set to meter
+                                // then we use this HTML element
+                                // as a rotating meter "arrow"
+                                var minValue = $meter.data('min');
+                                if (/[a-z]/i.test(minValue)) {
+                                    // if data-min attribute points
+                                    // to a property name then we use its value
+                                    minValue = data[minValue];
+                                }
+                                var maxValue = $meter.data('max');
+                                if (/[a-z]/i.test(maxValue)) {
+                                    // if data-max attribute points
+                                    // to a property name then we use its value
+                                    maxValue = data[maxValue];
+                                }
+                                $animations.push(this.setMeter($meter, value, parseFloat(minValue), parseFloat(maxValue)));
+                            }
+                            var $value = $e.not('[data-type="meter"]');
+                            if ($value.length > 0) {
+                                // just display the number
+                                $value.html(value);
+                            }
+                        } else if (typeof value == "string") {
+                            // just display string as is
+                            $e.html(value);
+                        }
+
+                        // set data-value attribute
+                        // to allow attribute based custom CSS selectors
+                        $e.attr('data-value', value);
+                    }
+                    return $animations;
+                };
+
+                Dashboard.prototype.setMeter = function ($meter, value, minValue, maxValue) {
+                    var maxValue = maxValue ? maxValue : $meter.data('max');
+                    var minAngle = $meter.data('min-angle');
+                    var maxAngle = $meter.data('max-angle');
+                    value = Math.min(value, maxValue);
+                    value = Math.max(value, minValue);
+                    var offset = (value - minValue) / (maxValue - minValue);
+                    var angle = (maxAngle - minAngle) * offset + minAngle;
+                    var updateTransform = function (v) {
+                        $meter.css({
+                            'transform': v,
+                            '-webkit-transform': v,
+                            '-moz-transform': v,
+                            '-ms-transform': v
+                        });
+                    };
+                    updateTransform('rotate(' + angle + 'deg)');
+                    var $animationFinished = $.Deferred();
+                    setTimeout(function () {
+                        $animationFinished.resolve();
+                    }, this.skinConfig.refreshRate);
+                    return $animationFinished;
+                };
+
+                // utility functions available for custom skins:
                 Dashboard.formatNumber = function (num, digits) {
                     var output = num + "";
                     while (output.length < digits)
@@ -185,119 +311,6 @@ var Funbit;
                     return date;
                 };
 
-                Dashboard.prototype.setMeter = function ($meter, value, minValue, maxValue) {
-                    var maxValue = maxValue ? maxValue : $meter.data('max');
-                    var minAngle = $meter.data('min-angle');
-                    var maxAngle = $meter.data('max-angle');
-                    value = Math.min(value, maxValue);
-                    value = Math.max(value, minValue);
-                    var offset = (value - minValue) / (maxValue - minValue);
-                    var angle = (maxAngle - minAngle) * offset + minAngle;
-                    if (this.skinConfig.useCssAnimation) {
-                        // use fast CSS animations instead of deprecated jQuery
-                        // (good for new browsers)
-                        $meter.velocity({ rotateZ: angle }, { duration: this.skinConfig.refreshDelay });
-                    } else {
-                        // use slower jQuery animation for old devices
-                        var prevAngle = parseInt($meter.data('prev'));
-                        $meter.data('prev', angle);
-                        var updateTransform = function (v) {
-                            $meter.css({
-                                'transform': v,
-                                '-webkit-transform': v,
-                                '-moz-transform': v,
-                                '-ms-transform': v
-                            });
-                        };
-                        updateTransform('rotate(' + angle + 'deg)');
-                        /*$({ a: prevAngle })
-                        .animate({ a: angle }, {
-                        duration: this.skinConfig.refreshDelay,
-                        queue: false,
-                        step: now => {
-                        updateTransform('rotate(' + now + 'deg)');
-                        }
-                        });*/
-                    }
-                };
-
-                Dashboard.prototype.process = function (data, reason) {
-                    if (typeof reason === "undefined") { reason = ''; }
-                    // update status message with failure reason
-                    $('.statusMessage').html(reason);
-
-                    // if we don't have real data we use default values
-                    var data = data === null ? new Ets2TelemetryData() : data;
-
-                    // tweak data using custom skin based filter
-                    data = this.filter(data);
-
-                    // tweak data using default internal filter
-                    data = this.internalFilter(data);
-
-                    // render data using internal method first
-                    this.internalRender(data);
-
-                    // then use skin based renderer if defined
-                    this.render(data);
-                };
-
-                Dashboard.prototype.internalFilter = function (data) {
-                    // convert ISO8601 to default readable format
-                    data.gameTime = Dashboard.timeToReadableString(data.gameTime);
-                    data.jobDeadlineTime = Dashboard.timeToReadableString(data.jobDeadlineTime);
-                    data.jobRemainingTime = Dashboard.timeDifferenceToReadableString(data.jobRemainingTime);
-                    return data;
-                };
-
-                Dashboard.prototype.internalRender = function (data) {
-                    for (var name in data) {
-                        var value = data[name];
-                        var $e = this.$cache[name] !== undefined ? this.$cache[name] : this.$cache[name] = $('.' + name);
-                        if (typeof value == "boolean") {
-                            // all booleans will have "yes" class
-                            // attached if value is true
-                            if (value) {
-                                $e.addClass('yes');
-                            } else {
-                                $e.removeClass('yes');
-                            }
-                        } else if (typeof value == "number") {
-                            var $meter = $e.filter('[data-type="meter"]');
-                            if ($meter.length > 0) {
-                                // if type is set to meter
-                                // then we use this HTML element
-                                // as a rotating meter "arrow"
-                                var minValue = $meter.data('min');
-                                if (/[a-z]/i.test(minValue)) {
-                                    // if data-min attribute points
-                                    // to a property name then we use its value
-                                    minValue = data[minValue];
-                                }
-                                var maxValue = $meter.data('max');
-                                if (/[a-z]/i.test(maxValue)) {
-                                    // if data-max attribute points
-                                    // to a property name then we use its value
-                                    maxValue = data[maxValue];
-                                }
-                                this.setMeter($meter, value, parseFloat(minValue), parseFloat(maxValue));
-                            }
-                            var $value = $e.not('[data-type="meter"]');
-                            if ($value.length > 0) {
-                                // just display the number
-                                $value.html(value);
-                            }
-                        } else if (typeof value == "string") {
-                            // just display string as is
-                            $e.html(value);
-                        }
-
-                        // set data-value attribute
-                        // to allow attribute based custom CSS selectors
-                        $e.attr('data-value', value);
-                    }
-                };
-
                 // "forward" declarations for custom skins:
                 // define custom data filter method for skins
                 Dashboard.prototype.filter = function (data) {
@@ -313,7 +326,7 @@ var Funbit;
                 Dashboard.prototype.initialize = function (skinConfig) {
                     return;
                 };
-                Dashboard.connectionTimeout = 3000;
+                Dashboard.reconnectDelay = 3000;
                 return Dashboard;
             })();
             Telemetry.Dashboard = Dashboard;

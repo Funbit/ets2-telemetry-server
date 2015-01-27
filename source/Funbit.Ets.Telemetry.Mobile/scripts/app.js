@@ -6,7 +6,7 @@ var Funbit;
         (function (Telemetry) {
             var App = (function () {
                 function App() {
-                    this.anticacheSeed = 0;
+                    this.anticacheSeed = Date.now();
                     this.skinConfig = Telemetry.Configuration.getInstance().getSkinConfiguration();
                     this.initializeViewport();
                     this.loadDashboardResources();
@@ -69,6 +69,7 @@ var Funbit;
                     var skinCssUrl = this.getSkinResourceUrl('dashboard.css');
                     var skinHtmlUrl = this.getSkinResourceUrl('dashboard.html');
                     var skinJsUrl = this.getSkinResourceUrl('dashboard.js');
+                    var signalrUrl = Telemetry.Configuration.getUrl('/signalr/hubs?seed=' + this.anticacheSeed++);
 
                     // preload skin css
                     $("head link[rel='stylesheet']").last().after('<link rel="stylesheet" href="' + skinCssUrl + '" type="text/css">');
@@ -81,6 +82,7 @@ var Funbit;
                         timeout: 3000
                     }).done(function (html) {
                         // include dashboard custom script
+                        html += '<script src="' + signalrUrl + '"></script>';
                         html += '<script src="' + skinJsUrl + '"></script>';
                         $('body').append(html);
                     }).fail(function () {

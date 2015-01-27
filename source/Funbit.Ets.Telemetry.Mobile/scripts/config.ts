@@ -11,8 +11,7 @@ module Funbit.Ets.Telemetry {
         name: string;
         title: string;
         author: string;
-        refreshDelay: number;
-        useCssAnimation: boolean;
+        refreshRate: number;
         width: number;
         height: number;
     } 
@@ -48,6 +47,7 @@ module Funbit.Ets.Telemetry {
         public static noTimeLeft = 'Overdue';
         public static couldNotConnectToServer = 'Could not connect to the server';
         public static connectedAndWaitingForDrive = 'Connected, waiting for the drive...';
+        public static connectingToServer = 'Connecting to the server...';
     }
 
     export class Configuration implements IConfiguration {
@@ -55,7 +55,7 @@ module Funbit.Ets.Telemetry {
         public skins: ISkinConfiguration[];
         public serverIp: string;
         public initialized: JQueryDeferred<Configuration>;
-        private anticacheSeed: number = 0;
+        private anticacheSeed: number = Date.now();
 
         private prefs: IPrefsPlugin;
         private insomnia: IInsomniaPlugin;
@@ -121,7 +121,6 @@ module Funbit.Ets.Telemetry {
         
         constructor() {
             this.initialized = $.Deferred<Configuration>();
-            
             this.skins = [];
             // initialize structures
             if (!Configuration.isCordovaAvailable()) {

@@ -7,7 +7,7 @@ module Funbit.Ets.Telemetry {
 
         private skinConfig: ISkinConfiguration;
         private dashboard: Dashboard;
-        private anticacheSeed: number = 0;
+        private anticacheSeed: number = Date.now();
         
         constructor() {
             this.skinConfig = Configuration.getInstance().getSkinConfiguration();
@@ -75,6 +75,7 @@ module Funbit.Ets.Telemetry {
             var skinCssUrl = this.getSkinResourceUrl('dashboard.css');
             var skinHtmlUrl = this.getSkinResourceUrl('dashboard.html');
             var skinJsUrl = this.getSkinResourceUrl('dashboard.js');
+            var signalrUrl = Configuration.getUrl('/signalr/hubs?seed=' + this.anticacheSeed++);
             // preload skin css
             $("head link[rel='stylesheet']").last()
                 .after('<link rel="stylesheet" href="' + skinCssUrl + '" type="text/css">');
@@ -86,6 +87,7 @@ module Funbit.Ets.Telemetry {
                 timeout: 3000
             }).done(html => {
                 // include dashboard custom script
+                html += '<script src="' + signalrUrl + '"></script>';
                 html += '<script src="' + skinJsUrl + '"></script>';
                 $('body').append(html);
             }).fail(() => {

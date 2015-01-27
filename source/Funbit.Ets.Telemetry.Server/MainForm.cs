@@ -20,9 +20,9 @@ namespace Funbit.Ets.Telemetry.Server
         IDisposable _server;
         static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        static readonly string BroardcastUrl = ConfigurationManager.AppSettings["BroardcastUrl"];
-        static readonly int BroardcastRateInSeconds = Math.Min(Math.Max(1, 
-            Convert.ToInt32(ConfigurationManager.AppSettings["BroardcastRate"])), 86400);
+        static readonly string BroadcastUrl = ConfigurationManager.AppSettings["BroadcastUrl"];
+        static readonly int BroadcastRateInSeconds = Math.Min(Math.Max(1, 
+            Convert.ToInt32(ConfigurationManager.AppSettings["BroadcastRate"])), 86400);
 
         public MainForm()
         {
@@ -86,11 +86,11 @@ namespace Funbit.Ets.Telemetry.Server
                 // start ETS2 process watchdog timer
                 statusUpdateTimer.Enabled = true;
 
-                // turn on broardcasting if set
-                if (!string.IsNullOrEmpty(BroardcastUrl))
+                // turn on broadcasting if set
+                if (!string.IsNullOrEmpty(BroadcastUrl))
                 {
-                    broardcastTimer.Interval = BroardcastRateInSeconds * 1000;
-                    broardcastTimer.Enabled = true;
+                    broadcastTimer.Interval = BroadcastRateInSeconds * 1000;
+                    broadcastTimer.Enabled = true;
                 }
 
                 // show tray icon
@@ -186,19 +186,19 @@ namespace Funbit.Ets.Telemetry.Server
             Settings.Instance.Save();
         }
 
-        private async void broardcastTimer_Tick(object sender, EventArgs e)
+        private async void broadcastTimer_Tick(object sender, EventArgs e)
         {
             try
             {
-                broardcastTimer.Enabled = false;
+                broadcastTimer.Enabled = false;
                 using (var client = new HttpClient())
-                    await client.PostAsJsonAsync(BroardcastUrl, Ets2TelemetryDataReader.Instance.Read());
+                    await client.PostAsJsonAsync(BroadcastUrl, Ets2TelemetryDataReader.Instance.Read());
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
             }
-            broardcastTimer.Enabled = true;
+            broadcastTimer.Enabled = true;
         }
     }
 }

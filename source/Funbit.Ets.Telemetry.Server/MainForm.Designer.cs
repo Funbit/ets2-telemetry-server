@@ -46,7 +46,7 @@
             this.apiEndpointUrlTitleLabel = new System.Windows.Forms.Label();
             this.statusTitleLabel = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.broardcastTimer = new System.Windows.Forms.Timer(this.components);
+            this.broadcastTimer = new System.Windows.Forms.Timer(this.components);
             this.contextMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -220,10 +220,10 @@
             this.toolTip.ReshowDelay = 50;
             this.toolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
             // 
-            // broardcastTimer
+            // broadcastTimer
             // 
-            this.broardcastTimer.Interval = 1000;
-            this.broardcastTimer.Tick += new System.EventHandler(this.broardcastTimer_Tick);
+            this.broadcastTimer.Interval = 1000;
+            this.broadcastTimer.Tick += new System.EventHandler(this.broadcastTimer_Tick);
             // 
             // MainForm
             // 
@@ -265,7 +265,7 @@
         private System.Windows.Forms.ComboBox interfacesDropDown;
         private System.Windows.Forms.Label networkInterfaceTitleLabel;
         private System.Windows.Forms.ToolTip toolTip;
-        private System.Windows.Forms.Timer broardcastTimer;
+        private System.Windows.Forms.Timer broadcastTimer;
     }
 }
 

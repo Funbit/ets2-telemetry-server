@@ -37,7 +37,7 @@
     -moz-transform: rotate(@angle);
     -ms-transform: rotate(@angle);
     -o-transform: rotate(@angle);
-    transform: rotate(@angle);
+    transform: rotate(@angle);    
 }
 
 .setOrigin(@width, @height) {
@@ -72,32 +72,16 @@
 
 // meters
 
-.truckSpeed {
-    color: #2491b9;
-    font-family: Courier New, Courier, monospace;
-    font-weight: bold;
-    font-size: 70px;
+.truckSpeed[data-type="meter"] {
+    .visible;
     position: absolute;
-    left: 460px;
-    top: 280px;
-    width: 190px;
-    height: 66px;
-    text-align: right;
-    -webkit-transition: 0.1s ease-in-out; 
-    -moz-transition: 0.1s ease-in-out; 
-    -o-transition: 0.1s ease-in-out; 
-    transition: 0.1s ease-in-out;
-    &[data-type="meter"] {
-        .visible;
-        position: absolute;
-        left: 571px;
-        top: 121px;
-        width: 10px;
-        height: 110px;
-        background-color: @arrow-color;
-        .setRotation(-114deg);
-        .setOrigin(50%, 440px);
-    }
+    left: 571px;
+    top: 121px;
+    width: 10px;
+    height: 110px;
+    background-color: @arrow-color;
+    .setRotation(-114deg);
+    .setOrigin(50%, 440px);
 }
 
 .engineRpm {
@@ -134,6 +118,19 @@
 }
 
 // other elements
+
+.truckSpeedRounded {
+    color: #2491b9;
+    font-family: Courier New, Courier, monospace;
+    font-weight: bold;
+    font-size: 70px;
+    position: absolute;
+    left: 460px;
+    top: 280px;
+    width: 190px;
+    height: 66px;
+    text-align: right;    
+}
 
 .gear {
     color: #35b32e;
