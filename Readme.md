@@ -137,7 +137,7 @@ Please check if you can connect to the dashboard from a browser first. Please re
 
 > **The dashboard UI animation (meters) sometimes stutters. Is it possible to fix that?**
 
-The default dashboard settings are optimized for most browsers and fast network connections. However, if you still have problems (especially on Android devices), you may try to tweak *refreshRate* parameter inside "*server\Html\config.json*" file (for each available skin). See comments inside that file for further guide. Refresh your browser to see the changes.
+The default dashboard settings are optimized for modern browsers and fast network connections. However, if you have problems (especially on Android devices), you may try to tweak *refreshRate* parameter inside "*server\Html\config.json*" file (available for each skin). See comments inside that file for further guide. Refresh your browser to see the changes. Note: as an example, the dashboard works smoothly on Samgung Galaxy Tab S (4.4.2), but not on Galaxy Note 1 or Kindle Fire HD. To achieve the best performance you may try to use a standalone Chrome browser instead of an app (but you will need to turn off device sleep mode when you use the dashboard). 
 
 > **Can I use mobile dashboard on Android 2.x devices?**
 
