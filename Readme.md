@@ -123,31 +123,35 @@ At this moment your system will be in exactly the same state as it were before t
 
 ## FAQ
 
-> **When I press "Install" button to setup the server it says "Could not detect game directory". What should I do?**
+> When I press "Install" button to setup the server it says "Could not detect game directory". What should I do?
 
 It seems that you have a non-standard ETS2 setup. Please read the "Installation" topic above about setting the game directory manually.
 
-> **I ran the server and opened HTML5 App URL on a device but browser says "Page not found". What should I do?**
+> I ran the server and opened HTML5 App URL on a device but browser says "Page not found". What should I do?
 
 First of all, make sure that you have selected correct "Network interface" on the main server screen. You must select the interface that is directly connected to your Wi-Fi network, *usually* it is named as "Wi-Fi" or "Ethernet". Also, make sure that "AP Isolation" is disabled on your Wi-Fi router ([more info](http://www.howtogeek.com/179089/lock-down-your-wi-fi-network-with-your-routers-wireless-isolation-option/)). 
 
-> **I installed provided Android application, but it always shows "Could not connect to the server" or "Disconnected" status. How do I fix that?**
+> I installed provided Android application, but it always shows "Could not connect to the server" or "Disconnected" status. How do I fix that?
 
 Please check if you can connect to the dashboard from a browser first. Please read the answer above.
 
-> **The dashboard UI animation (meters) sometimes stutters. Is it possible to fix that?**
+> The dashboard UI animation (meters) sometimes stutters. Is it possible to fix that?
 
 The default dashboard settings are optimized for modern browsers and fast network connections. However, if you have problems (especially on Android devices), you may try to tweak *refreshRate* parameter inside "*server\Html\config.json*" file (available for each skin). See comments inside that file for further guide. Refresh your browser to see the changes. Note: as an example, the dashboard works smoothly on Samgung Galaxy Tab S (4.4.2), but not on Galaxy Note 1 or Kindle Fire HD. To achieve the best performance you may try to use a standalone Chrome browser instead of an app (but you will need to turn off device sleep mode when you use the dashboard). 
 
-> **Can I use mobile dashboard on Android 2.x devices?**
+> Is it safe to use the server? Can it crash my game? What about influence on the game performance, say FPS, processor load?
+
+The server is written very carefully. It will not crash your game, because the telemetry plugin was created by the official developers. It also does not eat CPU (the load is less than 1%) and has small memory footprint (around 20MB). So you won't notice any difference in FPS. 
+
+> Can I use mobile dashboard on Android 2.x devices?
 
 No. There is a chance that it will work, but it won't be supported for sure.
 
-> **Sometimes D1 gear is not properly displayed on the dashboard. What is wrong?**
+> Sometimes D1 gear is not properly displayed on the dashboard. What is wrong?
 
 Unfortunately, this is a telemetry plugin limitation. Should be fixed soon.
 
-> **Cruise control is not properly updated. What is wrong?**
+> Cruise control is not properly updated. What is wrong?
 
 Unfortunately, this is a telemetry plugin limitation. Should be fixed soon.
 
