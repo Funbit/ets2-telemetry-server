@@ -1,22 +1,44 @@
-## ETS2 Telemetry Web Server 2.0.0 + Mobile Dashboard
+## ETS2 Telemetry Web Server 2.1.0 + Mobile Dashboard
 
-This is a free Telemetry Web Server for Euro Truck Simulator 2 written in C#. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
+This is a free Telemetry Web Server for Euro Truck Simulator 2 written in C# based on WebSockets and REST API. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
 
 ## Main Features
 
 - Free and open source
 - Automated installation
-- REST API for ETS2 telemetry data 
-- Support for custom dashboard skins
+- REST API for ETS2 telemetry data
+- HTML5 dashboard application for live telemetry data streaming based on WebSockets 
+- Advanced support for custom dashboard skins
 - Telemetry data broadcasting to a given URL via HTTP protocol
 
 ### Telemetry REST API
   
     GET http://localhost:25555/api/ets2/telemetry
 
-Returns JSON object with the latest telemetry data read from the game. The state is updated upon every API call. You may use this REST API for your own Applications. Here is a short explanation of some telemetry properties:
+Returns JSON object with the latest telemetry data read from the game: 
 
-- DateTime values are serialized to ISO 8601 strings in UTC time zone. Dates always start from 0001 year when 1st January is Monday.    
+    {    
+    	"connected": true,
+	    "gameTime": "0001-01-05T05:11:00Z",
+	    "gamePaused": false,
+	    "telemetryPluginVersion": "2",
+	    "gameVersion": "1.10",
+	    "trailerAttached": true,
+	    "truckSpeed": 20.007518805,
+	    "accelerationX": 5.598413e-7,
+	    "accelerationY": -9.40614e-7,
+	    "accelerationZ": -0.00000337752863,
+	    "coordinateX": 24901.9629,
+	    "coordinateY": 63.69309,
+	    "coordinateZ": 14775.623,
+	    "rotationX": 0.7503047,
+	    ... 
+    }
+
+The state is updated upon every API call. You may use this REST API for your own Applications. Here is a short explanation of some telemetry properties:
+
+- DateTime values are serialized to ISO 8601 strings in UTC time zone. 
+- Dates always start from 0001 year when 1st January is Monday.    
 - Gear values: -1 = R, 0 = N, 1 = D1, 2 = D2, etc.
 - Mass is expressed in kilograms
 - Speed is expressed in km/sec
@@ -32,9 +54,9 @@ Here is a screenshot of how your mobile dashboard will look like in a browser:
 
 ![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/source/Funbit.Ets.Telemetry.Mobile/skins/default/dashboard.jpg)
 
-Dashboard design is very customizable. All you have to do is to change dashboard.css, dashboard.html and dashboard.js (if needed). 
+Dashboard design is very customizable. All you have to do is to change dashboard.css, dashboard.html and dashboard.js (if needed). See Dashboard skin tutorial below for more information. 
 
-## Installation and Usage
+## Setup
 
 ### Supported OS
 
@@ -43,13 +65,13 @@ Dashboard design is very customizable. All you have to do is to change dashboard
 
 ### Supported games
 
-- Euro Truck Simulator 2 (32-bit or 64-bit). Multiplayer versions are supported as well. Steam version is preferred (non Steam users must edit configuration file prior to the installation). 
+- Euro Truck Simulator 2 (32-bit or 64-bit) version 1.15+. Multiplayer versions are supported as well. Steam version is preferred (*non Steam users must edit configuration file prior to the installation*).
 
 ### Tested browsers
 
-- iOS 8+ running Mobile Safari
-- Android 4+ Default or Chrome browsers
-- Latest Firefox, Chrome or IE11
+- iOS 8+ running Mobile Safari (highly recommended, best user experience)
+- Latest Firefox, Chrome or IE11 (Firefox or Chrome is recommended)
+- Android 4+ Default or Chrome browsers (see FAQ if you have performance issues)
 
 ### Installation
 
@@ -57,9 +79,10 @@ Dashboard design is very customizable. All you have to do is to change dashboard
 2. **Unpack downloaded ZIP** file *anywhere* you want.
 3. Run **server\Ets2Telemetry.exe** 
 4. Click "**Install**" button to perform the installation (see below for details) 
-5. When installation finishes click "**OK**", select your network interface and click "**HTML5 App URL**" link to open your dashboard!
+5. When installation finishes click "**OK**", select your network interface and click "**HTML5 App URL**" link to open your dashboard
+6. **Done** (now you may read *Usage* topic to understand how to use the server)
 
-If installer reports that it can't find your ETS2 game directory (when you don't use Steam for example) you must set it manually inside **server\Ets2Telemetry.exe.config** file (search for *Ets2GamePath* setting). 
+IMPORTANT: If installer reports that it can't find your ETS2 game directory (when you don't use Steam for example) you must set it manually inside **server\Ets2Telemetry.exe.config** file (search for *Ets2GamePath* setting, the comments inside will guide you further).
 
 Android users should install the provided "Ets2 Dashboard" application. The APK file is located in **mobile/Android/Ets2Dashboard.apk**. Copy it to your device and install via Android's File Manager. The application will prevent your device from going into sleep mode and will remember server IP address which is very useful if you are going to use the app frequently.
 
@@ -74,12 +97,9 @@ The server also reports everything to the log file (Ets2Telemetry.log), so you m
 
 Also, if you don't trust my compiled ets2-telemetry.dll you may compile it by yourself from [the official telemetry SDK](https://github.com/nlhans/ets2-sdk-plugin).
 
-### Usage
+### Upgrade
 
-1. Run **server/Ets2Telemetry.exe**  
-2. Run Euro Truck Simulator 2 (the order is not important though).
-3. **iOS users**: connect your iPhone or iPad to the same Wi-Fi network as your PC, open Safari and navigate to the "*HTML5 App URL*" displayed by the server. **Android users**: run "*Ets2 Dashboard*" application, enter server IP (*without http and port*) and press OK. If IP address is correct it will be remembered for the next time.
-4. Enjoy your mobile dashboard while playing your favorite simulator! ;)
+If you already have a previous version installed, it is recommended to leave it as is and **unpack the new version into a separate directory**. This way you will never lose your configuration files, logs, etc. 
 
 ### Uninstallation
 
@@ -88,20 +108,60 @@ If server hasn't fulfilled your expectations and you decide to uninstall it, the
 1. Exit from the Euro Truck Simulator
 1. Run **server\Uninstall.bat**
 2. Click "**Uninstall**" button
-3. Done
+3. **Done**
 
 At this moment your system will be in exactly the same state as it were before the installation. The only difference is that ets2-telemetry.dll plugin files are not deleted but renamed to .bak.
 
-### Known problems:
+## Usage
 
-- Sometimes D1 gear is not properly displayed on the screen (telemetry SDK limitation)
-- Cruise control is not properly updated (telemetry SDK limitation)
+1. Run **server/Ets2Telemetry.exe**  
+2. Run Euro Truck Simulator 2 (the order is not important though).
+3. **Desktop users**: connect your notebook to the same Wi-Fi/LAN network as your PC, open Firefox, Chrome or IE and navigate to the "*HTML5 App URL*" displayed by the server. 
+3. **iOS users**: connect your iPhone or iPad to the same Wi-Fi network as your PC, open Safari and navigate to the "*HTML5 App URL*" displayed by the server. 
+4. **Android users**: run "*Ets2 Dashboard*" application, enter server IP (*without http and port*, exactly in the same format as displayed by the server) and press OK. If IP address is correct it will be remembered for the next time.
+5. **Enjoy** your mobile dashboard while playing your favorite simulator! ;)
+
+## FAQ
+
+> **When I press "Install" button to setup the server it says "Could not detect game directory". What should I do?**
+
+It seems that you have a non-standard ETS2 setup. Please read the "Installation" topic above about setting the game directory manually.
+
+> **I ran the server and opened HTML5 App URL on a device but browser says "Page not found". What should I do?**
+
+First of all, make sure that you have selected correct "Network interface" on the main server screen. You must select the interface that is directly connected to your Wi-Fi network, *usually* it is named as "Wi-Fi" or "Ethernet". Also, make sure that "AP Isolation" is disabled on your Wi-Fi router ([more info](http://www.howtogeek.com/179089/lock-down-your-wi-fi-network-with-your-routers-wireless-isolation-option/)). 
+
+> **I installed provided Android application, but it always shows "Could not connect to the server" or "Disconnected" status. How do I fix that?**
+
+Please check if you can connect to the dashboard from a browser first. Please read the answer above.
+
+> **The dashboard UI animation (meters) sometimes stutters. Is it possible to fix that?**
+
+The default dashboard settings are optimized for most browsers and fast network connections. However, if you still have problems (especially on Android devices), you may try to tweak *refreshRate* parameter inside "*server\Html\config.json*" file (for each available skin). See comments inside that file for further guide. Refresh your browser to see the changes.
+
+> **Can I use mobile dashboard on Android 2.x devices?**
+
+No. There is a chance that it will work, but it won't be supported for sure.
+
+> **Sometimes D1 gear is not properly displayed on the dashboard. What is wrong?**
+
+Unfortunately, this is a telemetry plugin limitation. Should be fixed soon.
+
+> **Cruise control is not properly updated. What is wrong?**
+
+Unfortunately, this is a telemetry plugin limitation. Should be fixed soon.
 
 ## Dashboard skin tutorial
 
-Not yet available. Please stay tuned.
+Will be available soon. Please stay tuned.
 
 ## Version history
+
+### 2.1.0
+
+- Moved to WebSockets for low-latency data updates
+- Optimized UI animation (now it is SUPER SMOOTH, especially in Desktop and Mobile Safari browsers)  
+- Minor fixes
 
 ### 2.0.0
 
