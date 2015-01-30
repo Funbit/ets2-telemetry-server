@@ -42,18 +42,6 @@
 .dashboard.connected.yes {
   background-image: url("images/bg-on.png");
 }
-.truckSpeed {
-  color: #2491b9;
-  font-family: Courier New, Courier, monospace;
-  font-weight: bold;
-  font-size: 70px;
-  position: absolute;
-  left: 460px;
-  top: 280px;
-  width: 190px;
-  height: 66px;
-  text-align: right;
-}
 .truckSpeed[data-type="meter"] {
   visibility: visible;
   position: absolute;
@@ -126,6 +114,18 @@
   -ms-transform-origin: 50% 198px;
   -o-transform-origin: 50% 198px;
   transform-origin: 50% 198px;
+}
+.truckSpeedRounded {
+  color: #2491b9;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 70px;
+  position: absolute;
+  left: 460px;
+  top: 280px;
+  width: 190px;
+  height: 66px;
+  text-align: right;
 }
 .gear {
   color: #35b32e;
@@ -267,7 +267,7 @@
 }
 .gear,
 .truckOdometer,
-.truckSpeed,
+.truckSpeedRounded,
 .trailerMass,
 .trailerName,
 .jobRemainingTime,
@@ -277,7 +277,7 @@
 }
 .dashboard.connected.yes .gear,
 .dashboard.connected.yes .truckOdometer,
-.dashboard.connected.yes .truckSpeed {
+.dashboard.connected.yes .truckSpeedRounded {
   visibility: visible;
 }
 .hasJob.yes .trailerMass,

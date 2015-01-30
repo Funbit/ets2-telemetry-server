@@ -4,7 +4,7 @@
         (function (Telemetry) {
             var App = (function () {
                 function App() {
-                    this.anticacheSeed = 0;
+                    this.anticacheSeed = Date.now();
                     this.skinConfig = Telemetry.Configuration.getInstance().getSkinConfiguration();
                     this.initializeViewport();
                     this.loadDashboardResources();
@@ -60,6 +60,7 @@
                     var skinCssUrl = this.getSkinResourceUrl('dashboard.css');
                     var skinHtmlUrl = this.getSkinResourceUrl('dashboard.html');
                     var skinJsUrl = this.getSkinResourceUrl('dashboard.js');
+                    var signalrUrl = Telemetry.Configuration.getUrl('/signalr/hubs?seed=' + this.anticacheSeed++);
 
                     $("head link[rel='stylesheet']").last().after('<link rel="stylesheet" href="' + skinCssUrl + '" type="text/css">');
 
@@ -69,6 +70,7 @@
                         dataType: 'html',
                         timeout: 3000
                     }).done(function (html) {
+                        html += '<script src="' + signalrUrl + '"></script>';
                         html += '<script src="' + skinJsUrl + '"></script>';
                         $('body').append(html);
                     }).fail(function () {

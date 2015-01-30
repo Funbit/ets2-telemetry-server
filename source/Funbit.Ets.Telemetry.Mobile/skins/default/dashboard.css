@@ -267,7 +267,7 @@
 }
 .gear,
 .truckOdometer,
-.truckSpeed,
+.truckSpeedRounded,
 .trailerMass,
 .trailerName,
 .jobRemainingTime,
@@ -277,7 +277,7 @@
 }
 .dashboard.connected.yes .gear,
 .dashboard.connected.yes .truckOdometer,
-.dashboard.connected.yes .truckSpeed {
+.dashboard.connected.yes .truckSpeedRounded {
   visibility: visible;
 }
 .hasJob.yes .trailerMass,

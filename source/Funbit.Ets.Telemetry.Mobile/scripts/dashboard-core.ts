@@ -126,7 +126,9 @@ module Funbit.Ets.Telemetry {
 
         private initializeMeters() {
             var $meters = $('[data-type="meter"]');
-            var dataLatency = 20; // additional fix to make animation a bit longer for smoothness
+            var ie = /Trident/.test(navigator.userAgent);
+            // fix to make animation a bit longer for additional smoothness (but not in IE)
+            var dataLatency = ie ? 0 : 20; 
             var value = ((this.skinConfig.refreshRate + dataLatency) / 1000.0) + 's linear';
             $meters.css({
                 '-webkit-transition': value,

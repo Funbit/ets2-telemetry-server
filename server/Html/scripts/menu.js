@@ -68,7 +68,8 @@
                     $(document).on('click', 'td.skin-image,td.skin-desc', function (e) {
                         var $this = $(e.currentTarget);
                         var skinName = $this.closest('tr').data('name');
-                        window.location.href = "dashboard-host.html?skin=" + skinName + "&ip=" + _this.config.serverIp;
+                        var dashboardHostUrl = Telemetry.Configuration.getUrl("/dashboard-host.html?skin=" + skinName + "&ip=" + _this.config.serverIp);
+                        window.location.href = dashboardHostUrl;
                     });
                     $('.edit-server-ip').click(function () {
                         _this.promptServerIp();
