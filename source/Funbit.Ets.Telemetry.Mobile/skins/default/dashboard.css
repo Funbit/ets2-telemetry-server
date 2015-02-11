@@ -33,11 +33,6 @@
 }
 .dashboard {
   background-image: url("images/bg-off.png");
-  position: absolute;
-  left: 0px;
-  top: 1px;
-  width: 2048px;
-  height: 1152px;
 }
 .dashboard.connected.yes {
   background-image: url("images/bg-on.png");

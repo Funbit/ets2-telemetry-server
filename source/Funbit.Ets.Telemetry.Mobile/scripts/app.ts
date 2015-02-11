@@ -90,6 +90,13 @@ module Funbit.Ets.Telemetry {
                 html += '<script src="' + signalrUrl + '"></script>';
                 html += '<script src="' + skinJsUrl + '"></script>';
                 $('body').append(html);
+                $('.dashboard').css({
+                    position: 'absolute',
+                    left: '0px',
+                    top: '0px',
+                    width: this.skinConfig.width + 'px',
+                    height: this.skinConfig.height + 'px'
+                });
             }).fail(() => {
                 alert(Strings.dashboardHtmlLoadFailed + this.skinConfig.name);
             });
