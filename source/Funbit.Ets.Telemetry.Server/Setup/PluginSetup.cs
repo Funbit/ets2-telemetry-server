@@ -11,7 +11,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
         static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
         SetupStatus _status = SetupStatus.Uninstalled;
-        const string TelemetryDllName = "ets2-telemetry.dll";
+        const string TelemetryDllName = "ets2-telemetry-server.dll";
         
         static string Ets2GamePath
         {

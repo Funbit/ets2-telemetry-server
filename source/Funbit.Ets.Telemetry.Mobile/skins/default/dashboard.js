@@ -4,13 +4,23 @@
     ======================================    
 */
 
-// This filter is used to change telemetry data 
-// before it is displayed on the dashboard.
-// For example, you may convert km/h to mph, kilograms to tons, etc.
-// "data" object is an instance of the Ets2TelemetryData class 
-// defined in dashboard-core.ts (or see JSON response in the server's API).
+Funbit.Ets.Telemetry.Dashboard.prototype.initialize = function (skinConfig) {
+    //
+    // skinConfig - a copy of the skin configuration from config.json
+    //
+    // this function is called before everything else, 
+    // so you may perform any DOM or resource initializations here
+}
 
 Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
+    //
+    // data - telemetry data JSON object
+    //
+
+    // This filter is used to change telemetry data 
+    // before it is displayed on the dashboard.
+    // You may convert km/h to mph, kilograms to tons, etc.
+
     // round truck speed
     data.truckSpeedRounded = Math.round(data.truckSpeed);
     // convert kilometers per hour to miles per hour (just an example)
@@ -35,12 +45,4 @@ Funbit.Ets.Telemetry.Dashboard.prototype.render = function (data) {
     // we don't have anything custom to render in this skin,
     // but you may use jQuery here to update any element
     // with any custom animation, logic or style
-}
-
-Funbit.Ets.Telemetry.Dashboard.prototype.initialize = function (skinConfig) {
-    //
-    // skinConfig - a copy of the skin configuration from config.json
-    //
-    // this function is called before everything else, 
-    // so you may perform any DOM or resource initializations here
 }
