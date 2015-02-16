@@ -43,7 +43,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
                 string everyone = new System.Security.Principal.SecurityIdentifier(
                     "S-1-1-0").Translate(typeof(System.Security.Principal.NTAccount)).ToString();
                 string port = ConfigurationManager.AppSettings["Port"];
-                string arguments = string.Format(@"http add urlacl url=http://+:{0}/ user=\{1}", port, everyone);
+                string arguments = string.Format("http add urlacl url=http://+:{0}/ user=\"\\{1}\"", port, everyone);
                 Log.Info("Adding ACL rule...");
                 ProcessHelper.RunNetShell(arguments, "Failed to add URL ACL");
                 _status = SetupStatus.Installed;
