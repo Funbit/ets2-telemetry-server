@@ -202,7 +202,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// </summary>
         public float TruckMass
         {
-            get { return _rawData.TruckMass; }
+            get { return _rawData.truckWeight; }
         }
 
         public long TruckModelLength
@@ -315,7 +315,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
         public bool EngineOn
         {
-            get { return _rawData.engine_enabled != 0; }
+            get { return _rawData.engineEnabled != 0; }
         }
 
         public bool BlinkerLeftActive
@@ -491,6 +491,29 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public float TruckOdometer
         {
             get { return _rawData.truckOdometer; }
+        }
+
+        /// <summary>
+        /// Cruise control speed in km/h.
+        /// </summary>
+        public float CruiseControlSpeed
+        {
+            get { return _rawData.cruiseControlSpeed * 3.6f; }
+        }
+
+        public string TruckMake
+        {
+            get { return BytesToString(_rawData.truckMake); }
+        }
+
+        public string TruckMakeId
+        {
+            get { return BytesToString(_rawData.truckMakeId); }
+        }
+
+        public string TruckModel
+        {
+            get { return BytesToString(_rawData.truckModel); }
         }
     }
 }

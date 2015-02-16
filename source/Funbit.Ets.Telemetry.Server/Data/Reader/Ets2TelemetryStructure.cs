@@ -14,8 +14,10 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
 
         // ***** REVISION 1 ****** //
 
-        public short engine_enabled;
-        public short trailer_attached;
+        public byte padding1;
+        public byte trailer_attached;
+        public byte padding2;
+        public byte padding3;
 
         public float speed;
         public float accelerationX;
@@ -53,7 +55,7 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
         public float gameBrake;
         public float gameClutch;
         
-        public float TruckMass;
+        public float truckWeight;
         public float trailerWeight;
 
         public int modelOffset;
@@ -91,7 +93,7 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
         public int retarderBrake;
         public int shifterSlot;
         public int shifterToggle;
-        public int fill;
+        public int padding4;
 
         public byte cruiseControl;
         public byte wipers;
@@ -122,7 +124,7 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
         public byte adblueWarning;
         public byte oilPressureWarning;
         public byte waterTemperatureWarning;
-
+        
         public float airPressure;
         public float brakeTemperature;
         public float fuelWarning;
@@ -140,5 +142,13 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
         public float wearWheels;
         public float wearTrailer;
         public float truckOdometer;
+        public float cruiseControlSpeed;
+
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        public byte[] truckMake;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        public byte[] truckMakeId;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        public byte[] truckModel;
     }
 }

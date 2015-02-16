@@ -120,7 +120,11 @@ namespace Funbit.Ets.Telemetry.Server.Data
         float WearChassis { get; }
         float WearWheels { get; }
         float WearTrailer { get; }
-        
         float TruckOdometer { get; }
+        float CruiseControlSpeed { get; }
+
+        string TruckMake { get; }
+        string TruckMakeId { get; }
+        string TruckModel { get; }
     }
 }

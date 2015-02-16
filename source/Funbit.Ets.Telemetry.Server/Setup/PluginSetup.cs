@@ -84,6 +84,17 @@ namespace Funbit.Ets.Telemetry.Server.Setup
                 Log.Info("Checking plugin DLL files...");
                 bool pluginsExist = File.Exists(Ets2X86TelemetryPluginDllFileName) &&
                                     File.Exists(Ets2X64TelemetryPluginDllFileName);
+                // make sure that we disable old plugin (2.1.0 and earlier)
+                // ReSharper disable once AssignNullToNotNullAttribute
+                string oldX86PluginDllFileName = Path.Combine(
+                    Path.GetDirectoryName(Ets2X86TelemetryPluginDllFileName), "ets2-telemetry.dll");
+                // ReSharper disable once AssignNullToNotNullAttribute
+                string oldX64PluginDllFileName = Path.Combine(
+                    Path.GetDirectoryName(Ets2X64TelemetryPluginDllFileName), "ets2-telemetry.dll");
+                if (File.Exists(oldX86PluginDllFileName))
+                    File.Move(oldX86PluginDllFileName, Path.ChangeExtension(oldX86PluginDllFileName, ".deprecated.bak"));
+                if (File.Exists(oldX64PluginDllFileName))
+                    File.Move(oldX64PluginDllFileName, Path.ChangeExtension(oldX64PluginDllFileName, ".deprecated.bak"));
                 _status = pluginsExist ? SetupStatus.Installed : SetupStatus.Uninstalled;
             }
             catch (Exception ex)

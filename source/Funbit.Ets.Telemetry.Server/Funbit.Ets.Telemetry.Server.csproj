@@ -166,6 +166,14 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Content Include="..\..\server\Ets2Plugins\win_x64\plugins\ets2-telemetry-server.dll">
+      <Link>Ets2Plugins\win_x64\plugins\ets2-telemetry-server.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\server\Ets2Plugins\win_x86\plugins\ets2-telemetry-server.dll">
+      <Link>Ets2Plugins\win_x86\plugins\ets2-telemetry-server.dll</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\config.json">
       <Link>Html\config.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -193,14 +201,6 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <Content Include="..\..\server\Ets2Plugins\win_x64\plugins\ets2-telemetry.dll">
-      <Link>Ets2Plugins\win_x64\plugins\ets2-telemetry.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="..\..\server\Ets2Plugins\win_x86\plugins\ets2-telemetry.dll">
-      <Link>Ets2Plugins\win_x86\plugins\ets2-telemetry.dll</Link>
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\dashboard-host.css">
       <Link>Html\dashboard-host.css</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
