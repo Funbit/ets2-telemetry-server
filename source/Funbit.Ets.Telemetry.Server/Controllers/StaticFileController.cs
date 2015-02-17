@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -74,6 +75,13 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
             {
                 return Request.CreateErrorResponse(HttpStatusCode.InternalServerError, "Server error.");
             }
+        }
+
+        protected string[] EnumerateDirectories(string path)
+        {
+            var directories = Directory.EnumerateDirectories(
+                Path.Combine(AppDomain.CurrentDomain.BaseDirectory, BaseDirectory, path));
+            return directories.ToArray();
         }
     }
 }

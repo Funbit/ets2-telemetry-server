@@ -114,7 +114,6 @@
       <DependentUpon>dashboard-host.less</DependentUpon>
     </Content>
     <Content Include="dashboard-host.less" />
-    <Content Include="config.json" />
     <Content Include="dashboard-host.min.css">
       <DependentUpon>dashboard-host.css</DependentUpon>
     </Content>
@@ -201,6 +200,7 @@
     </Content>
     <Content Include="scripts\jquery.signalR-2.2.0.min.js" />
     <Content Include="scripts\menu.js" />
+    <Content Include="skins\default\config.json" />
     <Content Include="skins\default\dashboard.css">
       <DependentUpon>dashboard.less</DependentUpon>
     </Content>

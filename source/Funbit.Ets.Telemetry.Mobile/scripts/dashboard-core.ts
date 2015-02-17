@@ -277,10 +277,14 @@ module Funbit.Ets.Telemetry {
             return output;
         }
 
+        public static isIso8601(date: string): boolean {
+            return /(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date);
+        }
+
         public static timeToReadableString(date: string): string {
             // if we have ISO8601 (in UTC) then make it readable
             // in the following default format: "Wednesday 08:26"
-            if (/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date)) {
+            if (this.isIso8601(date)) {
                 var d = new Date(date);
                 return Strings.dayOfTheWeek[d.getUTCDay()] + ' '
                     + Dashboard.formatNumber(d.getUTCHours(), 2) + ':'
@@ -292,9 +296,9 @@ module Funbit.Ets.Telemetry {
         public static timeDifferenceToReadableString(date: string): string {
             // if we have ISO8601 (in UTC) then make it readable
             // in the following default format: "1 day 8 hours 26 minutes"
-            if (/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date)) {
+            if (this.isIso8601(date)) {
                 var d = new Date(date);
-                var dys = d.getUTCDate();
+                var dys = d.getUTCDate() - 1;
                 var hrs = d.getUTCHours();
                 var mnt = d.getUTCMinutes();
                 var o = dys > 1 ? dys + ' days ' : (dys != 0 ? dys + ' day ' : '');

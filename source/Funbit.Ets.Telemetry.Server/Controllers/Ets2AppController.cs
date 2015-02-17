@@ -1,12 +1,49 @@
-﻿using System.Net.Http;
+﻿using System;
+using System.IO;
+using System.Net;
+using System.Net.Http;
+using System.Net.Http.Formatting;
+using System.Reflection;
+using System.Text;
 using System.Web.Http;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Funbit.Ets.Telemetry.Server.Controllers
 {
     [RoutePrefix("")]
     public class Ets2AppController : StaticFileController
     {
+        static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public const string TelemetryAppUriPath = "/";
+
+        [HttpGet]
+        [Route("config.json", Name = "GetSkinConfig")]
+        public HttpResponseMessage GetSkinConfig()
+        {
+            var skinDirs = EnumerateDirectories("skins");
+            var skins = new JArray();
+            foreach (var skinDir in skinDirs)
+            {
+                var configJsonPath = Path.Combine(skinDir, "config.json");
+                if (File.Exists(configJsonPath))
+                {
+                    try
+                    {
+                        var skinConfigRoot = (JObject)JsonConvert.DeserializeObject(
+                            File.ReadAllText(configJsonPath, Encoding.UTF8));
+                        var skinConfig = skinConfigRoot["config"];
+                        skins.Add(skinConfig);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log.Error(ex);
+                    }
+                }
+            }
+            var config = new { skins };
+            return Request.CreateResponse(HttpStatusCode.OK, config, new JsonMediaTypeFormatter());
+        }
 
         [HttpGet]
         [Route("", Name = "GetRoot")]

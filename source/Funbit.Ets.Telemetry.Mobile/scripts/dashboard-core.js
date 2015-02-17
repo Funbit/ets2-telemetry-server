@@ -284,10 +284,14 @@ var Funbit;
                     return output;
                 };
 
+                Dashboard.isIso8601 = function (date) {
+                    return /(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date);
+                };
+
                 Dashboard.timeToReadableString = function (date) {
                     // if we have ISO8601 (in UTC) then make it readable
                     // in the following default format: "Wednesday 08:26"
-                    if (/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date)) {
+                    if (this.isIso8601(date)) {
                         var d = new Date(date);
                         return Telemetry.Strings.dayOfTheWeek[d.getUTCDay()] + ' ' + Dashboard.formatNumber(d.getUTCHours(), 2) + ':' + Dashboard.formatNumber(d.getUTCMinutes(), 2);
                     }
@@ -297,9 +301,9 @@ var Funbit;
                 Dashboard.timeDifferenceToReadableString = function (date) {
                     // if we have ISO8601 (in UTC) then make it readable
                     // in the following default format: "1 day 8 hours 26 minutes"
-                    if (/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date)) {
+                    if (this.isIso8601(date)) {
                         var d = new Date(date);
-                        var dys = d.getUTCDate();
+                        var dys = d.getUTCDate() - 1;
                         var hrs = d.getUTCHours();
                         var mnt = d.getUTCMinutes();
                         var o = dys > 1 ? dys + ' days ' : (dys != 0 ? dys + ' day ' : '');
