@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Reflection;
+using System.Windows.Forms;
 using Funbit.Ets.Telemetry.Server.Helpers;
 
 namespace Funbit.Ets.Telemetry.Server.Setup
@@ -55,8 +56,19 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             catch (Exception ex)
             {
                 Log.Error(ex);
-                _status = SetupStatus.Failed;
-                throw;
+                if (ex.Message.ToUpper().Contains("FWCFG.DLL"))
+                {
+                    string message = "Cannot configure Windows Firewall." + Environment.NewLine +
+                                     "If you are using some 3rd-party firewall please open " +
+                                     ConfigurationManager.AppSettings["Port"] + " TCP port manually!";
+                    MessageBox.Show(message, @"Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    _status = SetupStatus.Installed;
+                }
+                else
+                {
+                    _status = SetupStatus.Failed;
+                    throw;
+                }
             }
 
             return _status;
@@ -78,7 +90,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             catch (Exception ex)
             {
                 Log.Error(ex);
-                status = SetupStatus.Failed;
+                status = ex.Message.ToUpper().Contains("FWCFG.DLL") ? SetupStatus.Uninstalled : SetupStatus.Failed;
             }
             return status;
         }
