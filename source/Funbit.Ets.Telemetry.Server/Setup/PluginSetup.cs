@@ -117,23 +117,21 @@ namespace Funbit.Ets.Telemetry.Server.Setup
                 if (!string.IsNullOrEmpty(gamePath))
                     gamePath = Path.Combine(
                         gamePath.Replace('/', '\\'), @"SteamApps\common\Euro Truck Simulator 2");
-                if (!ValidateEts2Path(gamePath))
+                
+                while (!ValidateEts2Path(gamePath))
                 {
-                    while (!ValidateEts2Path(gamePath))
-                    {
-                        MessageBox.Show(owner,
-                            @"Could not detect ETS2 game path. " +
-                            @"Please click OK and select it manually." + Environment.NewLine + Environment.NewLine +
-                            @"For example:" + Environment.NewLine + @"D:\STEAM\SteamApps\common\Euro Truck Simulator 2",
-                            @"Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                        var browser = new FolderBrowserDialog();
-                        browser.Description = @"Select ETS2 game path";
-                        browser.ShowNewFolderButton = false;
-                        var result = browser.ShowDialog(owner);
-                        if (result == DialogResult.Cancel)
-                            Environment.Exit(1);
-                        gamePath = browser.SelectedPath;
-                    }
+                    MessageBox.Show(owner,
+                        @"Could not detect ETS2 game path. " +
+                        @"Please click OK and select it manually." + Environment.NewLine + Environment.NewLine +
+                        @"For example:" + Environment.NewLine + @"D:\STEAM\SteamApps\common\Euro Truck Simulator 2",
+                        @"Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                    var browser = new FolderBrowserDialog();
+                    browser.Description = @"Select ETS2 game path";
+                    browser.ShowNewFolderButton = false;
+                    var result = browser.ShowDialog(owner);
+                    if (result == DialogResult.Cancel)
+                        Environment.Exit(1);
+                    gamePath = browser.SelectedPath;
                 }
 
                 Settings.Instance.Ets2GamePath = gamePath;
