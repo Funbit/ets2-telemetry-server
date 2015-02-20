@@ -1,7 +1,8 @@
 ﻿using System;
-using System.Configuration;
 using System.IO;
 using System.Reflection;
+using System.Windows.Forms;
+using Funbit.Ets.Telemetry.Server.Helpers;
 using Microsoft.Win32;
 
 namespace Funbit.Ets.Telemetry.Server.Setup
@@ -12,29 +13,35 @@ namespace Funbit.Ets.Telemetry.Server.Setup
 
         SetupStatus _status = SetupStatus.Uninstalled;
         const string TelemetryDllName = "ets2-telemetry-server.dll";
-        
-        static string Ets2GamePath
+
+        static string GetDefaultSteamPath()
         {
-            get
-            {
-                string gamePath = ConfigurationManager.AppSettings["Ets2GamePath"];
-                if (string.IsNullOrWhiteSpace(gamePath))
-                {
-                    var steamKey = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam");
-                    if (steamKey != null)
-                    {
-                        string steamPath = steamKey.GetValue("SteamPath") as string;
-                        if (steamPath != null)
-                            gamePath = Path.Combine(
-                                steamPath.Replace('/', '\\'), @"SteamApps\common\Euro Truck Simulator 2");
-                    }
-                    if (string.IsNullOrWhiteSpace(gamePath))
-                        throw new Exception("Could not detect game directory. " +
-                        "Please make sure that you have a Steam version, " + 
-                        "otherwise Ets2GamePath must be defined in the app.config file.");
-                }
-                return gamePath;
-            }
+            var steamKey = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam");
+            if (steamKey != null)
+                return steamKey.GetValue("SteamPath") as string;
+            return null;
+        }
+
+        static bool ValidateEts2Path(string ets2Path)
+        {
+            if (string.IsNullOrEmpty(ets2Path))
+                return false;
+            var baseScsPath = Path.Combine(ets2Path, "base.scs");
+            var binPath = Path.Combine(ets2Path, "bin");
+            return File.Exists(baseScsPath) && Directory.Exists(binPath);
+        }
+
+        static string GetPluginPath(string ets2Path, bool x64)
+        {
+            return Path.Combine(ets2Path, x64 ? @"bin\win_x64\plugins" : @"bin\win_x86\plugins");
+        }
+        
+        static string GetTelemetryPluginDllFileName(string ets2Path, bool x64)
+        {
+            string path = GetPluginPath(ets2Path, x64);
+            if (!Directory.Exists(path))
+                Directory.CreateDirectory(path);
+            return Path.Combine(path, TelemetryDllName);
         }
 
         static string LocalEts2X86TelemetryPluginDllFileName
@@ -55,47 +62,35 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             }
         }
 
-        static string Ets2X86TelemetryPluginDllFileName
-        {
-            get
-            {
-                string pluginDirectory = Path.Combine(Ets2GamePath, @"bin\win_x86\plugins");
-                if (!Directory.Exists(pluginDirectory))
-                    Directory.CreateDirectory(pluginDirectory);
-                return Path.Combine(pluginDirectory, TelemetryDllName);
-            }
-        }
-
-        static string Ets2X64TelemetryPluginDllFileName
-        {
-            get
-            {
-                string pluginDirectory = Path.Combine(Ets2GamePath, @"bin\win_x64\plugins");
-                if (!Directory.Exists(pluginDirectory))
-                    Directory.CreateDirectory(pluginDirectory);
-                return Path.Combine(pluginDirectory, TelemetryDllName);
-            }
-        }
-
         public PluginSetup()
         {
             try
             {
                 Log.Info("Checking plugin DLL files...");
-                bool pluginsExist = File.Exists(Ets2X86TelemetryPluginDllFileName) &&
-                                    File.Exists(Ets2X64TelemetryPluginDllFileName);
-                // make sure that we disable old plugin (2.1.0 and earlier)
-                // ReSharper disable once AssignNullToNotNullAttribute
-                string oldX86PluginDllFileName = Path.Combine(
-                    Path.GetDirectoryName(Ets2X86TelemetryPluginDllFileName), "ets2-telemetry.dll");
-                // ReSharper disable once AssignNullToNotNullAttribute
-                string oldX64PluginDllFileName = Path.Combine(
-                    Path.GetDirectoryName(Ets2X64TelemetryPluginDllFileName), "ets2-telemetry.dll");
-                if (File.Exists(oldX86PluginDllFileName))
-                    File.Move(oldX86PluginDllFileName, Path.ChangeExtension(oldX86PluginDllFileName, ".deprecated.bak"));
-                if (File.Exists(oldX64PluginDllFileName))
-                    File.Move(oldX64PluginDllFileName, Path.ChangeExtension(oldX64PluginDllFileName, ".deprecated.bak"));
-                _status = pluginsExist ? SetupStatus.Installed : SetupStatus.Uninstalled;
+                string gamePath = Settings.Instance.Ets2GamePath;
+                if (ValidateEts2Path(gamePath))
+                {
+                    bool pluginsExist = File.Exists(GetTelemetryPluginDllFileName(gamePath, x64: true)) &&
+                                        File.Exists(GetTelemetryPluginDllFileName(gamePath, x64: false));
+                    // make sure that we disable old plugin (2.1.0 and earlier)
+                    // ReSharper disable once AssignNullToNotNullAttribute
+                    string oldX86PluginDllFileName = Path.Combine(GetPluginPath(gamePath, x64: false),
+                        "ets2-telemetry.dll");
+                    // ReSharper disable once AssignNullToNotNullAttribute
+                    string oldX64PluginDllFileName = Path.Combine(GetPluginPath(gamePath, x64: true),
+                        "ets2-telemetry.dll");
+                    if (File.Exists(oldX86PluginDllFileName))
+                        File.Move(oldX86PluginDllFileName,
+                            Path.ChangeExtension(oldX86PluginDllFileName, ".deprecated.bak"));
+                    if (File.Exists(oldX64PluginDllFileName))
+                        File.Move(oldX64PluginDllFileName,
+                            Path.ChangeExtension(oldX64PluginDllFileName, ".deprecated.bak"));
+                    _status = pluginsExist ? SetupStatus.Installed : SetupStatus.Uninstalled;
+                }
+                else
+                {
+                    _status = SetupStatus.Uninstalled;
+                }
             }
             catch (Exception ex)
             {
@@ -109,20 +104,52 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             get { return _status; }
         }
 
-        public SetupStatus Install()
+        public SetupStatus Install(IWin32Window owner)
         {
             if (_status == SetupStatus.Installed)
                 return _status;
 
             try
             {
-                Log.InfoFormat("Copying x86 plugin DLL file to: {0}", Ets2X86TelemetryPluginDllFileName);
-                if (!File.Exists(Ets2X86TelemetryPluginDllFileName))
-                    File.Copy(LocalEts2X86TelemetryPluginDllFileName, Ets2X86TelemetryPluginDllFileName);
-                
-                Log.InfoFormat("Copying x64 plugin DLL file to: {0}", Ets2X64TelemetryPluginDllFileName);
-                if (!File.Exists(Ets2X64TelemetryPluginDllFileName))
-                    File.Copy(LocalEts2X64TelemetryPluginDllFileName, Ets2X64TelemetryPluginDllFileName);
+                string gamePath = Settings.Instance.Ets2GamePath;
+                if (string.IsNullOrEmpty(gamePath))
+                    gamePath = GetDefaultSteamPath();
+                if (!string.IsNullOrEmpty(gamePath))
+                    gamePath = Path.Combine(
+                        gamePath.Replace('/', '\\'), @"SteamApps\common\Euro Truck Simulator 2");
+                if (!ValidateEts2Path(gamePath))
+                {
+                    while (!ValidateEts2Path(gamePath))
+                    {
+                        MessageBox.Show(owner,
+                            @"Could not detect ETS2 game path. " +
+                            @"Please click OK and select it manually." + Environment.NewLine + Environment.NewLine +
+                            @"For example:" + Environment.NewLine + @"D:\STEAM\SteamApps\common\Euro Truck Simulator 2",
+                            @"Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                        var browser = new FolderBrowserDialog();
+                        browser.Description = @"Select ETS2 game path";
+                        browser.ShowNewFolderButton = false;
+                        var result = browser.ShowDialog(owner);
+                        if (result == DialogResult.Cancel)
+                            Environment.Exit(1);
+                        gamePath = browser.SelectedPath;
+                    }
+                }
+
+                Settings.Instance.Ets2GamePath = gamePath;
+                Settings.Instance.Save();
+
+                string x64DllFileName = GetTelemetryPluginDllFileName(gamePath, x64: true);
+                string x86DllFileName = GetTelemetryPluginDllFileName(gamePath, x64: false);
+
+                Log.InfoFormat("Copying x86 plugin DLL file to: {0}", x86DllFileName);
+                if (!File.Exists(x86DllFileName))
+                    File.Copy(LocalEts2X86TelemetryPluginDllFileName, x86DllFileName);
+
+                Log.InfoFormat("Copying x64 plugin DLL file to: {0}", x64DllFileName);
+                if (!File.Exists(x64DllFileName))
+                    File.Copy(LocalEts2X64TelemetryPluginDllFileName, x64DllFileName);
+
                 _status = SetupStatus.Installed;
             }
             catch (Exception ex)
@@ -135,7 +162,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             return _status;
         }
 
-        public SetupStatus Uninstall()
+        public SetupStatus Uninstall(IWin32Window owner)
         {
             if (_status == SetupStatus.Uninstalled)
                 return _status;
@@ -145,14 +172,16 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             {
                 // rename plugin dll files to .bak
                 Log.Info("Backing up plugin DLL files...");
-                string x86BakFileName = Path.ChangeExtension(Ets2X86TelemetryPluginDllFileName, ".bak");
-                string x64BakFileName = Path.ChangeExtension(Ets2X64TelemetryPluginDllFileName, ".bak");
+                string x64DllFileName = GetTelemetryPluginDllFileName(Settings.Instance.Ets2GamePath, x64: true);
+                string x86DllFileName = GetTelemetryPluginDllFileName(Settings.Instance.Ets2GamePath, x64: false);
+                string x86BakFileName = Path.ChangeExtension(x86DllFileName, ".bak");
+                string x64BakFileName = Path.ChangeExtension(x64DllFileName, ".bak");
                 if (File.Exists(x86BakFileName))
                     File.Delete(x86BakFileName);
                 if (File.Exists(x64BakFileName))
                     File.Delete(x64BakFileName);
-                File.Move(Ets2X86TelemetryPluginDllFileName, x86BakFileName);
-                File.Move(Ets2X64TelemetryPluginDllFileName, x64BakFileName);
+                File.Move(x86DllFileName, x86BakFileName);
+                File.Move(x64DllFileName, x64BakFileName);
                 status = SetupStatus.Uninstalled;
             }
             catch (Exception ex)

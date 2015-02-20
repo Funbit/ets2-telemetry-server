@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Configuration;
 using System.Reflection;
+using System.Windows.Forms;
 using Funbit.Ets.Telemetry.Server.Helpers;
 
 namespace Funbit.Ets.Telemetry.Server.Setup
@@ -32,7 +33,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             get { return _status; }
         }
 
-        public SetupStatus Install()
+        public SetupStatus Install(IWin32Window owner)
         {
             if (_status == SetupStatus.Installed)
                 return _status;
@@ -57,7 +58,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             return _status;
         }
 
-        public SetupStatus Uninstall()
+        public SetupStatus Uninstall(IWin32Window owner)
         {
             if (_status == SetupStatus.Uninstalled)
                 return _status;

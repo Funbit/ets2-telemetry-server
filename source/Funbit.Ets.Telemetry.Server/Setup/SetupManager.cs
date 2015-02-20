@@ -10,12 +10,9 @@ namespace Funbit.Ets.Telemetry.Server.Setup
         {
             Steps = new ISetup[]
             {
-                // visible to user:
                 new PluginSetup(), 
                 new FirewallSetup(), 
-                new UrlReservationSetup(),
-                // internal:
-                new SettingsSetup()
+                new UrlReservationSetup()
             };
         }
     }

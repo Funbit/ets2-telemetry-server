@@ -39,7 +39,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             get { return _status; }
         }
 
-        public SetupStatus Install()
+        public SetupStatus Install(IWin32Window owner)
         {
             if (_status == SetupStatus.Installed)
                 return _status;
@@ -55,26 +55,21 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             }
             catch (Exception ex)
             {
+                _status = SetupStatus.Failed;
                 Log.Error(ex);
                 if (ex.Message.ToUpper().Contains("FWCFG.DLL"))
                 {
-                    string message = "Cannot configure Windows Firewall." + Environment.NewLine +
+                    throw new Exception("Cannot configure Windows Firewall." + Environment.NewLine +
                                      "If you are using some 3rd-party firewall please open " +
-                                     ConfigurationManager.AppSettings["Port"] + " TCP port manually!";
-                    MessageBox.Show(message, @"Warning", MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
-                    _status = SetupStatus.Installed;
+                                     ConfigurationManager.AppSettings["Port"] + " TCP port manually!", ex);
                 }
-                else
-                {
-                    _status = SetupStatus.Failed;
-                    throw;
-                }
+                throw;
             }
 
             return _status;
         }
 
-        public SetupStatus Uninstall()
+        public SetupStatus Uninstall(IWin32Window owner)
         {
             if (_status == SetupStatus.Uninstalled)
                 return _status;

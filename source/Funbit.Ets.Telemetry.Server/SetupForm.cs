@@ -125,7 +125,7 @@ namespace Funbit.Ets.Telemetry.Server
             {
                 try
                 {
-                    SetStepStatus(step, Program.UninstallMode ? step.Uninstall() : step.Install());
+                    SetStepStatus(step, Program.UninstallMode ? step.Uninstall(this) : step.Install(this));
                 }
                 catch (Exception ex)
                 {
@@ -135,20 +135,29 @@ namespace Funbit.Ets.Telemetry.Server
                 }
             }
 
+            string message;
             if (_setupFinished)
             {
-                string message = Program.UninstallMode
-                                     ? @"Server has been successfully uninstalled. " + 
-                                     Environment.NewLine +
-                                     @"Press OK to exit."
-                                     : @"Server has been successfully installed. " +
-                                     Environment.NewLine +
-                                     "Press OK to start the server.";
-                MessageBox.Show(this, message, @"Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                Close();
+                message = Program.UninstallMode
+                              ? @"Server has been successfully uninstalled. " + Environment.NewLine +
+                                @"Press OK to exit."
+                              : @"Server has been successfully installed. " + Environment.NewLine +
+                                "Press OK to start the server.";
+            }
+            else
+            {
+                message = Program.UninstallMode
+                              ? @"Server has been uninstalled with errors. " + Environment.NewLine +
+                                @"Press OK to exit."
+                              : @"Server has been installed with errors. " + Environment.NewLine +
+                                "Press OK to start the server.";
             }
 
-            okButton.Enabled = true;
+            if (Program.UninstallMode)
+                Helpers.Settings.Clear();
+
+            MessageBox.Show(this, message, @"Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            Close();
         }
 
         private void SetupForm_FormClosing(object sender, FormClosingEventArgs e)

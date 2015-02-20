@@ -10,6 +10,7 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
         #region Settings
 
         public string DefaultNetworkInterfaceId { get; set; }
+        public string Ets2GamePath { get; set; }
 
         #endregion
 
