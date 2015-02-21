@@ -15,11 +15,18 @@ namespace Funbit.Ets.Telemetry.Server.Setup
         {
             try
             {
-                string port = ConfigurationManager.AppSettings["Port"];
-                string arguments = string.Format(@"http show urlacl url=http://+:{0}/", port);
-                Log.Info("Adding ACL rule status...");
-                string output = ProcessHelper.RunNetShell(arguments, "Failed to check URL ACL status");
-                _status = output.Contains(port) ? SetupStatus.Installed : SetupStatus.Uninstalled;
+                if (Settings.Instance.UrlReservationSetupHadErrors)
+                {
+                    _status = SetupStatus.Installed;
+                }
+                else
+                {
+                    string port = ConfigurationManager.AppSettings["Port"];
+                    string arguments = string.Format(@"http show urlacl url=http://+:{0}/", port);
+                    Log.Info("Adding ACL rule status...");
+                    string output = ProcessHelper.RunNetShell(arguments, "Failed to check URL ACL status");
+                    _status = output.Contains(port) ? SetupStatus.Installed : SetupStatus.Uninstalled;    
+                }
             }
             catch (Exception ex)
             {
@@ -53,6 +60,8 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             {
                 Log.Error(ex);
                 _status = SetupStatus.Failed;
+                Settings.Instance.UrlReservationSetupHadErrors = true;
+                Settings.Instance.Save();
                 throw;
             }
             return _status;

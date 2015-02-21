@@ -7,101 +7,10 @@ var Funbit;
         (function (Telemetry) {
             var Ets2TelemetryData = (function () {
                 function Ets2TelemetryData() {
-                    // dates
                     this.gameTime = '';
                     this.jobDeadlineTime = '';
                     this.jobRemainingTime = '';
-                    // booleans
                     this.connected = false;
-                    this.gamePaused = false;
-                    this.hasJob = false;
-                    this.trailerAttached = false;
-                    this.cruiseControlOn = false;
-                    this.wipersOn = false;
-                    this.parkBrakeOn = false;
-                    this.motorBrakeOn = false;
-                    this.electricOn = false;
-                    this.engineOn = false;
-                    this.blinkerLeftActive = false;
-                    this.blinkerRightActive = false;
-                    this.blinkerLeftOn = false;
-                    this.blinkerRightOn = false;
-                    this.lightsParkingOn = false;
-                    this.lightsBeamLowOn = false;
-                    this.lightsBeamHighOn = false;
-                    this.lightsAuxFrontOn = false;
-                    this.lightsAuxRoofOn = false;
-                    this.lightsBeaconOn = false;
-                    this.lightsBrakeOn = false;
-                    this.lightsReverseOn = false;
-                    this.batteryVoltageWarning = false;
-                    this.airPressureWarning = false;
-                    this.airPressureEmergency = false;
-                    this.adblueWarning = false;
-                    this.oilPressureWarning = false;
-                    this.waterTemperatureWarning = false;
-                    // strings
-                    this.telemetryPluginVersion = '';
-                    this.gameVersion = '';
-                    this.trailerId = '';
-                    this.trailerName = '';
-                    this.sourceCity = '';
-                    this.destinationCity = '';
-                    this.sourceCompany = '';
-                    this.destinationCompany = '';
-                    // numbers
-                    this.jobIncome = 0;
-                    this.truckSpeed = 0;
-                    this.accelerationX = 0;
-                    this.accelerationY = 0;
-                    this.accelerationZ = 0;
-                    this.coordinateX = 0;
-                    this.coordinateY = 0;
-                    this.coordinateZ = 0;
-                    this.rotationX = 0;
-                    this.rotationY = 0;
-                    this.rotationZ = 0;
-                    this.gear = 0;
-                    this.gears = 1;
-                    this.gearRanges = 0;
-                    this.gearRangeActive = 0;
-                    this.engineRpm = 0;
-                    this.engineRpmMax = 1;
-                    this.fuel = 0;
-                    this.fuelCapacity = 1;
-                    this.fuelAverageConsumption = 0;
-                    this.userSteer = 0;
-                    this.userThrottle = 0;
-                    this.userBrake = 0;
-                    this.userClutch = 0;
-                    this.gameSteer = 0;
-                    this.gameThrottle = 0;
-                    this.gameBrake = 0;
-                    this.gameClutch = 0;
-                    this.truckMass = 0;
-                    this.truckModelLength = 0;
-                    this.truckModelOffset = 0;
-                    this.trailerMass = 0;
-                    this.retarderBrake = 0;
-                    this.shifterSlot = 0;
-                    this.shifterToggle = 0;
-                    this.airPressure = 0;
-                    this.brakeTemperature = 0;
-                    this.fuelWarning = 0;
-                    this.adblue = 0;
-                    this.adblueConsumpton = 0;
-                    this.oilPressure = 0;
-                    this.oilTemperature = 0;
-                    this.waterTemperature = 0;
-                    this.batteryVoltage = 0;
-                    this.lightsDashboard = 0;
-                    this.wearEngine = 0;
-                    this.wearTransmission = 0;
-                    this.wearCabin = 0;
-                    this.wearChassis = 0;
-                    this.wearWheels = 0;
-                    this.wearTrailer = 0;
-                    this.truckOdometer = 0;
                 }
                 return Ets2TelemetryData;
             })();
@@ -122,13 +31,13 @@ var Funbit;
                     this.initializeSignalR();
                 }
                 Dashboard.prototype.initializeMeters = function () {
-                    var $meters = $('[data-type="meter"]');
+                    var $animated = $('[data-type="meter"]').add('animated');
                     var ie = /Trident/.test(navigator.userAgent);
 
                     // fix to make animation a bit longer for additional smoothness (but not in IE)
                     var dataLatency = ie ? -17 : +17;
                     var value = ((this.skinConfig.refreshRate + dataLatency) / 1000.0) + 's linear';
-                    $meters.css({
+                    $animated.css({
                         '-webkit-transition': value,
                         '-moz-transition': value,
                         '-o-transition': value,

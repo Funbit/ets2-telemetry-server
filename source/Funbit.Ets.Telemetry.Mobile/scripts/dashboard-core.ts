@@ -5,101 +5,12 @@
 module Funbit.Ets.Telemetry {
 
     class Ets2TelemetryData {
-        // dates
         gameTime: string = '';                   // absolute time in ISO8601
         jobDeadlineTime: string = '';            // absolute time in ISO8601
         jobRemainingTime: string = '';           // time difference in ISO8601
-        // booleans
         connected: boolean = false;
-        gamePaused: boolean = false;
-        hasJob: boolean = false;
-        trailerAttached: boolean = false;
-        cruiseControlOn: boolean = false;
-        wipersOn: boolean = false;
-        parkBrakeOn: boolean = false;
-        motorBrakeOn: boolean = false;
-        electricOn: boolean = false;
-        engineOn: boolean = false;
-        blinkerLeftActive: boolean = false;
-        blinkerRightActive: boolean = false;
-        blinkerLeftOn: boolean = false;
-        blinkerRightOn: boolean = false;
-        lightsParkingOn: boolean = false;
-        lightsBeamLowOn: boolean = false;
-        lightsBeamHighOn: boolean = false;
-        lightsAuxFrontOn: boolean = false;
-        lightsAuxRoofOn: boolean = false;
-        lightsBeaconOn: boolean = false;
-        lightsBrakeOn: boolean = false;
-        lightsReverseOn: boolean = false;
-        batteryVoltageWarning: boolean = false;
-        airPressureWarning: boolean = false;
-        airPressureEmergency: boolean = false;
-        adblueWarning: boolean = false;
-        oilPressureWarning: boolean = false;
-        waterTemperatureWarning: boolean = false;
-        // strings
-        telemetryPluginVersion: string = '';
-        gameVersion: string = '';
-        trailerId: string = '';
-        trailerName: string = '';
-        sourceCity: string = '';
-        destinationCity: string = '';
-        sourceCompany: string = '';
-        destinationCompany: string = '';
-        // numbers
-        jobIncome: number = 0;
-        truckSpeed: number = 0;
-        accelerationX: number = 0;
-        accelerationY: number = 0;
-        accelerationZ: number = 0;
-        coordinateX: number = 0;
-        coordinateY: number = 0;
-        coordinateZ: number = 0;
-        rotationX: number = 0;
-        rotationY: number = 0;
-        rotationZ: number = 0;
-        gear: number = 0;
-        gears: number = 1;
-        gearRanges: number = 0;
-        gearRangeActive: number = 0;
-        engineRpm: number = 0;
-        engineRpmMax: number = 1;
-        fuel: number = 0;
-        fuelCapacity: number = 1;
-        fuelAverageConsumption: number = 0;
-        userSteer: number = 0;
-        userThrottle: number = 0;
-        userBrake: number = 0;
-        userClutch: number = 0;
-        gameSteer: number = 0;
-        gameThrottle: number = 0;
-        gameBrake: number = 0;
-        gameClutch: number = 0;
-        truckMass: number = 0;
-        truckModelLength: number = 0;
-        truckModelOffset: number = 0;
-        trailerMass: number = 0;
-        retarderBrake: number = 0;
-        shifterSlot: number = 0;
-        shifterToggle: number = 0;
-        airPressure: number = 0;
-        brakeTemperature: number = 0;
-        fuelWarning: number = 0;
-        adblue: number = 0;
-        adblueConsumpton: number = 0;
-        oilPressure: number = 0;
-        oilTemperature: number = 0;
-        waterTemperature: number = 0;
-        batteryVoltage: number = 0;
-        lightsDashboard: number = 0;
-        wearEngine: number = 0;
-        wearTransmission: number = 0;
-        wearCabin: number = 0;
-        wearChassis: number = 0;
-        wearWheels: number = 0;
-        wearTrailer: number = 0;
-        truckOdometer: number = 0;
+        // the rest properties are not defined here
+        // (see IEts2TelemetryData.cs or JSON contents for reference)
     }
 
     export class Dashboard {
@@ -125,12 +36,12 @@ module Funbit.Ets.Telemetry {
         }
 
         private initializeMeters() {
-            var $meters = $('[data-type="meter"]');
+            var $animated = $('[data-type="meter"]').add('animated');
             var ie = /Trident/.test(navigator.userAgent);
             // fix to make animation a bit longer for additional smoothness (but not in IE)
             var dataLatency = ie ? -17 : +17; 
             var value = ((this.skinConfig.refreshRate + dataLatency) / 1000.0) + 's linear';
-            $meters.css({
+            $animated.css({
                 '-webkit-transition': value,
                 '-moz-transition': value,
                 '-o-transition': value,

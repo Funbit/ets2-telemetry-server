@@ -19,13 +19,20 @@ namespace Funbit.Ets.Telemetry.Server.Setup
         {
             try
             {
-                string port = ConfigurationManager.AppSettings["Port"];
-                string arguments = string.Format("advfirewall firewall show rule dir=in name=all");
-                Log.Info("Checking Firewall rule...");
-                string output = ProcessHelper.RunNetShell(arguments, "Failed to check Firewall rule status");
-                // this check is kind of lame, but it works in any locale...
-                _status = output.Contains(port) && output.Contains(FirewallRuleName) 
-                    ? SetupStatus.Installed : SetupStatus.Uninstalled;
+                if (Settings.Instance.FirewallSetupHadErrors)
+                {
+                    _status = SetupStatus.Installed;
+                }
+                else
+                {
+                    string port = ConfigurationManager.AppSettings["Port"];
+                    string arguments = string.Format("advfirewall firewall show rule dir=in name=all");
+                    Log.Info("Checking Firewall rule...");
+                    string output = ProcessHelper.RunNetShell(arguments, "Failed to check Firewall rule status");
+                    // this check is kind of lame, but it works in any locale...
+                    _status = output.Contains(port) && output.Contains(FirewallRuleName)
+                        ? SetupStatus.Installed : SetupStatus.Uninstalled;
+                }
             }
             catch (Exception ex)
             {
@@ -57,13 +64,11 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             {
                 _status = SetupStatus.Failed;
                 Log.Error(ex);
-                if (ex.Message.ToUpper().Contains("FWCFG.DLL"))
-                {
-                    throw new Exception("Cannot configure Windows Firewall." + Environment.NewLine +
-                                     "If you are using some 3rd-party firewall please open " +
-                                     ConfigurationManager.AppSettings["Port"] + " TCP port manually!", ex);
-                }
-                throw;
+                Settings.Instance.FirewallSetupHadErrors = true;
+                Settings.Instance.Save();
+                throw new Exception("Cannot configure Windows Firewall." + Environment.NewLine +
+                                    "If you are using some 3rd-party firewall please open " +
+                                    ConfigurationManager.AppSettings["Port"] + " TCP port manually!", ex);
             }
 
             return _status;
@@ -85,7 +90,10 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             catch (Exception ex)
             {
                 Log.Error(ex);
-                status = ex.Message.ToUpper().Contains("FWCFG.DLL") ? SetupStatus.Uninstalled : SetupStatus.Failed;
+                _status = SetupStatus.Failed;
+                throw new Exception("Cannot configure Windows Firewall." + Environment.NewLine +
+                                    "If you are using some 3rd-party firewall please close " +
+                                    ConfigurationManager.AppSettings["Port"] + " TCP port manually!", ex);
             }
             return status;
         }

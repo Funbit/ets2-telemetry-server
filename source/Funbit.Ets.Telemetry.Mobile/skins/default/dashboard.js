@@ -46,7 +46,7 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
     data.gear = data.gear > 0 ? 'D' + data.gear : (data.gear < 0 ? 'R' : 'N');
     // convert rpm to rpm * 100
     data.engineRpm = data.engineRpm / 100;
-    // calculate damages
+    // calculate wear
     data.wearSum = Math.round(data.wearEngine +
         data.wearTransmission +
         data.wearCabin +

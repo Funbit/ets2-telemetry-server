@@ -162,7 +162,7 @@ namespace Funbit.Ets.Telemetry.Server
 
         private void SetupForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (e.CloseReason != CloseReason.UserClosing || !_setupFinished || Program.UninstallMode)
+            if (e.CloseReason != CloseReason.UserClosing || Program.UninstallMode)
                 DialogResult = DialogResult.Abort;
         }
 
