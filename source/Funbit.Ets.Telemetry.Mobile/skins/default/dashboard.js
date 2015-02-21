@@ -42,12 +42,14 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
     // convert rpm to rpm * 100
     data.engineRpm = data.engineRpm / 100;
     // calculate wear
-    data.wearSum = Math.round(data.wearEngine +
-        data.wearTransmission +
-        data.wearCabin +
-        data.wearChassis +
-        data.wearWheels) + '%';
-    data.wearTrailer = Math.round(data.wearTrailer) + '%';
+    var wearSumPercent = data.wearEngine * 100 +
+        data.wearTransmission * 100 +
+        data.wearCabin * 100 +
+        data.wearChassis * 100 +
+        data.wearWheels * 100;
+    wearSumPercent = Math.min(wearSumPercent, 100);
+    data.wearSum = Math.round(wearSumPercent) + '%';
+    data.wearTrailer = Math.round(data.wearTrailer * 100) + '%';
     // return changed data to the core for rendering
     return data;
 };
