@@ -142,10 +142,15 @@ namespace Funbit.Ets.Telemetry.Server
         {
             try
             {
-                if (Ets2ProcessHelper.IsEts2Running)
+                if (Ets2ProcessHelper.IsEts2Running && Ets2ProcessHelper.IsEts2TelemetryPluginRunning)
+                {
+                    statusLabel.Text = @"Connected to the simulator";
+                    statusLabel.ForeColor = Color.DarkGreen;
+                }
+                else if (Ets2ProcessHelper.IsEts2Running)
                 {
                     statusLabel.Text = @"Simulator is running";
-                    statusLabel.ForeColor = Color.DarkGreen;
+                    statusLabel.ForeColor = Color.Teal;
                 }
                 else
                 {
