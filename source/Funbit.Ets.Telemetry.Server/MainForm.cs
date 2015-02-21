@@ -95,7 +95,7 @@ namespace Funbit.Ets.Telemetry.Server
 
                 // show tray icon
                 trayIcon.Visible = true;
-
+                
                 // make sure that form is visible
                 Activate();
             }
@@ -174,6 +174,11 @@ namespace Funbit.Ets.Telemetry.Server
         private void MainForm_Resize(object sender, EventArgs e)
         {
             ShowInTaskbar = WindowState != FormWindowState.Minimized;
+            if (!ShowInTaskbar && trayIcon.Tag == null)
+            {
+                trayIcon.ShowBalloonTip(1000, @"ETS2 Telemetry Server", @"Double-click to restore.", ToolTipIcon.Info);
+                trayIcon.Tag = "Already shown";
+            }
         }
 
         private void interfaceDropDown_SelectedIndexChanged(object sender, EventArgs e)
