@@ -111,13 +111,13 @@ module Funbit.Ets.Telemetry {
         private $cache: any[] = [];
         private ets2TelemetryHub: any;
         
+        private lastDisconnectTimestamp: number = 0;
         private static reconnectDelay: number = 3000;
         
         constructor(telemetryEndpointUrl: string, skinConfig: ISkinConfiguration) {
             this.endpointUrl = telemetryEndpointUrl;
             this.skinConfig = skinConfig;
-            // prepare animated meters
-            this.initializeMeters();
+            this.adjustRefreshRate();
             // call custom skin initialization function
             this.initialize(skinConfig);
             // initialize SignalR based sync (using WebSockets)
@@ -128,14 +128,31 @@ module Funbit.Ets.Telemetry {
             var $meters = $('[data-type="meter"]');
             var ie = /Trident/.test(navigator.userAgent);
             // fix to make animation a bit longer for additional smoothness (but not in IE)
-            var dataLatency = ie ? 0 : 20; 
+            var dataLatency = ie ? -17 : +17; 
             var value = ((this.skinConfig.refreshRate + dataLatency) / 1000.0) + 's linear';
             $meters.css({
                 '-webkit-transition': value,
                 '-moz-transition': value,
                 '-o-transition': value,
+                '-ms-transition': value,
                 'transition': value
             });
+        }
+
+        private adjustRefreshRate() {
+            if (!this.skinConfig.refreshRate) this.skinConfig.refreshRate = 0;
+            var now = Date.now();
+            var lastDisconnectInterval = now - this.lastDisconnectTimestamp;
+            if (lastDisconnectInterval < 1 * 60 * 1000)  // 1 min
+                this.skinConfig.refreshRate += 20;
+            if (lastDisconnectInterval < 2 * 60 * 1000)  // 2 min
+                this.skinConfig.refreshRate += 10;
+            if (lastDisconnectInterval < 3 * 60 * 1000)  // 3 min
+                this.skinConfig.refreshRate += 5;
+            // adaptive refresh rate adjustment within range [50...250]
+            this.skinConfig.refreshRate = Math.min(250, this.skinConfig.refreshRate);
+            this.skinConfig.refreshRate = Math.max(50, this.skinConfig.refreshRate);
+            this.initializeMeters();
         }
 
         private initializeSignalR() {
@@ -152,6 +169,8 @@ module Funbit.Ets.Telemetry {
             });
             $.connection.hub.disconnected(() => {
                 this.process(null, Strings.couldNotConnectToServer);
+                this.adjustRefreshRate();
+                this.lastDisconnectTimestamp = Date.now();
                 setTimeout(() => {
                     $.connection.hub.start();
                 }, Dashboard.reconnectDelay);

@@ -110,11 +110,10 @@ var Funbit;
                 function Dashboard(telemetryEndpointUrl, skinConfig) {
                     // jquery element cache
                     this.$cache = [];
+                    this.lastDisconnectTimestamp = 0;
                     this.endpointUrl = telemetryEndpointUrl;
                     this.skinConfig = skinConfig;
-
-                    // prepare animated meters
-                    this.initializeMeters();
+                    this.adjustRefreshRate();
 
                     // call custom skin initialization function
                     this.initialize(skinConfig);
@@ -127,14 +126,33 @@ var Funbit;
                     var ie = /Trident/.test(navigator.userAgent);
 
                     // fix to make animation a bit longer for additional smoothness (but not in IE)
-                    var dataLatency = ie ? 0 : 20;
+                    var dataLatency = ie ? -17 : +17;
                     var value = ((this.skinConfig.refreshRate + dataLatency) / 1000.0) + 's linear';
                     $meters.css({
                         '-webkit-transition': value,
                         '-moz-transition': value,
                         '-o-transition': value,
+                        '-ms-transition': value,
                         'transition': value
                     });
+                };
+
+                Dashboard.prototype.adjustRefreshRate = function () {
+                    if (!this.skinConfig.refreshRate)
+                        this.skinConfig.refreshRate = 0;
+                    var now = Date.now();
+                    var lastDisconnectInterval = now - this.lastDisconnectTimestamp;
+                    if (lastDisconnectInterval < 1 * 60 * 1000)
+                        this.skinConfig.refreshRate += 20;
+                    if (lastDisconnectInterval < 2 * 60 * 1000)
+                        this.skinConfig.refreshRate += 10;
+                    if (lastDisconnectInterval < 3 * 60 * 1000)
+                        this.skinConfig.refreshRate += 5;
+
+                    // adaptive refresh rate adjustment within range [50...250]
+                    this.skinConfig.refreshRate = Math.min(250, this.skinConfig.refreshRate);
+                    this.skinConfig.refreshRate = Math.max(50, this.skinConfig.refreshRate);
+                    this.initializeMeters();
                 };
 
                 Dashboard.prototype.initializeSignalR = function () {
@@ -152,6 +170,8 @@ var Funbit;
                     });
                     $.connection.hub.disconnected(function () {
                         _this.process(null, Telemetry.Strings.couldNotConnectToServer);
+                        _this.adjustRefreshRate();
+                        _this.lastDisconnectTimestamp = Date.now();
                         setTimeout(function () {
                             $.connection.hub.start();
                         }, Dashboard.reconnectDelay);
