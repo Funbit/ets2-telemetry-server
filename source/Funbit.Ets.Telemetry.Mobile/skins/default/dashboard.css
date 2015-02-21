@@ -110,14 +110,15 @@
   -o-transform-origin: 50% 198px;
   transform-origin: 50% 198px;
 }
-.truckSpeedRounded {
+.truckSpeedRounded,
+.cruiseControlSpeedRounded {
   color: #2491b9;
   font-family: Courier New, Courier, monospace;
   font-weight: bold;
   font-size: 70px;
   position: absolute;
   left: 460px;
-  top: 280px;
+  top: 273px;
   width: 190px;
   height: 66px;
   text-align: right;
@@ -147,7 +148,7 @@
   font-size: 70px;
   position: absolute;
   left: 376px;
-  top: 516px;
+  top: 563px;
   width: 368px;
   height: 70px;
   text-align: right;
@@ -177,21 +178,25 @@
 .cruiseControlOn {
   background-image: url("images/cruise-off.png");
   position: absolute;
-  left: 710px;
-  top: 680px;
-  width: 114px;
-  height: 98px;
+  left: 687px;
+  top: 434px;
+  width: 82px;
+  height: 72px;
 }
 .cruiseControlOn.yes {
   background-image: url("images/cruise-on.png");
 }
+.cruiseControlSpeedRounded {
+  color: #24b999;
+  top: 431px;
+}
 .lightsBeamHighOn {
   background-image: url("images/highbeam-off.png");
   position: absolute;
-  left: 1326px;
-  top: 890px;
-  width: 120px;
-  height: 88px;
+  left: 1358px;
+  top: 860px;
+  width: 123px;
+  height: 90px;
 }
 .lightsBeamHighOn.yes {
   background-image: url("images/highbeam-on.png");
@@ -199,10 +204,10 @@
 .lightsBeamLowOn {
   background-image: url("images/lowbeam-off.png");
   position: absolute;
-  left: 1326px;
-  top: 1010px;
-  width: 120px;
-  height: 88px;
+  left: 1358px;
+  top: 954px;
+  width: 123px;
+  height: 90px;
 }
 .lightsBeamLowOn.yes {
   background-image: url("images/lowbeam-on.png");
@@ -210,10 +215,10 @@
 .lightsParkingOn {
   background-image: url("images/parklights-off.png");
   position: absolute;
-  left: 1454px;
-  top: 950px;
-  width: 106px;
-  height: 96px;
+  left: 1484px;
+  top: 904px;
+  width: 104px;
+  height: 98px;
 }
 .lightsParkingOn.yes {
   background-image: url("images/parklights-on.png");
@@ -222,7 +227,7 @@
   background-image: url("images/trailer-off.png");
   position: absolute;
   left: 1726px;
-  top: 922px;
+  top: 890px;
   width: 278px;
   height: 152px;
 }
@@ -236,7 +241,7 @@
   font-size: 40px;
   position: absolute;
   left: 1770px;
-  top: 938px;
+  top: 906px;
   width: 200px;
   height: 80px;
   text-align: center;
@@ -248,7 +253,7 @@
   font-weight: bold;
   position: absolute;
   left: 1742px;
-  top: 984px;
+  top: 952px;
   width: 242px;
   height: 80px;
   text-align: center;
@@ -260,24 +265,37 @@
 .jobRemainingTime {
   color: #54d9a8;
 }
+._jobIncome {
+  color: #5dd954;
+}
 .gear,
+.blinkerLeftOn,
+.blinkerRightOn,
+.cruiseControlOn,
 .truckOdometer,
 .truckSpeedRounded,
+.cruiseControlSpeedRounded,
 .trailerMass,
 .trailerName,
 .jobRemainingTime,
+._jobIncome,
 ._jobSource,
 ._jobDestionation {
   visibility: hidden;
 }
+.dashboard.connected.yes .blinkerLeftOn,
+.dashboard.connected.yes .blinkerRightOn,
+.dashboard.connected.yes .cruiseControlOn,
 .dashboard.connected.yes .gear,
 .dashboard.connected.yes .truckOdometer,
-.dashboard.connected.yes .truckSpeedRounded {
+.dashboard.connected.yes .truckSpeedRounded,
+.dashboard.connected.yes .cruiseControlSpeedRounded {
   visibility: visible;
 }
 .hasJob.yes .trailerMass,
 .hasJob.yes .trailerName,
 .hasJob.yes .jobRemainingTime,
+.hasJob.yes ._jobIncome,
 .hasJob.yes ._jobSource,
 .hasJob.yes ._jobDestionation {
   visibility: visible;
@@ -307,4 +325,25 @@ table._job td {
 }
 .statusMessage {
   color: coral;
+}
+._truckWearInfo,
+._trailerWearInfo {
+  font-family: Courier New, Courier, monospace;
+  font-size: 26px;
+  position: absolute;
+  left: 1600px;
+  top: 1066px;
+  width: 330px;
+  height: 30px;
+  text-align: left;
+  color: #aaa;
+  line-height: 90%;
+}
+._trailerWearInfo {
+  left: 1810px;
+}
+.wearSum,
+.wearTrailer {
+  font-size: 44px;
+  color: orangered;
 }

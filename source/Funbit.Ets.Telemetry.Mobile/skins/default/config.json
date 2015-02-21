@@ -1,0 +1,30 @@
+{
+    "comments": [
+        "==============================",
+        "     SKIN CONFIGURATION       ",
+        "==============================",
+
+        "Required properties:",
+
+        "           name: name of the skin (directory name: /skins/name)",
+        "          title: human readable skin title",
+        "         author: author name",
+        "    refreshRate: defines telemetry data refresh rate (ms), ",
+        "                 lower values may decrease visible latency,",
+        "                 but may also lead to UI stuttering due to performance problems (especially on Androids).",
+        "                 recommended values are between 50ms and 250ms.",
+        "                 Please note that refreshRate will be adjusted automatically in case if connection is unstable.",
+        "          width: width of the skin in pixels (same as defined in the CSS)",
+        "         height: height of the skin in pixels (same as defined in the CSS)"
+    ],
+
+    "config": {
+        "name": "default",
+        "title": "Generic Dashboard",
+        "author": "Funbit",
+        "refreshRate": 80,
+        "width": 2048,
+        "height": 1152
+    }    
+
+}
