@@ -36,7 +36,7 @@ module Funbit.Ets.Telemetry {
         }
 
         private initializeMeters() {
-            var $animated = $('[data-type="meter"]').add('animated');
+            var $animated = $('[data-type="meter"]').add('.animated');
             var ie = /Trident/.test(navigator.userAgent);
             // fix to make animation a bit longer for additional smoothness (but not in IE)
             var dataLatency = ie ? -17 : +17; 

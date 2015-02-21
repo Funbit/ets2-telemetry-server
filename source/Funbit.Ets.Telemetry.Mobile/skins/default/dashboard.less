@@ -4,11 +4,9 @@
     *** DO NOT CHANGE THIS STYLESHEET *** 
 
     If you want to create your own dashboard skin (or tweak something)
-    create a copy of the "/skins/default" directory and rename it
-    to something like: "/skins/your_skin_name".
-    Edit "/config.json" file and add a new object to the skins array.
-    Please note that the "name" property must be equal to "your_skin_name" defined above.
-    Refresh your application/browser to see the new skin.
+    create a copy of the "/skins/template" directory and rename it
+    to something like: "/skins/your_skin_name" and edit config.json file inside.
+    For more information see skin tutorial PDF.
 
     CSS naming convention:
 
@@ -286,6 +284,8 @@
 .cruiseControlSpeedRounded,
 .trailerMass, 
 .trailerName, 
+._truckWearInfo,
+._trailerWearInfo,
 .jobRemainingTime, 
 ._jobIncome,
 ._jobSource, 
@@ -300,6 +300,8 @@
     .blinkerRightOn,
     .cruiseControlOn,
     .gear,
+    ._truckWearInfo,
+    ._trailerWearInfo,
     .truckOdometer,
     .truckSpeedRounded,
     .cruiseControlSpeedRounded {

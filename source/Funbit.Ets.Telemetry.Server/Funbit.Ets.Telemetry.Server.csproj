@@ -177,11 +177,39 @@
       <Link>Html\scripts\jquery.signalR-2.2.0.min.js</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\template\dashboard.css">
+      <Link>Html\skins\template\dashboard.css</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\template\dashboard.html">
+      <Link>Html\skins\template\dashboard.html</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\template\dashboard.jpg">
+      <Link>Html\skins\template\dashboard.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\template\dashboard.js">
+      <Link>Html\skins\template\dashboard.js</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\template\images\bg-off.jpg">
+      <Link>Html\skins\template\images\bg-off.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\template\images\bg-on.jpg">
+      <Link>Html\skins\template\images\bg-on.jpg</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Ets2TestTelemetry.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\default\config.json">
       <Link>Html\skins\default\config.json</Link>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\Funbit.Ets.Telemetry.Mobile\skins\template\config.json">
+      <Link>Html\skins\template\config.json</Link>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\check-error.png" />

@@ -227,6 +227,13 @@
     <Content Include="skins\default\images\parklights-on.png" />
     <Content Include="skins\default\images\trailer-off.png" />
     <Content Include="skins\default\images\trailer-on.png" />
+    <Content Include="skins\template\config.json" />
+    <Content Include="skins\template\dashboard.css" />
+    <Content Include="skins\template\dashboard.html" />
+    <Content Include="skins\template\dashboard.jpg" />
+    <Content Include="skins\template\dashboard.js" />
+    <Content Include="skins\template\images\bg-off.jpg" />
+    <Content Include="skins\template\images\bg-on.jpg" />
     <Folder Include="merges\ios\" />
     <Content Include="merges\windows\scripts\platformOverrides.js" />
     <Content Include="merges\windows\scripts\winstore-jscompat.js" />
