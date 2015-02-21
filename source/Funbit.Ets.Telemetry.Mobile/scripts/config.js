@@ -2,6 +2,10 @@
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
+            // if you change port number here make sure that
+            // you change it inside Ets2Telemetry.exe.config as well
+            var serverPort = 25555;
+
             var Strings = (function () {
                 function Strings() {
                 }
@@ -137,7 +141,6 @@
                 };
 
                 Configuration.prototype.getUrlInternal = function (path) {
-                    var serverPort = 25555;
                     return "http://" + this.serverIp + ":" + serverPort + path;
                 };
 

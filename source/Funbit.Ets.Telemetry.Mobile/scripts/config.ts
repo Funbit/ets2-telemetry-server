@@ -2,6 +2,10 @@
 
 module Funbit.Ets.Telemetry {
 
+    // if you change port number here make sure that 
+    // you change it inside Ets2Telemetry.exe.config as well
+    var serverPort: number = 25555;
+
     export interface IConfiguration {
         skins: ISkinConfiguration[];
         serverIp: string;
@@ -111,7 +115,6 @@ module Funbit.Ets.Telemetry {
         }
 
         private getUrlInternal(path: string): string {
-            var serverPort: number = 25555;
             return "http://" + this.serverIp + ":" + serverPort + path;
         }
         

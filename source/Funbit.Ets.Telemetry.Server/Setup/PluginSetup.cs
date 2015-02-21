@@ -72,19 +72,6 @@ namespace Funbit.Ets.Telemetry.Server.Setup
                 {
                     bool pluginsExist = File.Exists(GetTelemetryPluginDllFileName(gamePath, x64: true)) &&
                                         File.Exists(GetTelemetryPluginDllFileName(gamePath, x64: false));
-                    // make sure that we disable old plugin (2.1.0 and earlier)
-                    // ReSharper disable once AssignNullToNotNullAttribute
-                    string oldX86PluginDllFileName = Path.Combine(GetPluginPath(gamePath, x64: false),
-                        "ets2-telemetry.dll");
-                    // ReSharper disable once AssignNullToNotNullAttribute
-                    string oldX64PluginDllFileName = Path.Combine(GetPluginPath(gamePath, x64: true),
-                        "ets2-telemetry.dll");
-                    if (File.Exists(oldX86PluginDllFileName))
-                        File.Move(oldX86PluginDllFileName,
-                            Path.ChangeExtension(oldX86PluginDllFileName, ".deprecated.bak"));
-                    if (File.Exists(oldX64PluginDllFileName))
-                        File.Move(oldX64PluginDllFileName,
-                            Path.ChangeExtension(oldX64PluginDllFileName, ".deprecated.bak"));
                     _status = pluginsExist ? SetupStatus.Installed : SetupStatus.Uninstalled;
                 }
                 else
@@ -136,6 +123,22 @@ namespace Funbit.Ets.Telemetry.Server.Setup
 
                 Settings.Instance.Ets2GamePath = gamePath;
                 Settings.Instance.Save();
+
+                // make sure that we disable old plugin (2.1.0 and earlier)
+                // ReSharper disable once AssignNullToNotNullAttribute
+                string oldX86PluginDllFileName = Path.Combine(GetPluginPath(gamePath, x64: false),
+                    "ets2-telemetry.dll");
+                // ReSharper disable once AssignNullToNotNullAttribute
+                string oldX64PluginDllFileName = Path.Combine(GetPluginPath(gamePath, x64: true),
+                    "ets2-telemetry.dll");
+                if (File.Exists(oldX86PluginDllFileName))
+                    File.Move(oldX86PluginDllFileName,
+                        Path.ChangeExtension(oldX86PluginDllFileName, ".deprecated.bak"));
+                if (File.Exists(oldX64PluginDllFileName))
+                    File.Move(oldX64PluginDllFileName,
+                        Path.ChangeExtension(oldX64PluginDllFileName, ".deprecated.bak"));
+
+                // install new plugin
 
                 string x64DllFileName = GetTelemetryPluginDllFileName(gamePath, x64: true);
                 string x86DllFileName = GetTelemetryPluginDllFileName(gamePath, x64: false);

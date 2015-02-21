@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Reflection;
 
 namespace Funbit.Ets.Telemetry.Server.Helpers
 {
@@ -12,8 +11,8 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
         {
             get
             {
-                Assembly assembly = Assembly.GetExecutingAssembly();
-                FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(assembly.Location);
+                FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(
+                    Process.GetCurrentProcess().MainModule.FileName);
                 string version = string.Format("{0}.{1}.{2}",
                     versionInfo.FileMajorPart, versionInfo.FileMinorPart, versionInfo.ProductBuildPart);
                 return version;

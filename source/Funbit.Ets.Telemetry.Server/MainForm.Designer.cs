@@ -47,6 +47,7 @@
             this.statusTitleLabel = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.broadcastTimer = new System.Windows.Forms.Timer(this.components);
+            this.helpLabel = new System.Windows.Forms.LinkLabel();
             this.contextMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -81,6 +82,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.helpLabel);
             this.groupBox1.Controls.Add(this.ipAddressLabel);
             this.groupBox1.Controls.Add(this.interfacesDropDown);
             this.groupBox1.Controls.Add(this.networkInterfaceTitleLabel);
@@ -225,6 +227,18 @@
             this.broadcastTimer.Interval = 1000;
             this.broadcastTimer.Tick += new System.EventHandler(this.broadcastTimer_Tick);
             // 
+            // helpLabel
+            // 
+            this.helpLabel.AutoSize = true;
+            this.helpLabel.Font = new System.Drawing.Font("Segoe UI Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.helpLabel.Location = new System.Drawing.Point(479, 194);
+            this.helpLabel.Name = "helpLabel";
+            this.helpLabel.Size = new System.Drawing.Size(34, 17);
+            this.helpLabel.TabIndex = 22;
+            this.helpLabel.TabStop = true;
+            this.helpLabel.Text = "Help";
+            this.helpLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.helpLabel_LinkClicked);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -267,6 +281,7 @@
         private System.Windows.Forms.Label networkInterfaceTitleLabel;
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Timer broadcastTimer;
+        private System.Windows.Forms.LinkLabel helpLabel;
     }
 }
 

@@ -29,7 +29,12 @@ namespace Funbit.Ets.Telemetry.Server
                     ? "Ets2Telemetry_8F63CCBE353DE22BD1A86308AD675001_UAC"
                     : "Ets2Telemetry_8F63CCBE353DE22BD1A86308AD675001");
             bool bAnotherInstanceRunning = GetLastError() == ErrorAlreadyExists;
-            if (bAnotherInstanceRunning) return;
+            if (bAnotherInstanceRunning)
+            {
+                MessageBox.Show(@"Another ETS2 Telemetry Server instance is already running!", @"Warning",
+                    MessageBoxButtons.OK, MessageBoxIcon.Exclamation);
+                return;
+            }
 
             log4net.Config.XmlConfigurator.Configure();
             

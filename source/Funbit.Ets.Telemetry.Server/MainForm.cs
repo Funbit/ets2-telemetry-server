@@ -200,5 +200,10 @@ namespace Funbit.Ets.Telemetry.Server
             }
             broadcastTimer.Enabled = true;
         }
+
+        private void helpLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            ProcessHelper.OpenUrl("https://github.com/Funbit/ets2-telemetry-server");
+        }
     }
 }
