@@ -2,6 +2,8 @@
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
+            var serverPort = 25555;
+
             var Strings = (function () {
                 function Strings() {
                 }
@@ -131,7 +133,6 @@
                 };
 
                 Configuration.prototype.getUrlInternal = function (path) {
-                    var serverPort = 25555;
                     return "http://" + this.serverIp + ":" + serverPort + path;
                 };
 

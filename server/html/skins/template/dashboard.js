@@ -3,18 +3,10 @@
     // skinConfig - a copy of the skin configuration from config.json
     //
     // this function is called before everything else, 
-    // so you may perform any DOM or resource initializations/preloading here
-
+    // so you may perform any DOM or resource initializations here
     $([
-        'images/bg-off.png', 'images/bg-on.png',
-        'images/blinker-left-off.png', 'images/blinker-left-on.png',
-        'images/blinker-right-off.png', 'images/blinker-right-on.png',
-        'images/cruise-off.png', 'images/cruise-on.png',
-        'images/highbeam-off.png', 'images/highbeam-on.png',
-        'images/lowbeam-off.png', 'images/lowbeam-on.png',
-        'images/parklights-off.png', 'images/parklights-on.png',
-        'images/trailer-off.png', 'images/trailer-on.png'
-    ]).each(function() {
+        'images/bg-off.jpg', 'images/bg-on.jpg'
+    ]).each(function () {
         $('<img/>')[0].src = this;
     });
 }
@@ -30,7 +22,6 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
 
     // round truck speed
     data.truckSpeedRounded = Math.round(data.truckSpeed);
-    data.cruiseControlSpeedRounded = data.cruiseControlOn ? Math.round(data.cruiseControlSpeed) : '';
     // convert kilometers per hour to miles per hour (just an example)
     data.truckSpeedMph = data.truckSpeed * 0.621371;
     // convert kg to t
@@ -41,15 +32,6 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
     data.gear = data.gear > 0 ? 'D' + data.gear : (data.gear < 0 ? 'R' : 'N');
     // convert rpm to rpm * 100
     data.engineRpm = data.engineRpm / 100;
-    // calculate wear
-    var wearSumPercent = data.wearEngine * 100 +
-        data.wearTransmission * 100 +
-        data.wearCabin * 100 +
-        data.wearChassis * 100 +
-        data.wearWheels * 100;
-    wearSumPercent = Math.min(wearSumPercent, 100);
-    data.wearSum = Math.round(wearSumPercent) + '%';
-    data.wearTrailer = Math.round(data.wearTrailer * 100) + '%';
     // return changed data to the core for rendering
     return data;
 };

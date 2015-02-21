@@ -73,6 +73,13 @@
                         html += '<script src="' + signalrUrl + '"></script>';
                         html += '<script src="' + skinJsUrl + '"></script>';
                         $('body').append(html);
+                        $('.dashboard').css({
+                            position: 'absolute',
+                            left: '0px',
+                            top: '0px',
+                            width: _this.skinConfig.width + 'px',
+                            height: _this.skinConfig.height + 'px'
+                        });
                     }).fail(function () {
                         alert(Telemetry.Strings.dashboardHtmlLoadFailed + _this.skinConfig.name);
                     });

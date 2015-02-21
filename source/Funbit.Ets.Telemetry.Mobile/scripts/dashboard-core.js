@@ -1,7 +1,4 @@
-﻿/// <reference path="typings/jquery.d.ts" />
-/// <reference path="typings/jqueryui.d.ts" />
-/// <reference path="typings/signalr.d.ts" />
-var Funbit;
+﻿var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
@@ -17,24 +14,20 @@ var Funbit;
 
             var Dashboard = (function () {
                 function Dashboard(telemetryEndpointUrl, skinConfig) {
-                    // jquery element cache
                     this.$cache = [];
                     this.lastDisconnectTimestamp = 0;
                     this.endpointUrl = telemetryEndpointUrl;
                     this.skinConfig = skinConfig;
                     this.adjustRefreshRate();
 
-                    // call custom skin initialization function
                     this.initialize(skinConfig);
 
-                    // initialize SignalR based sync (using WebSockets)
                     this.initializeSignalR();
                 }
                 Dashboard.prototype.initializeMeters = function () {
                     var $animated = $('[data-type="meter"]').add('.animated');
                     var ie = /Trident/.test(navigator.userAgent);
 
-                    // fix to make animation a bit longer for additional smoothness (but not in IE)
                     var dataLatency = ie ? -17 : +17;
                     var value = ((this.skinConfig.refreshRate + dataLatency) / 1000.0) + 's linear';
                     $animated.css({
@@ -58,7 +51,6 @@ var Funbit;
                     if (lastDisconnectInterval < 3 * 60 * 1000)
                         this.skinConfig.refreshRate += 5;
 
-                    // adaptive refresh rate adjustment within range [50...250]
                     this.skinConfig.refreshRate = Math.min(250, this.skinConfig.refreshRate);
                     this.skinConfig.refreshRate = Math.max(50, this.skinConfig.refreshRate);
                     this.initializeMeters();
@@ -95,35 +87,26 @@ var Funbit;
                 Dashboard.prototype.process = function (data, reason) {
                     if (typeof reason === "undefined") { reason = ''; }
                     if (data != null && !data.connected) {
-                        // if we're not connected we reset the data
                         reason = Telemetry.Strings.connectedAndWaitingForDrive;
                         data = null;
                     }
 
-                    // update status message with failure reason
                     $('.statusMessage').html(reason);
 
-                    // if we don't have real data we use default values
                     var data = data === null ? new Ets2TelemetryData() : data;
 
-                    // tweak data using custom skin based filter
                     data = this.filter(data);
 
-                    // tweak data using default internal filter
                     data = this.internalFilter(data);
 
-                    // render data using internal method first
                     var $renderFinished = this.internalRender(data);
 
-                    // then use skin based renderer if defined
                     this.render(data);
 
-                    // return deferred object that resolves when animation finishes
                     return $renderFinished;
                 };
 
                 Dashboard.prototype.internalFilter = function (data) {
-                    // convert ISO8601 to default readable format
                     data.gameTime = Dashboard.timeToReadableString(data.gameTime);
                     data.jobDeadlineTime = Dashboard.timeToReadableString(data.jobDeadlineTime);
                     data.jobRemainingTime = Dashboard.timeDifferenceToReadableString(data.jobRemainingTime);
@@ -137,8 +120,6 @@ var Funbit;
                         var value = data[name];
                         var $e = this.$cache[name] !== undefined ? this.$cache[name] : this.$cache[name] = $('.' + name);
                         if (typeof value == "boolean") {
-                            // all booleans will have "yes" class
-                            // attached if value is true
                             if (value) {
                                 $e.addClass('yes');
                             } else {
@@ -147,35 +128,24 @@ var Funbit;
                         } else if (typeof value == "number") {
                             var $meter = $e.filter('[data-type="meter"]');
                             if ($meter.length > 0) {
-                                // if type is set to meter
-                                // then we use this HTML element
-                                // as a rotating meter "arrow"
                                 var minValue = $meter.data('min');
                                 if (/[a-z]/i.test(minValue)) {
-                                    // if data-min attribute points
-                                    // to a property name then we use its value
                                     minValue = data[minValue];
                                 }
                                 var maxValue = $meter.data('max');
                                 if (/[a-z]/i.test(maxValue)) {
-                                    // if data-max attribute points
-                                    // to a property name then we use its value
                                     maxValue = data[maxValue];
                                 }
                                 $animations.push(this.setMeter($meter, value, parseFloat(minValue), parseFloat(maxValue)));
                             }
                             var $value = $e.not('[data-type="meter"]');
                             if ($value.length > 0) {
-                                // just display the number
                                 $value.html(value);
                             }
                         } else if (typeof value == "string") {
-                            // just display string as is
                             $e.html(value);
                         }
 
-                        // set data-value attribute
-                        // to allow attribute based custom CSS selectors
                         $e.attr('data-value', value);
                     }
                     return $animations;
@@ -205,7 +175,6 @@ var Funbit;
                     return $animationFinished;
                 };
 
-                // utility functions available for custom skins:
                 Dashboard.formatNumber = function (num, digits) {
                     var output = num + "";
                     while (output.length < digits)
@@ -218,8 +187,6 @@ var Funbit;
                 };
 
                 Dashboard.timeToReadableString = function (date) {
-                    // if we have ISO8601 (in UTC) then make it readable
-                    // in the following default format: "Wednesday 08:26"
                     if (this.isIso8601(date)) {
                         var d = new Date(date);
                         return Telemetry.Strings.dayOfTheWeek[d.getUTCDay()] + ' ' + Dashboard.formatNumber(d.getUTCHours(), 2) + ':' + Dashboard.formatNumber(d.getUTCMinutes(), 2);
@@ -228,8 +195,6 @@ var Funbit;
                 };
 
                 Dashboard.timeDifferenceToReadableString = function (date) {
-                    // if we have ISO8601 (in UTC) then make it readable
-                    // in the following default format: "1 day 8 hours 26 minutes"
                     if (this.isIso8601(date)) {
                         var d = new Date(date);
                         var dys = d.getUTCDate() - 1;
@@ -247,18 +212,14 @@ var Funbit;
                     return date;
                 };
 
-                // "forward" declarations for custom skins:
-                // define custom data filter method for skins
                 Dashboard.prototype.filter = function (data) {
                     return data;
                 };
 
-                // define custom data render method for skins
                 Dashboard.prototype.render = function (data) {
                     return;
                 };
 
-                // define custom initialization function
                 Dashboard.prototype.initialize = function (skinConfig) {
                     return;
                 };
@@ -271,4 +232,3 @@ var Funbit;
     })(Funbit.Ets || (Funbit.Ets = {}));
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
-//# sourceMappingURL=dashboard-core.js.map

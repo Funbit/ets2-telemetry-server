@@ -14,6 +14,7 @@
         <div class="fuel" data-type="meter" data-min="0" data-max="fuelCapacity" data-min-angle="-96" data-max-angle="0"></div>
         <div class="waterTemperature" data-type="meter" data-min="0" data-max="100" data-min-angle="-96" data-max-angle="0"></div>
         <div class="truckOdometer"></div>
+        <div class="cruiseControlSpeedRounded"></div>
         <div class="gear"></div>
         <!-- indicators -->
         <div class="blinkerLeftOn"></div>
@@ -41,8 +42,10 @@
             </tr>
             <tr>
                 <th>Deadline in:</th>
-                <td><span class="jobRemainingTime"></span></td>
+                <td><span class="jobRemainingTime"></span> <span class="_jobIncome">(€<span class="jobIncome"></span>)</span></td>
             </tr>
         </table>
+        <div class="_truckWearInfo">Truck <br/>wear: <span class="wearSum"></span></div>
+        <div class="_trailerWearInfo">Trailer <br/>damage: <span class="wearTrailer"></span></div>
     </div>
 </div>

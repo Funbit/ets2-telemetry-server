@@ -8,93 +8,6 @@
                     this.jobDeadlineTime = '';
                     this.jobRemainingTime = '';
                     this.connected = false;
-                    this.gamePaused = false;
-                    this.hasJob = false;
-                    this.trailerAttached = false;
-                    this.cruiseControlOn = false;
-                    this.wipersOn = false;
-                    this.parkBrakeOn = false;
-                    this.motorBrakeOn = false;
-                    this.electricOn = false;
-                    this.engineOn = false;
-                    this.blinkerLeftActive = false;
-                    this.blinkerRightActive = false;
-                    this.blinkerLeftOn = false;
-                    this.blinkerRightOn = false;
-                    this.lightsParkingOn = false;
-                    this.lightsBeamLowOn = false;
-                    this.lightsBeamHighOn = false;
-                    this.lightsAuxFrontOn = false;
-                    this.lightsAuxRoofOn = false;
-                    this.lightsBeaconOn = false;
-                    this.lightsBrakeOn = false;
-                    this.lightsReverseOn = false;
-                    this.batteryVoltageWarning = false;
-                    this.airPressureWarning = false;
-                    this.airPressureEmergency = false;
-                    this.adblueWarning = false;
-                    this.oilPressureWarning = false;
-                    this.waterTemperatureWarning = false;
-                    this.telemetryPluginVersion = '';
-                    this.gameVersion = '';
-                    this.trailerId = '';
-                    this.trailerName = '';
-                    this.sourceCity = '';
-                    this.destinationCity = '';
-                    this.sourceCompany = '';
-                    this.destinationCompany = '';
-                    this.jobIncome = 0;
-                    this.truckSpeed = 0;
-                    this.accelerationX = 0;
-                    this.accelerationY = 0;
-                    this.accelerationZ = 0;
-                    this.coordinateX = 0;
-                    this.coordinateY = 0;
-                    this.coordinateZ = 0;
-                    this.rotationX = 0;
-                    this.rotationY = 0;
-                    this.rotationZ = 0;
-                    this.gear = 0;
-                    this.gears = 1;
-                    this.gearRanges = 0;
-                    this.gearRangeActive = 0;
-                    this.engineRpm = 0;
-                    this.engineRpmMax = 1;
-                    this.fuel = 0;
-                    this.fuelCapacity = 1;
-                    this.fuelAverageConsumption = 0;
-                    this.userSteer = 0;
-                    this.userThrottle = 0;
-                    this.userBrake = 0;
-                    this.userClutch = 0;
-                    this.gameSteer = 0;
-                    this.gameThrottle = 0;
-                    this.gameBrake = 0;
-                    this.gameClutch = 0;
-                    this.truckMass = 0;
-                    this.truckModelLength = 0;
-                    this.truckModelOffset = 0;
-                    this.trailerMass = 0;
-                    this.retarderBrake = 0;
-                    this.shifterSlot = 0;
-                    this.shifterToggle = 0;
-                    this.airPressure = 0;
-                    this.brakeTemperature = 0;
-                    this.fuelWarning = 0;
-                    this.adblue = 0;
-                    this.adblueConsumpton = 0;
-                    this.oilPressure = 0;
-                    this.oilTemperature = 0;
-                    this.waterTemperature = 0;
-                    this.batteryVoltage = 0;
-                    this.lightsDashboard = 0;
-                    this.wearEngine = 0;
-                    this.wearTransmission = 0;
-                    this.wearCabin = 0;
-                    this.wearChassis = 0;
-                    this.wearWheels = 0;
-                    this.wearTrailer = 0;
-                    this.truckOdometer = 0;
                 }
                 return Ets2TelemetryData;
             })();
@@ -102,27 +15,45 @@
             var Dashboard = (function () {
                 function Dashboard(telemetryEndpointUrl, skinConfig) {
                     this.$cache = [];
+                    this.lastDisconnectTimestamp = 0;
                     this.endpointUrl = telemetryEndpointUrl;
                     this.skinConfig = skinConfig;
-
-                    this.initializeMeters();
+                    this.adjustRefreshRate();
 
                     this.initialize(skinConfig);
 
                     this.initializeSignalR();
                 }
                 Dashboard.prototype.initializeMeters = function () {
-                    var $meters = $('[data-type="meter"]');
+                    var $animated = $('[data-type="meter"]').add('.animated');
                     var ie = /Trident/.test(navigator.userAgent);
 
-                    var dataLatency = ie ? 0 : 20;
+                    var dataLatency = ie ? -17 : +17;
                     var value = ((this.skinConfig.refreshRate + dataLatency) / 1000.0) + 's linear';
-                    $meters.css({
+                    $animated.css({
                         '-webkit-transition': value,
                         '-moz-transition': value,
                         '-o-transition': value,
+                        '-ms-transition': value,
                         'transition': value
                     });
+                };
+
+                Dashboard.prototype.adjustRefreshRate = function () {
+                    if (!this.skinConfig.refreshRate)
+                        this.skinConfig.refreshRate = 0;
+                    var now = Date.now();
+                    var lastDisconnectInterval = now - this.lastDisconnectTimestamp;
+                    if (lastDisconnectInterval < 1 * 60 * 1000)
+                        this.skinConfig.refreshRate += 20;
+                    if (lastDisconnectInterval < 2 * 60 * 1000)
+                        this.skinConfig.refreshRate += 10;
+                    if (lastDisconnectInterval < 3 * 60 * 1000)
+                        this.skinConfig.refreshRate += 5;
+
+                    this.skinConfig.refreshRate = Math.min(250, this.skinConfig.refreshRate);
+                    this.skinConfig.refreshRate = Math.max(50, this.skinConfig.refreshRate);
+                    this.initializeMeters();
                 };
 
                 Dashboard.prototype.initializeSignalR = function () {
@@ -140,6 +71,8 @@
                     });
                     $.connection.hub.disconnected(function () {
                         _this.process(null, Telemetry.Strings.couldNotConnectToServer);
+                        _this.adjustRefreshRate();
+                        _this.lastDisconnectTimestamp = Date.now();
                         setTimeout(function () {
                             $.connection.hub.start();
                         }, Dashboard.reconnectDelay);
@@ -249,8 +182,12 @@
                     return output;
                 };
 
+                Dashboard.isIso8601 = function (date) {
+                    return /(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date);
+                };
+
                 Dashboard.timeToReadableString = function (date) {
-                    if (/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date)) {
+                    if (this.isIso8601(date)) {
                         var d = new Date(date);
                         return Telemetry.Strings.dayOfTheWeek[d.getUTCDay()] + ' ' + Dashboard.formatNumber(d.getUTCHours(), 2) + ':' + Dashboard.formatNumber(d.getUTCMinutes(), 2);
                     }
@@ -258,9 +195,9 @@
                 };
 
                 Dashboard.timeDifferenceToReadableString = function (date) {
-                    if (/(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date)) {
+                    if (this.isIso8601(date)) {
                         var d = new Date(date);
-                        var dys = d.getUTCDate();
+                        var dys = d.getUTCDate() - 1;
                         var hrs = d.getUTCHours();
                         var mnt = d.getUTCMinutes();
                         var o = dys > 1 ? dys + ' days ' : (dys != 0 ? dys + ' day ' : '');
