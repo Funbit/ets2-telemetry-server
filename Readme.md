@@ -174,6 +174,7 @@ The tutorial is included in the ZIP package (see "Dashboard Skin Tutorial.pdf").
 - Added ability to manually select ETS2 game path using standard UI when it is not detected automatically
 - Added wear indicators to the default skin
 - Added additional status message to check if server is connected to the telemetry plugin
+- Added 5 new photo realistic skins made by Klauzzy (DAF-XF, MAN-TGX, Mercedes-Atego, Scania, Volvo-FH)
 - Added simple template skin
 - Changed telemetry plugin DLL name from ets2-telemetry.dll to ets2-telemetry-server.dll (previous version is not compatible anymore)
 - Various refactoring and improvements
