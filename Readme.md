@@ -54,11 +54,11 @@ Here is a screenshot of how your mobile dashboard will look like in a browser:
 
 ![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/source/Funbit.Ets.Telemetry.Mobile/skins/default/dashboard.jpg)
 
-The package contains other photo realistic skins as well:
+The package contains other photo realistic skins as well. For example, this is a skin for MAN-TGX:
 
-![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/source/Funbit.Ets.Telemetry.Mobile/skins/man-tgx/dashboard.jpg)
+![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/server/html/skins/man-tgx/dashboard.jpg)
 
-Dashboard design is completely customizable. With some basic knowledge of the HTML and CSS you can create your own skins. See Dashboard skin tutorial below for more information. 
+As you can see dashboard design is completely customizable. With some basic knowledge of the HTML and CSS you can create your own skins. See Dashboard skin tutorial below for more information. 
 
 ## Setup
 
@@ -165,7 +165,7 @@ The tutorial is included in the ZIP package (see "Dashboard Skin Tutorial.pdf").
 
 ### 2.2.0
 
-- Added "Dashboard Skin Tutorial"!
+- Added Dashboard Skin Tutorial!
 - Fixed support for Cruise Control indicator and added Cruise Control Speed
 - Fixed deadline time bug
 - Made speed value always positive (even when reversing)
