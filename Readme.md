@@ -21,7 +21,7 @@ Returns JSON object with the latest telemetry data read from the game:
     	"connected": true,
 	    "gameTime": "0001-01-05T05:11:00Z",
 	    "gamePaused": false,
-	    "telemetryPluginVersion": "2",
+	    "telemetryPluginVersion": "3",
 	    "gameVersion": "1.10",
 	    "trailerAttached": true,
 	    "truckSpeed": 20.007518805,
@@ -131,7 +131,7 @@ At this moment your system will be in exactly the same state as it were before t
 
 > I ran the server and opened HTML5 App URL on a device but browser says "Page not found". What should I do?
 
-First of all, make sure that you have selected correct "Network interface" on the main server screen. You must select the interface that is directly connected to your Wi-Fi network, *usually* it is named as "Wi-Fi" or "Ethernet". Also, make sure that "AP Isolation" is disabled on your Wi-Fi router ([more info](http://www.howtogeek.com/179089/lock-down-your-wi-fi-network-with-your-routers-wireless-isolation-option/)). 
+First of all, make sure that your device is using Wi-Fi connection instead of mobile internet (3G, 4G, etc.). Then, make sure that you selected correct "Network interface" on the main server screen. You must select the interface that is directly connected to your Wi-Fi network, *usually* it is named as "Wi-Fi", "Ethernet" or "LAN". Also, make sure that "AP Isolation" is disabled on your Wi-Fi router ([more info](http://www.howtogeek.com/179089/lock-down-your-wi-fi-network-with-your-routers-wireless-isolation-option/)). If you still can't connect - try to temporarily disable firewalls (especially from 3rd-parties) or anti-viruses and check again. If problem persists then you should contact to your Administrator... 
 
 > I installed provided Android application, but it always shows "Could not connect to the server" or "Disconnected" status. How do I fix that?
 
@@ -141,9 +141,15 @@ Please check if you can connect to the dashboard from a browser first (read the 
 
 Please make sure that the server window is showing "Connected to the simulator" status message. If it is showing "Simulator is running" instead - then there is a problem with the telemetry plugin installation (ets2-telemetry-server.dll). If it is showing "Simulator is not running" but simulator is actually running then you have an incompatible ETS2 version.
 
-> The dashboard UI animation (meters) sometimes stutters. Is it possible to fix that?
+> The dashboard UI animation (meters) sometimes stutters. Is my device not good enough? Is it possible to fix that?
 
-The default dashboard settings are optimized for modern browsers and fast network connections. However, if you have problems (especially on Android devices or slow networks), you may try to tweak *refreshRate* parameter inside "*server\html\skins\skin_name\config.json*" file (available for each skin). See comments inside that file for further guide. Refresh your browser to see the changes. Note: as a performance example, the dashboard works smoothly on Samgung Galaxy Tab S (4.4.2), but not on Galaxy Note 1 or Kindle Fire HD due to slow GPU or turned off GPU graphics acceleration. Also, dashboard does not properly work on iOS prior to 8.0 (like iPhone 3GS). To achieve the best performance you may try to use a standalone Chrome browser instead of an app (but you will need to turn off device sleep mode when you use the dashboard). 
+The default dashboard settings are optimized for modern browsers and fast network connections. However, if you have problems (especially on Android devices or slow networks), you may try to tweak *refreshRate* parameter inside "*server\html\skins\skin_name\config.json*" file (available for each skin). See comments inside that file for further guide. Refresh your browser to see the changes. Also, don't forget to turn off background downloads, especially Torrent clients, because they may dramatically slow your connection between devices. 
+
+Just as a performance example, the dashboard will work smoothly on Samgung Galaxy Tab S (4.4.2), but not on Galaxy Note 1 or Kindle Fire HD due to slow GPU or turned off GPU graphics acceleration. To achieve the best performance you may try to use a standalone Chrome browser instead of an app (but you will need to turn off device sleep mode when you use the dashboard).
+
+The dashboard will work very smoothly on iOS 8.X devices (iPhone 6 or new iPads). But it will not properly work on iOS 6.X (iPhone 3GS, old iPods).
+
+And finally, the dashboard will perfectly work on any PC or laptop inside latest FF, Chrome or IE11.  
 
 > Is it safe to use the server? Can it crash my game? What about influence on the game performance, say FPS, processor load?
 
