@@ -29,11 +29,6 @@
 }
 .dashboard {
   background-image: url("images/bg-on.jpg");
-  position: absolute;
-  left: 0px;
-  top: 1px;
-  width: 1501px;
-  height: 779px;
 }
 .truckSpeed[data-type="meter"] {
   visibility: visible;

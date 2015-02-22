@@ -28,12 +28,7 @@
   visibility: visible;
 }
 .dashboard {
-  background-image: url("images/bg-on.jpg");
-  position: absolute;
-  left: 0px;
-  top: 1px;
-  width: 2000px;
-  height: 664px;
+  background-image: url("images/bg-on.jpg");  
 }
 .truckSpeed {
   color: #D3D395;
