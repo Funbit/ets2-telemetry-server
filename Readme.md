@@ -225,8 +225,7 @@ The tutorial is included in the ZIP package (see "Dashboard Skin Tutorial.pdf").
 
 Forums
 
-- [Server discussion on the official SCS forum](http://forum.scssoft.com/viewtopic.php?f=41&t=171000)
-- [Server discussion on the ets2mp.com forum](http://forum.ets2mp.com/index.php?/topic/3058-ets2-telemetry-web-server-mobile-gauge-for-all-phones/) 
+- [Discussion on the official SCS forum](http://forum.scssoft.com/viewtopic.php?f=41&t=171000)
 
 Video
 
