@@ -26,7 +26,9 @@
                         var skinTemplateDo = doT.template($('#skin-row-template').html());
                         var html = '';
                         for (var i = 0; i < skins.length; i++) {
-                            html += skinTemplateDo(skins[i]);
+                            var skinConfig = skins[i];
+                            skinConfig.splashUrl = Telemetry.Configuration.getUrl("/skins/" + skinConfig.name + "/dashboard.jpg");
+                            html += skinTemplateDo(skinConfig);
                         }
                         $tableSkins.append(html);
                     }

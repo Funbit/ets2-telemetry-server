@@ -32,7 +32,10 @@ module Funbit.Ets.Telemetry {
                 var skinTemplateDo = doT.template($('#skin-row-template').html());
                 var html = '';
                 for (var i = 0; i < skins.length; i++) {
-                    html += skinTemplateDo(skins[i]);
+                    var skinConfig: any = skins[i];
+                    skinConfig.splashUrl = Configuration.getUrl(
+                        "/skins/" + skinConfig.name + "/dashboard.jpg");
+                    html += skinTemplateDo(skinConfig);
                 }
                 $tableSkins.append(html);    
             }
