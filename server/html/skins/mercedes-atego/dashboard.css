@@ -1,0 +1,279 @@
+﻿/* 
+    *** DO NOT CHANGE THIS STYLESHEET *** 
+
+    If you want to create your own dashboard skin (or tweak something)
+    create a copy of the "/skins/template" directory and rename it
+    to something like: "/skins/your_skin_name" and edit config.json file inside.
+    For more information see skin tutorial PDF.
+
+    CSS naming convention:
+
+    - Dashboard core script maps all telemetry data properties to respective class names,
+      so truck's speed will be .truckSpeed and current gear is .gear (see JSON).
+    - All boolean telemetry properties will have a special ".yes" class added 
+      when the value is true (will be removed if value is false).
+    - When dashboard core script updates DOM it will always add 
+      data-value attribute containing current value, so you 
+      can use it to have custom css selectors based on the actual data 
+      (for example, this skin uses .gear[data-value="N"] to define
+      different style for neutral or reverse gear, see below).
+    - If you need to define your own style related classes.
+      I stronly recommend to use underscore prefix ("._job" for example) to distinguish names,
+      so you will never forget which classes are dynamic and which are static.
+*/
+.hidden {
+  visibility: hidden;
+}
+.visible {
+  visibility: visible;
+}
+.dashboard {
+  background-image: url("images/bg-on.jpg");
+  position: absolute;
+  left: 0px;
+  top: 1px;
+  width: 1501px;
+  height: 779px;
+}
+.truckSpeed[data-type="meter"] {
+  visibility: visible;
+  position: absolute;
+  left: 358px;
+  top: 325px;
+  width: 52px;
+  height: 184px;
+  background-image: url("images/arrow.png");
+  -webkit-transform: rotate(-114deg);
+  -moz-transform: rotate(-114deg);
+  -ms-transform: rotate(-114deg);
+  -o-transform: rotate(-114deg);
+  transform: rotate(-114deg);
+  -webkit-transform-origin: 50% 150px;
+  -moz-transform-origin: 50% 150px;
+  -ms-transform-origin: 50% 150px;
+  -o-transform-origin: 50% 150px;
+  transform-origin: 50% 150px;
+}
+.engineRpm {
+  position: absolute;
+  left: 1087px;
+  top: 325px;
+  width: 52px;
+  height: 184px;
+  background-image: url("images/arrow.png");
+  -webkit-transform: rotate(-97deg);
+  -moz-transform: rotate(-97deg);
+  -ms-transform: rotate(-97deg);
+  -o-transform: rotate(-97deg);
+  transform: rotate(-97deg);
+  -webkit-transform-origin: 50% 150px;
+  -moz-transform-origin: 50% 150px;
+  -ms-transform-origin: 50% 150px;
+  -o-transform-origin: 50% 150px;
+  transform-origin: 50% 150px;
+}
+.fuel {
+  position: absolute;
+  left: 265px;
+  top: 560px;
+  width: 38px;
+  height: 94px;
+  background-image: url("images/arrow-s.png");
+  -webkit-transform: rotate(-96deg);
+  -moz-transform: rotate(-96deg);
+  -ms-transform: rotate(-96deg);
+  -o-transform: rotate(-96deg);
+  transform: rotate(-96deg);
+  -webkit-transform-origin: 50% 70px;
+  -moz-transform-origin: 50% 70px;
+  -ms-transform-origin: 50% 70px;
+  -o-transform-origin: 50% 70px;
+  transform-origin: 50% 70px;
+}
+.airPressure {
+  position: absolute;
+  left: 1185px;
+  top: 560px;
+  width: 38px;
+  height: 94px;
+  background-image: url("images/arrow-s.png");
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transform-origin: 50% 70px;
+  -moz-transform-origin: 50% 70px;
+  -ms-transform-origin: 50% 70px;
+  -o-transform-origin: 50% 70px;
+  transform-origin: 50% 70px;
+}
+.truckSpeedRounded {
+  color: #C6CFD6;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 100px;
+  position: absolute;
+  left: 650px;
+  top: 370px;
+  width: 190px;
+  height: 66px;
+  text-align: center;
+}
+.gear {
+  color: #C6CFD6;
+  font-family:  Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 35px;
+  position: absolute;
+  left: 676px;
+  top: 555px;
+  width: 134px;
+  height: 100px;
+  text-align: center;
+}
+.gear[data-value="N"] {
+  color: #C6CFD6;
+}
+.gear[data-value="R"] {
+  color: #C6CFD6;
+}
+.truckOdometer {
+  color: #385C6A;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 20px;
+  position: absolute;
+  left: 376px;
+  top: 492px;
+  width: 470px;
+  height: 70px;
+  text-align: right;
+}
+.gameTime {
+  color: #A0A0A0;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 21px;
+  position: absolute;
+  left: 440px;
+  top: 319px;
+  width: 400px;
+  height: 25px;
+  text-align: right;
+}
+.blinkerLeftOn {
+  background-image: url("images/blinker-left-off.png");
+  position: absolute;
+  left: 472px;
+  top: 281px;
+  width: 90px;
+  height: 50px;
+}
+.blinkerLeftOn.yes {
+  background-image: url("images/blinker-left-on.png");
+}
+.blinkerRightOn {
+  background-image: url("images/blinker-right-off.png");
+  position: absolute;
+  left: 925px;
+  top: 281px;
+  width: 90px;
+  height: 50px;
+}
+.blinkerRightOn.yes {
+  background-image: url("images/blinker-right-on.png");
+}
+.lightsBeamHighOn {
+  background-image: url("images/highbeam-off.png");
+  position: absolute;
+  left: 750px;
+  top: 614px;
+  width: 40px;
+  height: 23px;
+}
+.lightsBeamHighOn.yes {
+  background-image: url("images/highbeam-on.png");
+}
+.lightsBeamLowOn {
+  background-image: url("images/lowbeam-off.png");
+  position: absolute;
+  left: 695px;
+  top: 612px;
+  width: 40px;
+  height: 23px;
+}
+.lightsBeamLowOn.yes {
+  background-image: url("images/lowbeam-on.png");
+}
+.lightsParkingOn {
+  background-image: url("images/parklights-off.png");
+  position: absolute;
+  left: 645px;
+  top: 614px;
+  width: 40px;
+  height: 23px;
+}
+.lightsParkingOn.yes {
+  background-image: url("images/parklights-on.png");
+}
+.fuelWarning {
+  background-image: url("images/fuel-warning-off.png");
+  position: absolute;
+  left: 329px;
+  top: 626px;
+  width: 21px;
+  height: 22px;
+}
+.fuelWarning.yes {
+  background-image: url("images/fuel-warning.png");
+}
+.airPressureWarning {
+  background-image: url("images/warning-off.png");
+  position: absolute;
+  left: 695px;
+  top: 650px;
+  width: 45px;
+  height: 35px;
+}
+.airPressureWarning.yes {
+  background-image: url("images/warning.png");
+}
+.parkBrakeOn {
+  background-image: url("images/parkingbrake-off.png");
+  position: absolute;
+  left: 645px;
+  top: 650px;
+  width: 45px;
+  height: 35px;
+}
+.parkBrakeOn.yes {
+  background-image: url("images/parkingbrake.png");
+}
+.retarderBrake {
+  color: #C6CFD6;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 30px;
+  position: absolute;
+  left: 285px;
+  top: 522px;
+  width: 470px;
+  height: 70px;
+  text-align: right;
+}
+.retarderBrake[data-value="1"] {
+  color: #FF0000;
+}
+.retarderBrake[data-value="2"] {
+  color: #FF0000;
+}
+.retarderBrake[data-value="3"] {
+  color: #FF0000;
+}
+.retarderBrake[data-value="4"] {
+  color: #FF0000;
+}
+.retarderBrake[data-value="5"] {
+  color: #FF0000;
+}

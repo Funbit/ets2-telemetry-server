@@ -1,0 +1,356 @@
+﻿/* 
+    *** DO NOT CHANGE THIS STYLESHEET *** 
+
+    If you want to create your own dashboard skin (or tweak something)
+    create a copy of the "/skins/template" directory and rename it
+    to something like: "/skins/your_skin_name" and edit config.json file inside.
+    For more information see skin tutorial PDF.
+
+    CSS naming convention:
+
+    - Dashboard core script maps all telemetry data properties to respective class names,
+      so truck's speed will be .truckSpeed and current gear is .gear (see JSON).
+    - All boolean telemetry properties will have a special ".yes" class added 
+      when the value is true (will be removed if value is false).
+    - When dashboard core script updates DOM it will always add 
+      data-value attribute containing current value, so you 
+      can use it to have custom css selectors based on the actual data 
+      (for example, this skin uses .gear[data-value="N"] to define
+      different style for neutral or reverse gear, see below).
+    - If you need to define your own style related classes.
+      I stronly recommend to use underscore prefix ("._job" for example) to distinguish names,
+      so you will never forget which classes are dynamic and which are static.
+*/
+.hidden {
+  visibility: hidden;
+}
+.visible {
+  visibility: visible;
+}
+.dashboard {
+  background-image: url("images/bg-on.jpg");
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  width: 2030px;
+  height: 1035px;
+}
+.truckSpeed {
+  color: #B4C3D1;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 70px;
+  position: absolute;
+  left: 907px;
+  top: 755px;
+  width: 190px;
+  height: 66px;
+  text-align: center;
+}
+.truckSpeed[data-type="meter"] {
+  visibility: visible;
+  position: absolute;
+  left: 1580px;
+  top: 180px;
+  width: 79px;
+  height: 299px;
+  background-image: url("images/gauge-arrow.png");
+  -webkit-transform: rotate(-114deg);
+  -moz-transform: rotate(-114deg);
+  -ms-transform: rotate(-114deg);
+  -o-transform: rotate(-114deg);
+  transform: rotate(-114deg);
+  -webkit-transform-origin: 50% 247px;
+  -moz-transform-origin: 50% 247px;
+  -ms-transform-origin: 50% 247px;
+  -o-transform-origin: 50% 247px;
+  transform-origin: 50% 247px;
+}
+.engineRpm {
+  position: absolute;
+  left: 360px;
+  top: 180px;
+  width: 79px;
+  height: 299px;
+  background-image: url("images/gauge-arrow.png");
+  -webkit-transform: rotate(-97deg);
+  -moz-transform: rotate(-97deg);
+  -ms-transform: rotate(-97deg);
+  -o-transform: rotate(-97deg);
+  transform: rotate(-97deg);
+  -webkit-transform-origin: 50% 247px;
+  -moz-transform-origin: 50% 247px;
+  -ms-transform-origin: 50% 247px;
+  -o-transform-origin: 50% 247px;
+  transform-origin: 50% 247px;
+}
+.fuel {
+  position: absolute;
+  left: 1501px;
+  top: 790px;
+  width: 62px;
+  height: 171px;
+  background-image: url("images/gauge-arrow-s.png");
+  -webkit-transform: rotate(-96deg);
+  -moz-transform: rotate(-96deg);
+  -ms-transform: rotate(-96deg);
+  -o-transform: rotate(-96deg);
+  transform: rotate(-96deg);
+  -webkit-transform-origin: 50% 141px;
+  -moz-transform-origin: 50% 141px;
+  -ms-transform-origin: 50% 141px;
+  -o-transform-origin: 50% 141px;
+  transform-origin: 50% 141px;
+}
+.waterTemperature {
+  position: absolute;
+  left: 457px;
+  top: 790px;
+  width: 62px;
+  height: 171px;
+  background-image: url("images/gauge-arrow-s.png");
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transform-origin: 50% 141px;
+  -moz-transform-origin: 50% 141px;
+  -ms-transform-origin: 50% 141px;
+  -o-transform-origin: 50% 141px;
+  transform-origin: 50% 141px;
+}
+.oilPressure {
+  position: absolute;
+  left: 1580px;
+  top: 535px;
+  width: 69px;
+  height: 170px;
+  background-image: url("images/gauge-arrow-s2.png");
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transform-origin: 50% 133px;
+  -moz-transform-origin: 50% 133px;
+  -ms-transform-origin: 50% 133px;
+  -o-transform-origin: 50% 133px;
+  transform-origin: 50% 133px;
+}
+.gear {
+  color: #F3F3F3;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 40px;
+  position: absolute;
+  left: 760px;
+  top: 159px;
+  width: 134px;
+  height: 100px;
+  text-align: center;
+}
+.gear[data-value="N"] {
+  color: #F3F3F3;
+}
+.gear[data-value="R"] {
+  color: #F3F3F3;
+}
+.truckOdometer {
+  color: #F3F3F3;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 33px;
+  position: absolute;
+  left: 802px;
+  top: 895px;
+  width: 185px;
+  height: 40px;
+  text-align: right;
+}
+.blinkerLeftOn {
+  background-image: url("images/blinker-left-off.png");
+  position: absolute;
+  left: 591px;
+  top: 72px;
+  width: 137px;
+  height: 136px;
+}
+.blinkerLeftOn.yes {
+  background-image: url("images/blinker-left-on.png");
+}
+.blinkerRightOn {
+  background-image: url("images/blinker-right-off.png");
+  position: absolute;
+  left: 1285px;
+  top: 70px;
+  width: 137px;
+  height: 136px;
+}
+.blinkerRightOn.yes {
+  background-image: url("images/blinker-right-on.png");
+}
+.cruiseControlOn.yes {
+  background-image: url("images/cruise-on.png");
+}
+.lightsBeamHighOn {
+  background-image: url("images/highbeam-off.png");
+  position: absolute;
+  left: 628px;
+  top: 199px;
+  width: 100px;
+  height: 70px;
+}
+.lightsBeamHighOn.yes {
+  background-image: url("images/highbeam-on.png");
+}
+.lightsBeamLowOn {
+  background-image: url("images/lowbeam-off.png");
+  position: absolute;
+  left: 267px;
+  top: 742px;
+  width: 90px;
+  height: 70px;
+}
+.lightsBeamLowOn.yes {
+  background-image: url("images/lowbeam-on.png");
+}
+.lightsParkingOn {
+  background-image: url("images/parklights-off.png");
+  position: absolute;
+  left: 172px;
+  top: 742px;
+  width: 90px;
+  height: 70px;
+}
+.lightsParkingOn.yes {
+  background-image: url("images/parklights-on.png");
+}
+.trailerAttached {
+  background-image: url("images/trailer-off.png");
+  position: absolute;
+  left: 1726px;
+  top: 922px;
+  width: 278px;
+  height: 152px;
+}
+.trailerAttached.yes {
+  background-image: url("images/trailer-on.png");
+}
+.trailerMass {
+  color: #B4C3D1;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 40px;
+  position: absolute;
+  left: 1148px;
+  top: 788px;
+  width: 200px;
+  height: 80px;
+  text-align: left;
+}
+.gameTime {
+  color: #F5F9F8;
+  font-family: Arial, Tahoma;
+  font-size: 40px;
+  font-weight: bold;
+  position: absolute;
+  left: 977px;
+  top: 158px;
+  width: 822px;
+  height: 45px;
+  text-align: left;
+  overflow: hidden;
+}
+.parkBrakeOn {
+  background-image: url("images/handbrake-off.png");
+  position: absolute;
+  left: 1305px;
+  top: 680px;
+  width: 75px;
+  height: 55px;
+}
+.parkBrakeOn.yes {
+  background-image: url("images/handbrake.png");
+}
+.airPressureEmergency {
+  background-image: url("images/warning-off.png");
+  position: absolute;
+  left: 631px;
+  top: 678px;
+  width: 75px;
+  height: 55px;
+}
+.airPressureEmergency.yes {
+  background-image: url("images/warning.png");
+}
+.airPressureEmergency {
+  background-image: url("images/warning-off.png");
+  position: absolute;
+  left: 631px;
+  top: 678px;
+  width: 75px;
+  height: 55px;
+}
+.fuelWarning.yes {
+  background-image: url("images/fuel-warning.png");
+}
+.fuelWarning {
+  background-image: url("images/fuel-warning-off.png");
+  position: absolute;
+  left: 1412px;
+  top: 887px;
+  width: 40px;
+  height: 45px;
+}
+.jobRemainingTime {
+  color: #54d9a8;
+}
+.gear,
+.truckOdometer,
+.truckSpeed,
+.trailerMass,
+.trailerName,
+.jobRemainingTime,
+._jobSource,
+._jobDestionation {
+  visibility: hidden;
+}
+.dashboard.connected.yes .gear,
+.dashboard.connected.yes .truckOdometer,
+.dashboard.connected.yes .truckSpeed {
+  visibility: visible;
+}
+.hasJob.yes .trailerMass,
+.hasJob.yes .trailerName,
+.hasJob.yes .jobRemainingTime,
+.hasJob.yes ._jobSource,
+.hasJob.yes ._jobDestionation {
+  visibility: visible;
+}
+table._job {
+  border-collapse: collapse;
+  font-family: Courier New, Courier, monospace;
+  font-size: 40px;
+  position: absolute;
+  left: 40px;
+  top: 850px;
+  width: 1300px;
+  height: 280px;
+}
+table._job th {
+  color: #aaa;
+  width: 260px;
+  text-align: right;
+}
+table._job td {
+  padding-left: 20px;
+  text-align: left;
+}
+._jobSource,
+._jobDestionation {
+  color: #efbd3a;
+}
+.statusMessage {
+  color: coral;
+}

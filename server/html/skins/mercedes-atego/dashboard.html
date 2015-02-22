@@ -1,0 +1,32 @@
+﻿<div class="dashboard connected">
+    <div class="hasJob">
+        <!-- meters -->
+        <!--
+            Attributes:
+            data-min-angle: angle in degress for the arrow for data-min value (0 = vertical, negative = left, positive = right)
+            data-max-angle: angle in degress for the arrow for data-max value (0 = vertical, negative = left, positive = right)
+            data-min: minimal possible value (as in JSON response), you may also use any telemetry property name for dynamic values
+            data-max: maximum possible value (as in JSON response), you may also use any telemetry property name for dynamic values
+            -->
+        <div class="truckSpeed" data-type="meter" data-min="3" data-max="140" data-min-angle="-111" data-max-angle="+151"></div>
+        <div class="truckSpeedRounded"></div>
+        <div class="engineRpm" data-type="meter" data-min="1" data-max="25" data-min-angle="-111" data-max-angle="+77"></div>
+        <div class="fuel" data-type="meter" data-min="0" data-max="fuelCapacity" data-min-angle="-103" data-max-angle="+103"></div>
+        <div class="airPressure" data-type="meter" data-min="0" data-max="200" data-min-angle="-103" data-max-angle="+111"></div>
+        <div class="truckOdometer"></div>
+        <div class="gear"></div>
+        <!-- indicators -->
+        <div class="blinkerLeftOn"></div>
+        <div class="blinkerRightOn"></div>
+        <div class="cruiseControlOn"></div>
+        <div class="lightsBeamHighOn"></div>
+        <div class="lightsBeamLowOn"></div>
+        <div class="lightsParkingOn"></div>
+        <div class="trailerAttached"></div>
+        <div class="trailerMass"><span class="ton">t</span></div>
+        <div class="trailerName"></div>
+        <div class="fuelWarning"></div>
+        <div class="airPressureWarning"></div>
+        <div class="parkBrakeOn"></div>
+        <div class="retarderBrake"></div>
+        <div class="gameTime"></div>

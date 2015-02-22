@@ -1,0 +1,304 @@
+﻿/* 
+    *** DO NOT CHANGE THIS STYLESHEET *** 
+
+    If you want to create your own dashboard skin (or tweak something)
+    create a copy of the "/skins/template" directory and rename it
+    to something like: "/skins/your_skin_name" and edit config.json file inside.
+    For more information see skin tutorial PDF.
+
+    CSS naming convention:
+
+    - Dashboard core script maps all telemetry data properties to respective class names,
+      so truck's speed will be .truckSpeed and current gear is .gear (see JSON).
+    - All boolean telemetry properties will have a special ".yes" class added 
+      when the value is true (will be removed if value is false).
+    - When dashboard core script updates DOM it will always add 
+      data-value attribute containing current value, so you 
+      can use it to have custom css selectors based on the actual data 
+      (for example, this skin uses .gear[data-value="N"] to define
+      different style for neutral or reverse gear, see below).
+    - If you need to define your own style related classes.
+      I stronly recommend to use underscore prefix ("._job" for example) to distinguish names,
+      so you will never forget which classes are dynamic and which are static.
+*/
+.hidden {
+  visibility: hidden;
+}
+.visible {
+  visibility: visible;
+}
+.dashboard {
+  background-image: url("images/bg-on.jpg");
+  position: absolute;
+  left: 0px;
+  top: 1px;
+  width: 2000px;
+  height: 664px;
+}
+.truckSpeed {
+  color: #D3D395;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 30px;
+  position: absolute;
+  left: 855px;
+  top: 272px;
+  width: 190px;
+  height: 66px;
+  text-align: right;
+}
+.truckSpeed[data-type="meter"] {
+  visibility: visible;
+  position: absolute;
+  left: 996px;
+  top: 143px;
+  width: 22px;
+  height: 74px;
+  background-image: url("images/arrow.png");
+  -webkit-transform: rotate(-114deg);
+  -moz-transform: rotate(-114deg);
+  -ms-transform: rotate(-114deg);
+  -o-transform: rotate(-114deg);
+  transform: rotate(-114deg);
+  -webkit-transform-origin: 50% 230px;
+  -moz-transform-origin: 50% 230px;
+  -ms-transform-origin: 50% 230px;
+  -o-transform-origin: 50% 230px;
+  transform-origin: 50% 230px;
+}
+.engineRpm {
+  position: absolute;
+  left: 1000px;
+  top: 365px;
+  width: 18px;
+  height: 90px;
+  background-image: url("images/gauge-arrow-s.png");
+  -webkit-transform: rotate(-97deg);
+  -moz-transform: rotate(-97deg);
+  -ms-transform: rotate(-97deg);
+  -o-transform: rotate(-97deg);
+  transform: rotate(-97deg);
+  -webkit-transform-origin: 50% 190px;
+  -moz-transform-origin: 50% 190px;
+  -ms-transform-origin: 50% 190px;
+  -o-transform-origin: 50% 190px;
+  transform-origin: 50% 190px;
+}
+.gear {
+  color: #D3D395;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 30px;
+  position: absolute;
+  left: 890px;
+  top: 272px;
+  width: 134px;
+  height: 100px;
+  text-align: center;
+}
+.gear[data-value="N"] {
+  color: #D3D395;
+}
+.gear[data-value="R"] {
+  color: #D3D395;
+}
+.truckOdometer {
+  color: #D3D395;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 30px;
+  position: absolute;
+  left: 220px;
+  top: 397px;
+  width: 368px;
+  height: 70px;
+  text-align: right;
+}
+.blinkerLeftOn {
+  background-image: url("images/blinker-left-off.png");
+  position: absolute;
+  left: 692px;
+  top: 36px;
+  width: 120px;
+  height: 120px;
+}
+.blinkerLeftOn.yes {
+  background-image: url("images/blinker-left-on.png");
+}
+.blinkerRightOn {
+  background-image: url("images/blinker-right-off.png");
+  position: absolute;
+  left: 1204px;
+  top: 26px;
+  width: 120px;
+  height: 120px;
+}
+.blinkerRightOn.yes {
+  background-image: url("images/blinker-right-on.png");
+}
+.lightsBeamHighOn {
+  background-image: url("images/highbeam-off.png");
+  position: absolute;
+  left: 475px;
+  top: 126px;
+  width: 40px;
+  height: 23px;
+}
+.lightsBeamHighOn.yes {
+  background-image: url("images/highbeam-on.png");
+}
+.lightsBeamLowOn {
+  background-image: url("images/lowbeam-off.png");
+  position: absolute;
+  left: 400px;
+  top: 126px;
+  width: 40px;
+  height: 23px;
+}
+.lightsBeamLowOn.yes {
+  background-image: url("images/lowbeam-on.png");
+}
+.lightsParkingOn {
+  background-image: url("images/parklights-off.png");
+  position: absolute;
+  left: 326px;
+  top: 126px;
+  width:  40px;
+  height: 23px;
+}
+.lightsParkingOn.yes {
+  background-image: url("images/parklights-on.png");
+}
+.parkBrakeOn {
+  background-image: url("images/parkBrakeOn-off.png");
+  position: absolute;
+  left: 1380px;
+  top: 480px;
+  width:  75px;
+  height: 55px;
+}
+.parkBrakeOn.yes {
+  background-image: url("images/parkBrakeOn.png");
+  }
+.airPressureWarning {
+  background-image: url("images/warning-off.png");
+  position: absolute;
+  left: 1480px;
+  top: 480px;
+  width:  65px;
+  height: 55px;
+}
+.airPressureWarning.yes {
+  background-image: url("images/warning.png");
+  }
+.trailerMass {
+  color: #D3D395;
+  font-family: Arial, Tahoma;
+  font-weight: bold;
+  font-size: 28px;
+  position: absolute;
+  left: 580px;
+  top: 245px;
+  width: 200px;
+  height: 80px;
+  text-align: left;
+}
+.trailerName {
+  color: #D3D395;
+  font-family: Arial, Tahoma;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  left: 320px;
+  top: 245px;
+  width: 242px;
+  height: 80px;
+  text-align: left;
+  overflow: hidden;
+}
+.waterTemperature {
+  color: #D3D395;
+  font-family: Arial, Tahoma;
+  font-size: 35px;
+  font-weight: bold;
+  position: absolute;
+  left: 1575px;
+  top: 236px;
+  width: 40px;
+  height: 80px;
+  text-align: right;
+  overflow: hidden;
+}
+.oilTemperature {
+  color: #D3D395;
+  font-family: Arial, Tahoma;
+  font-size: 35px;
+  font-weight: bold;
+  position: absolute;
+  left: 1575px;
+  top: 277px;
+  width: 40px;
+  height: 80px;
+  text-align: right;
+  overflow: hidden;
+}
+.batteryVoltage {
+  color: #D3D395;
+  font-family: Arial, Tahoma;
+  font-size: 35px;
+  font-weight: bold;
+  position: absolute;
+  left: 1565px;
+  top: 315px;
+  width: 67px;
+  height: 80px;
+  text-align: right;
+  overflow: hidden;
+}
+.gameTime {
+  color: #D3D395;
+  font-family: Arial, Tahoma;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  left: 320px;
+  top: 190px;
+  width: 242px;
+  height: 80px;
+  text-align: left;
+  overflow: hidden;
+}
+.retarderBrake {
+  color: #D3D395;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 30px;
+  position: absolute;
+  left: 940px;
+  top: 272px;
+  width: 190px;
+  height: 66px;
+  text-align: right;
+}
+.retarderBrake.yes {
+  background-image: url("images/retarder.png");
+  position: absolute;
+  left: 1074px;
+  top: 273px;
+  width: 43px;
+  height: 33px;
+}
+
+.fuel {
+  color: #D3D395;
+  font-family: Arial, Tahoma;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  left: 320px;
+  top: 270px;
+  width: 242px;
+  height: 80px;
+  text-align: left;
+  overflow: hidden;
+}
