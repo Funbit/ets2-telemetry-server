@@ -8,7 +8,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// <summary>
         /// ETS2 telemetry plugin maps the data to this mapped file name.
         /// </summary>
-        const string Ets2TelemetryMappedFileName = "Local\\SimTelemetryETS2";
+        const string Ets2TelemetryMappedFileName = "Local\\Ets2TelemetryServer";
 
         readonly SharedProcessMemory<Ets2TelemetryStructure> _sharedMemory = 
             new SharedProcessMemory<Ets2TelemetryStructure>(Ets2TelemetryMappedFileName);
