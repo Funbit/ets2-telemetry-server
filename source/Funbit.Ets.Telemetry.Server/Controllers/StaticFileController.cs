@@ -67,7 +67,8 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
                     BaseDirectory, directory, fileName);
                 var response = Request.CreateResponse(HttpStatusCode.OK);
                 response.Content = new StreamContent(
-                    File.Open(absoluteFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite));
+                    File.Open(absoluteFileName, FileMode.Open, FileAccess.Read, FileShare.ReadWrite),
+                    64 * 1024);
                 response.Content.Headers.ContentType = new MediaTypeHeaderValue(contentType);
                 return response;
             }
