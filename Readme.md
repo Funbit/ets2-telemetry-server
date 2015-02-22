@@ -1,4 +1,4 @@
-## ETS2 Telemetry Web Server 2.1.0 + Mobile Dashboard
+## ETS2 Telemetry Web Server 2.2.0 + Mobile Dashboard
 
 This is a free Telemetry Web Server for Euro Truck Simulator 2 written in C# based on WebSockets and REST API. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
 
@@ -8,7 +8,7 @@ This is a free Telemetry Web Server for Euro Truck Simulator 2 written in C# bas
 - Automated installation
 - REST API for ETS2 telemetry data
 - HTML5 dashboard application for live telemetry data streaming based on WebSockets 
-- Advanced support for custom dashboard skins
+- Powerful support for custom dashboard skins (skin tutorial included)
 - Telemetry data broadcasting to a given URL via HTTP protocol
 
 ### Telemetry REST API
@@ -54,23 +54,27 @@ Here is a screenshot of how your mobile dashboard will look like in a browser:
 
 ![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/source/Funbit.Ets.Telemetry.Mobile/skins/default/dashboard.jpg)
 
-Dashboard design is very customizable. All you have to do is to change dashboard.css, dashboard.html and dashboard.js (if needed). See Dashboard skin tutorial below for more information. 
+The package contains other photo realistic skins as well:
+
+![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/source/Funbit.Ets.Telemetry.Mobile/skins/man-tgx/dashboard.jpg)
+
+Dashboard design is completely customizable. With some basic knowledge of the HTML and CSS you can create your own skins. See Dashboard skin tutorial below for more information. 
 
 ## Setup
 
 ### Supported OS
 
-- Windows Vista, Windows 7 or Windows 8 (32-bit or 64-bit).
-- .NET Framework 4.5 (pre-installed in Windows 8+). If it is not installed you will be prompted to install it when you run the server.
+- **Windows Vista, Windows 7 or Windows 8 (32-bit or 64-bit)**. Windows XP is not supported.
+- **.NET Framework 4.5** (pre-installed in Windows 8+). If it is not installed you will be prompted to install it when you run the server. 
 
 ### Supported games
 
-- Euro Truck Simulator 2 (32-bit or 64-bit) version 1.15+. Multiplayer versions are supported as well. Steam version is preferred (*non Steam users must edit configuration file prior to the installation*).
+- Euro Truck Simulator 2 (32-bit or 64-bit) version 1.15+. Multiplayer versions are supported as well. 
 
 ### Tested browsers
 
 - iOS 8+ running Mobile Safari (highly recommended, best user experience)
-- Latest Firefox, Chrome or IE11 (Firefox or Chrome is recommended)
+- Latest Firefox, Chrome or IE11 (Firefox or Chrome is recommended though)
 - Android 4+ Default or Chrome browsers (see FAQ if you have performance issues)
 
 ### Installation
@@ -78,24 +82,26 @@ Dashboard design is very customizable. All you have to do is to change dashboard
 1. Download bundle by clicking **Download ZIP** button at the right side of this page. 
 2. **Unpack downloaded ZIP** file *anywhere* you want.
 3. Run **server\Ets2Telemetry.exe** 
-4. Click "**Install**" button to perform the installation (see below for details) 
+4. Click "**Install**" button to perform the installation 
 5. When installation finishes click "**OK**", select your network interface and click "**HTML5 App URL**" link to open your dashboard
 6. **Done** (now you may read *Usage* topic to understand how to use the server)
 
-IMPORTANT: If installer reports that it can't find your ETS2 game directory (when you don't use Steam for example) you must set it manually inside **server\Ets2Telemetry.exe.config** file (search for *Ets2GamePath* setting, the comments inside will guide you further).
-
-Android users should install the provided "Ets2 Dashboard" application. The APK file is located in **mobile/Android/Ets2Dashboard.apk**. Copy it to your device and install via Android's File Manager. The application will prevent your device from going into sleep mode and will remember server IP address which is very useful if you are going to use the app frequently.
+Android users may install the provided "Ets2 Dashboard" application. The APK file is located in **mobile/Android/Ets2Dashboard.apk**. Copy it to your device and install via Android's File Manager. The application will prevent your device from going into sleep mode and will remember server IP address which is very useful if you are going to use the app frequently.
 
 ***Security notes***: The installation must be done only once and requires Administrator privileges. If you mind what exactly server does to the system at this point here is the detailed information:
 
-1. Tries to find your ETS2 game directory and copy ets2-telemetry.dll plugin there (avoiding overwrites)
+1. Tries to find your ETS2 game directory and copy ets2-telemetry-server.dll plugin there (avoiding overwrites)
 2. Creates a new Firewall rule for 25555 port named "ETS2 TELEMETRY SERVER (PORT 25555)" opened only for local subnet (i.e. it won't be visible from Internet, so you are safe)
 3. Creates a new ACL rule for HTTP URL bound on 25555 port for OWIN's HttpListener ([more details](http://msdn.microsoft.com/en-us/library/ms733768%28v=vs.110%29.aspx))
 4. Creates a new file for storing application settings inside "\Users\USERNAME\AppData\Local\Ets2 Telemetry Server".
 
 The server also reports everything to the log file (Ets2Telemetry.log), so you may see the details there as well.
 
-Also, if you don't trust my compiled ets2-telemetry.dll you may compile it by yourself from [the official telemetry SDK](https://github.com/nlhans/ets2-sdk-plugin).
+Also, if you don't trust my compiled ets2-telemetry-server.dll you may compile it by yourself from [the official telemetry SDK](https://github.com/nlhans/ets2-sdk-plugin).
+
+### Skin Installation
+
+If you downloaded some third-party skin (which is folder, containing dashboard.html, css, js and image files, but **no EXE files**!) you may install it just by **copying to server/html/skins** directory. It should appear in the skin menu as soon as you refresh your browser.
 
 ### Upgrade
 
@@ -110,7 +116,7 @@ If server hasn't fulfilled your expectations and you decide to uninstall it, the
 2. Click "**Uninstall**" button
 3. **Done**
 
-At this moment your system will be in exactly the same state as it were before the installation. The only difference is that ets2-telemetry.dll plugin files are not deleted but renamed to .bak.
+At this moment your system will be in exactly the same state as it were before the installation. 
 
 ## Usage
 
@@ -123,21 +129,21 @@ At this moment your system will be in exactly the same state as it were before t
 
 ## FAQ
 
-> When I press "Install" button to setup the server it says "Could not detect game directory". What should I do?
-
-It seems that you have a non-standard ETS2 setup. Please read the "Installation" topic above about setting the game directory manually.
-
 > I ran the server and opened HTML5 App URL on a device but browser says "Page not found". What should I do?
 
 First of all, make sure that you have selected correct "Network interface" on the main server screen. You must select the interface that is directly connected to your Wi-Fi network, *usually* it is named as "Wi-Fi" or "Ethernet". Also, make sure that "AP Isolation" is disabled on your Wi-Fi router ([more info](http://www.howtogeek.com/179089/lock-down-your-wi-fi-network-with-your-routers-wireless-isolation-option/)). 
 
 > I installed provided Android application, but it always shows "Could not connect to the server" or "Disconnected" status. How do I fix that?
 
-Please check if you can connect to the dashboard from a browser first. Please read the answer above.
+Please check if you can connect to the dashboard from a browser first (read the answer above). If you are able to connect via browser then there is something wrong with the application (or Android environment). You may try to restart it or reinstall.
+
+> I started the game but dashboard is displaying "Connected, waiting for the drive..." message. What is wrong?
+
+Please make sure that the server window is showing "Connected to the simulator" status message. If it is showing "Simulator is running" instead - then there is a problem with the telemetry plugin installation (ets2-telemetry-server.dll). If it is showing "Simulator is not running" but simulator is actually running then you have an incompatible ETS2 version.
 
 > The dashboard UI animation (meters) sometimes stutters. Is it possible to fix that?
 
-The default dashboard settings are optimized for modern browsers and fast network connections. However, if you have problems (especially on Android devices), you may try to tweak *refreshRate* parameter inside "*server\Html\config.json*" file (available for each skin). See comments inside that file for further guide. Refresh your browser to see the changes. Note: as a performance example, the dashboard works smoothly on Samgung Galaxy Tab S (4.4.2), but not on Galaxy Note 1 or Kindle Fire HD due to slow GPU or turned off GPU graphics acceleration. To achieve the best performance you may try to use a standalone Chrome browser instead of an app (but you will need to turn off device sleep mode when you use the dashboard). 
+The default dashboard settings are optimized for modern browsers and fast network connections. However, if you have problems (especially on Android devices or slow networks), you may try to tweak *refreshRate* parameter inside "*server\html\skins\skin_name\config.json*" file (available for each skin). See comments inside that file for further guide. Refresh your browser to see the changes. Note: as a performance example, the dashboard works smoothly on Samgung Galaxy Tab S (4.4.2), but not on Galaxy Note 1 or Kindle Fire HD due to slow GPU or turned off GPU graphics acceleration. Also, dashboard does not properly work on iOS prior to 8.0 (like iPhone 3GS). To achieve the best performance you may try to use a standalone Chrome browser instead of an app (but you will need to turn off device sleep mode when you use the dashboard). 
 
 > Is it safe to use the server? Can it crash my game? What about influence on the game performance, say FPS, processor load?
 
@@ -145,21 +151,32 @@ The server is written very carefully. It will not crash your game, because the t
 
 > Can I use mobile dashboard on Android 2.x devices?
 
-No. There is a chance that it will work, but it won't be supported for sure.
+No. There is a chance that it will work, but it won't be supported.
 
 > Sometimes D1 gear is not properly displayed on the dashboard. What is wrong?
 
 Unfortunately, this is a telemetry plugin limitation. Should be fixed soon.
 
-> Cruise control is not properly updated. What is wrong?
-
-Unfortunately, this is a telemetry plugin limitation. Should be fixed soon.
-
 ## Dashboard skin tutorial
 
-Will be available soon. Please stay tuned.
+The tutorial is included in the ZIP package (see "Dashboard Skin Tutorial.pdf"). You may download it separately from [here](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/Dashboard%20Skin%20Tutorial.pdf).
 
 ## Version history
+
+### 2.2.0
+
+- Added "Dashboard Skin Tutorial"!
+- Fixed support for Cruise Control indicator and added Cruise Control Speed
+- Fixed deadline time bug
+- Made speed value always positive (even when reversing)
+- Significantly improved skin loading speed
+- Added ability to skip certain setup steps to support 3rd-party firewalls
+- Added ability to manually select ETS2 game path using standard UI when it is not detected automatically
+- Added wear indicators to the default skin
+- Added additional status message to check if server is connected to the telemetry plugin
+- Added simple template skin
+- Changed telemetry plugin DLL name from ets2-telemetry.dll to ets2-telemetry-server.dll (previous version is not compatible anymore)
+- Various refactoring and improvements
 
 ### 2.1.0
 
@@ -205,9 +222,23 @@ Will be available soon. Please stay tuned.
 
 ## External links
 
+Forums
+
 - [Server discussion on the official SCS forum](http://forum.scssoft.com/viewtopic.php?f=41&t=171000)
 - [Server discussion on the ets2mp.com forum](http://forum.ets2mp.com/index.php?/topic/3058-ets2-telemetry-web-server-mobile-gauge-for-all-phones/) 
 
+Video
+
+- [Dashboard overview from SimplySimulators](https://www.youtube.com/watch?v=mM13wfTYfM8)
+- [Dashboard usage with OBS from A JonC](https://www.youtube.com/watch?v=yLFu4DPixCM)
+- [Dashboard overview from MrSoundwaves Cubes](https://www.youtube.com/watch?v=2OCs9RwA0AI)
+- [Dashboard usage from z5teve](https://www.youtube.com/watch?v=gdwpTwhzZIg)
+- [Dashboard overview from Driver Geo (Romanian)](https://www.youtube.com/watch?v=zcrmyD5wq10)
+- [Dashboard overview from MaRKiToX12 (Spanish)](https://www.youtube.com/watch?v=J_SpwY8RIX4)
+- [Dashboard overview from Branislav Rác (Slovak)](https://www.youtube.com/watch?v=LpKyuNWxJTU)
+- [Dashboard overview from 1Tera Games (Portuguese)](https://www.youtube.com/watch?v=hfUMWmuLToQ)
+- [Обзор от Саши Плотникова (на русском)](https://www.youtube.com/watch?v=mmNm27eTTBs)
+  
 ## License
 
-MIT.
+[GNU General Public License v3 (GPL-3)](https://tldrlegal.com/license/gnu-general-public-license-v3-%28gpl-3%29).
