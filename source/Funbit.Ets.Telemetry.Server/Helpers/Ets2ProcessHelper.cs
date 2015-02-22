@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
-using System.IO.MemoryMappedFiles;
 using System.Linq;
 using System.Threading;
-using Funbit.Ets.Telemetry.Server.Data;
 
 namespace Funbit.Ets.Telemetry.Server.Helpers
 {
@@ -44,32 +42,6 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
                     _cachedRunningFlag = false;
                 }
                 return _cachedRunningFlag;
-            }
-        }
-
-        /// <summary>
-        /// Checks whether ETS2 game process has loaded telemetry plugin.
-        /// </summary>
-        /// /// <returns>True if telemetry plugin is loaded and running, false otherwise.</returns>
-        public static bool IsEts2TelemetryPluginRunning
-        {
-            get
-            {
-                MemoryMappedFile mmf = null;
-                try
-                {
-                    mmf = MemoryMappedFile.OpenExisting(Ets2TelemetryDataReader.Ets2TelemetryMappedFileName);
-                    return true;
-                }
-                catch (Exception)
-                {
-                    return false;
-                }
-                finally
-                {
-                    if (mmf != null)
-                        mmf.Dispose();
-                }
             }
         }
     }

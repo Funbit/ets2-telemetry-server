@@ -8,7 +8,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// <summary>
         /// ETS2 telemetry plugin maps the data to this mapped file name.
         /// </summary>
-        public const string Ets2TelemetryMappedFileName = "Local\\SimTelemetryETS2";
+        const string Ets2TelemetryMappedFileName = "Local\\SimTelemetryETS2";
 
         readonly SharedProcessMemory<Ets2TelemetryStructure> _sharedMemory = 
             new SharedProcessMemory<Ets2TelemetryStructure>(Ets2TelemetryMappedFileName);
@@ -23,6 +23,11 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public static Ets2TelemetryDataReader Instance
         {
             get { return instance.Value; }
+        }
+
+        public bool IsConnected
+        {
+            get { return _sharedMemory.IsConnected; }
         }
 
         public IEts2TelemetryData Read()

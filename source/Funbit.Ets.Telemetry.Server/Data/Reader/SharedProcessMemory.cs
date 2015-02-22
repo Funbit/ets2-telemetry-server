@@ -10,6 +10,11 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
 
         public T Data { get; set; }
 
+        public bool IsConnected
+        {
+            get { return _memoryMappedAccessor != null; }
+        }
+
         MemoryMappedFile _memoryMappedFile;
         MemoryMappedViewAccessor _memoryMappedAccessor;
 
@@ -25,7 +30,7 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
             {
                 try
                 {
-                    _memoryMappedFile = MemoryMappedFile.OpenExisting(_mapName, MemoryMappedFileRights.ReadWrite);
+                    _memoryMappedFile = MemoryMappedFile.OpenExisting(_mapName, MemoryMappedFileRights.Read);
                     _memoryMappedAccessor = _memoryMappedFile.CreateViewAccessor(0, Marshal.SizeOf(typeof(T)), MemoryMappedFileAccess.Read);
                 }
                 // ReSharper disable once EmptyGeneralCatchClause
