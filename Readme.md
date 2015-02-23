@@ -159,9 +159,13 @@ The server is written very carefully. It will not crash your game, because the t
 
 No. There is a chance that it will work, but it won't be supported.
 
+> Is it possible to include sleep indicator, remaining distance, ETA?
+
+Unfortunately, this information is not currently available via telemetry SDK. I hope it will be fixed soon.
+
 > Sometimes D1 gear is not properly displayed on the dashboard. What is wrong?
 
-Unfortunately, this is a telemetry plugin limitation. Should be fixed soon.
+Unfortunately, this is a telemetry SDK limitation. I hope it will be fixed soon.
 
 ## Dashboard skin tutorial
 
