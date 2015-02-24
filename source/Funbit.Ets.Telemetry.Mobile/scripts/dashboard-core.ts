@@ -16,19 +16,25 @@ module Funbit.Ets.Telemetry {
     export class Dashboard {
 
         private endpointUrl: string;
-
         private skinConfig: ISkinConfiguration;
+        
         // jquery element cache
         private $cache: any[] = [];
+
         private ets2TelemetryHub: any;
-        
-        private lastDisconnectTimestamp: number = 0;
+        private refreshRate: number;
+
+        private reconnectionTimer: any;
+        private meterAnimationTimer: any;
+
         private static reconnectDelay: number = 3000;
+        private static minRefreshRate: number = 50;
+        private static maxRefreshRate: number = 250;
         
         constructor(telemetryEndpointUrl: string, skinConfig: ISkinConfiguration) {
             this.endpointUrl = telemetryEndpointUrl;
             this.skinConfig = skinConfig;
-            this.adjustRefreshRate();
+            this.adjustRefreshRate(Dashboard.minRefreshRate);
             // call custom skin initialization function
             this.initialize(skinConfig);
             // initialize SignalR based sync (using WebSockets)
@@ -40,7 +46,7 @@ module Funbit.Ets.Telemetry {
             var ie = /Trident/.test(navigator.userAgent);
             // fix to make animation a bit longer for additional smoothness (but not in IE)
             var dataLatency = ie ? -17 : +17; 
-            var value = ((this.skinConfig.refreshRate + dataLatency) / 1000.0) + 's linear';
+            var value = ((this.refreshRate + dataLatency) / 1000.0) + 's linear';
             $animated.css({
                 '-webkit-transition': value,
                 '-moz-transition': value,
@@ -50,47 +56,47 @@ module Funbit.Ets.Telemetry {
             });
         }
 
-        private adjustRefreshRate() {
-            if (!this.skinConfig.refreshRate) this.skinConfig.refreshRate = 0;
-            var now = Date.now();
-            var lastDisconnectInterval = now - this.lastDisconnectTimestamp;
-            if (lastDisconnectInterval < 1 * 60 * 1000)  // 1 min
-                this.skinConfig.refreshRate += 20;
-            if (lastDisconnectInterval < 2 * 60 * 1000)  // 2 min
-                this.skinConfig.refreshRate += 10;
-            if (lastDisconnectInterval < 3 * 60 * 1000)  // 3 min
-                this.skinConfig.refreshRate += 5;
-            // adaptive refresh rate adjustment within range [50...250]
-            this.skinConfig.refreshRate = Math.min(250, this.skinConfig.refreshRate);
-            this.skinConfig.refreshRate = Math.max(50, this.skinConfig.refreshRate);
+        private adjustRefreshRate(newRefreshRate: number) {
+            this.refreshRate = Math.max(Dashboard.minRefreshRate,
+                Math.min(Dashboard.maxRefreshRate, newRefreshRate), newRefreshRate);
             this.initializeMeters();
         }
 
         private initializeSignalR() {
+            // $.connection.hub.logging = true;
             $.connection.hub.url = Configuration.getUrl('/signalr');
             this.ets2TelemetryHub = $.connection['ets2TelemetryHub'];
+            var requestDataUpdate = this.ets2TelemetryHub.server['requestData'];
             this.ets2TelemetryHub.client['updateData'] = data => {
                 var $processed = this.process(JSON.parse(data));
                 $.when.apply($, $processed).done(() => {
-                    this.ets2TelemetryHub.server['requestData']();
+                    requestDataUpdate();
                 });
             };
+            var startHub = () => {
+                $.connection.hub.start().done(() => {
+                    requestDataUpdate();
+                }).fail(() => {
+                    this.process(null, Strings.couldNotConnectToServer);
+                });
+            };
+            $.connection.hub.connectionSlow(() => {
+                this.adjustRefreshRate(this.refreshRate * 2);
+            });
             $.connection.hub.reconnecting(() => {
                 this.process(null, Strings.connectingToServer);
+                requestDataUpdate();
+            });
+            $.connection.hub.reconnected(() => {
+                requestDataUpdate();
             });
             $.connection.hub.disconnected(() => {
-                this.process(null, Strings.couldNotConnectToServer);
-                this.adjustRefreshRate();
-                this.lastDisconnectTimestamp = Date.now();
-                setTimeout(() => {
-                    $.connection.hub.start();
+                this.process(null, Strings.disconnectedFromServer);
+                this.reconnectionTimer = setTimeout(() => {
+                    startHub();
                 }, Dashboard.reconnectDelay);
             });
-            $.connection.hub.start().done(() => {
-                this.ets2TelemetryHub.server['requestData']();
-            }).fail(() => {
-                this.process(null, Strings.couldNotConnectToServer);
-            });
+            startHub();
         }
         
         private process(data: Ets2TelemetryData, reason: string = ''): JQueryDeferred<any>[]  {
@@ -195,7 +201,9 @@ module Funbit.Ets.Telemetry {
             };
             updateTransform('rotate(' + angle + 'deg)');
             var $animationFinished = $.Deferred<any>();
-            setTimeout(() => { $animationFinished.resolve(); }, this.skinConfig.refreshRate);
+            this.meterAnimationTimer = setTimeout(() => {
+                $animationFinished.resolve();
+            }, this.refreshRate);
             return $animationFinished;
         }
 

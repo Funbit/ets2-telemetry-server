@@ -7,7 +7,7 @@ module Funbit.Ets.Telemetry {
     export class Menu {
 
         private config: Configuration;
-        private reconnectTimer: any;
+        private reconnectionTimer: any;
 
         constructor() {
             this.config = Configuration.getInstance();
@@ -59,7 +59,7 @@ module Funbit.Ets.Telemetry {
                     .addClass('disconnected')
                     .html(Strings.disconnected);
                 this.buildSkinTable(this.config.skins);
-                this.reconnectTimer = setTimeout(
+                this.reconnectionTimer = setTimeout(
                     this.connectToServer.bind(this,
                         [$('.server-ip').html()]), 3000);
             });

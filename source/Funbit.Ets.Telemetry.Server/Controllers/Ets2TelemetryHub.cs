@@ -9,7 +9,7 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
     public class Ets2TelemetryHub : Hub
     {
         static readonly ConcurrentDictionary<string, bool> ConnectedIds = new ConcurrentDictionary<string, bool>();
-        
+
         public static bool HasConnections
         {
             get { return ConnectedIds.Count > 0; }
@@ -30,6 +30,7 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
         public override Task OnReconnected()
         {
             ConnectedIds.TryAdd(Context.ConnectionId, true);
+            Clients.Caller.updateData(Ets2TelemetryController.GetEts2TelemetryJson());
             return base.OnReconnected();
         }
 

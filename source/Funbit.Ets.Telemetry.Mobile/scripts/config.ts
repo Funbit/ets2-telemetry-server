@@ -15,7 +15,6 @@ module Funbit.Ets.Telemetry {
         name: string;
         title: string;
         author: string;
-        refreshRate: number;
         width: number;
         height: number;
     } 
@@ -49,6 +48,7 @@ module Funbit.Ets.Telemetry {
             'Saturday'
         ];
         public static noTimeLeft = 'Overdue';
+        public static disconnectedFromServer = 'Disconnected from server';
         public static couldNotConnectToServer = 'Could not connect to the server';
         public static connectedAndWaitingForDrive = 'Connected, waiting for the drive...';
         public static connectingToServer = 'Connecting to the server...';

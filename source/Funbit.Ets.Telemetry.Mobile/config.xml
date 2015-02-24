@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="info.funbit.ets.telemetry" android-versionCode="4" version="2.1.1.0" xmlns="http://www.w3.org/ns/widgets">
+<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="info.funbit.ets.telemetry" android-versionCode="5" version="2.2.1.0" xmlns="http://www.w3.org/ns/widgets">
   <name>ETS2 Dashboard</name>
   <description>Mobile dashboard for Euro Truck Simulator 2.</description>
   <author href="http://cordova.io" email="dev@cordova.apache.org">Funbit</author>
@@ -20,7 +20,7 @@
   <vs:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
   <vs:plugin name="me.apla.cordova.app-preferences" version="0.4.2" />
   <vs:platformSpecificValues>
-    <vs:platformSpecificWidget platformName="windows" id="info.funbit.ets.telemetry" version="2.1.1.0">
+    <vs:platformSpecificWidget platformName="windows" id="info.funbit.ets.telemetry" version="2.2.1.0">
       <vs:name>ETS2 Dashboard</vs:name>
     </vs:platformSpecificWidget>
   </vs:platformSpecificValues>

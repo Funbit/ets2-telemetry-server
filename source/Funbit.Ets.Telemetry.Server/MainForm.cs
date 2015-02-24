@@ -23,6 +23,8 @@ namespace Funbit.Ets.Telemetry.Server
         static readonly string BroadcastUrl = ConfigurationManager.AppSettings["BroadcastUrl"];
         static readonly int BroadcastRateInSeconds = Math.Min(Math.Max(1, 
             Convert.ToInt32(ConfigurationManager.AppSettings["BroadcastRate"])), 86400);
+        static readonly bool UseTestTelemetryData = Convert.ToBoolean(
+            ConfigurationManager.AppSettings["UseEts2TestTelemetryData"]);
 
         public MainForm()
         {
@@ -151,6 +153,11 @@ namespace Funbit.Ets.Telemetry.Server
                 {
                     statusLabel.Text = @"Simulator is running";
                     statusLabel.ForeColor = Color.Teal;
+                }
+                else if (UseTestTelemetryData)
+                {
+                    statusLabel.Text = @"Connected to Ets2TestTelemetry.json";
+                    statusLabel.ForeColor = Color.DarkGreen;
                 }
                 else
                 {
