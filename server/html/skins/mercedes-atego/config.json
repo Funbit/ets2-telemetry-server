@@ -9,11 +9,6 @@
         "           name: name of the skin (directory name: /skins/name)",
         "          title: human readable skin title",
         "         author: author name",
-        "    refreshRate: defines telemetry data refresh rate (ms), ",
-        "                 lower values may decrease visible latency,",
-        "                 but may also lead to UI stuttering due to performance problems (especially on Androids).",
-        "                 recommended values are between 50ms and 250ms.",
-        "                 Please note that refreshRate may be adjusted automatically in case if connection is unstable.",
         "          width: width of the skin in pixels (same as defined in the CSS)",
         "         height: height of the skin in pixels (same as defined in the CSS)"
     ],
@@ -22,7 +17,6 @@
         "name": "mercedes-atego",
         "title": "Mercedes Benz Atego MP4 Dashboard",
         "author": "Klauzzy",
-        "refreshRate": 80,
         "width": 1501,
         "height": 779
     }    

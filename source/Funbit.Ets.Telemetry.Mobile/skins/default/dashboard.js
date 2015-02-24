@@ -34,7 +34,7 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
     // convert kilometers per hour to miles per hour (just an example)
     data.truckSpeedMph = data.truckSpeed * 0.621371;
     // convert kg to t
-    data.trailerMass = (data.trailerMass / 1000.0) + 't';
+    data.trailerMass = data.hasJob ? ((data.trailerMass / 1000.0) + 't') : '';
     // format odometer data as: 00000.0
     data.truckOdometer = (Math.round(data.truckOdometer * 10) / 10).toFixed(1);
     // convert gear to readable format
