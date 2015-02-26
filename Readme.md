@@ -1,4 +1,4 @@
-## ETS2 Telemetry Web Server 2.2.0 + Mobile Dashboard
+## ETS2 Telemetry Web Server 2.2.1 + Mobile Dashboard
 
 This is a free Telemetry Web Server for Euro Truck Simulator 2 written in C# based on WebSockets and REST API. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
 
@@ -90,7 +90,7 @@ Android users may install the provided "Ets2 Dashboard" application. The APK fil
 
 ***Security notes***: The installation must be done only once and requires Administrator privileges. If you mind what exactly server does to the system at this point here is the detailed information:
 
-1. Tries to find your ETS2 game directory and copy ets2-telemetry-server.dll plugin there (avoiding overwrites)
+1. Tries to find your ETS2 game directory and copy ets2-telemetry-server.dll plugin there
 2. Creates a new Firewall rule for 25555 port named "ETS2 TELEMETRY SERVER (PORT 25555)" opened only for local subnet (i.e. it won't be visible from Internet, so you are safe)
 3. Creates a new ACL rule for HTTP URL bound on 25555 port for OWIN's HttpListener ([more details](http://msdn.microsoft.com/en-us/library/ms733768%28v=vs.110%29.aspx))
 4. Creates a new file for storing application settings inside "\Users\USERNAME\AppData\Local\Ets2 Telemetry Server".
@@ -143,13 +143,17 @@ Please make sure that the server window is showing "Connected to the simulator" 
 
 > The dashboard UI animation (meters) sometimes stutters. Is my device not good enough? Is it possible to fix that?
 
-The default dashboard settings are optimized for modern browsers and fast network connections. However, if you have problems (especially on Android devices or slow networks), you may try to tweak *refreshRate* parameter inside "*server\html\skins\skin_name\config.json*" file (available for each skin). See comments inside that file for further guide. Refresh your browser to see the changes. Also, don't forget to turn off background downloads, especially Torrent clients, because they may dramatically slow your connection between devices. 
+The HTML5 dashboard is optimized for modern browsers and fast network connections (LAN, local Wi-Fi), so you may experience problems on old devices or devices having old web browsers. 
 
-Just as a performance example, the dashboard will work smoothly on Samgung Galaxy Tab S (4.4.2), but not on Galaxy Note 1 or Kindle Fire HD due to slow GPU or turned off GPU graphics acceleration. To achieve the best performance you may try to use a standalone Chrome browser instead of an app (but you will need to turn off device sleep mode when you use the dashboard).
+Some performance examples:
+
+The dashboard will work smoothly on Samgung Galaxy Tab S (4.4.2), but not on Galaxy Note 1 or Kindle Fire HD due to slow GPU or turned off GPU graphics acceleration. To achieve the best performance on Androids you may try to use a standalone Chrome browser instead of an app (but you will need to turn off device sleep mode when you use the dashboard). 
 
 The dashboard will work very smoothly on iOS 8.X devices (iPhone 6 or new iPads). But it will not properly work on iOS 6.X (iPhone 3GS, old iPods).
 
 And finally, the dashboard will perfectly work on any PC or laptop inside latest FF, Chrome or IE11.  
+
+Also, don not forget to turn off background downloads, especially Torrent clients, because they may dramatically slow your connection between devices.
 
 > Is it safe to use the server? Can it crash my game? What about influence on the game performance, say FPS, processor load?
 
@@ -172,6 +176,14 @@ Unfortunately, this is a telemetry SDK limitation. I hope it will be fixed soon.
 The tutorial is included in the ZIP package (see "Dashboard Skin Tutorial.pdf"). You may download it separately from [here](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/Dashboard%20Skin%20Tutorial.pdf).
 
 ## Version history
+
+### 2.2.1
+
+- Removed refreshRate option (now it is adjusted automatically)
+- Refactored dashboard auto-reconnection when server goes offline for a moment
+- Fixed fuelWarning telemetry property (updated telemetry plugin DLL)
+- Fixed NaN trailer mass when dashboard is disconnected (default skin only)
+- Added new server status: "Connected to Ets2TestTelemetry.json"
 
 ### 2.2.0
 

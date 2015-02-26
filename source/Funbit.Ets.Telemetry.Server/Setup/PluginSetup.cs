@@ -1,6 +1,8 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Reflection;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using Funbit.Ets.Telemetry.Server.Helpers;
 using Microsoft.Win32;
@@ -13,6 +15,8 @@ namespace Funbit.Ets.Telemetry.Server.Setup
 
         SetupStatus _status = SetupStatus.Uninstalled;
         const string TelemetryDllName = "ets2-telemetry-server.dll";
+        const string TelemetryX64DllMd5 = "57c0bde80b8ff70b090e6f811e59f50b";
+        const string TelemetryX86DllMd5 = "ab76db9e7beb497b63ead3fe8edbbcb3";
 
         static string GetDefaultSteamPath()
         {
@@ -28,7 +32,9 @@ namespace Funbit.Ets.Telemetry.Server.Setup
                 return false;
             var baseScsPath = Path.Combine(ets2Path, "base.scs");
             var binPath = Path.Combine(ets2Path, "bin");
-            return File.Exists(baseScsPath) && Directory.Exists(binPath);
+            bool validated = File.Exists(baseScsPath) && Directory.Exists(binPath);
+            Log.InfoFormat("Validating ETS2 path: {0} ... {1}", ets2Path, validated ? "OK" : "Fail");
+            return validated;
         }
 
         static string GetPluginPath(string ets2Path, bool x64)
@@ -68,10 +74,11 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             {
                 Log.Info("Checking plugin DLL files...");
                 string gamePath = Settings.Instance.Ets2GamePath;
+                
                 if (ValidateEts2Path(gamePath))
                 {
-                    bool pluginsExist = File.Exists(GetTelemetryPluginDllFileName(gamePath, x64: true)) &&
-                                        File.Exists(GetTelemetryPluginDllFileName(gamePath, x64: false));
+                    bool pluginsExist = Md5(GetTelemetryPluginDllFileName(gamePath, x64: true)) == TelemetryX64DllMd5 &&
+                                        Md5(GetTelemetryPluginDllFileName(gamePath, x64: false)) == TelemetryX86DllMd5;
                     _status = pluginsExist ? SetupStatus.Installed : SetupStatus.Uninstalled;
                 }
                 else
@@ -100,10 +107,12 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             {
                 string gamePath = Settings.Instance.Ets2GamePath;
                 if (string.IsNullOrEmpty(gamePath))
+                {
                     gamePath = GetDefaultSteamPath();
-                if (!string.IsNullOrEmpty(gamePath))
-                    gamePath = Path.Combine(
-                        gamePath.Replace('/', '\\'), @"SteamApps\common\Euro Truck Simulator 2");
+                    if (!string.IsNullOrEmpty(gamePath))
+                        gamePath = Path.Combine(
+                            gamePath.Replace('/', '\\'), @"SteamApps\common\Euro Truck Simulator 2");
+                }
                 
                 while (!ValidateEts2Path(gamePath))
                 {
@@ -144,12 +153,10 @@ namespace Funbit.Ets.Telemetry.Server.Setup
                 string x86DllFileName = GetTelemetryPluginDllFileName(gamePath, x64: false);
 
                 Log.InfoFormat("Copying x86 plugin DLL file to: {0}", x86DllFileName);
-                if (!File.Exists(x86DllFileName))
-                    File.Copy(LocalEts2X86TelemetryPluginDllFileName, x86DllFileName);
+                File.Copy(LocalEts2X86TelemetryPluginDllFileName, x86DllFileName, true);
 
                 Log.InfoFormat("Copying x64 plugin DLL file to: {0}", x64DllFileName);
-                if (!File.Exists(x64DllFileName))
-                    File.Copy(LocalEts2X64TelemetryPluginDllFileName, x64DllFileName);
+                File.Copy(LocalEts2X64TelemetryPluginDllFileName, x64DllFileName, true);
 
                 _status = SetupStatus.Installed;
             }
@@ -191,6 +198,19 @@ namespace Funbit.Ets.Telemetry.Server.Setup
                 status = SetupStatus.Failed;
             }
             return status;
+        }
+
+        static string Md5(string fileName)
+        {
+            if (!File.Exists(fileName))
+                return null;
+            using (var provider = new MD5CryptoServiceProvider())
+            {
+                var bytes = File.ReadAllBytes(fileName);
+                byte[] hash = provider.ComputeHash(bytes);
+                var result = string.Concat(hash.Select(b => string.Format("{0:x02}", b)));
+                return result;
+            }
         }
     }
 }
