@@ -1,7 +1,4 @@
-﻿/// <reference path="typings/jquery.d.ts" />
-/// <reference path="typings/jqueryui.d.ts" />
-/// <reference path="typings/dot.d.ts" />
-var Funbit;
+﻿var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
@@ -51,7 +48,7 @@ var Funbit;
                     }, function () {
                         $serverStatus.removeClass('connected').addClass('disconnected').html(Telemetry.Strings.disconnected);
                         _this.buildSkinTable(_this.config.skins);
-                        _this.reconnectTimer = setTimeout(_this.connectToServer.bind(_this, [$('.server-ip').html()]), 3000);
+                        _this.reconnectionTimer = setTimeout(_this.connectToServer.bind(_this, [$('.server-ip').html()]), 3000);
                     });
                 };
 
@@ -89,9 +86,6 @@ var Funbit;
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
 
-//
-// Menu "entry-point"
-//
 if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
     $(document).on('deviceready', function () {
         (new Funbit.Ets.Telemetry.Menu());
@@ -99,4 +93,3 @@ if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
 } else {
     (new Funbit.Ets.Telemetry.Menu());
 }
-//# sourceMappingURL=menu.js.map

@@ -418,9 +418,9 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return _rawData.brakeTemperature; }
         }
 
-        public float FuelWarning
+        public bool FuelWarning
         {
-            get { return _rawData.fuelWarning; }
+            get { return _rawData.fuelWarning != 0; }
         }
 
         public float Adblue

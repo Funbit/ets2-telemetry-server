@@ -1,6 +1,4 @@
-﻿/// <reference path="typings/jquery.d.ts" />
-/// <reference path="typings/jqueryui.d.ts" />
-var Funbit;
+﻿var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
@@ -16,7 +14,6 @@ var Funbit;
                     var firefox = /Firefox/i.test(navigator.userAgent);
                     var ios = /iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-                    // fit viewport into the screen
                     var dashboardWidth = this.skinConfig.width * 1.0;
                     var dashboardHeight = this.skinConfig.height * 1.0;
                     var windowWidth = $(window).width();
@@ -36,21 +33,15 @@ var Funbit;
                         $body.css('-webkit-transform', scale);
                     }
 
-                    // return to menu by a click
                     $(document).add($body).on('click', function () {
                         window.history.back();
                     });
 
-                    // reload page when orientation changes
                     $(window).on('orientationchange', function () {
                         window.location.reload();
                     });
 
-                    // prevent iOS device from sleeping
                     if (ios && !Telemetry.Configuration.isCordovaAvailable()) {
-                        // the technique is very simple:
-                        // we just tell the browser that we are going to change the url
-                        // and at the last moment we abort the operation
                         setInterval(function () {
                             window.location.href = "/";
                             window.setTimeout(function () {
@@ -71,17 +62,14 @@ var Funbit;
                     var skinJsUrl = this.getSkinResourceUrl('dashboard.js');
                     var signalrUrl = Telemetry.Configuration.getUrl('/signalr/hubs?seed=' + this.anticacheSeed++);
 
-                    // preload skin css
                     $("head link[rel='stylesheet']").last().after('<link rel="stylesheet" href="' + skinCssUrl + '" type="text/css">');
 
-                    // load skin html (synchronously)
                     $.ajax({
                         url: skinHtmlUrl,
                         async: false,
                         dataType: 'html',
                         timeout: 3000
                     }).done(function (html) {
-                        // include dashboard custom script
                         html += '<script src="' + signalrUrl + '"></script>';
                         html += '<script src="' + skinJsUrl + '"></script>';
                         $('body').append(html);
@@ -110,9 +98,6 @@ var Funbit;
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
 
-//
-// Application "entry-point"
-//
 if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
     $(document).on('deviceready', function () {
         (new Funbit.Ets.Telemetry.App()).connectDashboard();
@@ -120,4 +105,3 @@ if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
 } else {
     (new Funbit.Ets.Telemetry.App()).connectDashboard();
 }
-//# sourceMappingURL=app.js.map

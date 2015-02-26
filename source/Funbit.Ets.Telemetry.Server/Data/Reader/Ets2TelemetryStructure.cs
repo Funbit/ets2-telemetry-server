@@ -127,7 +127,7 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
         
         public float airPressure;
         public float brakeTemperature;
-        public float fuelWarning;
+        public int fuelWarning;
         public float adblue;
         public float adblueConsumption;
         public float oilPressure;

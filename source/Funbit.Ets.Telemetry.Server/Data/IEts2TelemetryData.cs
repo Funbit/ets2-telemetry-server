@@ -106,7 +106,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
         float AirPressure { get; }
         float BrakeTemperature { get; }
-        float FuelWarning { get; }
+        bool FuelWarning { get; }
         float Adblue { get; }
         float AdblueConsumpton { get; }
         float OilPressure { get; }
