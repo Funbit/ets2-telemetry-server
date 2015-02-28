@@ -161,7 +161,7 @@ Also, do not forget to turn off background downloads, especially Torrent clients
 
 The server is written very carefully. It will not crash your game, because the telemetry plugin was created by the official developers. It also does not eat CPU (the load is less than 1%) and has small memory footprint (around 20MB). So you won't notice any difference in FPS. 
 
-If you don't trust the compiled exe/dll files you are always welcome to check them for viruses by 57 different Anti-Viruses on [VirusTotal](https://www.virustotal.com/) site.
+If you don't trust the compiled exe/dll files you are always welcome to check them for viruses by more than 50 different anti-virus programs on [VirusTotal](https://www.virustotal.com/) site.
 
 > Can I use mobile dashboard on Android 2.x devices?
 
