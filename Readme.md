@@ -75,7 +75,7 @@ As you can see dashboard design is completely customizable. With some basic know
 
 - iOS 8+ running Mobile Safari (highly recommended, best user experience)
 - Latest Firefox, Chrome or IE11 (Firefox or Chrome is recommended though)
-- Android 4+ Default or Chrome browsers (see FAQ if you have performance issues)
+- Android 4+ (4.4+ highly recommended) Default or Chrome browsers (see FAQ if you have performance issues)
 
 ### Installation
 
@@ -106,6 +106,8 @@ If you downloaded some third-party skin (which is folder, containing dashboard.h
 ### Upgrade
 
 If you already have a previous version installed, it is recommended to leave it as is and **unpack the new version into a separate directory**. This way you will never lose your configuration files, logs, etc. 
+
+However, please keep in mind that if you plan to return back to previous version you have to uninstall the latest one first!
 
 ### Uninstallation
 
@@ -149,11 +151,11 @@ Some performance examples:
 
 The dashboard will work smoothly on Samgung Galaxy Tab S (4.4.2), but not on Galaxy Note 1 or Kindle Fire HD due to slow GPU or turned off GPU graphics acceleration. To achieve the best performance on Androids you may try to use a standalone Chrome browser instead of an app (but you will need to turn off device sleep mode when you use the dashboard). 
 
-The dashboard will work very smoothly on iOS 8.X devices (iPhone 6 or new iPads). But it will not properly work on iOS 6.X (iPhone 3GS, old iPods).
+The dashboard will work very smoothly on iOS 8.X devices (iPhone 6 or new iPads). But it will not properly work on iOS 6.X (iPhone 3GS, old iPods). If you are experiencing slow performance even on new devices you may try to close all opened apps (especially Safari) and try again, that helps a lot.
 
-And finally, the dashboard will perfectly work on any PC or laptop inside latest FF, Chrome or IE11.  
+The dashboard will perfectly work on any PC or laptop inside latest Firefox, Chrome or IE11.  
 
-Also, don not forget to turn off background downloads, especially Torrent clients, because they may dramatically slow your connection between devices.
+Also, don not forget to turn off background downloads, especially Torrent clients, because they may dramatically slow your connection between devices!
 
 > Is it safe to use the server? Can it crash my game? What about influence on the game performance, say FPS, processor load?
 
@@ -179,10 +181,11 @@ The tutorial is included in the ZIP package (see "Dashboard Skin Tutorial.pdf").
 
 ### 2.2.1
 
+- Completely revamped dashboard core, including rendering and connection layers. The mobile dashboard now reflects game changes almost instantly (within 5-10ms)!
 - Removed refreshRate option (now it is adjusted automatically)
-- Refactored dashboard auto-reconnection when server goes offline for a moment
 - Fixed fuelWarning telemetry property (updated telemetry plugin DLL)
 - Fixed NaN trailer mass when dashboard is disconnected (default skin only)
+- Added some utility functions to dashboard.js (see Skin Tutorial for more info)
 - Added new server status: "Connected to Ets2TestTelemetry.json"
 
 ### 2.2.0
