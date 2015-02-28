@@ -264,7 +264,7 @@ module Funbit.Ets.Telemetry {
 
         private formatFloat(num: number, digits: number): string {
             var power = Math.pow(10, digits || 0);
-            return String(Math.round(num * power) / power);
+            return String((Math.round(num * power) / power).toFixed(digits));
         }
 
         private isIso8601(date: string): boolean {

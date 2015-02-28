@@ -246,7 +246,7 @@
 
                 Dashboard.prototype.formatFloat = function (num, digits) {
                     var power = Math.pow(10, digits || 0);
-                    return String(Math.round(num * power) / power);
+                    return String((Math.round(num * power) / power).toFixed(digits));
                 };
 
                 Dashboard.prototype.isIso8601 = function (date) {
