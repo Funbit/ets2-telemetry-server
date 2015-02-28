@@ -155,11 +155,13 @@ The dashboard will work very smoothly on iOS 8.X devices (iPhone 6 or new iPads)
 
 The dashboard will perfectly work on any PC or laptop inside latest Firefox, Chrome or IE11.  
 
-Also, don not forget to turn off background downloads, especially Torrent clients, because they may dramatically slow your connection between devices!
+Also, do not forget to turn off background downloads, especially Torrent clients, because they may dramatically slow your connection between devices!
 
 > Is it safe to use the server? Can it crash my game? What about influence on the game performance, say FPS, processor load?
 
 The server is written very carefully. It will not crash your game, because the telemetry plugin was created by the official developers. It also does not eat CPU (the load is less than 1%) and has small memory footprint (around 20MB). So you won't notice any difference in FPS. 
+
+If you don't trust the compiled exe/dll files you are always welcome to check them for viruses by 57 different Anti-Viruses on [VirusTotal](https://www.virustotal.com/) site.
 
 > Can I use mobile dashboard on Android 2.x devices?
 
