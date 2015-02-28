@@ -4,10 +4,14 @@
         (function (Telemetry) {
             var App = (function () {
                 function App() {
+                    var _this = this;
                     this.anticacheSeed = Date.now();
-                    this.skinConfig = Telemetry.Configuration.getInstance().getSkinConfiguration();
-                    this.initializeViewport();
-                    this.loadDashboardResources();
+                    $.when(Telemetry.Configuration.getInstance().initialized).done(function (config) {
+                        _this.config = config;
+                        _this.skinConfig = config.getSkinConfiguration();
+                        _this.initializeViewport();
+                        _this.initializeDashboard();
+                    });
                 }
                 App.prototype.initializeViewport = function () {
                     var ie = /Trident/.test(navigator.userAgent);
@@ -51,22 +55,17 @@
                     }
                 };
 
-                App.prototype.getSkinResourceUrl = function (name) {
-                    return Telemetry.Configuration.getUrl('/skins/' + this.skinConfig.name + '/' + name + '?seed=' + this.anticacheSeed++);
-                };
-
-                App.prototype.loadDashboardResources = function () {
+                App.prototype.initializeDashboard = function () {
                     var _this = this;
-                    var skinCssUrl = this.getSkinResourceUrl('dashboard.css');
-                    var skinHtmlUrl = this.getSkinResourceUrl('dashboard.html');
-                    var skinJsUrl = this.getSkinResourceUrl('dashboard.js');
+                    var skinCssUrl = this.config.getSkinResourceUrl(this.skinConfig, 'dashboard.css');
+                    var skinHtmlUrl = this.config.getSkinResourceUrl(this.skinConfig, 'dashboard.html');
+                    var skinJsUrl = this.config.getSkinResourceUrl(this.skinConfig, 'dashboard.js');
                     var signalrUrl = Telemetry.Configuration.getUrl('/signalr/hubs?seed=' + this.anticacheSeed++);
 
                     $("head link[rel='stylesheet']").last().after('<link rel="stylesheet" href="' + skinCssUrl + '" type="text/css">');
 
                     $.ajax({
                         url: skinHtmlUrl,
-                        async: false,
                         dataType: 'html',
                         timeout: 3000
                     }).done(function (html) {
@@ -80,14 +79,10 @@
                             width: _this.skinConfig.width + 'px',
                             height: _this.skinConfig.height + 'px'
                         });
+                        _this.dashboard = new Funbit.Ets.Telemetry.Dashboard(Telemetry.Configuration.getUrl('/api/ets2/telemetry'), _this.skinConfig);
                     }).fail(function () {
                         alert(Telemetry.Strings.dashboardHtmlLoadFailed + _this.skinConfig.name);
                     });
-                };
-
-                App.prototype.connectDashboard = function () {
-                    if (!this.dashboard)
-                        this.dashboard = new Funbit.Ets.Telemetry.Dashboard(Telemetry.Configuration.getUrl('/api/ets2/telemetry'), this.skinConfig);
                 };
                 return App;
             })();
@@ -100,8 +95,8 @@
 
 if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
     $(document).on('deviceready', function () {
-        (new Funbit.Ets.Telemetry.App()).connectDashboard();
+        Funbit.Ets.Telemetry.App.instance = new Funbit.Ets.Telemetry.App();
     });
 } else {
-    (new Funbit.Ets.Telemetry.App()).connectDashboard();
+    Funbit.Ets.Telemetry.App.instance = new Funbit.Ets.Telemetry.App();
 }

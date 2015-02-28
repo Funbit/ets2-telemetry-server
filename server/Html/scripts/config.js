@@ -61,26 +61,25 @@
                     var ip = Configuration.getParameter('ip');
                     if (ip) {
                         this.serverIp = ip;
-                        this.initialized.resolve(this);
+                        this.initialize();
                         return;
                     }
                     this.serverIp = '';
                     if (!Configuration.isCordovaAvailable()) {
                         this.serverIp = window.location.hostname;
-                        this.initialized.resolve(this);
+                        this.initialize();
                     } else {
                         this.prefs.fetch(function (savedIp) {
                             _this.serverIp = savedIp;
-                            _this.initialized.resolve(_this);
+                            _this.initialize();
                         }, function () {
-                            _this.initialized.resolve(_this);
+                            _this.initialize();
                         }, 'serverIp');
                     }
                 }
                 Configuration.getInstance = function () {
                     if (!Configuration.instance) {
                         Configuration.instance = new Configuration();
-                        Configuration.instance.reload(Configuration.instance.serverIp);
                     }
                     return Configuration.instance;
                 };
@@ -115,7 +114,6 @@
                     }, 'serverIp', this.serverIp);
                     $.ajax({
                         url: this.getUrlInternal('/config.json?seed=' + this.anticacheSeed++),
-                        async: (done != null),
                         dataType: 'json',
                         timeout: 3000
                     }).done(function (json) {
@@ -139,6 +137,17 @@
 
                 Configuration.getUrl = function (path) {
                     return Configuration.getInstance().getUrlInternal(path);
+                };
+
+                Configuration.prototype.getSkinResourceUrl = function (skinConfig, name) {
+                    return Configuration.getUrl('/skins/' + skinConfig.name + '/' + name + '?seed=' + this.anticacheSeed++);
+                };
+
+                Configuration.prototype.initialize = function () {
+                    var _this = this;
+                    this.reload(this.serverIp, function () {
+                        return _this.initialized.resolve(_this);
+                    });
                 };
                 return Configuration;
             })();

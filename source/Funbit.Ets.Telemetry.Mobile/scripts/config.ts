@@ -68,7 +68,6 @@ module Funbit.Ets.Telemetry {
         public static getInstance(): Configuration {
             if (!Configuration.instance) {
                 Configuration.instance = new Configuration();
-                Configuration.instance.reload(Configuration.instance.serverIp);
             }
             return Configuration.instance;
         }
@@ -98,7 +97,6 @@ module Funbit.Ets.Telemetry {
             this.prefs.store(() => { }, () => { }, 'serverIp', this.serverIp);
             $.ajax({
                 url: this.getUrlInternal('/config.json?seed=' + this.anticacheSeed++),
-                async: (done != null),
                 dataType: 'json',
                 timeout: 3000
             }).done(json => {
@@ -120,6 +118,15 @@ module Funbit.Ets.Telemetry {
         
         public static getUrl(path: string): string {
             return Configuration.getInstance().getUrlInternal(path);
+        }
+
+        public getSkinResourceUrl(skinConfig: ISkinConfiguration, name: string): string {
+            return Configuration.getUrl('/skins/' +
+                skinConfig.name + '/' + name + '?seed=' + this.anticacheSeed++);
+        }
+
+        private initialize() {
+            this.reload(this.serverIp, () => this.initialized.resolve(this));
         }
         
         constructor() {
@@ -144,7 +151,7 @@ module Funbit.Ets.Telemetry {
             var ip = Configuration.getParameter('ip');
             if (ip) {
                 this.serverIp = ip;
-                this.initialized.resolve(this);
+                this.initialize();
                 return;
             }
             this.serverIp = '';
@@ -153,13 +160,13 @@ module Funbit.Ets.Telemetry {
                 // we are in desktop environment 
                 // so we use current host name as our IP
                 this.serverIp = window.location.hostname;
-                this.initialized.resolve(this);
+                this.initialize();
             } else {
                 this.prefs.fetch(savedIp => {
                     this.serverIp = savedIp;
-                    this.initialized.resolve(this);
+                    this.initialize();
                 }, () => {
-                    this.initialized.resolve(this);
+                    this.initialize();
                 }, 'serverIp');
             }
         }

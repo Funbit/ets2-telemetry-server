@@ -5,10 +5,10 @@
             var Menu = (function () {
                 function Menu() {
                     var _this = this;
-                    this.config = Telemetry.Configuration.getInstance();
-                    this.initializeEvents();
-                    this.buildSkinTable([]);
-                    $.when(this.config.initialized).done(function (config) {
+                    $.when(Telemetry.Configuration.getInstance().initialized).done(function (config) {
+                        _this.config = config;
+                        _this.initializeEvents();
+                        _this.buildSkinTable([]);
                         if (!config.serverIp) {
                             _this.promptServerIp();
                         } else {
@@ -88,8 +88,8 @@
 
 if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
     $(document).on('deviceready', function () {
-        (new Funbit.Ets.Telemetry.Menu());
+        Funbit.Ets.Telemetry.Menu.instance = new Funbit.Ets.Telemetry.Menu();
     });
 } else {
-    (new Funbit.Ets.Telemetry.Menu());
+    Funbit.Ets.Telemetry.Menu.instance = new Funbit.Ets.Telemetry.Menu();
 }

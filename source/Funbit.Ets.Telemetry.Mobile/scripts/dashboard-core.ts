@@ -18,88 +18,130 @@ module Funbit.Ets.Telemetry {
         private endpointUrl: string;
         private skinConfig: ISkinConfiguration;
         
-        // jquery element cache
         private $cache: any[] = [];
 
         private ets2TelemetryHub: any;
-        private refreshRate: number;
+        private lastDataRequestFrame: number = 0;
+        private lastDataRequestFrameDiff: number = 0;
 
-        private reconnectionTimer: any;
-        private meterAnimationTimer: any;
+        private frame: number = 0;
+        private latestData: any = null;
+        private prevData: any = null;
+        private frameData: any = null;
+        private lastRafShimTime = 0;
 
-        private static reconnectDelay: number = 3000;
-        private static minRefreshRate: number = 50;
-        private static maxRefreshRate: number = 250;
+        private reconnectTimer: any;
+        private static reconnectDelay: number = 1000;
         
         constructor(telemetryEndpointUrl: string, skinConfig: ISkinConfiguration) {
             this.endpointUrl = telemetryEndpointUrl;
             this.skinConfig = skinConfig;
-            this.adjustRefreshRate(Dashboard.minRefreshRate);
+            this.initializeRequestAnimationFrame();
             // call custom skin initialization function
-            this.initialize(skinConfig);
-            // initialize SignalR based sync (using WebSockets)
-            this.initializeSignalR();
+            this.initialize(skinConfig, this.utilityFunctions(skinConfig));
+            // run infinite animation loop
+            this.animationLoop();
+            // initialize SignalR after some time to overcome some browser bugs
+            this.reconnectTimer = this.setTimer(this.reconnectTimer, () => {
+                this.initializeHub();
+                this.connectToHub();
+            }, 100);
         }
 
-        private initializeMeters() {
-            var $animated = $('[data-type="meter"]').add('.animated');
-            var ie = /Trident/.test(navigator.userAgent);
-            // fix to make animation a bit longer for additional smoothness (but not in IE)
-            var dataLatency = ie ? -17 : +17; 
-            var value = ((this.refreshRate + dataLatency) / 1000.0) + 's linear';
-            $animated.css({
-                '-webkit-transition': value,
-                '-moz-transition': value,
-                '-o-transition': value,
-                '-ms-transition': value,
-                'transition': value
-            });
+        private setTimer(timer: any, func: any, delay: number): any {
+            if (timer)
+                clearTimeout(timer);
+            return setTimeout(() => func(), delay);
         }
 
-        private adjustRefreshRate(newRefreshRate: number) {
-            this.refreshRate = Math.max(Dashboard.minRefreshRate,
-                Math.min(Dashboard.maxRefreshRate, newRefreshRate), newRefreshRate);
-            this.initializeMeters();
+        private initializeRequestAnimationFrame() {
+            // requestAnimationFrame polyfill
+            var vendors = ['ms', 'moz', 'webkit', 'o'];
+            for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+                window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
+                window.cancelAnimationFrame = window[vendors[x] + 'CancelAnimationFrame']
+                    || window[vendors[x] + 'CancelRequestAnimationFrame'];
+            }
+            if (!window.requestAnimationFrame)
+                window.requestAnimationFrame = callback => {
+                    var now = Date.now();
+                    // on old devices shim to set timer with target frame rate of 30 fps
+                    var timeToCall = Math.max(0, (1000 / 30.0) - (now - this.lastRafShimTime));
+                    var id = window.setTimeout(() => {
+                        callback(now + timeToCall);
+                    }, timeToCall);
+                    this.lastRafShimTime = now + timeToCall;
+                    return id;
+                };
+            if (!window.cancelAnimationFrame)
+                window.cancelAnimationFrame = id => {
+                    clearTimeout(id);
+                }; 
         }
 
-        private initializeSignalR() {
-            // $.connection.hub.logging = true;
+        private animationLoop() {
+            this.frame++;
+            window.requestAnimationFrame(() => this.animationLoop());
+            // render animated elements
+            if (this.latestData && this.prevData) {
+                // use our internal renderer first
+                this.internalRender();
+                // and then use skin based renderer
+                this.render(this.frameData, this.utilityFunctions(this.skinConfig));
+            }
+        }
+        
+        private initializeHub() {
+            $.connection.hub.logging = false;
             $.connection.hub.url = Configuration.getUrl('/signalr');
             this.ets2TelemetryHub = $.connection['ets2TelemetryHub'];
-            var requestDataUpdate = this.ets2TelemetryHub.server['requestData'];
-            this.ets2TelemetryHub.client['updateData'] = data => {
-                var $processed = this.process(JSON.parse(data));
-                $.when.apply($, $processed).done(() => {
-                    requestDataUpdate();
-                });
+            window.onbeforeunload = () => {
+                $.connection.hub.stop();
             };
-            var startHub = () => {
-                $.connection.hub.start().done(() => {
-                    requestDataUpdate();
-                }).fail(() => {
-                    this.process(null, Strings.couldNotConnectToServer);
-                });
+        }
+
+        private connectToHub() {
+            $.connection.hub.stop();
+            this.ets2TelemetryHub.client['updateData'] = json => {
+                this.dataUpdateCallback(json);
             };
-            $.connection.hub.connectionSlow(() => {
-                this.adjustRefreshRate(this.refreshRate * 2);
+            $.connection.hub.reconnected(() => {
+                this.requestDataUpdate();
             });
             $.connection.hub.reconnecting(() => {
                 this.process(null, Strings.connectingToServer);
-                requestDataUpdate();
-            });
-            $.connection.hub.reconnected(() => {
-                requestDataUpdate();
             });
             $.connection.hub.disconnected(() => {
                 this.process(null, Strings.disconnectedFromServer);
-                this.reconnectionTimer = setTimeout(() => {
-                    startHub();
-                }, Dashboard.reconnectDelay);
+                this.reconnectToHubAfterDelay();
             });
-            startHub();
+            $.connection.hub.start().done(() => {
+                this.requestDataUpdate();
+            }).fail(() => {
+                this.process(null, Strings.couldNotConnectToServer);
+                this.reconnectToHubAfterDelay();
+            });
+        }
+
+        private reconnectToHubAfterDelay() {
+            this.process(null, Strings.connectingToServer);
+            this.reconnectTimer = this.setTimer(this.reconnectTimer, () => {
+                this.connectToHub();
+            }, Dashboard.reconnectDelay);
         }
         
-        private process(data: Ets2TelemetryData, reason: string = ''): JQueryDeferred<any>[]  {
+        private requestDataUpdate() {
+            this.lastDataRequestFrame = this.frame;
+            this.ets2TelemetryHub.server['requestData']();
+        }
+
+        private dataUpdateCallback(jsonData: any) {
+            var data = JSON.parse(jsonData);
+            this.process(data);
+            this.requestDataUpdate();
+        }
+        
+        private process(data: Ets2TelemetryData, reason: string = '') {
             if (data != null && !data.connected) {
                 // if we're not connected we reset the data 
                 reason = Strings.connectedAndWaitingForDrive;
@@ -110,80 +152,75 @@ module Funbit.Ets.Telemetry {
             // if we don't have real data we use default values
             var data = data === null ? new Ets2TelemetryData() : data;
             // tweak data using custom skin based filter
-            data = this.filter(data);
+            data = this.filter(data, this.utilityFunctions(this.skinConfig));
             // tweak data using default internal filter
             data = this.internalFilter(data);
-            // render data using internal method first
-            var $renderFinished = this.internalRender(data);
-            // then use skin based renderer if defined
-            this.render(data);
-            // return deferred object that resolves when animation finishes
-            return $renderFinished;
+            // update data buffers
+            this.lastDataRequestFrameDiff = this.frame - this.lastDataRequestFrame;
+            this.prevData = this.latestData;
+            this.frameData = this.latestData;
+            this.latestData = data;
         }
 
         private internalFilter(data: Ets2TelemetryData): Ets2TelemetryData {
             // convert ISO8601 to default readable format
-            data.gameTime = Dashboard.timeToReadableString(data.gameTime);
-            data.jobDeadlineTime = Dashboard.timeToReadableString(data.jobDeadlineTime);
-            data.jobRemainingTime = Dashboard.timeDifferenceToReadableString(data.jobRemainingTime);
+            data.gameTime = this.timeToReadableString(data.gameTime);
+            data.jobDeadlineTime = this.timeToReadableString(data.jobDeadlineTime);
+            data.jobRemainingTime = this.timeDifferenceToReadableString(data.jobRemainingTime);
             return data;
         }
 
-        private internalRender(data: any): JQueryDeferred<any>[] {
-            var $animations = [];
-            // handle all telemetry properties by type
-            for (var name in data) {
-                var value = data[name];
+        private internalRender() {
+            var frames = Math.max(1, this.lastDataRequestFrameDiff) * 1.0;
+            for (var name in this.latestData) {
                 var $e = this.$cache[name] !== undefined
                     ? this.$cache[name]
-                   : this.$cache[name] = $('.' + name);
-                if (typeof value == "boolean") {
-                    // all booleans will have "yes" class 
-                    // attached if value is true
+                    : this.$cache[name] = $('.' + name);
+                var value = this.latestData[name];
+                if (typeof value == "number") {
+                    // calculate interpolated value for current frame
+                    var prevValue = this.prevData[name];
+                    value = this.frameData[name] + (value - prevValue) / frames;
+                    this.frameData[name] = value;
+                    var $meters = $e.filter('[data-type="meter"]');
+                    if ($meters.length > 0) {
+                        // if type is set to meter 
+                        // then we use this HTML element 
+                        // as a rotating meter "arrow"
+                        var minValue = $meters.data('min');
+                        if (/[a-z]/i.test(minValue)) {
+                            // if data-min attribute points
+                            // to a property name then we use its value
+                            minValue = this.latestData[minValue];
+                        }
+                        var maxValue = $meters.data('max');
+                        if (/[a-z]/i.test(maxValue)) {
+                            // if data-max attribute points
+                            // to a property name then we use its value
+                            maxValue = this.latestData[maxValue];
+                        }
+                        this.setMeter($meters, value,
+                            parseFloat(minValue), parseFloat(maxValue));
+                    } else {
+                        var $notMeters = $e.not('[data-type="meter"]');
+                        if ($notMeters.length > 0) {
+                            $notMeters.html(value);
+                        }
+                    }
+                } else if (typeof value == "boolean") {
                     if (value) {
                         $e.addClass('yes');
                     } else {
                         $e.removeClass('yes');
                     }
-                } else if (typeof value == "number") {
-                    var $meter = $e.filter('[data-type="meter"]');
-                    if ($meter.length > 0) {
-                        // if type is set to meter 
-                        // then we use this HTML element 
-                        // as a rotating meter "arrow"
-                        var minValue = $meter.data('min');
-                        if (/[a-z]/i.test(minValue)) {
-                            // if data-min attribute points
-                            // to a property name then we use its value
-                            minValue = data[minValue];
-                        }
-                        var maxValue = $meter.data('max');
-                        if (/[a-z]/i.test(maxValue)) {
-                            // if data-max attribute points
-                            // to a property name then we use its value
-                            maxValue = data[maxValue];
-                        }
-                        $animations.push(this.setMeter($meter, value,
-                            parseFloat(minValue), parseFloat(maxValue)));
-                    }
-                    var $value = $e.not('[data-type="meter"]');
-                    if ($value.length > 0) {
-                        // just display the number
-                        $value.html(value);
-                    }
                 } else if (typeof value == "string") {
-                    // just display string as is
                     $e.html(value);
                 }
-                // set data-value attribute 
-                // to allow attribute based custom CSS selectors 
                 $e.attr('data-value', value);
             }
-            return $animations;
         }
 
-        private setMeter($meter: any, value: number,
-            minValue: number, maxValue: number): JQueryDeferred<any> {
+        private setMeter($meter: any, value: number, minValue: number, maxValue: number) {
             var maxValue: number = maxValue ? maxValue : $meter.data('max');
             var minAngle: number = $meter.data('min-angle');
             var maxAngle: number = $meter.data('max-angle');
@@ -200,38 +237,53 @@ module Funbit.Ets.Telemetry {
                 });
             };
             updateTransform('rotate(' + angle + 'deg)');
-            var $animationFinished = $.Deferred<any>();
-            this.meterAnimationTimer = setTimeout(() => {
-                $animationFinished.resolve();
-            }, this.refreshRate);
-            return $animationFinished;
         }
 
         // utility functions available for custom skins:
 
-        public static formatNumber(num: number, digits: number): string {
+        private utilityFunctions(skinConfig: ISkinConfiguration): any {
+            return {
+                formatInteger: this.formatInteger,
+                formatFloat: this.formatFloat,
+                preloadImages: images => this.preloadImages(skinConfig, images)
+            }
+        }
+
+        private preloadImages(skinConfig: ISkinConfiguration, images: string[]) {
+            $(images).each(function () {
+                $('<img/>')[0]['src'] = Configuration.getInstance()
+                    .getSkinResourceUrl(skinConfig, this);
+            });
+        }
+
+        private formatInteger(num: number, digits: number): string {
             var output = num + "";
             while (output.length < digits) output = "0" + output;
             return output;
         }
 
-        public static isIso8601(date: string): boolean {
+        private formatFloat(num: number, digits: number): string {
+            var power = Math.pow(10, digits || 0);
+            return String(Math.round(num * power) / power);
+        }
+
+        private isIso8601(date: string): boolean {
             return /(\d{4})-(\d{2})-(\d{2})T(\d{2})\:(\d{2})\:(\d{2})Z/.test(date);
         }
 
-        public static timeToReadableString(date: string): string {
+        private timeToReadableString(date: string): string {
             // if we have ISO8601 (in UTC) then make it readable
             // in the following default format: "Wednesday 08:26"
             if (this.isIso8601(date)) {
                 var d = new Date(date);
                 return Strings.dayOfTheWeek[d.getUTCDay()] + ' '
-                    + Dashboard.formatNumber(d.getUTCHours(), 2) + ':'
-                    + Dashboard.formatNumber(d.getUTCMinutes(), 2);
+                    + this.formatInteger(d.getUTCHours(), 2) + ':'
+                    + this.formatInteger(d.getUTCMinutes(), 2);
             }
             return date;
         }
 
-        public static timeDifferenceToReadableString(date: string): string {
+        private timeDifferenceToReadableString(date: string): string {
             // if we have ISO8601 (in UTC) then make it readable
             // in the following default format: "1 day 8 hours 26 minutes"
             if (this.isIso8601(date)) {
@@ -254,17 +306,17 @@ module Funbit.Ets.Telemetry {
         // "forward" declarations for custom skins:
 
         // define custom data filter method for skins
-        private filter(data: Ets2TelemetryData): Ets2TelemetryData {
+        private filter(data: Ets2TelemetryData, utils: any): any {
             return data;
         }
 
         // define custom data render method for skins
-        private render(data: Ets2TelemetryData) {
+        private render(data: any, utils: any) {
             return;
         }
 
         // define custom initialization function
-        private initialize(skinConfig: ISkinConfiguration) {
+        private initialize(skinConfig: ISkinConfiguration, utils: any) {
             return;
         }
         

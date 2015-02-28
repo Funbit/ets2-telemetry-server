@@ -5,14 +5,20 @@ module Funbit.Ets.Telemetry {
 
     export class App {
 
+        private config: Configuration;
         private skinConfig: ISkinConfiguration;
         private dashboard: Dashboard;
         private anticacheSeed: number = Date.now();
         
+        public static instance: App;
+
         constructor() {
-            this.skinConfig = Configuration.getInstance().getSkinConfiguration();
-            this.initializeViewport();
-            this.loadDashboardResources();
+            $.when(Configuration.getInstance().initialized).done(config => {
+                this.config = config;
+                this.skinConfig = config.getSkinConfiguration();
+                this.initializeViewport();
+                this.initializeDashboard();
+            });
         }
 
         private initializeViewport() {
@@ -65,16 +71,11 @@ module Funbit.Ets.Telemetry {
             }
             
         }
-
-        private getSkinResourceUrl(name: string): string {
-            return Configuration.getUrl('/skins/' +
-                this.skinConfig.name + '/' + name + '?seed=' + this.anticacheSeed++);
-        }
         
-        public loadDashboardResources() {
-            var skinCssUrl = this.getSkinResourceUrl('dashboard.css');
-            var skinHtmlUrl = this.getSkinResourceUrl('dashboard.html');
-            var skinJsUrl = this.getSkinResourceUrl('dashboard.js');
+        public initializeDashboard() {
+            var skinCssUrl = this.config.getSkinResourceUrl(this.skinConfig, 'dashboard.css');
+            var skinHtmlUrl = this.config.getSkinResourceUrl(this.skinConfig, 'dashboard.html');
+            var skinJsUrl = this.config.getSkinResourceUrl(this.skinConfig, 'dashboard.js');
             var signalrUrl = Configuration.getUrl('/signalr/hubs?seed=' + this.anticacheSeed++);
             // preload skin css
             $("head link[rel='stylesheet']").last()
@@ -82,7 +83,6 @@ module Funbit.Ets.Telemetry {
             // load skin html (synchronously)
             $.ajax({
                 url: skinHtmlUrl,
-                async: false,
                 dataType: 'html',
                 timeout: 3000
             }).done(html => {
@@ -97,15 +97,11 @@ module Funbit.Ets.Telemetry {
                     width: this.skinConfig.width + 'px',
                     height: this.skinConfig.height + 'px'
                 });
+                this.dashboard = new Funbit.Ets.Telemetry.Dashboard(
+                    Configuration.getUrl('/api/ets2/telemetry'), this.skinConfig);
             }).fail(() => {
                 alert(Strings.dashboardHtmlLoadFailed + this.skinConfig.name);
             });
-        }
-
-        public connectDashboard() {
-            if (!this.dashboard)
-                this.dashboard = new Funbit.Ets.Telemetry.Dashboard(
-                    Configuration.getUrl('/api/ets2/telemetry'), this.skinConfig);
         }
 
     }
@@ -118,8 +114,8 @@ module Funbit.Ets.Telemetry {
 
 if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
     $(document).on('deviceready', () => {
-        (new Funbit.Ets.Telemetry.App()).connectDashboard();
+        Funbit.Ets.Telemetry.App.instance = new Funbit.Ets.Telemetry.App();
     });
 } else {
-    (new Funbit.Ets.Telemetry.App()).connectDashboard();
+    Funbit.Ets.Telemetry.App.instance = new Funbit.Ets.Telemetry.App();
 }

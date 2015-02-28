@@ -1,11 +1,13 @@
-﻿Funbit.Ets.Telemetry.Dashboard.prototype.initialize = function (skinConfig) {
+﻿Funbit.Ets.Telemetry.Dashboard.prototype.initialize = function (skinConfig, utils) {
     //
     // skinConfig - a copy of the skin configuration from config.json
+    // utils - an object containing several utility functions (see skin tutorial for more information)
     //
-    // this function is called before everything else, 
-    // so you may perform any DOM or resource initializations/preloading here
 
-    $([
+    // this function is called before everything else, 
+    // so you may perform any DOM or resource initializations / image preloading here
+
+    utils.preloadImages([
         'images/bg-off.png', 'images/bg-on.png',
         'images/blinker-left-off.png', 'images/blinker-left-on.png',
         'images/blinker-right-off.png', 'images/blinker-right-on.png',
@@ -14,14 +16,13 @@
         'images/lowbeam-off.png', 'images/lowbeam-on.png',
         'images/parklights-off.png', 'images/parklights-on.png',
         'images/trailer-off.png', 'images/trailer-on.png'
-    ]).each(function() {
-        $('<img/>')[0].src = this;
-    });
+    ]);
 }
 
-Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
+Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data, utils) {
     //
     // data - telemetry data JSON object
+    // utils - an object containing several utility functions (see skin tutorial for more information)
     //
 
     // This filter is used to change telemetry data 
@@ -36,7 +37,7 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
     // convert kg to t
     data.trailerMass = data.hasJob ? ((data.trailerMass / 1000.0) + 't') : '';
     // format odometer data as: 00000.0
-    data.truckOdometer = (Math.round(data.truckOdometer * 10) / 10).toFixed(1);
+    data.truckOdometer = utils.formatFloat(data.truckOdometer, 1);
     // convert gear to readable format
     data.gear = data.gear > 0 ? 'D' + data.gear : (data.gear < 0 ? 'R' : 'N');
     // convert rpm to rpm * 100
@@ -54,12 +55,12 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data) {
     return data;
 };
 
-Funbit.Ets.Telemetry.Dashboard.prototype.render = function (data) {
+Funbit.Ets.Telemetry.Dashboard.prototype.render = function (data, utils) {
     //
     // data - same data object as in the filter function
+    // utils - an object containing several utility functions (see skin tutorial for more information)
     //
 
     // we don't have anything custom to render in this skin,
-    // but you may use jQuery here to update any element
-    // with any custom animation, logic or style
+    // but you may use jQuery here to update DOM or CSS
 }

@@ -9,11 +9,13 @@ module Funbit.Ets.Telemetry {
         private config: Configuration;
         private reconnectionTimer: any;
 
+        public static instance: Menu;
+
         constructor() {
-            this.config = Configuration.getInstance();
-            this.initializeEvents();
-            this.buildSkinTable([]);
-            $.when(this.config.initialized).done(config => {
+            $.when(Configuration.getInstance().initialized).done(config => {
+                this.config = config;
+                this.initializeEvents();
+                this.buildSkinTable([]);
                 if (!config.serverIp) {
                     this.promptServerIp();
                 } else {
@@ -100,8 +102,8 @@ module Funbit.Ets.Telemetry {
 
 if (Funbit.Ets.Telemetry.Configuration.isCordovaAvailable()) {
     $(document).on('deviceready', () => {
-        (new Funbit.Ets.Telemetry.Menu());
+        Funbit.Ets.Telemetry.Menu.instance = new Funbit.Ets.Telemetry.Menu();
     });
 } else {
-    (new Funbit.Ets.Telemetry.Menu());
+    Funbit.Ets.Telemetry.Menu.instance = new Funbit.Ets.Telemetry.Menu();
 }
