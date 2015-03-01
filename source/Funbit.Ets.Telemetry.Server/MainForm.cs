@@ -144,7 +144,12 @@ namespace Funbit.Ets.Telemetry.Server
         {
             try
             {
-                if (Ets2ProcessHelper.IsEts2Running && Ets2TelemetryDataReader.Instance.IsConnected)
+                if (UseTestTelemetryData)
+                {
+                    statusLabel.Text = @"Connected to Ets2TestTelemetry.json";
+                    statusLabel.ForeColor = Color.DarkGreen;
+                } 
+                else if (Ets2ProcessHelper.IsEts2Running && Ets2TelemetryDataReader.Instance.IsConnected)
                 {
                     statusLabel.Text = @"Connected to the simulator";
                     statusLabel.ForeColor = Color.DarkGreen;
@@ -153,11 +158,6 @@ namespace Funbit.Ets.Telemetry.Server
                 {
                     statusLabel.Text = @"Simulator is running";
                     statusLabel.ForeColor = Color.Teal;
-                }
-                else if (UseTestTelemetryData)
-                {
-                    statusLabel.Text = @"Connected to Ets2TestTelemetry.json";
-                    statusLabel.ForeColor = Color.DarkGreen;
                 }
                 else
                 {
