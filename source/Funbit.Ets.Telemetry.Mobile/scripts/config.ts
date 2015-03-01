@@ -126,7 +126,11 @@ module Funbit.Ets.Telemetry {
         }
 
         private initialize() {
-            this.reload(this.serverIp, () => this.initialized.resolve(this));
+            if (!this.serverIp)
+                this.initialized.resolve(this);
+            this.reload(this.serverIp,
+                () => this.initialized.resolve(this),
+                () => this.initialized.resolve(this));
         }
         
         constructor() {
