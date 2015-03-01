@@ -23,7 +23,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
                 {
                     string port = ConfigurationManager.AppSettings["Port"];
                     string arguments = string.Format(@"http show urlacl url=http://+:{0}/", port);
-                    Log.Info("Adding ACL rule status...");
+                    Log.Info("Checking ACL rule status...");
                     string output = ProcessHelper.RunNetShell(arguments, "Failed to check URL ACL status");
                     _status = output.Contains(port) ? SetupStatus.Installed : SetupStatus.Uninstalled;    
                 }

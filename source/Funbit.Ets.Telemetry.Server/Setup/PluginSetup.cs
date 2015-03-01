@@ -33,7 +33,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             var baseScsPath = Path.Combine(ets2Path, "base.scs");
             var binPath = Path.Combine(ets2Path, "bin");
             bool validated = File.Exists(baseScsPath) && Directory.Exists(binPath);
-            Log.InfoFormat("Validating ETS2 path: {0} ... {1}", ets2Path, validated ? "OK" : "Fail");
+            Log.InfoFormat("Validating ETS2 path: '{0}' ... {1}", ets2Path, validated ? "OK" : "Fail");
             return validated;
         }
 
