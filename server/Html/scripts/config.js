@@ -145,7 +145,11 @@
 
                 Configuration.prototype.initialize = function () {
                     var _this = this;
+                    if (!this.serverIp)
+                        this.initialized.resolve(this);
                     this.reload(this.serverIp, function () {
+                        return _this.initialized.resolve(_this);
+                    }, function () {
                         return _this.initialized.resolve(_this);
                     });
                 };
