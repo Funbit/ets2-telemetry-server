@@ -33,8 +33,8 @@
 .truckSpeed[data-type="meter"] {
   visibility: visible;
   position: absolute;
-  left: 1561px;
-  top: 408px;
+  left: 1563px;
+  top: 415px;
   width: 29px;
   height: 177px;
   background-image: url("images/arrow.png");
@@ -316,7 +316,7 @@
   color: #B3A099;
   position: absolute;
   left: 1500px;
-  top: 718px;
+  top: 714px;
   width: 100px;
   height: 57px;
   font-size: 27px;
