@@ -22,4 +22,7 @@ Funbit.Ets.Telemetry.Dashboard.prototype.render = function (data, utils) {
 
 Funbit.Ets.Telemetry.Dashboard.prototype.initialize = function (skinConfig, utils) {    
     utils.preloadImages(['images/bg-on.jpg']);
+    $(document).add('body').on('click', function () {
+        window.history.back();
+    });
 }

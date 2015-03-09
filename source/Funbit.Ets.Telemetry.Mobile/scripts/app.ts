@@ -47,12 +47,7 @@ module Funbit.Ets.Telemetry {
             } else {
                 $body.css('-webkit-transform', scale);
             }
-
-            // return to menu by a click
-            $(document).add($body).on('click', () => {
-                window.history.back();
-            });
-
+            
             // reload page when orientation changes
             $(window).on('orientationchange', () => {
                 window.location.reload();

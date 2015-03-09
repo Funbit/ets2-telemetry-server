@@ -38,10 +38,6 @@
                         $body.css('-webkit-transform', scale);
                     }
 
-                    $(document).add($body).on('click', function () {
-                        window.history.back();
-                    });
-
                     $(window).on('orientationchange', function () {
                         window.location.reload();
                     });

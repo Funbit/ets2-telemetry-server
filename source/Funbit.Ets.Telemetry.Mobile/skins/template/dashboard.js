@@ -10,6 +10,11 @@
     utils.preloadImages([
         'images/bg-off.jpg', 'images/bg-on.jpg'
     ]);
+
+    // return to menu by a click
+    $(document).add('body').on('click', function () {
+        window.history.back();
+    });
 }
 
 Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data, utils) {

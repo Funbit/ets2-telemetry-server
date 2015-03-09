@@ -17,6 +17,11 @@
         'images/parklights-off.png', 'images/parklights-on.png',
         'images/trailer-off.png', 'images/trailer-on.png'
     ]);
+
+    // return to menu by a click
+    $(document).add('body').on('click', function () {
+        window.history.back();
+    });
 }
 
 Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data, utils) {
