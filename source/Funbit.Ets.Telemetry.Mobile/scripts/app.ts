@@ -9,6 +9,7 @@ module Funbit.Ets.Telemetry {
         private skinConfig: ISkinConfiguration;
         private dashboard: Dashboard;
         private anticacheSeed: number = Date.now();
+        private resizeTimer: any;
         
         public static instance: App;
 
@@ -55,6 +56,14 @@ module Funbit.Ets.Telemetry {
             // reload page when orientation changes
             $(window).on('orientationchange', () => {
                 window.location.reload();
+            });
+
+            // setup resize timer (after 1/4 sec delay)
+            $(window).resize(() => {
+                clearTimeout(this.resizeTimer);
+                this.resizeTimer = setTimeout(() => {
+                    window.location.reload();
+                }, 250);
             });
 
             // prevent iOS device from sleeping

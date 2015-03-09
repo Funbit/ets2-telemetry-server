@@ -14,6 +14,7 @@
                     });
                 }
                 App.prototype.initializeViewport = function () {
+                    var _this = this;
                     var ie = /Trident/.test(navigator.userAgent);
                     var firefox = /Firefox/i.test(navigator.userAgent);
                     var ios = /iPhone|iPad|iPod/i.test(navigator.userAgent);
@@ -43,6 +44,13 @@
 
                     $(window).on('orientationchange', function () {
                         window.location.reload();
+                    });
+
+                    $(window).resize(function () {
+                        clearTimeout(_this.resizeTimer);
+                        _this.resizeTimer = setTimeout(function () {
+                            window.location.reload();
+                        }, 250);
                     });
 
                     if (ios && !Telemetry.Configuration.isCordovaAvailable()) {
