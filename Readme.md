@@ -1,4 +1,4 @@
-## ETS2 Telemetry Web Server 2.2.2 + Mobile Dashboard
+## ETS2 Telemetry Web Server 2.2.3 + Mobile Dashboard
 
 This is a free Telemetry Web Server for Euro Truck Simulator 2 written in C# based on WebSockets and REST API. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
 
@@ -180,6 +180,15 @@ Unfortunately, this is a telemetry SDK limitation. I hope it will be fixed soon.
 The tutorial is included in the ZIP package (see "Dashboard Skin Tutorial.pdf"). You may download it separately from [here](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/Dashboard%20Skin%20Tutorial.pdf).
 
 ## Version history
+
+### 2.2.3
+
+- Fixed speedometer for all built-in skins (DAF, MAN, Mercedes, Volvo)
+- Implemented automatic window reloading on resize (for PC) *(greetings to denilsonsa)*
+- Added skin ability to control user clicks (back to menu link moved to dashboard.js) *(greetings to mkoch227)*
+- Changed speed rounding algorithm to match game's speed *(greetings to 
+maysaraahmad)*
+- Minor comment and typo fixes
 
 ### 2.2.2
 
