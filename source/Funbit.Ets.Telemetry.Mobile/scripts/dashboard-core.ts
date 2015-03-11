@@ -17,6 +17,7 @@ module Funbit.Ets.Telemetry {
 
         private endpointUrl: string;
         private skinConfig: ISkinConfiguration;
+        private utils: any;
         
         private $cache: any[] = [];
 
@@ -36,9 +37,10 @@ module Funbit.Ets.Telemetry {
         constructor(telemetryEndpointUrl: string, skinConfig: ISkinConfiguration) {
             this.endpointUrl = telemetryEndpointUrl;
             this.skinConfig = skinConfig;
+            this.utils = this.utilityFunctions(skinConfig);
             this.initializeRequestAnimationFrame();
             // call custom skin initialization function
-            this.initialize(skinConfig, this.utilityFunctions(skinConfig));
+            this.initialize(skinConfig, this.utils);
             // run infinite animation loop
             this.animationLoop();
             // initialize SignalR after some time to overcome some browser bugs
@@ -87,7 +89,7 @@ module Funbit.Ets.Telemetry {
                 // use our internal renderer first
                 this.internalRender();
                 // and then use skin based renderer
-                this.render(this.frameData, this.utilityFunctions(this.skinConfig));
+                this.render(this.frameData, this.utils);
             }
         }
         
@@ -152,7 +154,7 @@ module Funbit.Ets.Telemetry {
             // if we don't have real data we use default values
             var data = data === null ? new Ets2TelemetryData() : data;
             // tweak data using custom skin based filter
-            data = this.filter(data, this.utilityFunctions(this.skinConfig));
+            data = this.filter(data, this.utils);
             // tweak data using default internal filter
             data = this.internalFilter(data);
             // update data buffers
@@ -204,16 +206,21 @@ module Funbit.Ets.Telemetry {
                     } else {
                         var $notMeters = $e.not('[data-type="meter"]');
                         if ($notMeters.length > 0) {
+                            // convert number to a string
+                            // and render it by updating HTML element content
+                            value = "" + Math.round(value);
                             $notMeters.html(value);
                         }
                     }
                 } else if (typeof value == "boolean") {
+                    // render boolean by adding/removing "yes" CSS class
                     if (value) {
                         $e.addClass('yes');
                     } else {
                         $e.removeClass('yes');
                     }
                 } else if (typeof value == "string") {
+                    // render string value by updating HTML element content
                     $e.html(value);
                 }
                 $e.attr('data-value', value);

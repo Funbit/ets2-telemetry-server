@@ -25,9 +25,10 @@
                     this.lastRafShimTime = 0;
                     this.endpointUrl = telemetryEndpointUrl;
                     this.skinConfig = skinConfig;
+                    this.utils = this.utilityFunctions(skinConfig);
                     this.initializeRequestAnimationFrame();
 
-                    this.initialize(skinConfig, this.utilityFunctions(skinConfig));
+                    this.initialize(skinConfig, this.utils);
 
                     this.animationLoop();
 
@@ -78,7 +79,7 @@
                     if (this.latestData && this.prevData) {
                         this.internalRender();
 
-                        this.render(this.frameData, this.utilityFunctions(this.skinConfig));
+                        this.render(this.frameData, this.utils);
                     }
                 };
 
@@ -145,7 +146,7 @@
 
                     var data = data === null ? new Ets2TelemetryData() : data;
 
-                    data = this.filter(data, this.utilityFunctions(this.skinConfig));
+                    data = this.filter(data, this.utils);
 
                     data = this.internalFilter(data);
 
@@ -185,6 +186,7 @@
                             } else {
                                 var $notMeters = $e.not('[data-type="meter"]');
                                 if ($notMeters.length > 0) {
+                                    value = "" + Math.round(value);
                                     $notMeters.html(value);
                                 }
                             }

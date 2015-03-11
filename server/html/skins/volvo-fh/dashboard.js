@@ -1,8 +1,8 @@
 ﻿// SEE Dashboard Skin Tutorial FOR MORE INFORMATION ABOUT THIS FILE
 
 Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data, utils) {
-    // round truck speed
-    data.truckSpeed = Math.abs(Math.floor(data.truckSpeed));
+    // round truck speed    
+    data.truckSpeedRounded = Math.abs(Math.floor(data.truckSpeed));
     // convert kilometers per hour to miles per hour (just an example)
     data.truckSpeedMph = data.truckSpeed * 0.621371;
     // convert kg to t

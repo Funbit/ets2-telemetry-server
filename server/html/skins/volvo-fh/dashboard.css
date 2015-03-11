@@ -30,7 +30,7 @@
 .dashboard {
   background-image: url("images/bg-on.jpg");  
 }
-.truckSpeed {
+.truckSpeedRounded {
   color: #D3D395;
   font-family: Courier New, Courier, monospace;
   font-weight: bold;
