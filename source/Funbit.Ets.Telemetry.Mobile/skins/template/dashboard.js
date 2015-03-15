@@ -28,8 +28,13 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data, utils) {
     // You may convert km/h to mph, kilograms to tons, etc.
 
     // round truck speed
-    data.truckSpeedRounded = Math.abs(Math.floor(data.truckSpeed));
-    // convert kilometers per hour to miles per hour (just an example)
+    data.truckSpeedRounded = Math.abs(data.truckSpeed > 0
+        ? Math.floor(data.truckSpeed)
+        : Math.round(data.truckSpeed));
+
+    // other examples:
+
+    // convert kilometers per hour to miles per hour
     data.truckSpeedMph = data.truckSpeed * 0.621371;
     // convert kg to t
     data.trailerMass = (data.trailerMass / 1000.0) + 't';

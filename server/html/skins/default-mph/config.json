@@ -14,8 +14,8 @@
     ],
 
     "config": {
-        "name": "default",
-        "title": "Generic Dashboard / KMH",
+        "name": "default-mph",
+        "title": "Generic Dashboard / MPH",
         "author": "Funbit",
         "width": 2048,
         "height": 1152

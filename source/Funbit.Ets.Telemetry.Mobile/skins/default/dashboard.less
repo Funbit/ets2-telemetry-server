@@ -281,7 +281,7 @@
 .cruiseControlOn,
 .truckOdometer,
 .truckSpeedRounded,
-.cruiseControlSpeedRounded,
+.cruiseControlSpeedRounded[data-value="0"],
 .trailerMass, 
 .trailerName, 
 ._truckWearInfo,
@@ -304,7 +304,7 @@
     ._trailerWearInfo,
     .truckOdometer,
     .truckSpeedRounded,
-    .cruiseControlSpeedRounded {
+    .cruiseControlSpeedRounded:not([data-value="0"]) {
         .visible;
     }
 }
