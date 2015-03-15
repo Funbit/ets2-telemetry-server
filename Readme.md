@@ -1,4 +1,4 @@
-## ETS2 Telemetry Web Server 2.2.4 + Mobile Dashboard
+## ETS2 Telemetry Web Server 2.2.5 + Mobile Dashboard
 
 This is a free Telemetry Web Server for Euro Truck Simulator 2 written in C# based on WebSockets and REST API. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
 
@@ -180,6 +180,12 @@ Unfortunately, this is a telemetry SDK limitation. I hope it will be fixed soon.
 The tutorial is included in the ZIP package (see "Dashboard Skin Tutorial.pdf"). You may download it separately from [here](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/Dashboard%20Skin%20Tutorial.pdf).
 
 ## Version history
+
+### 2.2.5
+
+- Fixed truck speed rounding to avoid jumps between 0 and 1 km/h 
+- Created new MPH version of the default skin
+- Fixed minor bug with cruise control speed displayed as NaN sometimes (default skin)
 
 ### 2.2.4
 
