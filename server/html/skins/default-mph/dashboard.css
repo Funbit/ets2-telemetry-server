@@ -291,7 +291,7 @@
 .dashboard.connected.yes ._trailerWearInfo,
 .dashboard.connected.yes .truckOdometer,
 .dashboard.connected.yes .truckSpeedRounded,
-.dashboard.connected.yes .cruiseControlSpeedRounded {
+.dashboard.connected.yes .cruiseControlSpeedRounded:not([data-value="0"]) {
   visibility: visible;
 }
 .hasJob.yes .trailerMass,
