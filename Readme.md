@@ -185,6 +185,7 @@ The tutorial is included in the ZIP package (see "Dashboard Skin Tutorial.pdf").
 
 - Fixed trailerAttached property so it is properly changed when trailer is attached/detached. 
 - Changed hasJob property, now it equals to the trailerAttached value.
+- Fixed odometer for default MPH skin (was showing kilometers) *(thanks to kevindwood)* 
 
 ### 2.2.5
 
