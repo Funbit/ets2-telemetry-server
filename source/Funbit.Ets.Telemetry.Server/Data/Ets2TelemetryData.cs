@@ -56,7 +56,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
         public bool TrailerAttached
         {
-            get { return _rawData.trailerMass > 0; }
+            get { return _rawData.trailer_attached != 0; }
         }
 
         /// <summary>
@@ -235,7 +235,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
         public bool HasJob
         {
-            get { return _rawData.jobIncome > 0; }
+            get { return TrailerAttached; }
         }
 
         public int JobIncome

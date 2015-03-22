@@ -37,6 +37,6 @@ GNU General Public License v3 (GPL-3). Please read LICENSE file for details.
     CONTACTS
 ================
 
-You may contact the author using this email: funbit@gmail.com
+You may contact the author using this email: contact@funbit.info
 
 Funbit (c) 2015
