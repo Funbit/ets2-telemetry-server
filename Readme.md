@@ -167,9 +167,9 @@ If you don't trust the compiled exe/dll files you are always welcome to check th
 
 No. There is a chance that it will work, but it won't be supported.
 
-> Is it possible to include sleep indicator, remaining distance, ETA?
+> Is it possible to include sleep indicator, remaining distance, ETA, current speed limit (or whatever else)?
 
-Unfortunately, this information is not currently available via telemetry SDK. I hope it will be fixed soon.
+Unfortunately, all this information is not currently available via telemetry SDK. I hope it will be fixed soon.
 
 > Sometimes D1 gear is not properly displayed on the dashboard. What is wrong?
 
