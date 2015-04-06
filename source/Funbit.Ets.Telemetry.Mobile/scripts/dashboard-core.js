@@ -1,4 +1,7 @@
-﻿var Funbit;
+﻿/// <reference path="typings/jquery.d.ts" />
+/// <reference path="typings/jqueryui.d.ts" />
+/// <reference path="typings/signalr.d.ts" />
+var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
@@ -28,10 +31,13 @@
                     this.utils = this.utilityFunctions(skinConfig);
                     this.initializeRequestAnimationFrame();
 
+                    // call custom skin initialization function
                     this.initialize(skinConfig, this.utils);
 
+                    // run infinite animation loop
                     this.animationLoop();
 
+                    // initialize SignalR after some time to overcome some browser bugs
                     this.reconnectTimer = this.setTimer(this.reconnectTimer, function () {
                         _this.initializeHub();
                         _this.connectToHub();
@@ -47,6 +53,7 @@
 
                 Dashboard.prototype.initializeRequestAnimationFrame = function () {
                     var _this = this;
+                    // requestAnimationFrame polyfill
                     var vendors = ['ms', 'moz', 'webkit', 'o'];
                     for (var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
                         window.requestAnimationFrame = window[vendors[x] + 'RequestAnimationFrame'];
@@ -56,6 +63,7 @@
                         window.requestAnimationFrame = function (callback) {
                             var now = Date.now();
 
+                            // on old devices shim to set timer with target frame rate of 30 fps
                             var timeToCall = Math.max(0, (1000 / 30.0) - (now - _this.lastRafShimTime));
                             var id = window.setTimeout(function () {
                                 callback(now + timeToCall);
@@ -76,9 +84,12 @@
                         return _this.animationLoop();
                     });
 
+                    // render animated elements
                     if (this.latestData && this.prevData) {
+                        // use our internal renderer first
                         this.internalRender();
 
+                        // and then use skin based renderer
                         this.render(this.frameData, this.utils);
                     }
                 };
@@ -138,18 +149,24 @@
                 Dashboard.prototype.process = function (data, reason) {
                     if (typeof reason === "undefined") { reason = ''; }
                     if (data != null && !data.connected) {
+                        // if we're not connected we reset the data
                         reason = Telemetry.Strings.connectedAndWaitingForDrive;
                         data = null;
                     }
 
+                    // update status message with failure reason
                     $('.statusMessage').html(reason);
 
+                    // if we don't have real data we use default values
                     var data = data === null ? new Ets2TelemetryData() : data;
 
+                    // tweak data using custom skin based filter
                     data = this.filter(data, this.utils);
 
+                    // tweak data using default internal filter
                     data = this.internalFilter(data);
 
+                    // update data buffers
                     this.lastDataRequestFrameDiff = this.frame - this.lastDataRequestFrame;
                     this.prevData = this.latestData;
                     this.frameData = this.latestData;
@@ -157,6 +174,7 @@
                 };
 
                 Dashboard.prototype.internalFilter = function (data) {
+                    // convert ISO8601 to default readable format
                     data.gameTime = this.timeToReadableString(data.gameTime);
                     data.jobDeadlineTime = this.timeToReadableString(data.jobDeadlineTime);
                     data.jobRemainingTime = this.timeDifferenceToReadableString(data.jobRemainingTime);
@@ -169,34 +187,46 @@
                         var $e = this.$cache[name] !== undefined ? this.$cache[name] : this.$cache[name] = $('.' + name);
                         var value = this.latestData[name];
                         if (typeof value == "number") {
+                            // calculate interpolated value for current frame
                             var prevValue = this.prevData[name];
                             value = this.frameData[name] + (value - prevValue) / frames;
                             this.frameData[name] = value;
                             var $meters = $e.filter('[data-type="meter"]');
                             if ($meters.length > 0) {
+                                // if type is set to meter
+                                // then we use this HTML element
+                                // as a rotating meter "arrow"
                                 var minValue = $meters.data('min');
                                 if (/[a-z]/i.test(minValue)) {
+                                    // if data-min attribute points
+                                    // to a property name then we use its value
                                     minValue = this.latestData[minValue];
                                 }
                                 var maxValue = $meters.data('max');
                                 if (/[a-z]/i.test(maxValue)) {
+                                    // if data-max attribute points
+                                    // to a property name then we use its value
                                     maxValue = this.latestData[maxValue];
                                 }
                                 this.setMeter($meters, value, parseFloat(minValue), parseFloat(maxValue));
                             } else {
                                 var $notMeters = $e.not('[data-type="meter"]');
                                 if ($notMeters.length > 0) {
+                                    // convert number to a string
+                                    // and render it by updating HTML element content
                                     value = "" + Math.round(value);
                                     $notMeters.html(value);
                                 }
                             }
                         } else if (typeof value == "boolean") {
+                            // render boolean by adding/removing "yes" CSS class
                             if (value) {
                                 $e.addClass('yes');
                             } else {
                                 $e.removeClass('yes');
                             }
                         } else if (typeof value == "string") {
+                            // render string value by updating HTML element content
                             $e.html(value);
                         }
                         $e.attr('data-value', value);
@@ -222,6 +252,7 @@
                     updateTransform('rotate(' + angle + 'deg)');
                 };
 
+                // utility functions available for custom skins:
                 Dashboard.prototype.utilityFunctions = function (skinConfig) {
                     var _this = this;
                     return {
@@ -256,6 +287,8 @@
                 };
 
                 Dashboard.prototype.timeToReadableString = function (date) {
+                    // if we have ISO8601 (in UTC) then make it readable
+                    // in the following default format: "Wednesday 08:26"
                     if (this.isIso8601(date)) {
                         var d = new Date(date);
                         return Telemetry.Strings.dayOfTheWeek[d.getUTCDay()] + ' ' + this.formatInteger(d.getUTCHours(), 2) + ':' + this.formatInteger(d.getUTCMinutes(), 2);
@@ -264,6 +297,8 @@
                 };
 
                 Dashboard.prototype.timeDifferenceToReadableString = function (date) {
+                    // if we have ISO8601 (in UTC) then make it readable
+                    // in the following default format: "1 day 8 hours 26 minutes"
                     if (this.isIso8601(date)) {
                         var d = new Date(date);
                         var dys = d.getUTCDate() - 1;
@@ -281,14 +316,18 @@
                     return date;
                 };
 
+                // "forward" declarations for custom skins:
+                // define custom data filter method for skins
                 Dashboard.prototype.filter = function (data, utils) {
                     return data;
                 };
 
+                // define custom data render method for skins
                 Dashboard.prototype.render = function (data, utils) {
                     return;
                 };
 
+                // define custom initialization function
                 Dashboard.prototype.initialize = function (skinConfig, utils) {
                     return;
                 };
@@ -301,3 +340,4 @@
     })(Funbit.Ets || (Funbit.Ets = {}));
     var Ets = Funbit.Ets;
 })(Funbit || (Funbit = {}));
+//# sourceMappingURL=dashboard-core.js.map

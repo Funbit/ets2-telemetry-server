@@ -12,21 +12,32 @@ namespace Funbit.Ets.Telemetry.Server.Data
         string TelemetryPluginVersion { get; }
         string GameVersion { get; }
 
-        bool TrailerAttached { get; }
+        IEts2Truck Truck { get; }
+        IEts2Trailer Trailer { get; }
+        IEts2Job Job { get; }
+    }
 
-        float TruckSpeed { get; }
+    public interface IEts2Vector
+    {
+        float X { get; }
+        float Y { get; }
+        float Z { get; }
+    }
 
-        float AccelerationX { get; }
-        float AccelerationY { get; }
-        float AccelerationZ { get; }
+    public interface IEts2Truck
+    {
+        float Speed { get; }
 
-        float CoordinateX { get; }
-        float CoordinateY { get; }
-        float CoordinateZ { get; }
+        IEts2Vector Acceleration { get; }
+        IEts2Vector Coordinate { get; }
+        IEts2Vector Rotation { get; }
 
-        float RotationX { get; }
-        float RotationY { get; }
-        float RotationZ { get; }
+        float Odometer { get; }
+        float CruiseControlSpeed { get; }
+
+        string MakeId { get; }
+        string Make { get; }
+        string Model { get; }
 
         int Gear { get; }
         int Gears { get; }
@@ -50,30 +61,46 @@ namespace Funbit.Ets.Telemetry.Server.Data
         float GameBrake { get; }
         float GameClutch { get; }
 
-        float TruckMass { get; }
+        float Mass { get; }
 
-        long TruckModelLength { get; }
-        long TruckModelOffset { get; }
-
-        float TrailerMass { get; }
-
-        string TrailerId { get; }
-        string TrailerName { get; }
-
-        bool HasJob { get; }
-        int JobIncome { get; }
-        DateTime JobDeadlineTime { get; }
-        DateTime JobRemainingTime { get; }
-
-        string SourceCity { get; }
-        string DestinationCity { get; }
-        string SourceCompany { get; }
-        string DestinationCompany { get; }
+        long ModelLength { get; }
+        long ModelOffset { get; }
 
         int RetarderBrake { get; }
+        int RetarderStepCount { get; }
         int ShifterSlot { get; }
         int ShifterToggle { get; }
+        
+        float AirPressure { get; }
+        float BrakeTemperature { get; }
+        float Adblue { get; }
+        float AdblueConsumpton { get; }
+        float OilPressure { get; }
+        float OilTemperature { get; }
+        float WaterTemperature { get; }
+        float BatteryVoltage { get; }
+        float AdblueCapacity { get; }
+        
+        float EngineWear { get; }
+        float TransmissionWear { get; }
+        float CabinWear { get; }
+        float ChassisWear { get; }
+        float WheelsWear { get; }
 
+        IEts2Vector Head { get; }
+        IEts2Vector Cabin { get; }
+        IEts2Vector Hook { get; }
+
+        IEts2TruckIndicators Indicators { get; }
+
+        IEts2Wheel[] Wheels { get; }
+        IEts2GearSlot[] GearSlots { get; }
+
+        string ShifterType { get; }
+    }
+
+    public interface IEts2TruckIndicators
+    {
         bool CruiseControlOn { get; }
         bool WipersOn { get; }
 
@@ -97,34 +124,65 @@ namespace Funbit.Ets.Telemetry.Server.Data
         bool LightsBrakeOn { get; }
         bool LightsReverseOn { get; }
 
-        bool BatteryVoltageWarning { get; }
-        bool AirPressureWarning { get; }
-        bool AirPressureEmergency { get; }
-        bool AdblueWarning { get; }
-        bool OilPressureWarning { get; }
-        bool WaterTemperatureWarning { get; }
+        bool BatteryVoltageWarningOn { get; }
+        bool AirPressureWarningOn { get; }
+        bool AirPressureEmergencyOn { get; }
+        bool AdblueWarningOn { get; }
+        bool OilPressureWarningOn { get; }
+        bool WaterTemperatureWarningOn { get; }
 
-        float AirPressure { get; }
-        float BrakeTemperature { get; }
-        bool FuelWarning { get; }
-        float Adblue { get; }
-        float AdblueConsumpton { get; }
-        float OilPressure { get; }
-        float OilTemperature { get; }
-        float WaterTemperature { get; }
-        float BatteryVoltage { get; }
-        float LightsDashboard { get; }
-        float WearEngine { get; }
-        float WearTransmission { get; }
-        float WearCabin { get; }
-        float WearChassis { get; }
-        float WearWheels { get; }
-        float WearTrailer { get; }
-        float TruckOdometer { get; }
-        float CruiseControlSpeed { get; }
+        float LightsDashboardValue { get; }
+        bool LightsDashboardOn { get; }
 
-        string TruckMake { get; }
-        string TruckMakeId { get; }
-        string TruckModel { get; }
+        bool FuelWarningOn { get; }
+
+        float FuelWarningFactor { get; }
+        float AirPressureWarningValue { get; }
+        float AirPressureEmergencyValue { get; }
+        float OilPressureWarningValue { get; }
+        float WaterTemperatureWarningValue { get; }
+        float BatteryVoltageWarningValue { get; }
+    }
+
+    public interface IEts2Job
+    {
+        int Income { get; }
+
+        DateTime DeadlineTime { get; }
+        DateTime RemainingTime { get; }
+
+        string SourceCity { get; }
+        string DestinationCity { get; }
+        string SourceCompany { get; }
+        string DestinationCompany { get; }
+    }
+
+    public interface IEts2Trailer
+    {
+        bool Attached { get; }
+
+        float Mass { get; }
+
+        string Id { get; }
+        string Name { get; }
+
+        float Wear { get; }
+    }
+
+    public interface IEts2Wheel
+    {
+        bool Simulated { get; }
+        bool Steerable { get; }
+        float Radius { get; }
+        IEts2Vector Position { get; }
+        bool Powered { get; }
+        bool Liftable { get; }
+    }
+
+    public interface IEts2GearSlot
+    {
+        int Gear { get; }
+        int HandlePosition { get; }
+        int SlotSelectors { get; }
     }
 }

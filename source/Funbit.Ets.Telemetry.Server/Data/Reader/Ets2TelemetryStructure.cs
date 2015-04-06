@@ -5,6 +5,8 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Ansi)]
     internal struct Ets2TelemetryStructure
     {
+        const int GeneralStringSize = 64;
+
         public uint time;
         public uint paused;
 
@@ -69,23 +71,23 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
 
         public float trailerMass;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] 
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = GeneralStringSize)] 
         public byte[] trailerId;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] 
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = GeneralStringSize)] 
         public byte[] trailerName;
 
         public int jobIncome;
         public int jobDeadline;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] 
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = GeneralStringSize)] 
         public byte[] jobCitySource;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] 
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = GeneralStringSize)] 
         public byte[] jobCityDestination;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] 
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = GeneralStringSize)] 
         public byte[] jobCompanySource;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)] 
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = GeneralStringSize)] 
         public byte[] jobCompanyDestination;
 
         // ***** REVISION 3 ****** //
@@ -144,11 +146,65 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
         public float truckOdometer;
         public float cruiseControlSpeed;
 
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = GeneralStringSize)]
         public byte[] truckMake;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = GeneralStringSize)]
         public byte[] truckMakeId;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 64)]
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = GeneralStringSize)]
         public byte[] truckModel;
+
+        // ***** REVISION 4 ****** //
+
+        const int MaxWheelCount = 20;
+        const int MaxSlotCount = 32;
+
+        public float fuelWarningFactor;
+        public float adblueCapacity;
+        public float airPressureWarningValue;
+        public float airPressureEmergencyValue;
+        public float oilPressureWarningValue;
+        public float waterTemperatureWarningValue;
+        public float batteryVoltageWarningValue;
+
+        public uint retarderStepCount;
+		
+		public float cabinPositionX;
+		public float cabinPositionY;
+		public float cabinPositionZ;
+		public float headPositionX;
+		public float headPositionY;
+		public float headPositionZ;
+		public float hookPositionX;
+		public float hookPositionY;
+		public float hookPositionZ;
+        
+		public uint wheelCount;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+		public float[] wheelPositionX;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+		public float[] wheelPositionY;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+		public float[] wheelPositionZ;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+        public byte[] wheelSteerable;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+        public byte[] wheelSimulated;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+		public float[] wheelRadius;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+        public byte[] wheelPowered;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+        public byte[] wheelLiftable;
+        
+		public uint selectorCount;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxSlotCount)]
+		public int[] slotGear;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxSlotCount)]
+		public uint[] slotHandlePosition;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxSlotCount)]
+		public uint[] slotSelectors;
+        
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
+		public byte[] shifterType;
     }
 }
