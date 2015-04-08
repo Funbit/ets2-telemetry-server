@@ -140,9 +140,14 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return _rawData.gear; }
         }
 
-        public int Gears
+        public int ForwardGears
         {
-            get { return _rawData.gears; }
+            get { return _rawData.gearsForward; }
+        }
+
+        public int ReverseGears
+        {
+            get { return _rawData.gearsReverse; }
         }
 
         public int GearRanges

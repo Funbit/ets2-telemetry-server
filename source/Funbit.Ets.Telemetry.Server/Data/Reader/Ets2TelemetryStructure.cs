@@ -35,7 +35,7 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
         public float rotationZ;
         
         public int gear;
-        public int gears;
+        public int gearsForward;
         public int gearRanges;
         public int gearRangeActive;
 
