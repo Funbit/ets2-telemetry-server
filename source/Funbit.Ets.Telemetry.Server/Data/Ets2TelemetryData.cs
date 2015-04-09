@@ -55,6 +55,16 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return string.Format("{0}.{1}", _rawData.ets2_version_major, _rawData.ets2_version_minor); }
         }
 
+        public DateTime NextRestStopTime
+        {
+            get { return MinutesToDate(_rawData.nextRestStop); }
+        }
+
+        public float GameTimeScale
+        {
+            get { return _rawData.localScale; }
+        }
+
         public IEts2Truck Truck
         {
             get { return new Ets2Truck(_rawData); }

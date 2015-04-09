@@ -12,6 +12,21 @@ namespace Funbit.Ets.Telemetry.Server.Data
         string TelemetryPluginVersion { get; }
         string GameVersion { get; }
 
+        /// <summary>
+        /// When the fatique simulation is disabled, the behavior of this channel
+        /// is implementation dependent. The game might provide the value which would
+        /// apply if it was enabled or provide no value at all.
+        /// Example: "0001-01-01T10:52:00Z"
+        /// </summary>
+        DateTime NextRestStopTime { get; }
+        /// <summary>
+        /// Scale applied to distance and time to compensate 
+        /// for the scale of the map (e.g. 1s of real time corresponds 
+        /// to local_scale seconds of simulated game time).
+        /// Example: 3
+        /// </summary>
+        float GameTimeScale { get; }
+
         IEts2Truck Truck { get; }
         IEts2Trailer Trailer { get; }
         IEts2Job Job { get; }
@@ -301,6 +316,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         bool Steerable { get; }
         /// <summary>
         /// Radius of the wheel.
+        /// Example: 0.5120504
         /// </summary>
         float Radius { get; }
         /// <summary>
@@ -335,6 +351,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// <summary>
         /// Bitmask of required on/off state of selectors.
         /// Only first N number of bits are relevant (where N is the number of IEts2GearSlot objects).
+        /// Example: 0
         /// </summary>
         int SlotSelectors { get; }
     }

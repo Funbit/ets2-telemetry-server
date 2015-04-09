@@ -206,5 +206,8 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
         
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
 		public byte[] shifterType;
+
+        public float localScale;
+        public int nextRestStop;
     }
 }
