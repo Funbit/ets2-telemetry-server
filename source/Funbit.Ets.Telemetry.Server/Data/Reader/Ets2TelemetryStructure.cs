@@ -114,8 +114,8 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
         public byte lightsParking;
         public byte lightsBeamLow;
         public byte lightsBeamHigh;
-        public byte lightsAuxFront;
-        public byte lightsAuxRoof;
+        public uint lightsAuxFront;
+        public uint lightsAuxRoof;
         public byte lightsBeacon;
         public byte lightsBrake;
         public byte lightsReverse;
@@ -209,5 +209,8 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
 
         public float localScale;
         public int nextRestStop;
+        public float trailerCoordinateX;
+        public float trailerCoordinateY;
+        public float trailerCoordinateZ;
     }
 }

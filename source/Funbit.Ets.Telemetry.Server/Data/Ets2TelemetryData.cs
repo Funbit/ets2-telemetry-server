@@ -644,6 +644,17 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return Ets2TelemetryData.BytesToString(_rawData.trailerName); }
         }
 
+        public IEts2Vector Coordinate
+        {
+            get
+            {
+                return new Ets2Vector(
+                      _rawData.trailerCoordinateX,
+                      _rawData.trailerCoordinateY,
+                      _rawData.trailerCoordinateZ);
+            }
+        }
+
         public float Wear
         {
             get { return _rawData.wearTrailer; }

@@ -131,10 +131,26 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// </summary>
         float AdblueCapacity { get; }
         
+        /// <summary>
+        /// Current level of truck's engine wear/damage between 0 (min) and 1 (max).
+        /// Example: 0.00675457
+        /// </summary>
         float EngineWear { get; }
+        /// <summary>
+        /// Current level of truck's transmission wear/damage between 0 (min) and 1 (max).
+        /// </summary>
         float TransmissionWear { get; }
+        /// <summary>
+        /// Current level of truck's cabin wear/damage between 0 (min) and 1 (max).
+        /// </summary>
         float CabinWear { get; }
+        /// <summary>
+        /// Current level of truck's chassis wear/damage between 0 (min) and 1 (max).
+        /// </summary>
         float ChassisWear { get; }
+        /// <summary>
+        /// Current level of truck's wheel wear/damage between 0 (min) and 1 (max).
+        /// </summary>
         float WheelsWear { get; }
 
         /// <summary>
@@ -295,12 +311,24 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// Example: "Derrick"
         /// </summary>
         string Name { get; }
+        /// <summary>
+        /// Is the trailer attached to the truck or not.
+        /// </summary>
         bool Attached { get; }
         /// <summary>
         /// Mass of the cargo in kilograms.
         /// Example: 22000
         /// </summary>
         float Mass { get; }
+        /// <summary>
+        /// Current position of the trailer in the game world.
+        /// Example: { "x": 13743.4951, "y": 65.24, "z": 13780.47 }
+        /// </summary>
+        IEts2Vector Coordinate { get; }
+        /// <summary>
+        /// Current level of trailer wear/damage between 0 (min) and 1 (max).
+        /// Example: 0.0314717
+        /// </summary>
         float Wear { get; }
     }
 
