@@ -16,7 +16,7 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
 
         // ***** REVISION 1 ****** //
 
-        public byte padding1;
+        readonly byte padding1;
         public byte trailer_attached;
         public byte padding2;
         public byte padding3;
@@ -212,5 +212,9 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
         public float trailerCoordinateX;
         public float trailerCoordinateY;
         public float trailerCoordinateZ;
+        public float trailerRotationX;
+        public float trailerRotationY;
+        public float trailerRotationZ;
+        readonly byte padding5;
     }
 }

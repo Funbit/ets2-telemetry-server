@@ -95,6 +95,27 @@ namespace Funbit.Ets.Telemetry.Server.Data
         }
     }
 
+    class Ets2Placement : IEts2Placement
+    {
+        public float X { get; private set; }
+        public float Y { get; private set; }
+        public float Z { get; private set; }
+        public float Heading { get; private set; }
+        public float Pitch { get; private set; }
+        public float Roll { get; private set; }
+
+        public Ets2Placement(float x, float y, float z,
+            float heading, float pitch, float roll)
+        {
+            X = x;
+            Y = y;
+            Z = z;
+            Heading = heading;
+            Pitch = pitch;
+            Roll = roll;
+        }
+    }
+
     class Ets2Truck : IEts2Truck
     {
         readonly Ets2TelemetryStructure _rawData;
@@ -123,28 +144,20 @@ namespace Funbit.Ets.Telemetry.Server.Data
             }
         }
 
-        public IEts2Vector Coordinate
+        public IEts2Placement Placement
         {
             get
             {
-                return new Ets2Vector(
+                return new Ets2Placement(
                       _rawData.coordinateX,
                       _rawData.coordinateY,
-                      _rawData.coordinateZ);
+                      _rawData.coordinateZ,
+                      _rawData.rotationX,
+                      _rawData.rotationY,
+                      _rawData.rotationZ);
             }
         }
-
-        public IEts2Vector Rotation
-        {
-            get
-            {
-                return new Ets2Vector(
-                    _rawData.rotationX,
-                    _rawData.rotationY,
-                    _rawData.rotationZ);
-            }
-        }
-
+        
         public int Gear
         {
             get { return _rawData.gear; }
@@ -158,16 +171,6 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public int ReverseGears
         {
             get { return _rawData.gearsReverse; }
-        }
-
-        public int GearRanges
-        {
-            get { return _rawData.gearRanges; }
-        }
-
-        public int GearRangeActive
-        {
-            get { return _rawData.gearRangeActive; }
         }
 
         public float EngineRpm
@@ -233,24 +236,6 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public float GameClutch
         {
             get { return _rawData.gameClutch; }
-        }
-
-        /// <summary>
-        /// Truck mass in kilograms.
-        /// </summary>
-        public float Mass
-        {
-            get { return _rawData.truckWeight; }
-        }
-
-        public long ModelLength
-        {
-            get { return _rawData.modelLength; }
-        }
-
-        public long ModelOffset
-        {
-            get { return _rawData.modelOffset; }
         }
 
         public int RetarderBrake
@@ -644,14 +629,17 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return Ets2TelemetryData.BytesToString(_rawData.trailerName); }
         }
 
-        public IEts2Vector Coordinate
+        public IEts2Placement Placement
         {
             get
             {
-                return new Ets2Vector(
+                return new Ets2Placement(
                       _rawData.trailerCoordinateX,
                       _rawData.trailerCoordinateY,
-                      _rawData.trailerCoordinateZ);
+                      _rawData.trailerCoordinateZ,
+                      _rawData.trailerRotationX,
+                      _rawData.trailerRotationY,
+                      _rawData.trailerRotationZ);
             }
         }
 

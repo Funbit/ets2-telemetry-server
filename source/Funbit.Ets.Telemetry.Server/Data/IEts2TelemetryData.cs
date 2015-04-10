@@ -4,12 +4,32 @@ namespace Funbit.Ets.Telemetry.Server.Data
 {
     public interface IEts2TelemetryData
     {
+        /// <summary>
+        /// Indicates whether the telemetry server is connected
+        /// to the simulator (ETS) or not.
+        /// </summary>
         bool Connected { get; }
 
+        /// <summary>
+        /// Current game time. 
+        /// Serializes to ISO 8601 string in JSON.
+        /// Example: "0001-01-05T05:11:00Z"
+        /// </summary>
         DateTime GameTime { get; }
+        /// <summary>
+        /// True if game is currently paused, false otherwise.
+        /// </summary>
         bool GamePaused { get; }
 
+        /// <summary>
+        /// Current version of the telemetry plugin DLL file.
+        /// Example: "4"
+        /// </summary>
         string TelemetryPluginVersion { get; }
+        /// <summary>
+        /// Current version of the game.
+        /// Example: "1.10"
+        /// </summary>
         string GameVersion { get; }
 
         /// <summary>
@@ -27,8 +47,19 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// </summary>
         float GameTimeScale { get; }
 
+        /// <summary>
+        /// Truck information.
+        /// </summary>
         IEts2Truck Truck { get; }
+
+        /// <summary>
+        /// Trailer information.
+        /// </summary>
         IEts2Trailer Trailer { get; }
+
+        /// <summary>
+        /// Job information.
+        /// </summary>
         IEts2Job Job { get; }
     }
 
@@ -39,15 +70,75 @@ namespace Funbit.Ets.Telemetry.Server.Data
         float Z { get; }
     }
 
+    public interface IEts2Placement
+    {
+        /// <summary>
+        /// X coordinate of the placement.
+        /// Example: 13723.7881
+        /// </summary>
+        float X { get; }
+        /// <summary>
+        /// Y coordinate of the placement.
+        /// Example: 65.22377
+        /// </summary>
+        float Y { get; }
+        /// <summary>
+        /// Z coordinate of the placement.
+        /// Example: 13738.8018
+        /// </summary>
+        float Z { get; }
+        /// <summary>
+        /// The angle is measured counterclockwise in horizontal plane when looking
+        /// from top where 0 corresponds to forward (north), 0.25 to left (west),
+        /// 0.5 to backward (south) and 0.75 to right (east).
+        /// Stored in unit range where (0,1) corresponds to (0,360).
+        /// Example: 0.13688866
+        /// </summary>
+        float Heading { get; }
+        /// <summary>
+        /// The pitch angle is zero when in horizontal direction,
+        /// with positive values pointing up (0.25 directly to zenith),
+        /// and negative values pointing down (-0.25 directly to nadir).
+        /// Stored in unit range where (-0.25,0.25) corresponds to (-90,90).
+        /// Example: 0.00005
+        /// </summary>
+        float Pitch { get; }
+        /// <summary>
+        /// The angle is measured in counterclockwise when looking in direction of the roll axis.
+        /// Stored in unit range where (-0.5,0.5) corresponds to (-180,180).
+        /// Example: -0.00009
+        /// </summary>
+        float Roll { get; }
+    }
+
     public interface IEts2Truck
     {
+        /// <summary>
+        /// Current truck speed in km/h.
+        /// Example: 50.411231
+        /// </summary>
         float Speed { get; }
 
+        /// <summary>
+        /// Represents vehicle space linear acceleration of 
+        /// the truck measured in meters per second^2.
+        /// Example: { "x": 0.046569, "y": -0.00116, "z": -1.03676 }
+        /// </summary>
         IEts2Vector Acceleration { get; }
-        IEts2Vector Coordinate { get; }
-        IEts2Vector Rotation { get; }
-
+        /// <summary>
+        /// Current truck placement in the game world.
+        /// </summary>
+        IEts2Placement Placement { get; }
+        
+        /// <summary>
+        /// The value of the odometer in km.
+        /// Example: 105809.25
+        /// </summary>
         float Odometer { get; }
+        /// <summary>
+        /// Speed selected for the cruise control in km/h.
+        /// Example: 75
+        /// </summary>
         float CruiseControlSpeed { get; }
 
         /// <summary>
@@ -66,47 +157,115 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// </summary>
         string Model { get; }
 
+        /// <summary>
+        /// Gear currently selected in the engine.
+        /// Positive values reflect forward gears, negative - reverse.
+        /// Example: 9
+        /// </summary>
         int Gear { get; }
         /// <summary>
         /// Number of forward gears on undamaged truck.
+        /// Example: 12
         /// </summary>
         int ForwardGears { get; }
         /// <summary>
         /// Number of reverse gears on undamaged truck.
+        /// Example: 2
         /// </summary>
         int ReverseGears { get; }
-        int GearRanges { get; }
-        int GearRangeActive { get; }
 
+        /// <summary>
+        /// Current RPM value of the truck's engine (rotates per minute).
+        /// Example: 1372.3175
+        /// </summary>
         float EngineRpm { get; }
         /// <summary>
-        /// Maximal RPM value of the current truck's engine (rotates per minute).
+        /// Maximal RPM value of the truck's engine.
+        /// Example: 2500
         /// </summary>
         float EngineRpmMax { get; }
 
+        /// <summary>
+        /// Current amount of fuel in liters.
+        /// Example: 696.7544
+        /// </summary>
         float Fuel { get; }
         /// <summary>
         /// Fuel tank capacity in litres.
         /// Example: 700
         /// </summary>
         float FuelCapacity { get; }
+        /// <summary>
+        /// Average consumption of the fuel in liters/km.
+        /// Example: 0.4923077
+        /// </summary>
         float FuelAverageConsumption { get; }
 
+        /// <summary>
+        /// Steering received from input (-1;1).
+        /// Note that it is interpreted counterclockwise.
+        /// If the user presses the steer right button on digital input
+        /// (e.g. keyboard) this value goes immediatelly to -1.0
+        /// Example: -1.0
+        /// </summary>
         float UserSteer { get; }
+        /// <summary>
+        /// Throttle received from input (-1;1).
+        /// If the user presses the forward button on digital input
+        /// (e.g. keyboard) this value goes immediatelly to 1.0
+        /// Example: 0
+        /// </summary>
         float UserThrottle { get; }
+        /// <summary>
+        /// Brake received from input (-1;1)
+        /// If the user presses the brake button on digital input
+        /// (e.g. keyboard) this value goes immediatelly to 1.0
+        /// Example: 0
+        /// </summary>
         float UserBrake { get; }
+        /// <summary>
+        /// Clutch received from input (-1;1)
+        /// If the user presses the clutch button on digital input
+        /// (e.g. keyboard) this value goes immediatelly to 1.0
+        /// Example: 0
+        /// </summary>
         float UserClutch { get; }
 
+        /// <summary>
+        /// Steering as used by the simulation (-1;1)
+        /// Note that it is interpreted counterclockwise.
+        /// Accounts for interpolation speeds and simulated
+        /// counterfoces for digital inputs.
+        /// Example: -0.423521
+        /// </summary>
         float GameSteer { get; }
+        /// <summary>
+        /// Throttle pedal input as used by the simulation (0;1)
+        /// Accounts for the press attack curve for digital inputs
+        /// or cruise-control input.
+        /// Example: 0.17161
+        /// </summary>
         float GameThrottle { get; }
+        /// <summary>
+        /// Brake pedal input as used by the simulation (0;1)
+        /// Accounts for the press attack curve for digital inputs. 
+        /// Does not contain retarder, parking or motor brake.
+        /// Example: 0
+        /// </summary>
         float GameBrake { get; }
+        /// <summary>
+        /// Clutch pedal input as used by the simulation (0;1)
+        /// Accounts for the automatic shifting or interpolation of
+        /// player input.
+        /// Example: 0
+        /// </summary>
         float GameClutch { get; }
-
-        float Mass { get; }
-
-        long ModelLength { get; }
-        long ModelOffset { get; }
-
+        
+        /// <summary>
+        /// Current level of the retarder brake.
+        /// Ranges from 0 to RetarderStepCount.
+        /// Example: 0
+        /// </summary>
         int RetarderBrake { get; }
         /// <summary>
         /// Number of steps in the retarder.
@@ -114,16 +273,56 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// Example: 3
         /// </summary>
         int RetarderStepCount { get; }
+        /// <summary>
+        /// Gearbox slot the h-shifter handle is currently in.
+        /// 0 means that no slot is selected.
+        /// Example: 0
+        /// </summary>
         int ShifterSlot { get; }
+        /// <summary>
+        /// TODO: not sure if it is correct.
+        /// </summary>
         int ShifterToggle { get; }
         
+        /// <summary>
+        /// Pressure in the brake air tank in psi.
+        /// Example: 133.043961
+        /// </summary>
         float AirPressure { get; }
+        /// <summary>
+        /// Temperature of the brakes in degrees celsius.
+        /// Example: 15.9377184
+        /// </summary>
         float BrakeTemperature { get; }
+        /// <summary>
+        /// Amount of AdBlue in liters.
+        /// Example: 0
+        /// </summary>
         float Adblue { get; }
+        /// <summary>
+        /// Average consumption of the adblue in liters/km.
+        /// Example: 0
+        /// </summary>
         float AdblueConsumpton { get; }
+        /// <summary>
+        /// Pressure of the oil in psi.
+        /// Example: 36.4550362
+        /// </summary>
         float OilPressure { get; }
+        /// <summary>
+        /// Temperature of the oil in degrees celsius.
+        /// Example: 16.2580566
+        /// </summary>
         float OilTemperature { get; }
+        /// <summary>
+        /// Temperature of the water in degrees celsius.
+        /// Example: 16.1623955
+        /// </summary>
         float WaterTemperature { get; }
+        /// <summary>
+        /// Voltage of the battery in volts.
+        /// Example: 23.4985161
+        /// </summary>
         float BatteryVoltage { get; }
         /// <summary>
         /// AdBlue tank capacity in litres.
@@ -171,6 +370,9 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// </summary>
         IEts2Vector Hook { get; }
 
+        /// <summary>
+        /// Dashboard indicators.
+        /// </summary>
         IEts2TruckIndicators Indicators { get; }
 
         /// <summary>
@@ -191,39 +393,120 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
     public interface IEts2TruckIndicators
     {
+        /// <summary>
+        /// Indicates whether cruise control is turned on or off. 
+        /// </summary>
         bool CruiseControlOn { get; }
+        /// <summary>
+        /// Indicates whether wipers are currently turned on or off.
+        /// </summary>
         bool WipersOn { get; }
 
+        /// <summary>
+        /// Is the parking brake enabled or not.
+        /// </summary>
         bool ParkBrakeOn { get; }
+        /// <summary>
+        /// Is the motor brake enabled or not.
+        /// </summary>
         bool MotorBrakeOn { get; }
 
+        /// <summary>
+        /// Is the electric enabled or not.
+        /// </summary>
         bool ElectricOn { get; }
+        /// <summary>
+        /// Is engine turned on or off.
+        /// </summary>
         bool EngineOn { get; }
 
+        /// <summary>
+        /// Is left blinker currently emits light or not.
+        /// </summary>
         bool BlinkerLeftActive { get; }
+        /// <summary>
+        /// Is right blinker currently emits light or not.
+        /// </summary>
         bool BlinkerRightActive { get; }
+        /// <summary>
+        /// Is left blinker currently turned on or off.
+        /// </summary>
         bool BlinkerLeftOn { get; }
+        /// <summary>
+        /// Is right blinker currently turned on or off.
+        /// </summary>
         bool BlinkerRightOn { get; }
 
+        /// <summary>
+        /// Are the parking lights enabled or not.
+        /// </summary>
         bool LightsParkingOn { get; }
+        /// <summary>
+        /// Are the low beam lights enabled or not.
+        /// </summary>
         bool LightsBeamLowOn { get; }
+        /// <summary>
+        /// Are the high beam lights enabled or not.
+        /// </summary>
         bool LightsBeamHighOn { get; }
+        /// <summary>
+        /// Are the auxiliary front lights active or not.
+        /// </summary>
         bool LightsAuxFrontOn { get; }
+        /// <summary>
+        /// Are the auxiliary roof lights active or not.
+        /// </summary>
         bool LightsAuxRoofOn { get; }
+        /// <summary>
+        /// Are the beacon lights enabled or not.
+        /// </summary>
         bool LightsBeaconOn { get; }
+        /// <summary>
+        /// Is the brake light active or not.
+        /// </summary>
         bool LightsBrakeOn { get; }
+        /// <summary>
+        /// Is the reverse light active or not.
+        /// </summary>
         bool LightsReverseOn { get; }
 
+        /// <summary>
+        /// Is the battery voltage/not charging warning active or not.
+        /// </summary>
         bool BatteryVoltageWarningOn { get; }
+        /// <summary>
+        /// Is the air pressure warning active or not.
+        /// </summary>
         bool AirPressureWarningOn { get; }
+        /// <summary>
+        /// Are the emergency brakes active as result of low air pressure or not.
+        /// </summary>
         bool AirPressureEmergencyOn { get; }
+        /// <summary>
+        /// Is the low adblue warning active or not.
+        /// </summary>
         bool AdblueWarningOn { get; }
+        /// <summary>
+        /// Is the oil pressure warning active or not.
+        /// </summary>
         bool OilPressureWarningOn { get; }
+        /// <summary>
+        /// Is the water temperature warning active or not.
+        /// </summary>
         bool WaterTemperatureWarningOn { get; }
 
+        /// <summary>
+        /// Intensity of the dashboard backlight between 0 (off) and 1 (max).
+        /// </summary>
         float LightsDashboardValue { get; }
+        /// <summary>
+        /// Is the dashboard backlight currently turned on or off.
+        /// </summary>
         bool LightsDashboardOn { get; }
 
+        /// <summary>
+        /// Is the low fuel warning active or not.
+        /// </summary>
         bool FuelWarningOn { get; }
 
         /// <summary>
@@ -262,6 +545,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
     {
         /// <summary>
         /// Reward in internal game-specific currency.
+        /// Example: 2316
         /// </summary>
         int Income { get; }
 
@@ -321,10 +605,9 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// </summary>
         float Mass { get; }
         /// <summary>
-        /// Current position of the trailer in the game world.
-        /// Example: { "x": 13743.4951, "y": 65.24, "z": 13780.47 }
+        /// Current trailer placement in the game world.
         /// </summary>
-        IEts2Vector Coordinate { get; }
+        IEts2Placement Placement { get; }
         /// <summary>
         /// Current level of trailer wear/damage between 0 (min) and 1 (max).
         /// Example: 0.0314717
