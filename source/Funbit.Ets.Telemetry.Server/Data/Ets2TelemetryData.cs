@@ -35,24 +35,19 @@ namespace Funbit.Ets.Telemetry.Server.Data
                 _rawData.timeAbsolute != 0; }
         }
 
-        public DateTime GameTime
-        {
-            get { return MinutesToDate(_rawData.timeAbsolute); }
-        }
-
         public bool GamePaused
         {
             get { return _rawData.paused != 0; }
         }
 
-        public string TelemetryPluginVersion
+        public DateTime GameTime
         {
-            get { return _rawData.ets2_telemetry_plugin_revision.ToString(); }
+            get { return MinutesToDate(_rawData.timeAbsolute); }
         }
 
-        public string GameVersion
+        public float GameTimeScale
         {
-            get { return string.Format("{0}.{1}", _rawData.ets2_version_major, _rawData.ets2_version_minor); }
+            get { return _rawData.localScale; }
         }
 
         public DateTime NextRestStopTime
@@ -60,9 +55,14 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return MinutesToDate(_rawData.nextRestStop); }
         }
 
-        public float GameTimeScale
+        public string GameVersion
         {
-            get { return _rawData.localScale; }
+            get { return string.Format("{0}.{1}", _rawData.ets2_version_major, _rawData.ets2_version_minor); }
+        }
+
+        public string TelemetryPluginVersion
+        {
+            get { return _rawData.ets2_telemetry_plugin_revision.ToString(); }
         }
 
         public IEts2Truck Truck
@@ -125,6 +125,21 @@ namespace Funbit.Ets.Telemetry.Server.Data
             _rawData = rawData;
         }
 
+        public string Id
+        {
+            get { return Ets2TelemetryData.BytesToString(_rawData.truckMakeId); }
+        }
+
+        public string Make
+        {
+            get { return Ets2TelemetryData.BytesToString(_rawData.truckMake); }
+        }
+
+        public string Model
+        {
+            get { return Ets2TelemetryData.BytesToString(_rawData.truckModel); }
+        }
+
         /// <summary>
         /// Truck speed in km/h.
         /// </summary>
@@ -133,31 +148,24 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return _rawData.speed * 3.6f; }
         }
 
-        public IEts2Vector Acceleration
+        /// <summary>
+        /// Cruise control speed in km/h.
+        /// </summary>
+        public float CruiseControlSpeed
         {
-            get
-            {
-                return new Ets2Vector(
-                      _rawData.accelerationX,
-                      _rawData.accelerationY,
-                      _rawData.accelerationZ);
-            }
+            get { return _rawData.cruiseControlSpeed * 3.6f; }
         }
 
-        public IEts2Placement Placement
+        public bool CruiseControlOn
         {
-            get
-            {
-                return new Ets2Placement(
-                      _rawData.coordinateX,
-                      _rawData.coordinateY,
-                      _rawData.coordinateZ,
-                      _rawData.rotationX,
-                      _rawData.rotationY,
-                      _rawData.rotationZ);
-            }
+            get { return _rawData.cruiseControl != 0; }
         }
-        
+
+        public float Odometer
+        {
+            get { return _rawData.truckOdometer; }
+        }
+
         public int Gear
         {
             get { return _rawData.gear; }
@@ -171,6 +179,11 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public int ReverseGears
         {
             get { return _rawData.gearsReverse; }
+        }
+
+        public string ShifterType
+        {
+            get { return Ets2TelemetryData.BytesToString(_rawData.shifterType); }
         }
 
         public float EngineRpm
@@ -196,6 +209,41 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public float FuelAverageConsumption
         {
             get { return _rawData.fuelAvgConsumption; }
+        }
+
+        public float FuelWarningFactor
+        {
+            get { return _rawData.fuelWarningFactor; }
+        }
+
+        public bool FuelWarningOn
+        {
+            get { return _rawData.fuelWarning != 0; }
+        }
+
+        public float EngineWear
+        {
+            get { return _rawData.wearEngine; }
+        }
+
+        public float TransmissionWear
+        {
+            get { return _rawData.wearTransmission; }
+        }
+
+        public float CabinWear
+        {
+            get { return _rawData.wearCabin; }
+        }
+
+        public float ChassisWear
+        {
+            get { return _rawData.wearChassis; }
+        }
+
+        public float WheelsWear
+        {
+            get { return _rawData.wearWheels; }
         }
 
         public float UserSteer
@@ -238,16 +286,6 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return _rawData.gameClutch; }
         }
 
-        public int RetarderBrake
-        {
-            get { return _rawData.retarderBrake; }
-        }
-
-        public int RetarderStepCount
-        {
-            get { return (int)_rawData.retarderStepCount; }
-        }
-
         public int ShifterSlot
         {
             get { return _rawData.shifterSlot; }
@@ -258,187 +296,84 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return _rawData.shifterToggle; }
         }
 
-        public float AirPressure
+        public bool EngineOn
         {
-            get { return _rawData.airPressure; }
+            get { return _rawData.engineEnabled != 0; }
+        }
+
+        public bool ElectricOn
+        {
+            get { return _rawData.electricEnabled != 0; }
+        }
+
+        public bool WipersOn
+        {
+            get { return _rawData.wipers != 0; }
+        }
+
+        public int RetarderBrake
+        {
+            get { return _rawData.retarderBrake; }
+        }
+
+        public int RetarderStepCount
+        {
+            get { return (int)_rawData.retarderStepCount; }
+        }
+
+        public bool ParkBrakeOn
+        {
+            get { return _rawData.parkBrake != 0; }
+        }
+
+        public bool MotorBrakeOn
+        {
+            get { return _rawData.motorBrake != 0; }
         }
 
         public float BrakeTemperature
         {
             get { return _rawData.brakeTemperature; }
         }
-        
+
         public float Adblue
         {
             get { return _rawData.adblue; }
-        }
-
-        public float AdblueConsumpton
-        {
-            get { return _rawData.adblueConsumption; }
-        }
-
-        public float OilPressure
-        {
-            get { return _rawData.oilPressure; }
-        }
-
-        public float OilTemperature
-        {
-            get { return _rawData.oilTemperature; }
-        }
-
-        public float WaterTemperature
-        {
-            get { return _rawData.waterTemperature; }
-        }
-
-        public float BatteryVoltage
-        {
-            get { return _rawData.batteryVoltage; }
         }
 
         public float AdblueCapacity
         {
             get { return _rawData.adblueCapacity; }
         }
-        
-        public float EngineWear
+
+        public float AdblueAverageConsumpton
         {
-            get { return _rawData.wearEngine; }
+            get { return _rawData.adblueConsumption; }
         }
 
-        public float TransmissionWear
+        public bool AdblueWarningOn
         {
-            get { return _rawData.wearTransmission; }
+            get { return _rawData.adblueWarning != 0; }
         }
 
-        public float CabinWear
+        public float AirPressure
         {
-            get { return _rawData.wearCabin; }
+            get { return _rawData.airPressure; }
         }
 
-        public float ChassisWear
+        public bool AirPressureWarningOn
         {
-            get { return _rawData.wearChassis; }
+            get { return _rawData.airPressureWarning != 0; }
         }
 
-        public float WheelsWear
-        {
-            get { return _rawData.wearWheels; }
-        }
-
-        public float Odometer
-        {
-            get { return _rawData.truckOdometer; }
-        }
-
-        /// <summary>
-        /// Cruise control speed in km/h.
-        /// </summary>
-        public float CruiseControlSpeed
-        {
-            get { return _rawData.cruiseControlSpeed * 3.6f; }
-        }
-
-        public string Make
-        {
-            get { return Ets2TelemetryData.BytesToString(_rawData.truckMake); }
-        }
-
-        public string MakeId
-        {
-            get { return Ets2TelemetryData.BytesToString(_rawData.truckMakeId); }
-        }
-
-        public string Model
-        {
-            get { return Ets2TelemetryData.BytesToString(_rawData.truckModel); }
-        }
-
-        public IEts2TruckIndicators Indicators
-        {
-            get { return new Ets2TruckIndicators(_rawData); }
-        }
-        
-        public IEts2Vector Head
-        {
-            get
-            {
-                return new Ets2Vector(
-                    _rawData.headPositionX,
-                    _rawData.headPositionY,
-                    _rawData.headPositionZ);
-            }
-        }
-
-        public IEts2Vector Cabin
-        {
-            get
-            {
-                return new Ets2Vector(
-                    _rawData.cabinPositionX,
-                    _rawData.cabinPositionY,
-                    _rawData.cabinPositionZ);
-            }
-        }
-
-        public IEts2Vector Hook
-        {
-            get
-            {
-                return new Ets2Vector(
-                    _rawData.hookPositionX,
-                    _rawData.hookPositionY,
-                    _rawData.hookPositionZ);
-            }
-        }
-
-        public IEts2Wheel[] Wheels
-        {
-            get
-            {
-                var array = new IEts2Wheel[_rawData.wheelCount];
-                for (int i = 0; i < array.Length; i++)
-                    array[i] = new Ets2Wheel(_rawData, i);
-                return array;
-            }
-        }
-
-        public IEts2GearSlot[] GearSlots
-        {
-            get
-            {
-                var array = new IEts2GearSlot[_rawData.selectorCount];
-                for (int i = 0; i < array.Length; i++)
-                    array[i] = new Ets2GearSlot(_rawData, i);
-                return array;
-            }
-        }
-
-        public string ShifterType
-        {
-            get { return Ets2TelemetryData.BytesToString(_rawData.shifterType); }
-        }
-    }
-
-    class Ets2TruckIndicators : IEts2TruckIndicators
-    {
-        readonly Ets2TelemetryStructure _rawData;
-
-        public Ets2TruckIndicators(Ets2TelemetryStructure rawData)
-        {
-            _rawData = rawData;
-        }
-
-        public float FuelWarningFactor
-        {
-            get { return _rawData.fuelWarningFactor; }
-        }
-        
         public float AirPressureWarningValue
         {
             get { return _rawData.airPressureWarningValue; }
+        }
+
+        public bool AirPressureEmergencyOn
+        {
+            get { return _rawData.airPressureEmergency != 0; }
         }
 
         public float AirPressureEmergencyValue
@@ -446,14 +381,49 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return _rawData.airPressureEmergencyValue; }
         }
 
+        public float OilTemperature
+        {
+            get { return _rawData.oilTemperature; }
+        }
+
+        public float OilPressure
+        {
+            get { return _rawData.oilPressure; }
+        }
+
+        public bool OilPressureWarningOn
+        {
+            get { return _rawData.oilPressureWarning != 0; }
+        }
+
         public float OilPressureWarningValue
         {
             get { return _rawData.oilPressureWarningValue; }
         }
 
+        public float WaterTemperature
+        {
+            get { return _rawData.waterTemperature; }
+        }
+
+        public bool WaterTemperatureWarningOn
+        {
+            get { return _rawData.waterTemperatureWarning != 0; }
+        }
+
         public float WaterTemperatureWarningValue
         {
             get { return _rawData.waterTemperatureWarningValue; }
+        }
+
+        public float BatteryVoltage
+        {
+            get { return _rawData.batteryVoltage; }
+        }
+
+        public bool BatteryVoltageWarningOn
+        {
+            get { return _rawData.batteryVoltageWarning != 0; }
         }
 
         public float BatteryVoltageWarningValue
@@ -469,41 +439,6 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public bool LightsDashboardOn
         {
             get { return _rawData.lightsDashboard > 0; }
-        }
-
-        public bool FuelWarningOn
-        {
-            get { return _rawData.fuelWarning != 0; }
-        }
-
-        public bool CruiseControlOn
-        {
-            get { return _rawData.cruiseControl != 0; }
-        }
-
-        public bool WipersOn
-        {
-            get { return _rawData.wipers != 0; }
-        }
-
-        public bool ParkBrakeOn
-        {
-            get { return _rawData.parkBrake != 0; }
-        }
-
-        public bool MotorBrakeOn
-        {
-            get { return _rawData.motorBrake != 0; }
-        }
-
-        public bool ElectricOn
-        {
-            get { return _rawData.electricEnabled != 0; }
-        }
-
-        public bool EngineOn
-        {
-            get { return _rawData.engineEnabled != 0; }
         }
 
         public bool BlinkerLeftActive
@@ -566,34 +501,84 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return _rawData.lightsReverse != 0; }
         }
 
-        public bool BatteryVoltageWarningOn
+        public IEts2Placement Placement
         {
-            get { return _rawData.batteryVoltageWarning != 0; }
+            get
+            {
+                return new Ets2Placement(
+                    _rawData.coordinateX,
+                    _rawData.coordinateY,
+                    _rawData.coordinateZ,
+                    _rawData.rotationX,
+                    _rawData.rotationY,
+                    _rawData.rotationZ);
+            }
         }
 
-        public bool AirPressureWarningOn
+        public IEts2Vector Acceleration
         {
-            get { return _rawData.airPressureWarning != 0; }
+            get
+            {
+                return new Ets2Vector(
+                    _rawData.accelerationX,
+                    _rawData.accelerationY,
+                    _rawData.accelerationZ);
+            }
         }
 
-        public bool AirPressureEmergencyOn
+        public IEts2Vector Head
         {
-            get { return _rawData.airPressureEmergency != 0; }
+            get
+            {
+                return new Ets2Vector(
+                    _rawData.headPositionX,
+                    _rawData.headPositionY,
+                    _rawData.headPositionZ);
+            }
         }
 
-        public bool AdblueWarningOn
+        public IEts2Vector Cabin
         {
-            get { return _rawData.adblueWarning != 0; }
+            get
+            {
+                return new Ets2Vector(
+                    _rawData.cabinPositionX,
+                    _rawData.cabinPositionY,
+                    _rawData.cabinPositionZ);
+            }
         }
 
-        public bool OilPressureWarningOn
+        public IEts2Vector Hook
         {
-            get { return _rawData.oilPressureWarning != 0; }
+            get
+            {
+                return new Ets2Vector(
+                    _rawData.hookPositionX,
+                    _rawData.hookPositionY,
+                    _rawData.hookPositionZ);
+            }
         }
 
-        public bool WaterTemperatureWarningOn
+        public IEts2GearSlot[] GearSlots
         {
-            get { return _rawData.waterTemperatureWarning != 0; }
+            get
+            {
+                var array = new IEts2GearSlot[_rawData.selectorCount];
+                for (int i = 0; i < array.Length; i++)
+                    array[i] = new Ets2GearSlot(_rawData, i);
+                return array;
+            }
+        }
+
+        public IEts2Wheel[] Wheels
+        {
+            get
+            {
+                var array = new IEts2Wheel[_rawData.wheelCount];
+                for (int i = 0; i < array.Length; i++)
+                    array[i] = new Ets2Wheel(_rawData, i);
+                return array;
+            }
         }
     }
 
@@ -611,14 +596,6 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return _rawData.trailer_attached != 0; }
         }
 
-        /// <summary>
-        /// Trailer mass in kilograms.
-        /// </summary>
-        public float Mass
-        {
-            get { return _rawData.trailerMass; }
-        }
-
         public string Id
         {
             get { return Ets2TelemetryData.BytesToString(_rawData.trailerId); }
@@ -629,23 +606,31 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return Ets2TelemetryData.BytesToString(_rawData.trailerName); }
         }
 
-        public IEts2Placement Placement
+        /// <summary>
+        /// Trailer mass in kilograms.
+        /// </summary>
+        public float Mass
         {
-            get
-            {
-                return new Ets2Placement(
-                      _rawData.trailerCoordinateX,
-                      _rawData.trailerCoordinateY,
-                      _rawData.trailerCoordinateZ,
-                      _rawData.trailerRotationX,
-                      _rawData.trailerRotationY,
-                      _rawData.trailerRotationZ);
-            }
+            get { return _rawData.trailerMass; }
         }
 
         public float Wear
         {
             get { return _rawData.wearTrailer; }
+        }
+
+        public IEts2Placement Placement
+        {
+            get
+            {
+                return new Ets2Placement(
+                    _rawData.trailerCoordinateX,
+                    _rawData.trailerCoordinateY,
+                    _rawData.trailerCoordinateZ,
+                    _rawData.trailerRotationX,
+                    _rawData.trailerRotationY,
+                    _rawData.trailerRotationZ);
+            }
         }
     }
 
@@ -678,14 +663,14 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return Ets2TelemetryData.BytesToString(_rawData.jobCitySource); }
         }
 
-        public string DestinationCity
-        {
-            get { return Ets2TelemetryData.BytesToString(_rawData.jobCityDestination); }
-        }
-
         public string SourceCompany
         {
             get { return Ets2TelemetryData.BytesToString(_rawData.jobCompanySource); }
+        }
+
+        public string DestinationCity
+        {
+            get { return Ets2TelemetryData.BytesToString(_rawData.jobCityDestination); }
         }
 
         public string DestinationCompany
@@ -711,10 +696,10 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
         public bool Simulated { get; private set; }
         public bool Steerable { get; private set; }
-        public float Radius { get; private set; }
-        public IEts2Vector Position { get; private set; }
         public bool Powered { get; private set; }
         public bool Liftable { get; private set; }
+        public float Radius { get; private set; }
+        public IEts2Vector Position { get; private set; }
     }
 
     class Ets2GearSlot : IEts2GearSlot

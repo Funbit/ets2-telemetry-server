@@ -2,12 +2,21 @@
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
+            var Ets2JobMock = (function () {
+                function Ets2JobMock() {
+                    this.deadlineTime = '';
+                    this.remainingTime = '';
+                }
+                return Ets2JobMock;
+            })();
+
             var Ets2TelemetryData = (function () {
                 function Ets2TelemetryData() {
                     this.gameTime = '';
-                    this.jobDeadlineTime = '';
-                    this.jobRemainingTime = '';
                     this.connected = false;
+                    this.truck = {};
+                    this.trailer = {};
+                    this.job = new Ets2JobMock();
                 }
                 return Ets2TelemetryData;
             })();
@@ -158,29 +167,40 @@
 
                 Dashboard.prototype.internalFilter = function (data) {
                     data.gameTime = this.timeToReadableString(data.gameTime);
-                    data.jobDeadlineTime = this.timeToReadableString(data.jobDeadlineTime);
-                    data.jobRemainingTime = this.timeDifferenceToReadableString(data.jobRemainingTime);
+                    data.job.deadlineTime = this.timeToReadableString(data.job.deadlineTime);
+                    data.job.remainingTime = this.timeDifferenceToReadableString(data.job.remainingTime);
                     return data;
                 };
 
-                Dashboard.prototype.internalRender = function () {
+                Dashboard.prototype.internalRender = function (parent, propNamePrefix) {
+                    if (typeof parent === "undefined") { parent = null; }
+                    if (typeof propNamePrefix === "undefined") { propNamePrefix = null; }
+                    var propSplitter = '.';
+                    var cssPropertySplitter = '-';
                     var frames = Math.max(1, this.lastDataRequestFrameDiff) * 1.0;
-                    for (var name in this.latestData) {
-                        var $e = this.$cache[name] !== undefined ? this.$cache[name] : this.$cache[name] = $('.' + name);
-                        var value = this.latestData[name];
-                        if (typeof value == "number") {
-                            var prevValue = this.prevData[name];
-                            value = this.frameData[name] + (value - prevValue) / frames;
-                            this.frameData[name] = value;
+                    var object = parent != null ? parent : this.latestData;
+                    for (var propName in object) {
+                        var fullPropName = propNamePrefix != null ? propNamePrefix + propName : propName;
+                        var value = object[propName];
+                        var $e = this.$cache[fullPropName] !== undefined ? this.$cache[fullPropName] : this.$cache[fullPropName] = $('.' + this.replaceAll(fullPropName, propSplitter, cssPropertySplitter));
+                        if (typeof value === "number") {
+                            var prevValue = this.resolveObjectByPath(this.prevData, fullPropName);
+                            value = this.resolveObjectByPath(this.frameData, fullPropName) + (value - prevValue) / frames;
+                            if (propNamePrefix == null) {
+                                this.frameData[propName] = value;
+                            } else {
+                                var parentPropName = fullPropName.substr(0, fullPropName.lastIndexOf(propSplitter));
+                                this.resolveObjectByPath(this.frameData, parentPropName)[propName] = value;
+                            }
                             var $meters = $e.filter('[data-type="meter"]');
                             if ($meters.length > 0) {
                                 var minValue = $meters.data('min');
-                                if (/[a-z]/i.test(minValue)) {
-                                    minValue = this.latestData[minValue];
+                                if (/[a-z\-]/i.test(minValue)) {
+                                    minValue = this.resolveObjectByPath(this.latestData, this.replaceAll(minValue, cssPropertySplitter, propSplitter));
                                 }
                                 var maxValue = $meters.data('max');
-                                if (/[a-z]/i.test(maxValue)) {
-                                    maxValue = this.latestData[maxValue];
+                                if (/[a-z\-]/i.test(maxValue)) {
+                                    maxValue = this.resolveObjectByPath(this.latestData, this.replaceAll(maxValue, cssPropertySplitter, propSplitter));
                                 }
                                 this.setMeter($meters, value, parseFloat(minValue), parseFloat(maxValue));
                             } else {
@@ -190,14 +210,20 @@
                                     $notMeters.html(value);
                                 }
                             }
-                        } else if (typeof value == "boolean") {
+                        } else if (typeof value === "boolean") {
                             if (value) {
                                 $e.addClass('yes');
                             } else {
                                 $e.removeClass('yes');
                             }
-                        } else if (typeof value == "string") {
+                        } else if (typeof value === "string") {
                             $e.html(value);
+                        } else if ($.isArray(value)) {
+                            for (var j = 0; j < value.length; j++) {
+                                this.internalRender(value[j], fullPropName + propSplitter + j + propSplitter);
+                            }
+                        } else if (typeof value === "object") {
+                            this.internalRender(value, fullPropName + propSplitter);
                         }
                         $e.attr('data-value', value);
                     }
@@ -229,7 +255,8 @@
                         formatFloat: this.formatFloat,
                         preloadImages: function (images) {
                             return _this.preloadImages(skinConfig, images);
-                        }
+                        },
+                        resolveObjectByPath: this.resolveObjectByPath
                     };
                 };
 
@@ -279,6 +306,16 @@
                         return o;
                     }
                     return date;
+                };
+
+                Dashboard.prototype.replaceAll = function (input, search, replace) {
+                    return input.replace(new RegExp('\\' + search, 'g'), replace);
+                };
+
+                Dashboard.prototype.resolveObjectByPath = function (obj, path) {
+                    return path.split('.').reduce(function (prev, curr) {
+                        return prev ? prev[curr] : undefined;
+                    }, obj || self);
                 };
 
                 Dashboard.prototype.filter = function (data, utils) {

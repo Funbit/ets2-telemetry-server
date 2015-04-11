@@ -145,7 +145,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// Brand Id of the current truck. 
         /// Example: "man".
         /// </summary>
-        string MakeId { get; }
+        string Id { get; }
         /// <summary>
         /// Localized brand name of the current truck for display purposes.
         /// Example: "MAN".
@@ -303,7 +303,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// Average consumption of the adblue in liters/km.
         /// Example: 0
         /// </summary>
-        float AdblueConsumpton { get; }
+        float AdblueAverageConsumpton { get; }
         /// <summary>
         /// Pressure of the oil in psi.
         /// Example: 36.4550362
@@ -371,11 +371,6 @@ namespace Funbit.Ets.Telemetry.Server.Data
         IEts2Vector Hook { get; }
 
         /// <summary>
-        /// Dashboard indicators.
-        /// </summary>
-        IEts2TruckIndicators Indicators { get; }
-
-        /// <summary>
         /// List of all available truck (and trailer) wheels.
         /// </summary>
         IEts2Wheel[] Wheels { get; }
@@ -389,10 +384,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// One of the following values: "arcade", "automatic", "manual", "hshifter".
         /// </summary>
         string ShifterType { get; }
-    }
 
-    public interface IEts2TruckIndicators
-    {
         /// <summary>
         /// Indicates whether cruise control is turned on or off. 
         /// </summary>

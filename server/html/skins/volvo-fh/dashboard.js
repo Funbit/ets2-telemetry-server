@@ -2,19 +2,19 @@
 
 Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data, utils) {
     // round truck speed    
-    data.truckSpeedRounded = Math.abs(data.truckSpeed > 0
-        ? Math.floor(data.truckSpeed)
-        : Math.round(data.truckSpeed));
+    data.truck.speedRounded = Math.abs(data.truck.speed > 0
+        ? Math.floor(data.truck.speed)
+        : Math.round(data.truck.speed));
     // convert kilometers per hour to miles per hour (just an example)
-    data.truckSpeedMph = data.truckSpeed * 0.621371;
+    data.truck.speedMph = data.truck.speed * 0.621371;
     // convert kg to t
-    data.trailerMass = (data.trailerMass / 1000.0) + 't';
+    data.trailer.mass = (data.trailer.mass / 1000.0) + 't';
     // format odometer data as: 00000.0
-    data.truckOdometer = utils.formatFloat(data.truckOdometer, 1);
+    data.truck.odometer = utils.formatFloat(data.truck.odometer, 1);
     // convert gear to readable format
-    data.gear = data.gear > 0 ? 'D' + data.gear : (data.gear < 0 ? 'R' : 'N');
+    data.truck.gear = data.truck.gear > 0 ? 'D' + data.truck.gear : (data.truck.gear < 0 ? 'R' : 'N');
     // convert rpm to rpm * 100
-    data.engineRpm = data.engineRpm / 100;
+    data.truck.engineRpm = data.truck.engineRpm / 100;
     // return changed data to the core for rendering
     return data;
 };

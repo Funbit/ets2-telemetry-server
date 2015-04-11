@@ -1,27 +1,4 @@
-﻿/* 
-    *** DO NOT CHANGE THIS STYLESHEET *** 
-
-    If you want to create your own dashboard skin (or tweak something)
-    create a copy of the "/skins/template" directory and rename it
-    to something like: "/skins/your_skin_name" and edit config.json file inside.
-    For more information see skin tutorial PDF.
-
-    CSS naming convention:
-
-    - Dashboard core script maps all telemetry data properties to respective class names,
-      so truck's speed will be .truckSpeed and current gear is .gear (see JSON).
-    - All boolean telemetry properties will have a special ".yes" class added 
-      when the value is true (will be removed if value is false).
-    - When dashboard core script updates DOM it will always add 
-      data-value attribute containing current value, so you 
-      can use it to have custom css selectors based on the actual data 
-      (for example, this skin uses .gear[data-value="N"] to define
-      different style for neutral or reverse gear, see below).
-    - If you need to define your own style related classes.
-      I stronly recommend to use underscore prefix ("._job" for example) to distinguish names,
-      so you will never forget which classes are dynamic and which are static.
-*/
-.hidden {
+﻿.hidden {
   visibility: hidden;
 }
 .visible {
@@ -30,7 +7,7 @@
 .dashboard {
   background-image: url("images/bg-on.jpg");
 }
-.truckSpeed[data-type="meter"] {
+.truck-speed[data-type="meter"] {
   visibility: visible;
   position: absolute;
   left: 1563px;
@@ -49,7 +26,7 @@
   -o-transform-origin: 50% 212px;
   transform-origin: 50% 212px;
 }
-.engineRpm {
+.truck-engineRpm {
   position: absolute;
   left: 495px;
   top: 396px;
@@ -67,7 +44,7 @@
   -o-transform-origin: 50% 212px;
   transform-origin: 50% 212px;
 }
-.fuel {
+.truck-fuel {
   position: absolute;
   left: 308px;
   top: 916px;
@@ -85,7 +62,7 @@
   -o-transform-origin: 50% 112px;
   transform-origin: 50% 112px;
 }
-.waterTemperature {
+.truck-waterTemperature {
   position: absolute;
   left: 671px;
   top: 914px;
@@ -103,7 +80,7 @@
   -o-transform-origin: 50% 112px;
   transform-origin: 50% 112px;
 }
-.waterTemperature {
+.truck-waterTemperature {
   position: absolute;
   left: 671px;
   top: 914px;
@@ -121,7 +98,7 @@
   -o-transform-origin: 50% 112px;
   transform-origin: 50% 112px;
 }
-.truckSpeedRounded {
+.truck-speedRounded {
   color: #B2B5AF;
   font-family: Courier New, Courier, monospace;
   font-weight: bold;
@@ -133,7 +110,7 @@
   height: 66px;
   text-align: left;
 }
-.gear {
+.truck-gear {
   color: #B2B5AF;
   font-family: Courier New, Courier, monospace;
   font-weight: bold;
@@ -145,13 +122,13 @@
   height: 89px;
   text-align: center;
 }
-.gear[data-value="N"] {
+.truck-gear[data-value="N"] {
   color: #B2B5AF;
 }
-.gear[data-value="R"] {
+.truck-gear[data-value="R"] {
   color: #B2B5AF;
 }
-.truckOdometer {
+.truck-odometer {
   color: #B3A099;
   font-family: Courier New, Courier, monospace;
   font-weight: ;
@@ -163,7 +140,7 @@
   height: 41px;
   text-align: right;
 }
-.blinkerLeftOn {
+.truck-blinkerLeftOn {
   background-image: url("images/blinker-left-off.png");
   position: absolute;
   left: 687px;
@@ -171,10 +148,10 @@
   width: 102px;
   height: 92px;
 }
-.blinkerLeftOn.yes {
+.truck-blinkerLeftOn.yes {
   background-image: url("images/blinker-left-on.png");
 }
-.blinkerRightOn {
+.truck-blinkerRightOn {
   background-image: url("images/blinker-right-off.png");
   position: absolute;
   left: 1288px;
@@ -182,10 +159,10 @@
   width: 102px;
   height: 92px;
 }
-.blinkerRightOn.yes {
+.truck-blinkerRightOn.yes {
   background-image: url("images/blinker-right-on.png");
 }
-.cruiseControlOn {
+.truck-cruiseControlOn {
   background-image: url("images/cruise-on.png");
   position: absolute;
   left: 1145px;
@@ -193,10 +170,10 @@
   width: 92px;
   height: 69px;
 }
-.cruiseControlOn.yes {
+.truck-cruiseControlOn.yes {
   background-image: url("images/cruise-on.png");
 }
-.lightsBeamHighOn {
+.truck-lightsBeamHighOn {
   background-image: url("images/highbeam-off.png");
   position: absolute;
   left: 532px;
@@ -204,10 +181,10 @@
   width: 47px;
   height: 41px;
 }
-.lightsBeamHighOn.yes {
+.truck-lightsBeamHighOn.yes {
   background-image: url("images/highbeam-on.png");
 }
-.lightsBeamLowOn {
+.truck-lightsBeamLowOn {
   background-image: url("images/lowbeam-off.png");
   position: absolute;
   left: 474px;
@@ -215,10 +192,10 @@
   width: 48px;
   height: 38px;
 }
-.lightsBeamLowOn.yes {
+.truck-lightsBeamLowOn.yes {
   background-image: url("images/lowbeam-on.png");
 }
-.lightsParkingOn {
+.truck-lightsParkingOn {
   background-image: url("images/parklights-off.png");
   position: absolute;
   left: 418px;
@@ -226,10 +203,10 @@
   width: 49px;
   height: 42px;
 }
-.lightsParkingOn.yes {
+.truck-lightsParkingOn.yes {
   background-image: url("images/parklights-on.png");
 }
-.trailerMass {
+.trailer-mass {
   color: #B2B5AF;
   font-family: Courier New, Courier, monospace;
   font-size: 30px;
@@ -241,7 +218,7 @@
   height: 40px;
   text-align: left;
 }
-.parkBrakeOn {
+.truck-parkBrakeOn {
   background-image: url("images/parking-brake-off.png");
   font-family: Arial, Tahoma;
   font-size: 40px;
@@ -254,10 +231,10 @@
   text-align: left;
   overflow: hidden;
 }
-.parkBrakeOn.yes {
+.truck-parkBrakeOn.yes {
   background-image: url("images/parking-brake.png");
 }
-.airPressureWarning {
+.truck-airPressureWarningOn {
   background-image: url("images/air-warning-off.png");
   font-family: Arial, Tahoma;
   font-size: 40px;
@@ -270,10 +247,10 @@
   text-align: left;
   overflow: hidden;
 }
-.airPressureWarning.yes {
+.truck-airPressureWarningOn.yes {
   background-image: url("images/air-warning.png");
 }
-.retarderBrake {
+.truck-retarderBrake {
   color: #B2B5AF;
   font-family: Courier New, Courier, monospace;
   font-size: 35px;
@@ -285,7 +262,7 @@
   height: 45px;
   text-align: left;
 }
-.oilTemperature {
+.truck-oilTemperature {
   color: #B2B5AF;
   font-family: Courier New, Courier, monospace;
   font-size: 30px;
@@ -299,7 +276,7 @@
   overflow: hidden;
 
 }
-.batteryVoltage {
+.truck-batteryVoltage {
   color: #B2B5AF;
   font-family: Courier New, Courier, monospace;
   font-size: 30px;
@@ -321,7 +298,7 @@
   height: 57px;
   font-size: 27px;
 }
-.airPressure {
+.truck-airPressure {
   position: absolute;
   left: 1408px;
   top: 914px;
@@ -339,7 +316,7 @@
   -o-transform-origin: 50% 112px;
   transform-origin: 50% 112px;
 }
-.airPressureEmergency {
+.truck-airPressureEmergencyOn {
   background-image: url("images/warning-off.png");
   position: absolute;
   left: 1017px;
@@ -347,6 +324,6 @@
   width: 45px;
   height: 45px;
 }
-.airPressureEmergency.yes {
+.truck-airPressureEmergencyOn.yes {
   background-image: url("images/warning.png");
 }

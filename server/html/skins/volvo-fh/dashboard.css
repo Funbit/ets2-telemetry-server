@@ -9,14 +9,14 @@
     CSS naming convention:
 
     - Dashboard core script maps all telemetry data properties to respective class names,
-      so truck's speed will be .truckSpeed and current gear is .gear (see JSON).
+      so truck's speed will be .truck-speed and current truck-gear is .truck-gear (see JSON).
     - All boolean telemetry properties will have a special ".yes" class added 
       when the value is true (will be removed if value is false).
     - When dashboard core script updates DOM it will always add 
       data-value attribute containing current value, so you 
       can use it to have custom css selectors based on the actual data 
-      (for example, this skin uses .gear[data-value="N"] to define
-      different style for neutral or reverse gear, see below).
+      (for example, this skin uses .truck-gear[data-value="N"] to define
+      different style for neutral or reverse truck-gear, see below).
     - If you need to define your own style related classes.
       I stronly recommend to use underscore prefix ("._job" for example) to distinguish names,
       so you will never forget which classes are dynamic and which are static.
@@ -30,7 +30,7 @@
 .dashboard {
   background-image: url("images/bg-on.jpg");  
 }
-.truckSpeedRounded {
+.truck-speedRounded {
   color: #D3D395;
   font-family: Courier New, Courier, monospace;
   font-weight: bold;
@@ -42,7 +42,7 @@
   height: 66px;
   text-align: right;
 }
-.truckSpeed[data-type="meter"] {
+.truck-speed[data-type="meter"] {
   visibility: visible;
   position: absolute;
   left: 996px;
@@ -61,7 +61,7 @@
   -o-transform-origin: 50% 230px;
   transform-origin: 50% 230px;
 }
-.engineRpm {
+.truck-engineRpm {
   position: absolute;
   left: 1000px;
   top: 365px;
@@ -79,7 +79,7 @@
   -o-transform-origin: 50% 190px;
   transform-origin: 50% 190px;
 }
-.gear {
+.truck-gear {
   color: #D3D395;
   font-family: Courier New, Courier, monospace;
   font-weight: bold;
@@ -91,13 +91,13 @@
   height: 100px;
   text-align: center;
 }
-.gear[data-value="N"] {
+.truck-gear[data-value="N"] {
   color: #D3D395;
 }
-.gear[data-value="R"] {
+.truck-gear[data-value="R"] {
   color: #D3D395;
 }
-.truckOdometer {
+.truck-odometer {
   color: #D3D395;
   font-family: Courier New, Courier, monospace;
   font-weight: bold;
@@ -109,7 +109,7 @@
   height: 70px;
   text-align: right;
 }
-.blinkerLeftOn {
+.truck-blinkerLeftOn {
   background-image: url("images/blinker-left-off.png");
   position: absolute;
   left: 692px;
@@ -117,10 +117,10 @@
   width: 120px;
   height: 120px;
 }
-.blinkerLeftOn.yes {
+.truck-blinkerLeftOn.yes {
   background-image: url("images/blinker-left-on.png");
 }
-.blinkerRightOn {
+.truck-blinkerRightOn {
   background-image: url("images/blinker-right-off.png");
   position: absolute;
   left: 1204px;
@@ -128,10 +128,10 @@
   width: 120px;
   height: 120px;
 }
-.blinkerRightOn.yes {
+.truck-blinkerRightOn.yes {
   background-image: url("images/blinker-right-on.png");
 }
-.lightsBeamHighOn {
+.truck-lightsBeamHighOn {
   background-image: url("images/highbeam-off.png");
   position: absolute;
   left: 475px;
@@ -139,10 +139,10 @@
   width: 40px;
   height: 23px;
 }
-.lightsBeamHighOn.yes {
+.truck-lightsBeamHighOn.yes {
   background-image: url("images/highbeam-on.png");
 }
-.lightsBeamLowOn {
+.truck-lightsBeamLowOn {
   background-image: url("images/lowbeam-off.png");
   position: absolute;
   left: 400px;
@@ -150,10 +150,10 @@
   width: 40px;
   height: 23px;
 }
-.lightsBeamLowOn.yes {
+.truck-lightsBeamLowOn.yes {
   background-image: url("images/lowbeam-on.png");
 }
-.lightsParkingOn {
+.truck-lightsParkingOn {
   background-image: url("images/parklights-off.png");
   position: absolute;
   left: 326px;
@@ -161,10 +161,10 @@
   width:  40px;
   height: 23px;
 }
-.lightsParkingOn.yes {
+.truck-lightsParkingOn.yes {
   background-image: url("images/parklights-on.png");
 }
-.parkBrakeOn {
+.truck-parkBrakeOn {
   background-image: url("images/parkBrakeOn-off.png");
   position: absolute;
   left: 1380px;
@@ -172,10 +172,10 @@
   width:  75px;
   height: 55px;
 }
-.parkBrakeOn.yes {
+.truck-parkBrakeOn.yes {
   background-image: url("images/parkBrakeOn.png");
   }
-.airPressureWarning {
+.truck-airPressureWarningOn {
   background-image: url("images/warning-off.png");
   position: absolute;
   left: 1480px;
@@ -183,10 +183,10 @@
   width:  65px;
   height: 55px;
 }
-.airPressureWarning.yes {
+.truck-airPressureWarningOn.yes {
   background-image: url("images/warning.png");
   }
-.trailerMass {
+.trailer-mass {
   color: #D3D395;
   font-family: Arial, Tahoma;
   font-weight: bold;
@@ -198,7 +198,7 @@
   height: 80px;
   text-align: left;
 }
-.trailerName {
+.trailer-name {
   color: #D3D395;
   font-family: Arial, Tahoma;
   font-size: 28px;
@@ -211,7 +211,7 @@
   text-align: left;
   overflow: hidden;
 }
-.waterTemperature {
+.truck-waterTemperature {
   color: #D3D395;
   font-family: Arial, Tahoma;
   font-size: 35px;
@@ -224,7 +224,7 @@
   text-align: right;
   overflow: hidden;
 }
-.oilTemperature {
+.truck-oilTemperature {
   color: #D3D395;
   font-family: Arial, Tahoma;
   font-size: 35px;
@@ -237,7 +237,7 @@
   text-align: right;
   overflow: hidden;
 }
-.batteryVoltage {
+.truck-batteryVoltage {
   color: #D3D395;
   font-family: Arial, Tahoma;
   font-size: 35px;
@@ -263,7 +263,7 @@
   text-align: left;
   overflow: hidden;
 }
-.retarderBrake {
+.truck-retarderBrake {
   color: #D3D395;
   font-family: Courier New, Courier, monospace;
   font-weight: bold;
@@ -275,7 +275,7 @@
   height: 66px;
   text-align: right;
 }
-.retarderBrake.yes {
+.truck-retarderBrake.yes {
   background-image: url("images/retarder.png");
   position: absolute;
   left: 1074px;
@@ -284,7 +284,7 @@
   height: 33px;
 }
 
-.fuel {
+.truck-fuel {
   color: #D3D395;
   font-family: Arial, Tahoma;
   font-size: 28px;

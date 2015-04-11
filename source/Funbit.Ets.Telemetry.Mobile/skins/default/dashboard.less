@@ -159,7 +159,7 @@
     text-align: right;
 }
 
-.truck-indicators-blinkerLeftOn {
+.truck-blinkerLeftOn {
     background-image: url("images/blinker-left-off.png");
     position: absolute;
     left: 98px;
@@ -169,7 +169,7 @@
     &.yes { background-image: url("images/blinker-left-on.png") }
 }
 
-.truck-indicators-blinkerRightOn {
+.truck-blinkerRightOn {
     background-image: url("images/blinker-right-off.png");
     position: absolute;
     left: 950px;
@@ -179,7 +179,7 @@
     &.yes { background-image: url("images/blinker-right-on.png") }
 }
 
-.truck-indicators-cruiseControlOn {
+.truck-cruiseControlOn {
     background-image: url("images/cruise-off.png");
     position: absolute;
     left: 687px;
@@ -194,7 +194,7 @@
     top: 431px;
 }
 
-.truck-indicators-lightsBeamHighOn {
+.truck-lightsBeamHighOn {
     background-image: url("images/highbeam-off.png");
     position: absolute;
     left: 1358px;
@@ -204,7 +204,7 @@
     &.yes { background-image: url("images/highbeam-on.png") }
 }
 
-.truck-indicators-lightsBeamLowOn {
+.truck-lightsBeamLowOn {
     background-image: url("images/lowbeam-off.png");
     position: absolute;
     left: 1358px;
@@ -214,7 +214,7 @@
     &.yes { background-image: url("images/lowbeam-on.png") }
 }
 
-.truck-indicators-lightsParkingOn {
+.truck-lightsParkingOn {
     background-image: url("images/parklights-off.png");
     position: absolute;
     left: 1484px;
@@ -276,9 +276,9 @@
 // elements which are hidden by default
 
 .truck-gear,
-.truck-indicators-blinkerLeftOn,
-.truck-indicators-blinkerRightOn,
-.truck-indicators-cruiseControlOn,
+.truck-blinkerLeftOn,
+.truck-blinkerRightOn,
+.truck-cruiseControlOn,
 .truck-odometer,
 .truck-speedRounded,
 .truck-cruiseControlSpeedRounded[data-value="0"],
@@ -296,9 +296,9 @@
 // elements which are visible only when dashboard is connected
 
 .dashboard.connected.yes {    
-    .truck-indicators-blinkerLeftOn,
-    .truck-indicators-blinkerRightOn,
-    .truck-indicators-cruiseControlOn,
+    .truck-blinkerLeftOn,
+    .truck-blinkerRightOn,
+    .truck-cruiseControlOn,
     .truck-gear,
     ._truckWearInfo,
     ._trailerWearInfo,

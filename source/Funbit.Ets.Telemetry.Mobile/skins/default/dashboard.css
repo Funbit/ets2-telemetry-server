@@ -151,7 +151,7 @@
   height: 70px;
   text-align: right;
 }
-.truck-indicators-blinkerLeftOn {
+.truck-blinkerLeftOn {
   background-image: url("images/blinker-left-off.png");
   position: absolute;
   left: 98px;
@@ -159,10 +159,10 @@
   width: 102px;
   height: 92px;
 }
-.truck-indicators-blinkerLeftOn.yes {
+.truck-blinkerLeftOn.yes {
   background-image: url("images/blinker-left-on.png");
 }
-.truck-indicators-blinkerRightOn {
+.truck-blinkerRightOn {
   background-image: url("images/blinker-right-off.png");
   position: absolute;
   left: 950px;
@@ -170,10 +170,10 @@
   width: 102px;
   height: 92px;
 }
-.truck-indicators-blinkerRightOn.yes {
+.truck-blinkerRightOn.yes {
   background-image: url("images/blinker-right-on.png");
 }
-.truck-indicators-cruiseControlOn {
+.truck-cruiseControlOn {
   background-image: url("images/cruise-off.png");
   position: absolute;
   left: 687px;
@@ -181,14 +181,14 @@
   width: 82px;
   height: 72px;
 }
-.truck-indicators-cruiseControlOn.yes {
+.truck-cruiseControlOn.yes {
   background-image: url("images/cruise-on.png");
 }
 .truck-cruiseControlSpeedRounded {
   color: #24b999;
   top: 431px;
 }
-.truck-indicators-lightsBeamHighOn {
+.truck-lightsBeamHighOn {
   background-image: url("images/highbeam-off.png");
   position: absolute;
   left: 1358px;
@@ -196,10 +196,10 @@
   width: 123px;
   height: 90px;
 }
-.truck-indicators-lightsBeamHighOn.yes {
+.truck-lightsBeamHighOn.yes {
   background-image: url("images/highbeam-on.png");
 }
-.truck-indicators-lightsBeamLowOn {
+.truck-lightsBeamLowOn {
   background-image: url("images/lowbeam-off.png");
   position: absolute;
   left: 1358px;
@@ -207,10 +207,10 @@
   width: 123px;
   height: 90px;
 }
-.truck-indicators-lightsBeamLowOn.yes {
+.truck-lightsBeamLowOn.yes {
   background-image: url("images/lowbeam-on.png");
 }
-.truck-indicators-lightsParkingOn {
+.truck-lightsParkingOn {
   background-image: url("images/parklights-off.png");
   position: absolute;
   left: 1484px;
@@ -218,7 +218,7 @@
   width: 104px;
   height: 98px;
 }
-.truck-indicators-lightsParkingOn.yes {
+.truck-lightsParkingOn.yes {
   background-image: url("images/parklights-on.png");
 }
 .trailer-attached {
@@ -267,9 +267,9 @@
   color: #5dd954;
 }
 .truck-gear,
-.truck-indicators-blinkerLeftOn,
-.truck-indicators-blinkerRightOn,
-.truck-indicators-cruiseControlOn,
+.truck-blinkerLeftOn,
+.truck-blinkerRightOn,
+.truck-cruiseControlOn,
 .truck-odometer,
 .truck-speedRounded,
 .truck-cruiseControlSpeedRounded[data-value="0"],
@@ -283,9 +283,9 @@
 ._jobDestionation {
   visibility: hidden;
 }
-.dashboard.connected.yes .truck-indicators-blinkerLeftOn,
-.dashboard.connected.yes .truck-indicators-blinkerRightOn,
-.dashboard.connected.yes .truck-indicators-cruiseControlOn,
+.dashboard.connected.yes .truck-blinkerLeftOn,
+.dashboard.connected.yes .truck-blinkerRightOn,
+.dashboard.connected.yes .truck-cruiseControlOn,
 .dashboard.connected.yes .truck-gear,
 .dashboard.connected.yes ._truckWearInfo,
 .dashboard.connected.yes ._trailerWearInfo,

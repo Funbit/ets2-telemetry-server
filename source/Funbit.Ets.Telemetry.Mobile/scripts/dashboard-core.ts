@@ -10,7 +10,7 @@ module Funbit.Ets.Telemetry {
         deadlineTime: string = '';  // absolute time in ISO8601
         remainingTime: string = ''; // absolute time in ISO8601
     }
-
+    
     class Ets2TelemetryData {
         gameTime: string = '';  // absolute time in ISO8601
         job: Ets2JobMock;
@@ -19,6 +19,11 @@ module Funbit.Ets.Telemetry {
         connected: boolean = false;
         // the rest properties are not defined here
         // (see IEts2TelemetryData.cs for reference)
+        constructor() {
+            this.truck = {};
+            this.trailer = {};
+            this.job = new Ets2JobMock();
+        }
     }
 
     export class Dashboard {
@@ -190,8 +195,8 @@ module Funbit.Ets.Telemetry {
                 var value = object[propName];
                 var $e = this.$cache[fullPropName] !== undefined
                     ? this.$cache[fullPropName]
-                    : this.$cache[fullPropName] = $('.' + fullPropName
-                        .replace(new RegExp('\\' + propSplitter, 'g'), cssPropertySplitter));
+                    : this.$cache[fullPropName] = $('.' + this
+                        .replaceAll(fullPropName, propSplitter, cssPropertySplitter));
                 if (typeof value === "number") {
                     // calculate interpolated value for current frame
                     var prevValue = this.resolveObjectByPath(this.prevData, fullPropName);
@@ -211,18 +216,20 @@ module Funbit.Ets.Telemetry {
                         // then we use this HTML element 
                         // as a rotating meter "arrow"
                         var minValue = $meters.data('min');
-                        if (/[a-z]/i.test(minValue)) {
+                        if (/[a-z\-]/i.test(minValue)) {
                             // if data-min attribute points
                             // to a property name then we use its value
                             minValue = this.resolveObjectByPath(
-                                this.latestData, minValue);
+                                this.latestData,
+                                this.replaceAll(minValue, cssPropertySplitter, propSplitter));
                         }
                         var maxValue = $meters.data('max');
-                        if (/[a-z]/i.test(maxValue)) {
+                        if (/[a-z\-]/i.test(maxValue)) {
                             // if data-max attribute points
                             // to a property name then we use its value
                             maxValue = this.resolveObjectByPath(
-                                this.latestData, maxValue);
+                                this.latestData,
+                                this.replaceAll(maxValue, cssPropertySplitter, propSplitter));
                         }
                         this.setMeter($meters, value,
                             parseFloat(minValue), parseFloat(maxValue));
@@ -342,6 +349,10 @@ module Funbit.Ets.Telemetry {
                 return o;
             }
             return date;
+        }
+
+        private replaceAll(input: string, search: string, replace: string): string {
+            return input.replace(new RegExp('\\' + search, 'g'), replace);
         }
 
         private resolveObjectByPath(obj: any, path: string): any {
