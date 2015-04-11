@@ -4,13 +4,21 @@
 
 module Funbit.Ets.Telemetry {
 
+    // forward declaration for properties and objects
+
+    class Ets2JobMock {
+        deadlineTime: string = '';  // absolute time in ISO8601
+        remainingTime: string = ''; // absolute time in ISO8601
+    }
+
     class Ets2TelemetryData {
-        gameTime: string = '';                   // absolute time in ISO8601
-        jobDeadlineTime: string = '';            // absolute time in ISO8601
-        jobRemainingTime: string = '';           // time difference in ISO8601
+        gameTime: string = '';  // absolute time in ISO8601
+        job: Ets2JobMock;
+        truck: any;
+        trailer: any;
         connected: boolean = false;
         // the rest properties are not defined here
-        // (see IEts2TelemetryData.cs or JSON contents for reference)
+        // (see IEts2TelemetryData.cs for reference)
     }
 
     export class Dashboard {
@@ -167,23 +175,36 @@ module Funbit.Ets.Telemetry {
         private internalFilter(data: Ets2TelemetryData): Ets2TelemetryData {
             // convert ISO8601 to default readable format
             data.gameTime = this.timeToReadableString(data.gameTime);
-            data.jobDeadlineTime = this.timeToReadableString(data.jobDeadlineTime);
-            data.jobRemainingTime = this.timeDifferenceToReadableString(data.jobRemainingTime);
+            data.job.deadlineTime = this.timeToReadableString(data.job.deadlineTime);
+            data.job.remainingTime = this.timeDifferenceToReadableString(data.job.remainingTime);
             return data;
         }
 
-        private internalRender() {
+        private internalRender(parent: any = null, propNamePrefix: string = null) {
+            var propSplitter = '.';
+            var cssPropertySplitter = '-';
             var frames = Math.max(1, this.lastDataRequestFrameDiff) * 1.0;
-            for (var name in this.latestData) {
-                var $e = this.$cache[name] !== undefined
-                    ? this.$cache[name]
-                    : this.$cache[name] = $('.' + name);
-                var value = this.latestData[name];
-                if (typeof value == "number") {
+            var object = parent != null ? parent : this.latestData;
+            for (var propName in object) {
+                var fullPropName = propNamePrefix != null ? propNamePrefix + propName : propName;
+                var value = object[propName];
+                var $e = this.$cache[fullPropName] !== undefined
+                    ? this.$cache[fullPropName]
+                    : this.$cache[fullPropName] = $('.' + fullPropName
+                        .replace(new RegExp('\\' + propSplitter, 'g'), cssPropertySplitter));
+                if (typeof value === "number") {
                     // calculate interpolated value for current frame
-                    var prevValue = this.prevData[name];
-                    value = this.frameData[name] + (value - prevValue) / frames;
-                    this.frameData[name] = value;
+                    var prevValue = this.resolveObjectByPath(this.prevData, fullPropName);
+                    value = this.resolveObjectByPath(
+                        this.frameData, fullPropName) + (value - prevValue) / frames;
+                    if (propNamePrefix == null) {
+                        this.frameData[propName] = value;
+                    } else {
+                        var parentPropName = fullPropName.substr(
+                            0, fullPropName.lastIndexOf(propSplitter));
+                        this.resolveObjectByPath(
+                            this.frameData, parentPropName)[propName] = value;
+                    }
                     var $meters = $e.filter('[data-type="meter"]');
                     if ($meters.length > 0) {
                         // if type is set to meter 
@@ -193,13 +214,15 @@ module Funbit.Ets.Telemetry {
                         if (/[a-z]/i.test(minValue)) {
                             // if data-min attribute points
                             // to a property name then we use its value
-                            minValue = this.latestData[minValue];
+                            minValue = this.resolveObjectByPath(
+                                this.latestData, minValue);
                         }
                         var maxValue = $meters.data('max');
                         if (/[a-z]/i.test(maxValue)) {
                             // if data-max attribute points
                             // to a property name then we use its value
-                            maxValue = this.latestData[maxValue];
+                            maxValue = this.resolveObjectByPath(
+                                this.latestData, maxValue);
                         }
                         this.setMeter($meters, value,
                             parseFloat(minValue), parseFloat(maxValue));
@@ -212,16 +235,26 @@ module Funbit.Ets.Telemetry {
                             $notMeters.html(value);
                         }
                     }
-                } else if (typeof value == "boolean") {
+                } else if (typeof value === "boolean") {
                     // render boolean by adding/removing "yes" CSS class
                     if (value) {
                         $e.addClass('yes');
                     } else {
                         $e.removeClass('yes');
                     }
-                } else if (typeof value == "string") {
+                } else if (typeof value === "string") {
                     // render string value by updating HTML element content
                     $e.html(value);
+                } else if ($.isArray(value)) {
+                    // recursively process arrays
+                    for (var j = 0; j < value.length; j++) {
+                        this.internalRender(value[j],
+                            fullPropName + propSplitter + j + propSplitter);
+                    }
+                } else if (typeof value === "object") {
+                    // recursively process complex objects
+                    this.internalRender(value,
+                        fullPropName + propSplitter);
                 }
                 $e.attr('data-value', value);
             }
@@ -252,7 +285,8 @@ module Funbit.Ets.Telemetry {
             return {
                 formatInteger: this.formatInteger,
                 formatFloat: this.formatFloat,
-                preloadImages: images => this.preloadImages(skinConfig, images)
+                preloadImages: images => this.preloadImages(skinConfig, images),
+                resolveObjectByPath: this.resolveObjectByPath
             }
         }
 
@@ -310,6 +344,18 @@ module Funbit.Ets.Telemetry {
             return date;
         }
 
+        private resolveObjectByPath(obj: any, path: string): any {
+            // access obj by property path, 
+            // example:
+            // "truck.speed"
+            // "truck.wheels"
+            // or for array elements:
+            // "truck.wheels.0.steerable
+            return path.split('.').reduce(
+                (prev, curr) =>
+                    prev ? prev[curr] : undefined, obj || self)
+        }
+
         // "forward" declarations for custom skins:
 
         // define custom data filter method for skins
@@ -326,7 +372,6 @@ module Funbit.Ets.Telemetry {
         private initialize(skinConfig: ISkinConfiguration, utils: any) {
             return;
         }
-        
     }
 
 }

@@ -34,30 +34,31 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data, utils) {
     // before it is displayed on the dashboard.
     // You may convert km/h to mph, kilograms to tons, etc.
 
+    data.hasJob = data.trailer.attached;
     // round truck speed
-    data.truckSpeedRounded = Math.abs(data.truckSpeed > 0
-        ? Math.floor(data.truckSpeed)
-        : Math.round(data.truckSpeed));
-    data.cruiseControlSpeedRounded = data.cruiseControlOn
-        ? Math.floor(data.cruiseControlSpeed)
+    data.truck.speedRounded = Math.abs(data.truck.speed > 0
+        ? Math.floor(data.truck.speed)
+        : Math.round(data.truck.speed));
+    data.truck.cruiseControlSpeedRounded = data.truck.cruiseControlOn
+        ? Math.floor(data.truck.cruiseControlSpeed)
         : 0;
     // convert kg to t
-    data.trailerMass = data.hasJob ? ((data.trailerMass / 1000.0) + 't') : '';
+    data.trailer.mass = data.hasJob ? ((data.trailer.mass / 1000.0) + 't') : '';
     // format odometer data as: 00000.0
-    data.truckOdometer = utils.formatFloat(data.truckOdometer, 1);
+    data.truck.odometer = utils.formatFloat(data.truck.odometer, 1);
     // convert gear to readable format
-    data.gear = data.gear > 0 ? 'D' + data.gear : (data.gear < 0 ? 'R' : 'N');
+    data.truck.gear = data.truck.gear > 0 ? 'D' + data.truck.gear : (data.truck.gear < 0 ? 'R' : 'N');
     // convert rpm to rpm * 100
-    data.engineRpm = data.engineRpm / 100;
+    data.truck.engineRpm = data.truck.engineRpm / 100;
     // calculate wear
-    var wearSumPercent = data.wearEngine * 100 +
-        data.wearTransmission * 100 +
-        data.wearCabin * 100 +
-        data.wearChassis * 100 +
-        data.wearWheels * 100;
+    var wearSumPercent = data.truck.engineWear * 100 +
+        data.truck.transmissionWear * 100 +
+        data.truck.cabinWear * 100 +
+        data.truck.chassisWear * 100 +
+        data.truck.wheelsWear * 100;
     wearSumPercent = Math.min(wearSumPercent, 100);
-    data.wearSum = Math.round(wearSumPercent) + '%';
-    data.wearTrailer = Math.round(data.wearTrailer * 100) + '%';
+    data.truck.wearSum = Math.round(wearSumPercent) + '%';
+    data.trailer.wear = Math.round(data.trailer.wear * 100) + '%';
     // return changed data to the core for rendering
     return data;
 };

@@ -11,13 +11,13 @@
     CSS naming convention:
 
     - Dashboard core script maps all telemetry data properties to respective class names,
-      so truck's speed will be .truckSpeed and current gear is .gear (see JSON).
+      so truck's speed will be .truck-speed and current gear is .truck-gear (see JSON).
     - All boolean telemetry properties will have a special ".yes" class added 
       when the value is true (will be removed if value is false).
     - When dashboard core script updates DOM it will always add 
       data-value attribute containing current value, so you 
       can use it to have custom css selectors based on the actual data 
-      (for example, this skin uses .gear[data-value="N"] to define
+      (for example, this skin uses .truck-gear[data-value="N"] to define
       different style for neutral or reverse gear, see below).
     - If you need to define your own style related classes.
       I stronly recommend to use underscore prefix ("._job" for example) to distinguish names,
@@ -65,7 +65,7 @@
 
 // meters
 
-.truckSpeed[data-type="meter"] {
+.truck-speed[data-type="meter"] {
     .visible;
     position: absolute;
     left: 571px;
@@ -77,7 +77,7 @@
     .setOrigin(50%, 440px);
 }
 
-.engineRpm {
+.truck-engineRpm {
     position: absolute;
     left: 1580px;
     top: 105px;
@@ -88,7 +88,7 @@
     .setOrigin(50%, 336px);    
 }
 
-.fuel {
+.truck-fuel {
     position: absolute;
     left: 1452px;
     top: 546px;
@@ -99,7 +99,7 @@
     .setOrigin(50%, 198px);    
 }
 
-.waterTemperature {
+.truck-waterTemperature {
     position: absolute;
     left: 1788px;
     top: 546px;
@@ -112,7 +112,7 @@
 
 // other elements
 
-.truckSpeedRounded, .cruiseControlSpeedRounded {
+.truck-speedRounded, .truck-cruiseControlSpeedRounded {
     color: #2491b9;
     font-family: Courier New, Courier, monospace;
     font-weight: bold;
@@ -125,7 +125,7 @@
     text-align: right;    
 }
 
-.gear {
+.truck-gear {
     color: #35b32e;
     font-family: Courier New, Courier, monospace;
     font-weight: bold;
@@ -138,15 +138,15 @@
     text-align: center;
 }
 
-.gear[data-value="N"] {
+.truck-gear[data-value="N"] {
     color: #2c8a26;
 }
 
-.gear[data-value="R"] {
+.truck-gear[data-value="R"] {
     color: #ddff00;
 }
 
-.truckOdometer {
+.truck-odometer {
     color: #1a6783;
     font-family: Courier New, Courier, monospace;
     font-weight: bold;
@@ -159,7 +159,7 @@
     text-align: right;
 }
 
-.blinkerLeftOn {
+.truck-indicators-blinkerLeftOn {
     background-image: url("images/blinker-left-off.png");
     position: absolute;
     left: 98px;
@@ -169,7 +169,7 @@
     &.yes { background-image: url("images/blinker-left-on.png") }
 }
 
-.blinkerRightOn {
+.truck-indicators-blinkerRightOn {
     background-image: url("images/blinker-right-off.png");
     position: absolute;
     left: 950px;
@@ -179,7 +179,7 @@
     &.yes { background-image: url("images/blinker-right-on.png") }
 }
 
-.cruiseControlOn {
+.truck-indicators-cruiseControlOn {
     background-image: url("images/cruise-off.png");
     position: absolute;
     left: 687px;
@@ -189,12 +189,12 @@
     &.yes { background-image: url("images/cruise-on.png") }
 }
 
-.cruiseControlSpeedRounded {    
+.truck-cruiseControlSpeedRounded {    
     color: #24b999;
     top: 431px;
 }
 
-.lightsBeamHighOn {
+.truck-indicators-lightsBeamHighOn {
     background-image: url("images/highbeam-off.png");
     position: absolute;
     left: 1358px;
@@ -204,7 +204,7 @@
     &.yes { background-image: url("images/highbeam-on.png") }
 }
 
-.lightsBeamLowOn {
+.truck-indicators-lightsBeamLowOn {
     background-image: url("images/lowbeam-off.png");
     position: absolute;
     left: 1358px;
@@ -214,7 +214,7 @@
     &.yes { background-image: url("images/lowbeam-on.png") }
 }
 
-.lightsParkingOn {
+.truck-indicators-lightsParkingOn {
     background-image: url("images/parklights-off.png");
     position: absolute;
     left: 1484px;
@@ -224,7 +224,7 @@
     &.yes { background-image: url("images/parklights-on.png") }
 }
 
-.trailerAttached {
+.trailer-attached {
     background-image: url("images/trailer-off.png");
     position: absolute;
     left: 1726px;
@@ -234,7 +234,7 @@
     &.yes { background-image: url("images/trailer-on.png") }
 }
 
-.trailerMass {
+.trailer-mass {
     color: #3e3b60;
     font-family: Courier New, Courier, monospace;
     font-weight: bold;
@@ -247,7 +247,7 @@
     text-align: center;    
 }
 
-.trailerName {
+.trailer-name {
     color: #222;
     font-family: Arial, Tahoma;    
     font-size: 28px;
@@ -265,7 +265,7 @@
     color: #C2D8ED;
 }
 
-.jobRemainingTime {
+.job-remainingTime {
     color: #54d9a8;
 }
 
@@ -275,18 +275,18 @@
 
 // elements which are hidden by default
 
-.gear,
-.blinkerLeftOn,
-.blinkerRightOn,
-.cruiseControlOn,
-.truckOdometer,
-.truckSpeedRounded,
-.cruiseControlSpeedRounded[data-value="0"],
-.trailerMass, 
-.trailerName, 
+.truck-gear,
+.truck-indicators-blinkerLeftOn,
+.truck-indicators-blinkerRightOn,
+.truck-indicators-cruiseControlOn,
+.truck-odometer,
+.truck-speedRounded,
+.truck-cruiseControlSpeedRounded[data-value="0"],
+.trailer-mass, 
+.trailer-name, 
 ._truckWearInfo,
 ._trailerWearInfo,
-.jobRemainingTime, 
+.job-remainingTime, 
 ._jobIncome,
 ._jobSource, 
 ._jobDestionation {
@@ -296,15 +296,15 @@
 // elements which are visible only when dashboard is connected
 
 .dashboard.connected.yes {    
-    .blinkerLeftOn,
-    .blinkerRightOn,
-    .cruiseControlOn,
-    .gear,
+    .truck-indicators-blinkerLeftOn,
+    .truck-indicators-blinkerRightOn,
+    .truck-indicators-cruiseControlOn,
+    .truck-gear,
     ._truckWearInfo,
     ._trailerWearInfo,
-    .truckOdometer,
-    .truckSpeedRounded,
-    .cruiseControlSpeedRounded:not([data-value="0"]) {
+    .truck-odometer,
+    .truck-speedRounded,
+    .truck-cruiseControlSpeedRounded:not([data-value="0"]) {
         .visible;
     }
 }
@@ -313,9 +313,9 @@
 
 .hasJob {    
     &.yes {
-        .trailerMass, 
-        .trailerName, 
-        .jobRemainingTime, 
+        .trailer-mass, 
+        .trailer-name, 
+        .job-remainingTime, 
         ._jobIncome,
         ._jobSource, 
         ._jobDestionation {
@@ -372,8 +372,8 @@ table._job {
     left: 1810px;
 }
 
-.wearSum,
-.wearTrailer {
+.truck-wearSum,
+.trailer-wear {
     font-size: 44px;
     color: orangered;
 }
