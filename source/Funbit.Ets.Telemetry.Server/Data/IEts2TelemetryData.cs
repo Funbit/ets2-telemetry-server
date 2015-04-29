@@ -5,48 +5,10 @@ namespace Funbit.Ets.Telemetry.Server.Data
     public interface IEts2TelemetryData
     {
         /// <summary>
-        /// Indicates whether the telemetry server is connected
-        /// to the simulator (ETS) or not.
+        /// Game information.
         /// </summary>
-        bool Connected { get; }
-
-        /// <summary>
-        /// Current game time. 
-        /// Serializes to ISO 8601 string in JSON.
-        /// Example: "0001-01-05T05:11:00Z"
-        /// </summary>
-        DateTime GameTime { get; }
-        /// <summary>
-        /// True if game is currently paused, false otherwise.
-        /// </summary>
-        bool GamePaused { get; }
-
-        /// <summary>
-        /// Current version of the telemetry plugin DLL file.
-        /// Example: "4"
-        /// </summary>
-        string TelemetryPluginVersion { get; }
-        /// <summary>
-        /// Current version of the game.
-        /// Example: "1.10"
-        /// </summary>
-        string GameVersion { get; }
-
-        /// <summary>
-        /// When the fatique simulation is disabled, the behavior of this channel
-        /// is implementation dependent. The game might provide the value which would
-        /// apply if it was enabled or provide no value at all.
-        /// Example: "0001-01-01T10:52:00Z"
-        /// </summary>
-        DateTime NextRestStopTime { get; }
-        /// <summary>
-        /// Scale applied to distance and time to compensate 
-        /// for the scale of the map (e.g. 1s of real time corresponds 
-        /// to local_scale seconds of simulated game time).
-        /// Example: 3
-        /// </summary>
-        float GameTimeScale { get; }
-
+        IEts2Game Game { get; }
+        
         /// <summary>
         /// Truck information.
         /// </summary>
@@ -61,6 +23,52 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// Job information.
         /// </summary>
         IEts2Job Job { get; }
+    }
+
+    public interface IEts2Game
+    {
+        /// <summary>
+        /// Indicates whether the telemetry server is connected
+        /// to the simulator (ETS) or not.
+        /// </summary>
+        bool Connected { get; }
+
+        /// <summary>
+        /// Current game time. 
+        /// Serializes to ISO 8601 string in JSON.
+        /// Example: "0001-01-05T05:11:00Z"
+        /// </summary>
+        DateTime Time { get; }
+        /// <summary>
+        /// True if game is currently paused, false otherwise.
+        /// </summary>
+        bool Paused { get; }
+
+        /// <summary>
+        /// Current version of the telemetry plugin DLL file.
+        /// Example: "4"
+        /// </summary>
+        string TelemetryPluginVersion { get; }
+        /// <summary>
+        /// Current version of the game.
+        /// Example: "1.10"
+        /// </summary>
+        string Version { get; }
+
+        /// <summary>
+        /// When the fatique simulation is disabled, the behavior of this channel
+        /// is implementation dependent. The game might provide the value which would
+        /// apply if it was enabled or provide no value at all.
+        /// Example: "0001-01-01T10:52:00Z"
+        /// </summary>
+        DateTime NextRestStopTime { get; }
+        /// <summary>
+        /// Scale applied to distance and time to compensate 
+        /// for the scale of the map (e.g. 1s of real time corresponds 
+        /// to local_scale seconds of simulated game time).
+        /// Example: 3
+        /// </summary>
+        float TimeScale { get; }
     }
 
     public interface IEts2Vector

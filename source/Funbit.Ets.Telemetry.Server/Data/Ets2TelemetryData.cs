@@ -8,11 +8,11 @@ namespace Funbit.Ets.Telemetry.Server.Data
 {
     class Ets2TelemetryData : IEts2TelemetryData
     {
-        Ets2TelemetryStructure _rawData;
+        Box<Ets2TelemetryStructure> _rawData;
         
         public void Update(Ets2TelemetryStructure rawData)
         {
-            _rawData = rawData;
+            _rawData = new Box<Ets2TelemetryStructure>(rawData);
         }
 
         internal static DateTime MinutesToDate(int minutes)
@@ -27,44 +27,12 @@ namespace Funbit.Ets.Telemetry.Server.Data
                 return string.Empty;
             return Encoding.UTF8.GetString(bytes, 0, Array.FindIndex(bytes, b => b == 0));
         }
+
+        public IEts2Game Game
+        {
+            get { return new Ets2Game(_rawData); }
+        }
         
-        public bool Connected
-        {
-            get { return _rawData.ets2_telemetry_plugin_revision != 0 && 
-                Ets2ProcessHelper.IsEts2Running && 
-                _rawData.timeAbsolute != 0; }
-        }
-
-        public bool GamePaused
-        {
-            get { return _rawData.paused != 0; }
-        }
-
-        public DateTime GameTime
-        {
-            get { return MinutesToDate(_rawData.timeAbsolute); }
-        }
-
-        public float GameTimeScale
-        {
-            get { return _rawData.localScale; }
-        }
-
-        public DateTime NextRestStopTime
-        {
-            get { return MinutesToDate(_rawData.nextRestStop); }
-        }
-
-        public string GameVersion
-        {
-            get { return string.Format("{0}.{1}", _rawData.ets2_version_major, _rawData.ets2_version_minor); }
-        }
-
-        public string TelemetryPluginVersion
-        {
-            get { return _rawData.ets2_telemetry_plugin_revision.ToString(); }
-        }
-
         public IEts2Truck Truck
         {
             get { return new Ets2Truck(_rawData); }
@@ -78,6 +46,56 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public IEts2Job Job
         {
             get { return new Ets2Job(_rawData); }
+        }
+    }
+
+    class Ets2Game : IEts2Game
+    {
+        readonly Box<Ets2TelemetryStructure> _rawData;
+
+        public Ets2Game(Box<Ets2TelemetryStructure> rawData)
+        {
+            _rawData = rawData;
+        }
+
+        public bool Connected
+        {
+            get
+            {
+                return _rawData.Struct.ets2_telemetry_plugin_revision != 0 &&
+                    Ets2ProcessHelper.IsEts2Running &&
+                    _rawData.Struct.timeAbsolute != 0;
+            }
+        }
+
+        public bool Paused
+        {
+            get { return _rawData.Struct.paused != 0; }
+        }
+
+        public DateTime Time
+        {
+            get { return Ets2TelemetryData.MinutesToDate(_rawData.Struct.timeAbsolute); }
+        }
+
+        public float TimeScale
+        {
+            get { return _rawData.Struct.localScale; }
+        }
+
+        public DateTime NextRestStopTime
+        {
+            get { return Ets2TelemetryData.MinutesToDate(_rawData.Struct.nextRestStop); }
+        }
+
+        public string Version
+        {
+            get { return string.Format("{0}.{1}", _rawData.Struct.ets2_version_major, _rawData.Struct.ets2_version_minor); }
+        }
+
+        public string TelemetryPluginVersion
+        {
+            get { return _rawData.Struct.ets2_telemetry_plugin_revision.ToString(); }
         }
     }
 
@@ -118,26 +136,26 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
     class Ets2Truck : IEts2Truck
     {
-        readonly Ets2TelemetryStructure _rawData;
+        readonly Box<Ets2TelemetryStructure> _rawData;
 
-        public Ets2Truck(Ets2TelemetryStructure rawData)
+        public Ets2Truck(Box<Ets2TelemetryStructure> rawData)
         {
             _rawData = rawData;
         }
 
         public string Id
         {
-            get { return Ets2TelemetryData.BytesToString(_rawData.truckMakeId); }
+            get { return Ets2TelemetryData.BytesToString(_rawData.Struct.truckMakeId); }
         }
 
         public string Make
         {
-            get { return Ets2TelemetryData.BytesToString(_rawData.truckMake); }
+            get { return Ets2TelemetryData.BytesToString(_rawData.Struct.truckMake); }
         }
 
         public string Model
         {
-            get { return Ets2TelemetryData.BytesToString(_rawData.truckModel); }
+            get { return Ets2TelemetryData.BytesToString(_rawData.Struct.truckModel); }
         }
 
         /// <summary>
@@ -145,7 +163,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// </summary>
         public float Speed
         {
-            get { return _rawData.speed * 3.6f; }
+            get { return _rawData.Struct.speed * 3.6f; }
         }
 
         /// <summary>
@@ -153,352 +171,352 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// </summary>
         public float CruiseControlSpeed
         {
-            get { return _rawData.cruiseControlSpeed * 3.6f; }
+            get { return _rawData.Struct.cruiseControlSpeed * 3.6f; }
         }
 
         public bool CruiseControlOn
         {
-            get { return _rawData.cruiseControl != 0; }
+            get { return _rawData.Struct.cruiseControl != 0; }
         }
 
         public float Odometer
         {
-            get { return _rawData.truckOdometer; }
+            get { return _rawData.Struct.truckOdometer; }
         }
 
         public int Gear
         {
-            get { return _rawData.gear; }
+            get { return _rawData.Struct.gear; }
         }
 
         public int ForwardGears
         {
-            get { return _rawData.gearsForward; }
+            get { return _rawData.Struct.gearsForward; }
         }
 
         public int ReverseGears
         {
-            get { return _rawData.gearsReverse; }
+            get { return _rawData.Struct.gearsReverse; }
         }
 
         public string ShifterType
         {
-            get { return Ets2TelemetryData.BytesToString(_rawData.shifterType); }
+            get { return Ets2TelemetryData.BytesToString(_rawData.Struct.shifterType); }
         }
 
         public float EngineRpm
         {
-            get { return _rawData.engineRpm; }
+            get { return _rawData.Struct.engineRpm; }
         }
 
         public float EngineRpmMax
         {
-            get { return _rawData.engineRpmMax; }
+            get { return _rawData.Struct.engineRpmMax; }
         }
 
         public float Fuel
         {
-            get { return _rawData.fuel; }
+            get { return _rawData.Struct.fuel; }
         }
 
         public float FuelCapacity
         {
-            get { return _rawData.fuelCapacity; }
+            get { return _rawData.Struct.fuelCapacity; }
         }
 
         public float FuelAverageConsumption
         {
-            get { return _rawData.fuelAvgConsumption; }
+            get { return _rawData.Struct.fuelAvgConsumption; }
         }
 
         public float FuelWarningFactor
         {
-            get { return _rawData.fuelWarningFactor; }
+            get { return _rawData.Struct.fuelWarningFactor; }
         }
 
         public bool FuelWarningOn
         {
-            get { return _rawData.fuelWarning != 0; }
+            get { return _rawData.Struct.fuelWarning != 0; }
         }
 
         public float EngineWear
         {
-            get { return _rawData.wearEngine; }
+            get { return _rawData.Struct.wearEngine; }
         }
 
         public float TransmissionWear
         {
-            get { return _rawData.wearTransmission; }
+            get { return _rawData.Struct.wearTransmission; }
         }
 
         public float CabinWear
         {
-            get { return _rawData.wearCabin; }
+            get { return _rawData.Struct.wearCabin; }
         }
 
         public float ChassisWear
         {
-            get { return _rawData.wearChassis; }
+            get { return _rawData.Struct.wearChassis; }
         }
 
         public float WheelsWear
         {
-            get { return _rawData.wearWheels; }
+            get { return _rawData.Struct.wearWheels; }
         }
 
         public float UserSteer
         {
-            get { return _rawData.userSteer; }
+            get { return _rawData.Struct.userSteer; }
         }
 
         public float UserThrottle
         {
-            get { return _rawData.userThrottle; }
+            get { return _rawData.Struct.userThrottle; }
         }
 
         public float UserBrake
         {
-            get { return _rawData.userBrake; }
+            get { return _rawData.Struct.userBrake; }
         }
 
         public float UserClutch
         {
-            get { return _rawData.userClutch; }
+            get { return _rawData.Struct.userClutch; }
         }
 
         public float GameSteer
         {
-            get { return _rawData.gameSteer; }
+            get { return _rawData.Struct.gameSteer; }
         }
 
         public float GameThrottle
         {
-            get { return _rawData.gameThrottle; }
+            get { return _rawData.Struct.gameThrottle; }
         }
 
         public float GameBrake
         {
-            get { return _rawData.gameBrake; }
+            get { return _rawData.Struct.gameBrake; }
         }
 
         public float GameClutch
         {
-            get { return _rawData.gameClutch; }
+            get { return _rawData.Struct.gameClutch; }
         }
 
         public int ShifterSlot
         {
-            get { return _rawData.shifterSlot; }
+            get { return _rawData.Struct.shifterSlot; }
         }
 
         public int ShifterToggle
         {
-            get { return _rawData.shifterToggle; }
+            get { return _rawData.Struct.shifterToggle; }
         }
 
         public bool EngineOn
         {
-            get { return _rawData.engineEnabled != 0; }
+            get { return _rawData.Struct.engineEnabled != 0; }
         }
 
         public bool ElectricOn
         {
-            get { return _rawData.electricEnabled != 0; }
+            get { return _rawData.Struct.electricEnabled != 0; }
         }
 
         public bool WipersOn
         {
-            get { return _rawData.wipers != 0; }
+            get { return _rawData.Struct.wipers != 0; }
         }
 
         public int RetarderBrake
         {
-            get { return _rawData.retarderBrake; }
+            get { return _rawData.Struct.retarderBrake; }
         }
 
         public int RetarderStepCount
         {
-            get { return (int)_rawData.retarderStepCount; }
+            get { return (int)_rawData.Struct.retarderStepCount; }
         }
 
         public bool ParkBrakeOn
         {
-            get { return _rawData.parkBrake != 0; }
+            get { return _rawData.Struct.parkBrake != 0; }
         }
 
         public bool MotorBrakeOn
         {
-            get { return _rawData.motorBrake != 0; }
+            get { return _rawData.Struct.motorBrake != 0; }
         }
 
         public float BrakeTemperature
         {
-            get { return _rawData.brakeTemperature; }
+            get { return _rawData.Struct.brakeTemperature; }
         }
 
         public float Adblue
         {
-            get { return _rawData.adblue; }
+            get { return _rawData.Struct.adblue; }
         }
 
         public float AdblueCapacity
         {
-            get { return _rawData.adblueCapacity; }
+            get { return _rawData.Struct.adblueCapacity; }
         }
 
         public float AdblueAverageConsumpton
         {
-            get { return _rawData.adblueConsumption; }
+            get { return _rawData.Struct.adblueConsumption; }
         }
 
         public bool AdblueWarningOn
         {
-            get { return _rawData.adblueWarning != 0; }
+            get { return _rawData.Struct.adblueWarning != 0; }
         }
 
         public float AirPressure
         {
-            get { return _rawData.airPressure; }
+            get { return _rawData.Struct.airPressure; }
         }
 
         public bool AirPressureWarningOn
         {
-            get { return _rawData.airPressureWarning != 0; }
+            get { return _rawData.Struct.airPressureWarning != 0; }
         }
 
         public float AirPressureWarningValue
         {
-            get { return _rawData.airPressureWarningValue; }
+            get { return _rawData.Struct.airPressureWarningValue; }
         }
 
         public bool AirPressureEmergencyOn
         {
-            get { return _rawData.airPressureEmergency != 0; }
+            get { return _rawData.Struct.airPressureEmergency != 0; }
         }
 
         public float AirPressureEmergencyValue
         {
-            get { return _rawData.airPressureEmergencyValue; }
+            get { return _rawData.Struct.airPressureEmergencyValue; }
         }
 
         public float OilTemperature
         {
-            get { return _rawData.oilTemperature; }
+            get { return _rawData.Struct.oilTemperature; }
         }
 
         public float OilPressure
         {
-            get { return _rawData.oilPressure; }
+            get { return _rawData.Struct.oilPressure; }
         }
 
         public bool OilPressureWarningOn
         {
-            get { return _rawData.oilPressureWarning != 0; }
+            get { return _rawData.Struct.oilPressureWarning != 0; }
         }
 
         public float OilPressureWarningValue
         {
-            get { return _rawData.oilPressureWarningValue; }
+            get { return _rawData.Struct.oilPressureWarningValue; }
         }
 
         public float WaterTemperature
         {
-            get { return _rawData.waterTemperature; }
+            get { return _rawData.Struct.waterTemperature; }
         }
 
         public bool WaterTemperatureWarningOn
         {
-            get { return _rawData.waterTemperatureWarning != 0; }
+            get { return _rawData.Struct.waterTemperatureWarning != 0; }
         }
 
         public float WaterTemperatureWarningValue
         {
-            get { return _rawData.waterTemperatureWarningValue; }
+            get { return _rawData.Struct.waterTemperatureWarningValue; }
         }
 
         public float BatteryVoltage
         {
-            get { return _rawData.batteryVoltage; }
+            get { return _rawData.Struct.batteryVoltage; }
         }
 
         public bool BatteryVoltageWarningOn
         {
-            get { return _rawData.batteryVoltageWarning != 0; }
+            get { return _rawData.Struct.batteryVoltageWarning != 0; }
         }
 
         public float BatteryVoltageWarningValue
         {
-            get { return _rawData.batteryVoltageWarningValue; }
+            get { return _rawData.Struct.batteryVoltageWarningValue; }
         }
 
         public float LightsDashboardValue
         {
-            get { return _rawData.lightsDashboard; }
+            get { return _rawData.Struct.lightsDashboard; }
         }
 
         public bool LightsDashboardOn
         {
-            get { return _rawData.lightsDashboard > 0; }
+            get { return _rawData.Struct.lightsDashboard > 0; }
         }
 
         public bool BlinkerLeftActive
         {
-            get { return _rawData.blinkerLeftActive != 0; }
+            get { return _rawData.Struct.blinkerLeftActive != 0; }
         }
 
         public bool BlinkerRightActive
         {
-            get { return _rawData.blinkerRightActive != 0; }
+            get { return _rawData.Struct.blinkerRightActive != 0; }
         }
 
         public bool BlinkerLeftOn
         {
-            get { return _rawData.blinkerLeftOn != 0; }
+            get { return _rawData.Struct.blinkerLeftOn != 0; }
         }
 
         public bool BlinkerRightOn
         {
-            get { return _rawData.blinkerRightOn != 0; }
+            get { return _rawData.Struct.blinkerRightOn != 0; }
         }
 
         public bool LightsParkingOn
         {
-            get { return _rawData.lightsParking != 0; }
+            get { return _rawData.Struct.lightsParking != 0; }
         }
 
         public bool LightsBeamLowOn
         {
-            get { return _rawData.lightsBeamLow != 0; }
+            get { return _rawData.Struct.lightsBeamLow != 0; }
         }
 
         public bool LightsBeamHighOn
         {
-            get { return _rawData.lightsBeamHigh != 0; }
+            get { return _rawData.Struct.lightsBeamHigh != 0; }
         }
 
         public bool LightsAuxFrontOn
         {
-            get { return _rawData.lightsAuxFront != 0; }
+            get { return _rawData.Struct.lightsAuxFront != 0; }
         }
 
         public bool LightsAuxRoofOn
         {
-            get { return _rawData.lightsAuxRoof != 0; }
+            get { return _rawData.Struct.lightsAuxRoof != 0; }
         }
 
         public bool LightsBeaconOn
         {
-            get { return _rawData.lightsBeacon != 0; }
+            get { return _rawData.Struct.lightsBeacon != 0; }
         }
 
         public bool LightsBrakeOn
         {
-            get { return _rawData.lightsBrake != 0; }
+            get { return _rawData.Struct.lightsBrake != 0; }
         }
 
         public bool LightsReverseOn
         {
-            get { return _rawData.lightsReverse != 0; }
+            get { return _rawData.Struct.lightsReverse != 0; }
         }
 
         public IEts2Placement Placement
@@ -506,12 +524,12 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get
             {
                 return new Ets2Placement(
-                    _rawData.coordinateX,
-                    _rawData.coordinateY,
-                    _rawData.coordinateZ,
-                    _rawData.rotationX,
-                    _rawData.rotationY,
-                    _rawData.rotationZ);
+                    _rawData.Struct.coordinateX,
+                    _rawData.Struct.coordinateY,
+                    _rawData.Struct.coordinateZ,
+                    _rawData.Struct.rotationX,
+                    _rawData.Struct.rotationY,
+                    _rawData.Struct.rotationZ);
             }
         }
 
@@ -520,9 +538,9 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get
             {
                 return new Ets2Vector(
-                    _rawData.accelerationX,
-                    _rawData.accelerationY,
-                    _rawData.accelerationZ);
+                    _rawData.Struct.accelerationX,
+                    _rawData.Struct.accelerationY,
+                    _rawData.Struct.accelerationZ);
             }
         }
 
@@ -531,9 +549,9 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get
             {
                 return new Ets2Vector(
-                    _rawData.headPositionX,
-                    _rawData.headPositionY,
-                    _rawData.headPositionZ);
+                    _rawData.Struct.headPositionX,
+                    _rawData.Struct.headPositionY,
+                    _rawData.Struct.headPositionZ);
             }
         }
 
@@ -542,9 +560,9 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get
             {
                 return new Ets2Vector(
-                    _rawData.cabinPositionX,
-                    _rawData.cabinPositionY,
-                    _rawData.cabinPositionZ);
+                    _rawData.Struct.cabinPositionX,
+                    _rawData.Struct.cabinPositionY,
+                    _rawData.Struct.cabinPositionZ);
             }
         }
 
@@ -553,9 +571,9 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get
             {
                 return new Ets2Vector(
-                    _rawData.hookPositionX,
-                    _rawData.hookPositionY,
-                    _rawData.hookPositionZ);
+                    _rawData.Struct.hookPositionX,
+                    _rawData.Struct.hookPositionY,
+                    _rawData.Struct.hookPositionZ);
             }
         }
 
@@ -563,7 +581,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         {
             get
             {
-                var array = new IEts2GearSlot[_rawData.selectorCount];
+                var array = new IEts2GearSlot[_rawData.Struct.selectorCount];
                 for (int i = 0; i < array.Length; i++)
                     array[i] = new Ets2GearSlot(_rawData, i);
                 return array;
@@ -574,7 +592,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         {
             get
             {
-                var array = new IEts2Wheel[_rawData.wheelCount];
+                var array = new IEts2Wheel[_rawData.Struct.wheelCount];
                 for (int i = 0; i < array.Length; i++)
                     array[i] = new Ets2Wheel(_rawData, i);
                 return array;
@@ -584,26 +602,26 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
     class Ets2Trailer : IEts2Trailer
     {
-        readonly Ets2TelemetryStructure _rawData;
+        readonly Box<Ets2TelemetryStructure> _rawData;
 
-        public Ets2Trailer(Ets2TelemetryStructure rawData)
+        public Ets2Trailer(Box<Ets2TelemetryStructure> rawData)
         {
             _rawData = rawData;
         }
 
         public bool Attached
         {
-            get { return _rawData.trailer_attached != 0; }
+            get { return _rawData.Struct.trailer_attached != 0; }
         }
 
         public string Id
         {
-            get { return Ets2TelemetryData.BytesToString(_rawData.trailerId); }
+            get { return Ets2TelemetryData.BytesToString(_rawData.Struct.trailerId); }
         }
 
         public string Name
         {
-            get { return Ets2TelemetryData.BytesToString(_rawData.trailerName); }
+            get { return Ets2TelemetryData.BytesToString(_rawData.Struct.trailerName); }
         }
 
         /// <summary>
@@ -611,12 +629,12 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// </summary>
         public float Mass
         {
-            get { return _rawData.trailerMass; }
+            get { return _rawData.Struct.trailerMass; }
         }
 
         public float Wear
         {
-            get { return _rawData.wearTrailer; }
+            get { return _rawData.Struct.wearTrailer; }
         }
 
         public IEts2Placement Placement
@@ -624,74 +642,74 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get
             {
                 return new Ets2Placement(
-                    _rawData.trailerCoordinateX,
-                    _rawData.trailerCoordinateY,
-                    _rawData.trailerCoordinateZ,
-                    _rawData.trailerRotationX,
-                    _rawData.trailerRotationY,
-                    _rawData.trailerRotationZ);
+                    _rawData.Struct.trailerCoordinateX,
+                    _rawData.Struct.trailerCoordinateY,
+                    _rawData.Struct.trailerCoordinateZ,
+                    _rawData.Struct.trailerRotationX,
+                    _rawData.Struct.trailerRotationY,
+                    _rawData.Struct.trailerRotationZ);
             }
         }
     }
 
     class Ets2Job : IEts2Job
     {
-        readonly Ets2TelemetryStructure _rawData;
+        readonly Box<Ets2TelemetryStructure> _rawData;
 
-        public Ets2Job(Ets2TelemetryStructure rawData)
+        public Ets2Job(Box<Ets2TelemetryStructure> rawData)
         {
             _rawData = rawData;
         }
 
         public int Income
         {
-            get { return _rawData.jobIncome; }
+            get { return _rawData.Struct.jobIncome; }
         }
 
         public DateTime DeadlineTime
         {
-            get { return Ets2TelemetryData.MinutesToDate(_rawData.jobDeadline); }
+            get { return Ets2TelemetryData.MinutesToDate(_rawData.Struct.jobDeadline); }
         }
 
         public DateTime RemainingTime
         {
-            get { return Ets2TelemetryData.MinutesToDate(_rawData.jobDeadline - _rawData.timeAbsolute); }
+            get { return Ets2TelemetryData.MinutesToDate(_rawData.Struct.jobDeadline - _rawData.Struct.timeAbsolute); }
         }
 
         public string SourceCity
         {
-            get { return Ets2TelemetryData.BytesToString(_rawData.jobCitySource); }
+            get { return Ets2TelemetryData.BytesToString(_rawData.Struct.jobCitySource); }
         }
 
         public string SourceCompany
         {
-            get { return Ets2TelemetryData.BytesToString(_rawData.jobCompanySource); }
+            get { return Ets2TelemetryData.BytesToString(_rawData.Struct.jobCompanySource); }
         }
 
         public string DestinationCity
         {
-            get { return Ets2TelemetryData.BytesToString(_rawData.jobCityDestination); }
+            get { return Ets2TelemetryData.BytesToString(_rawData.Struct.jobCityDestination); }
         }
 
         public string DestinationCompany
         {
-            get { return Ets2TelemetryData.BytesToString(_rawData.jobCompanyDestination); }
+            get { return Ets2TelemetryData.BytesToString(_rawData.Struct.jobCompanyDestination); }
         }
     }
 
     class Ets2Wheel : IEts2Wheel
     {
-        public Ets2Wheel(Ets2TelemetryStructure rawData, int wheelIndex)
+        public Ets2Wheel(Box<Ets2TelemetryStructure> rawData, int wheelIndex)
         {
-            Simulated = rawData.wheelSimulated[wheelIndex] != 0;
-            Steerable = rawData.wheelSteerable[wheelIndex] != 0;
-            Radius = rawData.wheelRadius[wheelIndex];
+            Simulated = rawData.Struct.wheelSimulated[wheelIndex] != 0;
+            Steerable = rawData.Struct.wheelSteerable[wheelIndex] != 0;
+            Radius = rawData.Struct.wheelRadius[wheelIndex];
             Position = new Ets2Vector(
-                rawData.wheelPositionX[wheelIndex],
-                rawData.wheelPositionY[wheelIndex],
-                rawData.wheelPositionZ[wheelIndex]);
-            Powered = rawData.wheelPowered[wheelIndex] != 0;
-            Liftable = rawData.wheelLiftable[wheelIndex] != 0;
+                rawData.Struct.wheelPositionX[wheelIndex],
+                rawData.Struct.wheelPositionY[wheelIndex],
+                rawData.Struct.wheelPositionZ[wheelIndex]);
+            Powered = rawData.Struct.wheelPowered[wheelIndex] != 0;
+            Liftable = rawData.Struct.wheelLiftable[wheelIndex] != 0;
         }
 
         public bool Simulated { get; private set; }
@@ -704,15 +722,25 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
     class Ets2GearSlot : IEts2GearSlot
     {
-        public Ets2GearSlot(Ets2TelemetryStructure rawData, int slotIndex)
+        public Ets2GearSlot(Box<Ets2TelemetryStructure> rawData, int slotIndex)
         {
-            Gear = rawData.slotGear[slotIndex];
-            HandlePosition = (int)rawData.slotHandlePosition[slotIndex];
-            SlotSelectors = (int)rawData.slotSelectors[slotIndex];
+            Gear = rawData.Struct.slotGear[slotIndex];
+            HandlePosition = (int)rawData.Struct.slotHandlePosition[slotIndex];
+            SlotSelectors = (int)rawData.Struct.slotSelectors[slotIndex];
         }
 
         public int Gear { get; private set; }
         public int HandlePosition { get; private set; }
         public int SlotSelectors { get; private set; }
+    }
+
+    class Box<T> where T : struct 
+    {
+        public T Struct { get; set; }
+
+        public Box(T @struct)
+        {
+            Struct = @struct;
+        }
     }
 }

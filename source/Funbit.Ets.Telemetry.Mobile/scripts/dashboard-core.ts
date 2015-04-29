@@ -6,23 +6,29 @@ module Funbit.Ets.Telemetry {
 
     // forward declaration for properties and objects
 
+    class Ets2GameMock {
+        connected: boolean = false;
+        time: string = '';              // absolute time in ISO8601
+        nextRestStopTime: string = '';  // absolute time in ISO8601
+    }
+
     class Ets2JobMock {
         deadlineTime: string = '';  // absolute time in ISO8601
         remainingTime: string = ''; // absolute time in ISO8601
     }
     
     class Ets2TelemetryData {
-        gameTime: string = '';  // absolute time in ISO8601
+        game: Ets2GameMock;
         job: Ets2JobMock;
         truck: any;
         trailer: any;
-        connected: boolean = false;
         // the rest properties are not defined here
         // (see IEts2TelemetryData.cs for reference)
         constructor() {
             this.truck = {};
             this.trailer = {};
             this.job = new Ets2JobMock();
+            this.game = new Ets2GameMock();
         }
     }
 
@@ -157,7 +163,7 @@ module Funbit.Ets.Telemetry {
         }
         
         private process(data: Ets2TelemetryData, reason: string = '') {
-            if (data != null && !data.connected) {
+            if (data != null && data.game != null && !data.game.connected) {
                 // if we're not connected we reset the data 
                 reason = Strings.connectedAndWaitingForDrive;
                 data = null;
@@ -179,7 +185,7 @@ module Funbit.Ets.Telemetry {
 
         private internalFilter(data: Ets2TelemetryData): Ets2TelemetryData {
             // convert ISO8601 to default readable format
-            data.gameTime = this.timeToReadableString(data.gameTime);
+            data.game.time = this.timeToReadableString(data.game.time);
             data.job.deadlineTime = this.timeToReadableString(data.job.deadlineTime);
             data.job.remainingTime = this.timeDifferenceToReadableString(data.job.remainingTime);
             return data;

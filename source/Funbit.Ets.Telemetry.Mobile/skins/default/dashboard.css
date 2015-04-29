@@ -32,7 +32,7 @@
 .dashboard {
   background-image: url("images/bg-off.png");
 }
-.dashboard.connected.yes {
+.dashboard.game-connected.yes {
   background-image: url("images/bg-on.png");
 }
 .truck-speed[data-type="meter"] {
@@ -257,7 +257,7 @@
   text-align: center;
   overflow: hidden;
 }
-.gameTime {
+.game-time {
   color: #C2D8ED;
 }
 .job-remainingTime {
@@ -286,18 +286,18 @@
 ._jobDestionation {
   visibility: hidden;
 }
-.dashboard.connected.yes .truck-blinkerLeftOn,
-.dashboard.connected.yes .truck-blinkerRightOn,
-.dashboard.connected.yes .truck-cruiseControlOn,
-.dashboard.connected.yes .truck-lightsBeamHighOn,
-.dashboard.connected.yes .truck-lightsBeamLowOn,
-.dashboard.connected.yes .truck-lightsParkingOn,
-.dashboard.connected.yes .truck-gear,
-.dashboard.connected.yes ._truckWearInfo,
-.dashboard.connected.yes ._trailerWearInfo,
-.dashboard.connected.yes .truck-odometer,
-.dashboard.connected.yes .truck-speedRounded,
-.dashboard.connected.yes .truck-cruiseControlSpeedRounded:not([data-value="0"]) {
+.dashboard.game-connected.yes .truck-blinkerLeftOn,
+.dashboard.game-connected.yes .truck-blinkerRightOn,
+.dashboard.game-connected.yes .truck-cruiseControlOn,
+.dashboard.game-connected.yes .truck-lightsBeamHighOn,
+.dashboard.game-connected.yes .truck-lightsBeamLowOn,
+.dashboard.game-connected.yes .truck-lightsParkingOn,
+.dashboard.game-connected.yes .truck-gear,
+.dashboard.game-connected.yes ._truckWearInfo,
+.dashboard.game-connected.yes ._trailerWearInfo,
+.dashboard.game-connected.yes .truck-odometer,
+.dashboard.game-connected.yes .truck-speedRounded,
+.dashboard.game-connected.yes .truck-cruiseControlSpeedRounded:not([data-value="0"]) {
   visibility: visible;
 }
 .hasJob.yes .trailer-mass,

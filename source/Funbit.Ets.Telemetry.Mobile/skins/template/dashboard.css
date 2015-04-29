@@ -26,7 +26,7 @@
 	background-image: url("images/bg-off.jpg");
 }
 
-.dashboard.connected.yes {
+.dashboard.game-connected.yes {
 	background-image: url("images/bg-on.jpg");
 }
 
@@ -36,7 +36,7 @@
 
 /* hide speed when not connected to the simulator */
 
-.connected.yes ._speed {
+.game-connected.yes ._speed {
     visibility: visible;
     color: white;
     font-family: Courier New, Courier, monospace;
@@ -55,7 +55,7 @@
     color: green;
 }
 
-.connected.yes .statusMessage {
+.game-connected.yes .statusMessage {
     visibility: hidden;
 }
 

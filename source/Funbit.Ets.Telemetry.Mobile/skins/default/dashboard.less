@@ -58,7 +58,7 @@
 
 .dashboard {    
     background-image: url("images/bg-off.png");    
-    &.connected.yes { 
+    &.game-connected.yes { 
         background-image: url("images/bg-on.png");
     }
 }
@@ -261,7 +261,7 @@
     overflow: hidden;
 }
 
-.gameTime  {
+.game-time  {
     color: #C2D8ED;
 }
 
@@ -298,7 +298,7 @@
 
 // elements which are visible only when dashboard is connected
 
-.dashboard.connected.yes {    
+.dashboard.game-connected.yes {    
     .truck-blinkerLeftOn,
     .truck-blinkerRightOn,
     .truck-cruiseControlOn,

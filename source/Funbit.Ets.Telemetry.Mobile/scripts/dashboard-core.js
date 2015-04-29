@@ -2,6 +2,15 @@
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
+            var Ets2GameMock = (function () {
+                function Ets2GameMock() {
+                    this.connected = false;
+                    this.time = '';
+                    this.nextRestStopTime = '';
+                }
+                return Ets2GameMock;
+            })();
+
             var Ets2JobMock = (function () {
                 function Ets2JobMock() {
                     this.deadlineTime = '';
@@ -12,11 +21,10 @@
 
             var Ets2TelemetryData = (function () {
                 function Ets2TelemetryData() {
-                    this.gameTime = '';
-                    this.connected = false;
                     this.truck = {};
                     this.trailer = {};
                     this.job = new Ets2JobMock();
+                    this.game = new Ets2GameMock();
                 }
                 return Ets2TelemetryData;
             })();
@@ -146,7 +154,7 @@
 
                 Dashboard.prototype.process = function (data, reason) {
                     if (typeof reason === "undefined") { reason = ''; }
-                    if (data != null && !data.connected) {
+                    if (data != null && data.game != null && !data.game.connected) {
                         reason = Telemetry.Strings.connectedAndWaitingForDrive;
                         data = null;
                     }
@@ -166,7 +174,7 @@
                 };
 
                 Dashboard.prototype.internalFilter = function (data) {
-                    data.gameTime = this.timeToReadableString(data.gameTime);
+                    data.game.time = this.timeToReadableString(data.game.time);
                     data.job.deadlineTime = this.timeToReadableString(data.job.deadlineTime);
                     data.job.remainingTime = this.timeDifferenceToReadableString(data.job.remainingTime);
                     return data;
