@@ -177,7 +177,7 @@
 .truck-lightsParkingOn.yes {
   background-image: url("images/parklights-on.png");
 }
-.gameTime {
+.game-time {
   color: #D8DFE5;
   font-family: Courier New, Courier, monospace;
   font-weight: bold;

@@ -131,7 +131,7 @@
 .truck-odometer {
   color: #B3A099;
   font-family: Courier New, Courier, monospace;
-  font-weight: ;
+  
   font-size: 30px;
   position: absolute;
   left: 362px;
@@ -289,7 +289,7 @@
   text-align: left;
   overflow: hidden;
 }
-.gameTime {
+.game-time {
   color: #B3A099;
   position: absolute;
   left: 1500px;

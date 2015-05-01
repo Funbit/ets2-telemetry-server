@@ -1,29 +1,4 @@
-﻿/* 
-    Default ETS2 dashboard skin.
-
-    *** DO NOT CHANGE THIS STYLESHEET *** 
-
-    If you want to create your own dashboard skin (or tweak something)
-    create a copy of the "/skins/template" directory and rename it
-    to something like: "/skins/your_skin_name" and edit config.json file inside.
-    For more information see skin tutorial PDF.
-
-    CSS naming convention:
-
-    - Dashboard core script maps all telemetry data properties to respective class names,
-      so truck's speed will be .truck-speed and current truck-gear is .truck-gear (see JSON).
-    - All boolean telemetry properties will have a special ".yes" class added 
-      when the value is true (will be removed if value is false).
-    - When dashboard core script updates DOM it will always add 
-      data-value attribute containing current value, so you 
-      can use it to have custom css selectors based on the actual data 
-      (for example, this skin uses .truck-gear[data-value="N"] to define
-      different style for neutral or reverse truck-gear, see below).
-    - If you need to define your own style related classes.
-      I stronly recommend to use underscore prefix ("._job" for example) to distinguish names,
-      so you will never forget which classes are dynamic and which are static.
-*/
-.hidden {
+﻿.hidden {
   visibility: hidden;
 }
 .visible {
@@ -32,7 +7,7 @@
 .dashboard {
   background-image: url("images/bg-off.png");
 }
-.dashboard.connected.yes {
+.dashboard.game-connected.yes {
   background-image: url("images/bg-on.png");
 }
 .truck-speed[data-type="meter"] {
@@ -257,7 +232,7 @@
   text-align: center;
   overflow: hidden;
 }
-.gameTime {
+.game-time {
   color: #C2D8ED;
 }
 .job-remainingTime {
@@ -286,18 +261,18 @@
 ._jobDestionation {
   visibility: hidden;
 }
-.dashboard.connected.yes .truck-blinkerLeftOn,
-.dashboard.connected.yes .truck-blinkerRightOn,
-.dashboard.connected.yes .truck-cruiseControlOn,
-.dashboard.connected.yes .truck-lightsBeamHighOn,
-.dashboard.connected.yes .truck-lightsBeamLowOn,
-.dashboard.connected.yes .truck-lightsParkingOn,
-.dashboard.connected.yes .truck-gear,
-.dashboard.connected.yes ._truckWearInfo,
-.dashboard.connected.yes ._trailerWearInfo,
-.dashboard.connected.yes .truck-odometer,
-.dashboard.connected.yes .truck-speedRounded,
-.dashboard.connected.yes .cruiseControlSpeedRounded:not([data-value="0"]) {
+.dashboard.game-connected.yes .truck-blinkerLeftOn,
+.dashboard.game-connected.yes .truck-blinkerRightOn,
+.dashboard.game-connected.yes .truck-cruiseControlOn,
+.dashboard.game-connected.yes .truck-lightsBeamHighOn,
+.dashboard.game-connected.yes .truck-lightsBeamLowOn,
+.dashboard.game-connected.yes .truck-lightsParkingOn,
+.dashboard.game-connected.yes .truck-gear,
+.dashboard.game-connected.yes ._truckWearInfo,
+.dashboard.game-connected.yes ._trailerWearInfo,
+.dashboard.game-connected.yes .truck-odometer,
+.dashboard.game-connected.yes .truck-speedRounded,
+.dashboard.game-connected.yes .cruiseControlSpeedRounded:not([data-value="0"]) {
   visibility: visible;
 }
 .hasJob.yes .trailer-mass,

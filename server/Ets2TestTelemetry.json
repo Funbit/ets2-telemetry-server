@@ -1,218 +1,220 @@
-﻿{
-  "connected": true,
-  "gamePaused": true,
-  "gameTime": "0001-01-08T20:35:00Z",
-  "gameTimeScale": 3,
-  "nextRestStopTime": "0001-01-01T10:45:00Z",
-  "gameVersion": "1.10",
-  "telemetryPluginVersion": "4",
-  "truck": {
-    "id": "man",
-    "make": "MAN",
-    "model": "TGX",
-    "speed": 41.71311,
-    "cruiseControlSpeed": 0,
-    "cruiseControlOn": false,
-    "odometer": 105809.992,
-    "gear": 9,
-    "forwardGears": 12,
-    "reverseGears": 1,
-    "shifterType": "arcade",
-    "engineRpm": 1253.187,
-    "engineRpmMax": 2500,
-    "fuel": 695.7282,
-    "fuelCapacity": 700,
-    "fuelAverageConsumption": 0.4923077,
-    "fuelWarningFactor": 0.15,
-    "fuelWarningOn": false,
-    "engineWear": 0.008115281,
-    "transmissionWear": 0.004869169,
-    "cabinWear": 0.0129844509,
-    "chassisWear": 0.0162305627,
-    "wheelsWear": 0.00243458454,
-    "userSteer": 0,
-    "userThrottle": 0,
-    "userBrake": 0,
-    "userClutch": 0,
-    "gameSteer": 0.04693169,
-    "gameThrottle": 0.260529876,
-    "gameBrake": 0,
-    "gameClutch": 0,
-    "shifterSlot": 0,
-    "shifterToggle": 0,
-    "engineOn": true,
-    "electricOn": false,
-    "wipersOn": false,
-    "retarderBrake": 0,
-    "retarderStepCount": 3,
-    "parkBrakeOn": false,
-    "motorBrakeOn": false,
-    "brakeTemperature": 20.1956882,
-    "adblue": 0,
-    "adblueCapacity": 0,
-    "adblueAverageConsumpton": 0,
-    "adblueWarningOn": false,
-    "airPressure": 139.999954,
-    "airPressureWarningOn": false,
-    "airPressureWarningValue": 65,
-    "airPressureEmergencyOn": false,
-    "airPressureEmergencyValue": 30,
-    "oilTemperature": 32.9730949,
-    "oilPressure": 68.89268,
-    "oilPressureWarningOn": false,
-    "oilPressureWarningValue": 10,
-    "waterTemperature": 31.2690468,
-    "waterTemperatureWarningOn": false,
-    "waterTemperatureWarningValue": 105,
-    "batteryVoltage": 23.9114666,
-    "batteryVoltageWarningOn": false,
-    "batteryVoltageWarningValue": 22,
-    "lightsDashboardValue": 1,
-    "lightsDashboardOn": true,
-    "blinkerLeftActive": false,
-    "blinkerRightActive": false,
-    "blinkerLeftOn": false,
-    "blinkerRightOn": false,
-    "lightsParkingOn": false,
-    "lightsBeamLowOn": false,
-    "lightsBeamHighOn": false,
-    "lightsAuxFrontOn": false,
-    "lightsAuxRoofOn": false,
-    "lightsBeaconOn": false,
-    "lightsBrakeOn": false,
-    "lightsReverseOn": false,
-    "placement": {
-      "x": 13812.9854,
-      "y": 65.70228,
-      "z": 13837.7959,
-      "heading": 0.5207673,
-      "pitch": 0.00771997264,
-      "roll": -0.000360520149
-    },
-    "acceleration": {
-      "x": 0.0967605338,
-      "y": 0.0163526125,
-      "z": -0.189994678
-    },
-    "head": {
-      "x": -0.795116067,
-      "y": 1.43522251,
-      "z": -0.08483863
-    },
-    "cabin": {
-      "x": 0,
-      "y": 1.36506855,
-      "z": -1.70362806
-    },
-    "hook": {
-      "x": 0,
-      "y": 0.939669,
-      "z": -6.17736959
-    },
-    "gearSlots": [
-      {
-        "gear": 0,
-        "handlePosition": 0,
-        "slotSelectors": 0
+{
+   "game":{
+      "connected":true,
+      "paused":true,
+      "time":"0001-01-08T21:09:00Z",
+      "timeScale":19.0,
+      "nextRestStopTime":"0001-01-01T10:11:00Z",
+      "version":"1.10",
+      "telemetryPluginVersion":"4"
+   },
+   "truck":{
+      "id":"man",
+      "make":"MAN",
+      "model":"TGX",
+      "speed":53.82604,
+      "cruiseControlSpeed":0.0,
+      "cruiseControlOn":false,
+      "odometer":105830.453,
+      "gear":10,
+      "forwardGears":12,
+      "reverseGears":1,
+      "shifterType":"arcade",
+      "engineRpm":1337.18762,
+      "engineRpmMax":2500.0,
+      "fuel":683.829834,
+      "fuelCapacity":700.0,
+      "fuelAverageConsumption":0.4923077,
+      "fuelWarningFactor":0.15,
+      "fuelWarningOn":false,
+      "engineWear":0.008189549,
+      "transmissionWear":0.004930536,
+      "cabinWear":0.0130360955,
+      "chassisWear":0.0162951164,
+      "wheelsWear":0.002864266,
+      "userSteer":0.0,
+      "userThrottle":1.0,
+      "userBrake":0.0,
+      "userClutch":0.0,
+      "gameSteer":0.026530467,
+      "gameThrottle":1.0,
+      "gameBrake":0.0,
+      "gameClutch":0.0,
+      "shifterSlot":0,
+      "shifterToggle":0,
+      "engineOn":true,
+      "electricOn":false,
+      "wipersOn":false,
+      "retarderBrake":0,
+      "retarderStepCount":3,
+      "parkBrakeOn":false,
+      "motorBrakeOn":false,
+      "brakeTemperature":15.0831814,
+      "adblue":0.0,
+      "adblueCapacity":0.0,
+      "adblueAverageConsumpton":0.0,
+      "adblueWarningOn":false,
+      "airPressure":139.999741,
+      "airPressureWarningOn":false,
+      "airPressureWarningValue":65.0,
+      "airPressureEmergencyOn":false,
+      "airPressureEmergencyValue":30.0,
+      "oilTemperature":57.3665657,
+      "oilPressure":70.40637,
+      "oilPressureWarningOn":false,
+      "oilPressureWarningValue":10.0,
+      "waterTemperature":53.1299934,
+      "waterTemperatureWarningOn":false,
+      "waterTemperatureWarningValue":105.0,
+      "batteryVoltage":23.6067848,
+      "batteryVoltageWarningOn":false,
+      "batteryVoltageWarningValue":22.0,
+      "lightsDashboardValue":1.0,
+      "lightsDashboardOn":true,
+      "blinkerLeftActive":false,
+      "blinkerRightActive":false,
+      "blinkerLeftOn":false,
+      "blinkerRightOn":false,
+      "lightsParkingOn":false,
+      "lightsBeamLowOn":false,
+      "lightsBeamHighOn":false,
+      "lightsAuxFrontOn":false,
+      "lightsAuxRoofOn":false,
+      "lightsBeaconOn":false,
+      "lightsBrakeOn":false,
+      "lightsReverseOn":false,
+      "placement":{
+         "x":13475.5762,
+         "y":67.3605652,
+         "z":14618.6211,
+         "heading":0.185142234,
+         "pitch":-0.0067760786,
+         "roll":-0.000293774
+      },
+      "acceleration":{
+         "x":0.0214568116,
+         "y":0.00623101648,
+         "z":-0.759649038
+      },
+      "head":{
+         "x":-0.795116067,
+         "y":1.43522251,
+         "z":-0.08483863
+      },
+      "cabin":{
+         "x":0.0,
+         "y":1.36506855,
+         "z":-1.70362806
+      },
+      "hook":{
+         "x":0.0,
+         "y":0.939669,
+         "z":-6.17736959
+      },
+      "gearSlots":[
+         {
+            "gear":0,
+            "handlePosition":0,
+            "slotSelectors":0
+         }
+      ],
+      "wheels":[
+         {
+            "simulated":true,
+            "steerable":false,
+            "powered":false,
+            "liftable":false,
+            "radius":0.5120504,
+            "position":{
+               "x":-0.9,
+               "y":0.506898463,
+               "z":6.25029
+            }
+         },
+         {
+            "simulated":true,
+            "steerable":false,
+            "powered":false,
+            "liftable":false,
+            "radius":0.5120504,
+            "position":{
+               "x":0.9,
+               "y":0.506898463,
+               "z":6.25029
+            }
+         },
+         {
+            "simulated":true,
+            "steerable":false,
+            "powered":false,
+            "liftable":false,
+            "radius":0.5120504,
+            "position":{
+               "x":-0.9,
+               "y":0.507362664,
+               "z":5.13048172
+            }
+         },
+         {
+            "simulated":true,
+            "steerable":false,
+            "powered":false,
+            "liftable":false,
+            "radius":0.5120504,
+            "position":{
+               "x":0.9,
+               "y":0.507362664,
+               "z":5.13048172
+            }
+         },
+         {
+            "simulated":true,
+            "steerable":false,
+            "powered":false,
+            "liftable":false,
+            "radius":0.5120504,
+            "position":{
+               "x":-0.9,
+               "y":0.507822156,
+               "z":4.02218342
+            }
+         },
+         {
+            "simulated":true,
+            "steerable":false,
+            "powered":false,
+            "liftable":false,
+            "radius":0.5120504,
+            "position":{
+               "x":0.9,
+               "y":0.507822156,
+               "z":4.02218342
+            }
+         }
+      ]
+   },
+   "trailer":{
+      "attached":true,
+      "id":"derrick",
+      "name":"Вышка",
+      "mass":22000.0,
+      "wear":0.0234265551,
+      "placement":{
+         "x":13483.3223,
+         "y":67.73905,
+         "z":14622.127,
+         "heading":0.1813016,
+         "pitch":-0.00583146373,
+         "roll":-0.000160016149
       }
-    ],
-    "wheels": [
-      {
-        "simulated": true,
-        "steerable": false,
-        "powered": false,
-        "liftable": false,
-        "radius": 0.5120504,
-        "position": {
-          "x": -0.9,
-          "y": 0.506898463,
-          "z": 6.25029
-        }
-      },
-      {
-        "simulated": true,
-        "steerable": false,
-        "powered": false,
-        "liftable": false,
-        "radius": 0.5120504,
-        "position": {
-          "x": 0.9,
-          "y": 0.506898463,
-          "z": 6.25029
-        }
-      },
-      {
-        "simulated": true,
-        "steerable": false,
-        "powered": false,
-        "liftable": false,
-        "radius": 0.5120504,
-        "position": {
-          "x": -0.9,
-          "y": 0.507362664,
-          "z": 5.13048172
-        }
-      },
-      {
-        "simulated": true,
-        "steerable": false,
-        "powered": false,
-        "liftable": false,
-        "radius": 0.5120504,
-        "position": {
-          "x": 0.9,
-          "y": 0.507362664,
-          "z": 5.13048172
-        }
-      },
-      {
-        "simulated": true,
-        "steerable": false,
-        "powered": false,
-        "liftable": false,
-        "radius": 0.5120504,
-        "position": {
-          "x": -0.9,
-          "y": 0.507822156,
-          "z": 4.02218342
-        }
-      },
-      {
-        "simulated": true,
-        "steerable": false,
-        "powered": false,
-        "liftable": false,
-        "radius": 0.5120504,
-        "position": {
-          "x": 0.9,
-          "y": 0.507822156,
-          "z": 4.02218342
-        }
-      }
-    ]
-  },
-  "trailer": {
-    "attached": true,
-    "id": "derrick",
-    "name": "Вышка",
-    "mass": 22000,
-    "wear": 0.023103781,
-    "placement": {
-      "x": 13812.2344,
-      "y": 65.41864,
-      "z": 13829.3076,
-      "heading": 0.5114418,
-      "pitch": 0.00571800629,
-      "roll": -0.000662338571
-    }
-  },
-  "job": {
-    "income": 2316,
-    "deadlineTime": "0001-01-09T03:34:00Z",
-    "remainingTime": "0001-01-01T06:59:00Z",
-    "sourceCity": "Linz",
-    "sourceCompany": "DPD",
-    "destinationCity": "Salzburg",
-    "destinationCompany": "JCB"
-  }
+   },
+   "job":{
+      "income":2316,
+      "deadlineTime":"0001-01-09T03:34:00Z",
+      "remainingTime":"0001-01-01T06:25:00Z",
+      "sourceCity":"Linz",
+      "sourceCompany":"DPD",
+      "destinationCity":"Salzburg",
+      "destinationCompany":"JCB"
+   }
 }

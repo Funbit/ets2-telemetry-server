@@ -1,27 +1,4 @@
-﻿/* 
-    *** DO NOT CHANGE THIS STYLESHEET *** 
-
-    If you want to create your own dashboard skin (or tweak something)
-    create a copy of the "/skins/template" directory and rename it
-    to something like: "/skins/your_skin_name" and edit config.json file inside.
-    For more information see skin tutorial PDF.
-
-    CSS naming convention:
-
-    - Dashboard core script maps all telemetry data properties to respective class names,
-      so truck's speed will be .truck-speed and current truck-gear is .truck-gear (see JSON).
-    - All boolean telemetry properties will have a special ".yes" class added 
-      when the value is true (will be removed if value is false).
-    - When dashboard core script updates DOM it will always add 
-      data-value attribute containing current value, so you 
-      can use it to have custom css selectors based on the actual data 
-      (for example, this skin uses .truck-gear[data-value="N"] to define
-      different style for neutral or reverse truck-gear, see below).
-    - If you need to define your own style related classes.
-      I stronly recommend to use underscore prefix ("._job" for example) to distinguish names,
-      so you will never forget which classes are dynamic and which are static.
-*/
-.hidden {
+﻿.hidden {
   visibility: hidden;
 }
 .visible {
@@ -250,7 +227,7 @@
   text-align: right;
   overflow: hidden;
 }
-.gameTime {
+.game-time {
   color: #D3D395;
   font-family: Arial, Tahoma;
   font-size: 28px;

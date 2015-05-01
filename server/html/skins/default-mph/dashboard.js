@@ -34,14 +34,13 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data, utils) {
     // before it is displayed on the dashboard.
     // You may convert km/h to mph, kilograms to tons, etc.
 
-	data.hasJob = data.trailer.attached;
-    // round truck speed    
+	data.hasJob = data.trailer.attached;      
     data.truck.speed = data.truck.speed * 0.621371;
     data.truck.cruiseControlSpeed = data.truck.cruiseControlSpeed * 0.621371;
     data.truck.speedRounded = Math.abs(data.truck.speed > 0
         ? Math.floor(data.truck.speed)
         : Math.round(data.truck.speed));
-    data.truck.cruiseControlSpeedRounded = data.cruiseControlOn
+    data.truck.cruiseControlSpeedRounded = data.truck.cruiseControlOn
         ? Math.floor(data.truck.cruiseControlSpeed)
         : 0;
     // convert kg to t

@@ -1,7 +1,7 @@
 ﻿// SEE Dashboard Skin Tutorial FOR MORE INFORMATION ABOUT THIS FILE
 
 Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data, utils) {
-	data.hasJob = data.trailer.attached;
+    data.hasJob = data.trailer.attached;
     // round truck speed    
     data.truck.speedRounded = Math.abs(data.truck.speed > 0
         ? Math.floor(data.truck.speed)
