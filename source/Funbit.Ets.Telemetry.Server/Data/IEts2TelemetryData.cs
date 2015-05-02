@@ -342,23 +342,23 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// Current level of truck's engine wear/damage between 0 (min) and 1 (max).
         /// Example: 0.00675457
         /// </summary>
-        float EngineWear { get; }
+        float WearEngine { get; }
         /// <summary>
         /// Current level of truck's transmission wear/damage between 0 (min) and 1 (max).
         /// </summary>
-        float TransmissionWear { get; }
+        float WearTransmission { get; }
         /// <summary>
         /// Current level of truck's cabin wear/damage between 0 (min) and 1 (max).
         /// </summary>
-        float CabinWear { get; }
+        float WearCabin { get; }
         /// <summary>
         /// Current level of truck's chassis wear/damage between 0 (min) and 1 (max).
         /// </summary>
-        float ChassisWear { get; }
+        float WearChassis { get; }
         /// <summary>
         /// Current level of truck's wheel wear/damage between 0 (min) and 1 (max).
         /// </summary>
-        float WheelsWear { get; }
+        float WearWheels { get; }
 
         /// <summary>
         /// Default position of the head in the cabin space.

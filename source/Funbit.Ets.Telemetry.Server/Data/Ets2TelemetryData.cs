@@ -239,27 +239,27 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return _rawData.Struct.fuelWarning != 0; }
         }
 
-        public float EngineWear
+        public float WearEngine
         {
             get { return _rawData.Struct.wearEngine; }
         }
 
-        public float TransmissionWear
+        public float WearTransmission
         {
             get { return _rawData.Struct.wearTransmission; }
         }
 
-        public float CabinWear
+        public float WearCabin
         {
             get { return _rawData.Struct.wearCabin; }
         }
 
-        public float ChassisWear
+        public float WearChassis
         {
             get { return _rawData.Struct.wearChassis; }
         }
 
-        public float WheelsWear
+        public float WearWheels
         {
             get { return _rawData.Struct.wearWheels; }
         }
