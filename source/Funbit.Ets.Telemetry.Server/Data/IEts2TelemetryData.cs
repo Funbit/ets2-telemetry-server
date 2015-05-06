@@ -23,6 +23,11 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// Job information.
         /// </summary>
         IEts2Job Job { get; }
+
+        /// <summary>
+        /// Navigation information.
+        /// </summary>
+        IEts2Navigation Navigation { get; }
     }
 
     public interface IEts2Game
@@ -166,11 +171,17 @@ namespace Funbit.Ets.Telemetry.Server.Data
         string Model { get; }
 
         /// <summary>
-        /// Gear currently selected in the engine.
+        /// Gear that is currently selected in the engine.
         /// Positive values reflect forward gears, negative - reverse.
         /// Example: 9
         /// </summary>
         int Gear { get; }
+        /// <summary>
+        /// Gear that is currently displayed on the main dashboard.
+        /// Positive values reflect forward gears, negative - reverse.
+        /// Example: 4
+        /// </summary>
+        int DisplayedGear { get; }
         /// <summary>
         /// Number of forward gears on undamaged truck.
         /// Example: 12
@@ -541,6 +552,27 @@ namespace Funbit.Ets.Telemetry.Server.Data
         float BatteryVoltageWarningValue { get; }
     }
 
+    public interface IEts2Navigation
+    {
+        /// <summary>
+        /// Relative estimated time of arrival.
+        /// Example: "0001-01-01T02:05:00Z"
+        /// </summary>
+        DateTime EstimatedTime { get; }
+
+        /// <summary>
+        /// Estimated distance to the destination in meters.
+        /// Example: 1224
+        /// </summary>
+        int EstimatedDistance { get; }
+
+        /// <summary>
+        /// Current value of the "Route Advisor speed limit" in km/h.
+        /// Example: 50
+        /// </summary>
+        int SpeedLimit { get; }
+    }
+
     public interface IEts2Job
     {
         /// <summary>
@@ -560,7 +592,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// Example: "0001-01-01T07:06:00Z"
         /// </summary>
         DateTime RemainingTime { get; }
-
+        
         /// <summary>
         /// Localized name of the source city for display purposes.
         /// Example: "Linz"

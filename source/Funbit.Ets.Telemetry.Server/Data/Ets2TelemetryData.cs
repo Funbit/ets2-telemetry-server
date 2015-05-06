@@ -15,10 +15,15 @@ namespace Funbit.Ets.Telemetry.Server.Data
             _rawData = new Box<Ets2TelemetryStructure>(rawData);
         }
 
+        internal static DateTime SecondsToDate(int seconds)
+        {
+            if (seconds < 0) seconds = 0;
+            return new DateTime((long)seconds * 10000000, DateTimeKind.Utc);
+        }
+
         internal static DateTime MinutesToDate(int minutes)
         {
-            if (minutes < 0) minutes = 0;
-            return new DateTime((long)minutes * 10000000 * 60, DateTimeKind.Utc);
+            return SecondsToDate(minutes * 60);
         }
 
         internal static string BytesToString(byte[] bytes)
@@ -46,6 +51,11 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public IEts2Job Job
         {
             get { return new Ets2Job(_rawData); }
+        }
+
+        public IEts2Navigation Navigation
+        {
+            get { return new Ets2Navigation(_rawData); }
         }
     }
 
@@ -187,6 +197,11 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public int Gear
         {
             get { return _rawData.Struct.gear; }
+        }
+
+        public int DisplayedGear
+        {
+            get { return _rawData.Struct.displayedGear; }
         }
 
         public int ForwardGears
@@ -649,6 +664,31 @@ namespace Funbit.Ets.Telemetry.Server.Data
                     _rawData.Struct.trailerRotationY,
                     _rawData.Struct.trailerRotationZ);
             }
+        }
+    }
+
+    class Ets2Navigation : IEts2Navigation
+    {
+        readonly Box<Ets2TelemetryStructure> _rawData;
+        
+        public Ets2Navigation(Box<Ets2TelemetryStructure> rawData)
+        {
+            _rawData = rawData;
+        }
+        
+        public DateTime EstimatedTime
+        {
+            get { return Ets2TelemetryData.SecondsToDate((int)_rawData.Struct.navigationTime); }
+        }
+
+        public int EstimatedDistance
+        {
+            get { return (int)_rawData.Struct.navigationDistance; }
+        }
+
+        public int SpeedLimit
+        {
+            get { return (int)(_rawData.Struct.navigationSpeedLimit * 3.6f); }
         }
     }
 

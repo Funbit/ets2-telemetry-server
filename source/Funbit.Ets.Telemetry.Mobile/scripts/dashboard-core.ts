@@ -367,7 +367,7 @@ module Funbit.Ets.Telemetry {
             // "truck.speed"
             // "truck.wheels"
             // or for array elements:
-            // "truck.wheels.0.steerable
+            // "truck.wheels.0.steerable"
             return path.split('.').reduce(
                 (prev, curr) =>
                     prev ? prev[curr] : undefined, obj || self)
