@@ -154,8 +154,7 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
         public byte[] truckModel;
 
         // ***** REVISION 4 ****** //
-
-        const int MaxWheelCount = 20;
+        
         const int MaxSlotCount = 32;
 
         public float fuelWarningFactor;
@@ -177,24 +176,6 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
 		public float hookPositionX;
 		public float hookPositionY;
 		public float hookPositionZ;
-        
-		public uint wheelCount;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
-		public float[] wheelPositionX;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
-		public float[] wheelPositionY;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
-		public float[] wheelPositionZ;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
-        public byte[] wheelSteerable;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
-        public byte[] wheelSimulated;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
-		public float[] wheelRadius;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
-        public byte[] wheelPowered;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
-        public byte[] wheelLiftable;
         
 		public uint selectorCount;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxSlotCount)]
@@ -221,5 +202,26 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
         public float navigationDistance;
         public float navigationTime;
         public float navigationSpeedLimit;
+
+        /*
+        const int MaxWheelCount = 20;
+        public uint wheelCount; 
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+        public float[] wheelPositionX;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+        public float[] wheelPositionY;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+        public float[] wheelPositionZ;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+        public byte[] wheelSteerable;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+        public byte[] wheelSimulated;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+        public float[] wheelRadius;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+        public byte[] wheelPowered;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
+        public byte[] wheelLiftable;
+        */
     }
 }

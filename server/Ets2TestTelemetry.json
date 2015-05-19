@@ -17,6 +17,7 @@
       "cruiseControlOn":false,
       "odometer":105830.453,
       "gear":10,
+      "displayedGear":10,
       "forwardGears":12,
       "reverseGears":1,
       "shifterType":"arcade",
@@ -216,5 +217,10 @@
       "sourceCompany":"DPD",
       "destinationCity":"Salzburg",
       "destinationCompany":"JCB"
+   },
+   "navigation":{
+      "estimatedTime": "0001-01-01T03:01:40Z",
+      "estimatedDistance": 132500,
+      "speedLimit": 90
    }
 }

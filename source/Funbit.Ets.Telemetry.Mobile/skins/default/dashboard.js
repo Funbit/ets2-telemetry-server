@@ -43,7 +43,7 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data, utils) {
         ? Math.floor(data.truck.cruiseControlSpeed)
         : 0;
     // convert kg to t
-    data.trailer.mass = data.hasJob ? ((data.trailer.mass / 1000.0) + 't') : '';
+    data.trailer.mass = data.hasJob ? (Math.round(data.trailer.mass / 1000.0) + 't') : '';
     // format odometer data as: 00000.0
     data.truck.odometer = utils.formatFloat(data.truck.odometer, 1);
     // convert gear to readable format

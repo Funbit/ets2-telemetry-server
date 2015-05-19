@@ -299,7 +299,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// </summary>
         int ShifterSlot { get; }
         /// <summary>
-        /// TODO: not sure if it is correct.
+        /// TODO: need to fix.
         /// </summary>
         int ShifterToggle { get; }
         
@@ -389,10 +389,6 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// </summary>
         IEts2Vector Hook { get; }
 
-        /// <summary>
-        /// List of all available truck (and trailer) wheels.
-        /// </summary>
-        IEts2Wheel[] Wheels { get; }
         /// <summary>
         /// All available selectors (e.g. range/splitter toggles).
         /// </summary>

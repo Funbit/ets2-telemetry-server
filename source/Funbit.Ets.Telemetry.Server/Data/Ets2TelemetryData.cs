@@ -603,6 +603,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
             }
         }
 
+        /*
         public IEts2Wheel[] Wheels
         {
             get
@@ -613,6 +614,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
                 return array;
             }
         }
+        */
     }
 
     class Ets2Trailer : IEts2Trailer
@@ -737,6 +739,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         }
     }
 
+    /*
     class Ets2Wheel : IEts2Wheel
     {
         public Ets2Wheel(Box<Ets2TelemetryStructure> rawData, int wheelIndex)
@@ -759,6 +762,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public float Radius { get; private set; }
         public IEts2Vector Position { get; private set; }
     }
+    */
 
     class Ets2GearSlot : IEts2GearSlot
     {
