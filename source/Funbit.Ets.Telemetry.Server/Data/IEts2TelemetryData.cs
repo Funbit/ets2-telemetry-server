@@ -301,7 +301,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// <summary>
         /// TODO: need to fix.
         /// </summary>
-        int ShifterToggle { get; }
+        //int ShifterToggle { get; }
         
         /// <summary>
         /// Pressure in the brake air tank in psi.
@@ -390,9 +390,9 @@ namespace Funbit.Ets.Telemetry.Server.Data
         IEts2Vector Hook { get; }
 
         /// <summary>
-        /// All available selectors (e.g. range/splitter toggles).
+        /// All available selectors (e.g. range/splitter toggles). TODO: need to fix.
         /// </summary>
-        IEts2GearSlot[] GearSlots { get; }
+        //IEts2GearSlot[] GearSlots { get; }
 
         /// <summary>
         /// Type of the shifter.
@@ -643,6 +643,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         float Wear { get; }
     }
 
+    /*
     public interface IEts2Wheel
     {
         /// <summary>
@@ -694,4 +695,5 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// </summary>
         int SlotSelectors { get; }
     }
+    */
 }

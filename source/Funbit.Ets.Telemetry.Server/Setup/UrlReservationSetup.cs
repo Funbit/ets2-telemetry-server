@@ -9,7 +9,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
     public class UrlReservationSetup : ISetup
     {
         static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
-        SetupStatus _status = SetupStatus.Uninstalled;
+        SetupStatus _status;
         
         public UrlReservationSetup()
         {

@@ -592,6 +592,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
             }
         }
 
+        /*
         public IEts2GearSlot[] GearSlots
         {
             get
@@ -602,8 +603,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
                 return array;
             }
         }
-
-        /*
+                
         public IEts2Wheel[] Wheels
         {
             get
@@ -690,7 +690,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
         public int SpeedLimit
         {
-            get { return (int)(_rawData.Struct.navigationSpeedLimit * 3.6f); }
+            get { return _rawData.Struct.navigationSpeedLimit > 0 ? ((int)(_rawData.Struct.navigationSpeedLimit * 3.6f)) : 0; }
         }
     }
 
@@ -762,8 +762,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public float Radius { get; private set; }
         public IEts2Vector Position { get; private set; }
     }
-    */
-
+    
     class Ets2GearSlot : IEts2GearSlot
     {
         public Ets2GearSlot(Box<Ets2TelemetryStructure> rawData, int slotIndex)
@@ -777,6 +776,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public int HandlePosition { get; private set; }
         public int SlotSelectors { get; private set; }
     }
+    */
 
     class Box<T> where T : struct 
     {

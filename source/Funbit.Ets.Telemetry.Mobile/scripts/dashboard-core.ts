@@ -4,31 +4,163 @@
 
 module Funbit.Ets.Telemetry {
 
-    // forward declaration for properties and objects
-
-    class Ets2GameMock {
+    // default telemetry values used when game connection is lost
+   
+    class Ets2Game {
         connected: boolean = false;
-        time: string = '';              // absolute time in ISO8601
-        nextRestStopTime: string = '';  // absolute time in ISO8601
+        paused: boolean = false;
+        time: string = "";
+        timeScale: number = 0;
+        nextRestStopTime: string = "";
+        version: string = "";
+        telemetryPluginVersion: string = "";
     }
 
-    class Ets2JobMock {
-        deadlineTime: string = '';  // absolute time in ISO8601
-        remainingTime: string = ''; // absolute time in ISO8601
+    class Ets2Job {
+        income: number = 0;
+        deadlineTime: string = "";
+        remainingTime: string = "";
+        sourceCity: string = "";
+        sourceCompany: string = "";
+        destinationCity: string = "";
+        destinationCompany: string = "";
     }
-    
-    class Ets2TelemetryData {
-        game: Ets2GameMock;
-        job: Ets2JobMock;
-        truck: any;
-        trailer: any;
-        // the rest properties are not defined here
-        // (see IEts2TelemetryData.cs for reference)
+
+    class Ets2Truck {
+        id: string = "";
+        make: string = "";
+        model: string = "";
+        speed: number = 0;
+        cruiseControlSpeed: number = 0;
+        cruiseControlOn: boolean = false;
+        odometer: number = 0;
+        gear: number = 0;
+        displayedGear: number = 0;
+        forwardGears: number = 0;
+        reverseGears: number = 0;
+        shifterType: string = "";
+        engineRpm: number = 0;
+        engineRpmMax: number = 0;
+        fuel: number = 0;
+        fuelCapacity: number = 0;
+        fuelAverageConsumption: number = 0;
+        fuelWarningFactor: number = 0;
+        fuelWarningOn: boolean = false;
+        wearEngine: number = 0;
+        wearTransmission: number = 0;
+        wearCabin: number = 0;
+        wearChassis: number = 0;
+        wearWheels: number = 0;
+        userSteer: number = 0;
+        userThrottle: number = 0;
+        userBrake: number = 0;
+        userClutch: number = 0;
+        gameSteer: number = 0;
+        gameThrottle: number = 0;
+        gameBrake: number = 0;
+        gameClutch: number = 0;
+        shifterSlot: number = 0;
+        shifterToggle: number = 0;
+        engineOn: boolean = false;
+        electricOn: boolean = false;
+        wipersOn: boolean = false;
+        retarderBrake: number = 0;
+        retarderStepCount: number = 0;
+        parkBrakeOn: boolean = false;
+        motorBrakeOn: boolean = false;
+        brakeTemperature: number = 0;
+        adblue: number = 0;
+        adblueCapacity: number = 0;
+        adblueAverageConsumpton: number = 0;
+        adblueWarningOn: boolean = false;
+        airPressure: number = 0;
+        airPressureWarningOn: boolean = false;
+        airPressureWarningValue: number = 0;
+        airPressureEmergencyOn: boolean = false;
+        airPressureEmergencyValue: number = 0;
+        oilTemperature: number = 0;
+        oilPressure: number = 0;
+        oilPressureWarningOn: boolean = false;
+        oilPressureWarningValue: number = 0;
+        waterTemperature: number = 0;
+        waterTemperatureWarningOn: boolean = false;
+        waterTemperatureWarningValue: number = 0;
+        batteryVoltage: number = 0;
+        batteryVoltageWarningOn: boolean = false;
+        batteryVoltageWarningValue: number = 0;
+        lightsDashboardValue: number = 0;
+        lightsDashboardOn: boolean = false;
+        blinkerLeftActive: boolean = false;
+        blinkerRightActive: boolean = false;
+        blinkerLeftOn: boolean = false;
+        blinkerRightOn: boolean = false;
+        lightsParkingOn: boolean = false;
+        lightsBeamLowOn: boolean = false;
+        lightsBeamHighOn: boolean = false;
+        lightsAuxFrontOn: boolean = false;
+        lightsAuxRoofOn: boolean = false;
+        lightsBeaconOn: boolean = false;
+        lightsBrakeOn: boolean = false;
+        lightsReverseOn: boolean = false;
+        placement: Ets2Placement;
+        acceleration: Ets2Vector;
+        head: Ets2Vector;
+        cabin: Ets2Vector;
+        hook: Ets2Vector;
         constructor() {
-            this.truck = {};
-            this.trailer = {};
-            this.job = new Ets2JobMock();
-            this.game = new Ets2GameMock();
+            this.placement = new Ets2Placement();
+            this.acceleration = new Ets2Vector();
+            this.head = new Ets2Vector();
+            this.cabin = new Ets2Vector();
+            this.hook = new Ets2Vector();
+        }
+    }
+
+    class Ets2Trailer {
+        attached: boolean = false;
+        id: string = "";
+        name: string = "";
+        mass: number = 0;
+        wear: number = 0;
+        placement: Ets2Placement;
+        constructor() {
+            this.placement = new Ets2Placement();
+        }
+    }
+
+    class Ets2Navigation {
+        estimatedTime: string = "";
+        estimatedDistance: number = 0;
+        speedLimit: number = 0;
+    }
+
+    class Ets2Vector {
+        x: number = 0;
+        y: number = 0;
+        z: number = 0;
+    }
+
+    class Ets2Placement {
+        x: number = 0;
+        y: number = 0;
+        z: number = 0;
+        heading: number = 0;
+        pitch: number = 0;
+        roll: number = 0;
+    }
+
+    class Ets2TelemetryData {
+        game: Ets2Game;
+        truck: Ets2Truck;
+        trailer: Ets2Trailer;
+        job: Ets2Job;
+        navigation: Ets2Navigation;
+        constructor() {
+            this.game = new Ets2Game();
+            this.truck = new Ets2Truck();
+            this.trailer = new Ets2Trailer();
+            this.job = new Ets2Job();
+            this.navigation = new Ets2Navigation();
         }
     }
 
@@ -166,12 +298,14 @@ module Funbit.Ets.Telemetry {
             if (data != null && data.game != null && !data.game.connected) {
                 // if we're not connected we reset the data 
                 reason = Strings.connectedAndWaitingForDrive;
-                data = null;
+                // use default values
+                data = new Ets2TelemetryData();
+            } else if (data === null) {
+                // if we don't have real data we use default values
+                data = new Ets2TelemetryData();
             }
             // update status message with failure reason
             $('.statusMessage').html(reason);
-            // if we don't have real data we use default values
-            var data = data === null ? new Ets2TelemetryData() : data;
             // tweak data using custom skin based filter
             data = this.filter(data, this.utils);
             // tweak data using default internal filter

@@ -13,10 +13,10 @@ namespace Funbit.Ets.Telemetry.Server.Setup
     {
         static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
-        SetupStatus _status = SetupStatus.Uninstalled;
+        SetupStatus _status;
         const string TelemetryDllName = "ets2-telemetry-server.dll";
-        const string TelemetryX64DllMd5 = "93738cde42d8ad342084707d7ce0e01d";
-        const string TelemetryX86DllMd5 = "237f9ae0ac8e2670436422265bed0fb3";
+        const string TelemetryX64DllMd5 = "ac6cdf1b223dd9e8dca61532e050aefa";
+        const string TelemetryX86DllMd5 = "7f8bccf0175a0586c9afd6ed96cbdd57";
 
         static string GetDefaultSteamPath()
         {

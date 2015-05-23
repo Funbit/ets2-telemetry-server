@@ -13,7 +13,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
         static readonly string FirewallRuleName = string.Format(
             "ETS2 TELEMETRY SERVER (PORT {0})", ConfigurationManager.AppSettings["Port"]);
 
-        SetupStatus _status = SetupStatus.Uninstalled;
+        SetupStatus _status;
 
         public FirewallSetup()
         {

@@ -155,8 +155,6 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
 
         // ***** REVISION 4 ****** //
         
-        const int MaxSlotCount = 32;
-
         public float fuelWarningFactor;
         public float adblueCapacity;
         public float airPressureWarningValue;
@@ -177,14 +175,6 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
 		public float hookPositionY;
 		public float hookPositionZ;
         
-		public uint selectorCount;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxSlotCount)]
-		public int[] slotGear;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxSlotCount)]
-		public uint[] slotHandlePosition;
-        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxSlotCount)]
-		public uint[] slotSelectors;
-        
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 16)]
 		public byte[] shifterType;
 
@@ -196,14 +186,14 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
         public float trailerRotationX;
         public float trailerRotationY;
         public float trailerRotationZ;
-        //readonly byte padding5;
-
+        
         public int displayedGear;
         public float navigationDistance;
         public float navigationTime;
         public float navigationSpeedLimit;
 
         /*
+        const int MaxSlotCount = 32; // TODO: need to fix.
         const int MaxWheelCount = 20;
         public uint wheelCount; 
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
@@ -221,7 +211,14 @@ namespace Funbit.Ets.Telemetry.Server.Data.Reader
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
         public byte[] wheelPowered;
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxWheelCount)]
-        public byte[] wheelLiftable;
+        public byte[] wheelLiftable;        
+        public uint selectorCount;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxSlotCount)]
+		public int[] slotGear;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxSlotCount)]
+		public uint[] slotHandlePosition;
+        [MarshalAs(UnmanagedType.ByValArray, SizeConst = MaxSlotCount)]
+		public uint[] slotSelectors;         
         */
     }
 }
