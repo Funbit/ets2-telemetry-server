@@ -47,6 +47,7 @@ Funbit.Ets.Telemetry.Dashboard.prototype.filter = function (data, utils) {
     // format odometer data as: 00000.0
     data.truck.odometer = utils.formatFloat(data.truck.odometer, 1);
     // convert gear to readable format
+    data.truck.gear = data.truck.displayedGear; // use displayed gear
     data.truck.gear = data.truck.gear > 0
         ? 'D' + data.truck.gear
         : (data.truck.gear < 0 ? 'R' + Math.abs(data.truck.gear) : 'N');

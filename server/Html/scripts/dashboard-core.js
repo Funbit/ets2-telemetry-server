@@ -2,29 +2,167 @@
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
-            var Ets2GameMock = (function () {
-                function Ets2GameMock() {
+            var Ets2Game = (function () {
+                function Ets2Game() {
                     this.connected = false;
-                    this.time = '';
-                    this.nextRestStopTime = '';
+                    this.paused = false;
+                    this.time = "";
+                    this.timeScale = 0;
+                    this.nextRestStopTime = "";
+                    this.version = "";
+                    this.telemetryPluginVersion = "";
                 }
-                return Ets2GameMock;
+                return Ets2Game;
             })();
 
-            var Ets2JobMock = (function () {
-                function Ets2JobMock() {
-                    this.deadlineTime = '';
-                    this.remainingTime = '';
+            var Ets2Job = (function () {
+                function Ets2Job() {
+                    this.income = 0;
+                    this.deadlineTime = "";
+                    this.remainingTime = "";
+                    this.sourceCity = "";
+                    this.sourceCompany = "";
+                    this.destinationCity = "";
+                    this.destinationCompany = "";
                 }
-                return Ets2JobMock;
+                return Ets2Job;
+            })();
+
+            var Ets2Truck = (function () {
+                function Ets2Truck() {
+                    this.id = "";
+                    this.make = "";
+                    this.model = "";
+                    this.speed = 0;
+                    this.cruiseControlSpeed = 0;
+                    this.cruiseControlOn = false;
+                    this.odometer = 0;
+                    this.gear = 0;
+                    this.displayedGear = 0;
+                    this.forwardGears = 0;
+                    this.reverseGears = 0;
+                    this.shifterType = "";
+                    this.engineRpm = 0;
+                    this.engineRpmMax = 0;
+                    this.fuel = 0;
+                    this.fuelCapacity = 0;
+                    this.fuelAverageConsumption = 0;
+                    this.fuelWarningFactor = 0;
+                    this.fuelWarningOn = false;
+                    this.wearEngine = 0;
+                    this.wearTransmission = 0;
+                    this.wearCabin = 0;
+                    this.wearChassis = 0;
+                    this.wearWheels = 0;
+                    this.userSteer = 0;
+                    this.userThrottle = 0;
+                    this.userBrake = 0;
+                    this.userClutch = 0;
+                    this.gameSteer = 0;
+                    this.gameThrottle = 0;
+                    this.gameBrake = 0;
+                    this.gameClutch = 0;
+                    this.shifterSlot = 0;
+                    this.shifterToggle = 0;
+                    this.engineOn = false;
+                    this.electricOn = false;
+                    this.wipersOn = false;
+                    this.retarderBrake = 0;
+                    this.retarderStepCount = 0;
+                    this.parkBrakeOn = false;
+                    this.motorBrakeOn = false;
+                    this.brakeTemperature = 0;
+                    this.adblue = 0;
+                    this.adblueCapacity = 0;
+                    this.adblueAverageConsumpton = 0;
+                    this.adblueWarningOn = false;
+                    this.airPressure = 0;
+                    this.airPressureWarningOn = false;
+                    this.airPressureWarningValue = 0;
+                    this.airPressureEmergencyOn = false;
+                    this.airPressureEmergencyValue = 0;
+                    this.oilTemperature = 0;
+                    this.oilPressure = 0;
+                    this.oilPressureWarningOn = false;
+                    this.oilPressureWarningValue = 0;
+                    this.waterTemperature = 0;
+                    this.waterTemperatureWarningOn = false;
+                    this.waterTemperatureWarningValue = 0;
+                    this.batteryVoltage = 0;
+                    this.batteryVoltageWarningOn = false;
+                    this.batteryVoltageWarningValue = 0;
+                    this.lightsDashboardValue = 0;
+                    this.lightsDashboardOn = false;
+                    this.blinkerLeftActive = false;
+                    this.blinkerRightActive = false;
+                    this.blinkerLeftOn = false;
+                    this.blinkerRightOn = false;
+                    this.lightsParkingOn = false;
+                    this.lightsBeamLowOn = false;
+                    this.lightsBeamHighOn = false;
+                    this.lightsAuxFrontOn = false;
+                    this.lightsAuxRoofOn = false;
+                    this.lightsBeaconOn = false;
+                    this.lightsBrakeOn = false;
+                    this.lightsReverseOn = false;
+                    this.placement = new Ets2Placement();
+                    this.acceleration = new Ets2Vector();
+                    this.head = new Ets2Vector();
+                    this.cabin = new Ets2Vector();
+                    this.hook = new Ets2Vector();
+                }
+                return Ets2Truck;
+            })();
+
+            var Ets2Trailer = (function () {
+                function Ets2Trailer() {
+                    this.attached = false;
+                    this.id = "";
+                    this.name = "";
+                    this.mass = 0;
+                    this.wear = 0;
+                    this.placement = new Ets2Placement();
+                }
+                return Ets2Trailer;
+            })();
+
+            var Ets2Navigation = (function () {
+                function Ets2Navigation() {
+                    this.estimatedTime = "";
+                    this.estimatedDistance = 0;
+                    this.speedLimit = 0;
+                }
+                return Ets2Navigation;
+            })();
+
+            var Ets2Vector = (function () {
+                function Ets2Vector() {
+                    this.x = 0;
+                    this.y = 0;
+                    this.z = 0;
+                }
+                return Ets2Vector;
+            })();
+
+            var Ets2Placement = (function () {
+                function Ets2Placement() {
+                    this.x = 0;
+                    this.y = 0;
+                    this.z = 0;
+                    this.heading = 0;
+                    this.pitch = 0;
+                    this.roll = 0;
+                }
+                return Ets2Placement;
             })();
 
             var Ets2TelemetryData = (function () {
                 function Ets2TelemetryData() {
-                    this.truck = {};
-                    this.trailer = {};
-                    this.job = new Ets2JobMock();
-                    this.game = new Ets2GameMock();
+                    this.game = new Ets2Game();
+                    this.truck = new Ets2Truck();
+                    this.trailer = new Ets2Trailer();
+                    this.job = new Ets2Job();
+                    this.navigation = new Ets2Navigation();
                 }
                 return Ets2TelemetryData;
             })();
@@ -156,12 +294,13 @@
                     if (typeof reason === "undefined") { reason = ''; }
                     if (data != null && data.game != null && !data.game.connected) {
                         reason = Telemetry.Strings.connectedAndWaitingForDrive;
-                        data = null;
+
+                        data = new Ets2TelemetryData();
+                    } else if (data === null) {
+                        data = new Ets2TelemetryData();
                     }
 
                     $('.statusMessage').html(reason);
-
-                    var data = data === null ? new Ets2TelemetryData() : data;
 
                     data = this.filter(data, this.utils);
 

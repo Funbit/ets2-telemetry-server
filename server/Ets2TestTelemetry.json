@@ -41,8 +41,7 @@
       "gameThrottle":1.0,
       "gameBrake":0.0,
       "gameClutch":0.0,
-      "shifterSlot":0,
-      "shifterToggle":0,
+      "shifterSlot":0,      
       "engineOn":true,
       "electricOn":false,
       "wipersOn":false,
@@ -111,88 +110,7 @@
          "x":0.0,
          "y":0.939669,
          "z":-6.17736959
-      },
-      "gearSlots":[
-         {
-            "gear":0,
-            "handlePosition":0,
-            "slotSelectors":0
-         }
-      ],
-      "wheels":[
-         {
-            "simulated":true,
-            "steerable":false,
-            "powered":false,
-            "liftable":false,
-            "radius":0.5120504,
-            "position":{
-               "x":-0.9,
-               "y":0.506898463,
-               "z":6.25029
-            }
-         },
-         {
-            "simulated":true,
-            "steerable":false,
-            "powered":false,
-            "liftable":false,
-            "radius":0.5120504,
-            "position":{
-               "x":0.9,
-               "y":0.506898463,
-               "z":6.25029
-            }
-         },
-         {
-            "simulated":true,
-            "steerable":false,
-            "powered":false,
-            "liftable":false,
-            "radius":0.5120504,
-            "position":{
-               "x":-0.9,
-               "y":0.507362664,
-               "z":5.13048172
-            }
-         },
-         {
-            "simulated":true,
-            "steerable":false,
-            "powered":false,
-            "liftable":false,
-            "radius":0.5120504,
-            "position":{
-               "x":0.9,
-               "y":0.507362664,
-               "z":5.13048172
-            }
-         },
-         {
-            "simulated":true,
-            "steerable":false,
-            "powered":false,
-            "liftable":false,
-            "radius":0.5120504,
-            "position":{
-               "x":-0.9,
-               "y":0.507822156,
-               "z":4.02218342
-            }
-         },
-         {
-            "simulated":true,
-            "steerable":false,
-            "powered":false,
-            "liftable":false,
-            "radius":0.5120504,
-            "position":{
-               "x":0.9,
-               "y":0.507822156,
-               "z":4.02218342
-            }
-         }
-      ]
+      }
    },
    "trailer":{
       "attached":true,
