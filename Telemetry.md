@@ -1,6 +1,6 @@
-## Telemetry reference
+# Telemetry reference
 
-This document describes all telemetry properties supported by the ETS2 Telemetry Web Server. 
+This document describes all telemetry properties supported by the [ETS2 Telemetry Web Server](https://github.com/Funbit/ets2-telemetry-server). 
 
 ## Property types
 
@@ -14,15 +14,15 @@ An integer value. Example: 40
 
 #### float
 
-A floating point value. Example: 40.1233.
+A floating point value. Example: 40.1233
 
 #### date
 
-Date types are always serialized to [ISO 8601 ](http://en.wikipedia.org/wiki/ISO_8601)string in [UTC](http://en.wikipedia.org/wiki/Coordinated_Universal_Time) time zone. Counting starts from 0001 year when 1st January is Monday. Example: "0001-01-05T05:11:00Z".
+Date types are always serialized to [ISO 8601 ](http://en.wikipedia.org/wiki/ISO_8601)string in [UTC](http://en.wikipedia.org/wiki/Coordinated_Universal_Time) time zone. Counting starts from 0001 year when 1st January is Monday. Example: "0001-01-05T05:11:00Z"
 
 #### string
 
-A string value. Example: "hshifter".
+A string value. Example: "hshifter"
 
 #### placement
 
