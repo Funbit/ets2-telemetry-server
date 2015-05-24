@@ -108,7 +108,7 @@ When the fatique simulation is enabled contains relative remaining time before p
 
 ##### game.version 
 
-Current version of the game (internal).
+Current version of the game engine (internal).
 
 		Type: 		string
 		Example: 	"1.10"
@@ -126,766 +126,784 @@ Current version of the telemetry plugin DLL file (revision).
 
 ##### truck.id
 
-.
+Brand Id of the current truck. Standard values are: "daf", "iveco", "man", "mercedes", "renault", "scania", "volvo".
 
-		Type: 		.
-		Example: 	.
+		Type: 		string
+		Example: 	"man"
 		CSS Class: 	truck-id
 
 ##### truck.make
 
-.
+Localized brand name of the current truck for display purposes.
 
-		Type: 		.
-		Example: 	.
+		Type: 		string
+		Example: 	"MAN"
 		CSS Class: 	truck-make
 
 ##### truck.model
 
-.
+Localized model name of the current truck.
 
-		Type: 		.
-		Example: 	.
+		Type: 		string
+		Example: 	"TGX"
 		CSS Class: 	truck-model
 
 ##### truck.speed
 
-.
+Current truck speed in km/h. If truck is moving backwards the value is negative.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	50.411231
 		CSS Class: 	truck-speed
 
 ##### truck.cruiseControlSpeed
 
-.
+Speed selected for the cruise control in km/h.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	75.0
 		CSS Class: 	truck-cruiseControlSpeed
 
 ##### truck.cruiseControlOn
 
-.
+Indicates whether cruise control is turned on or off. 
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-cruiseControlOn
 
 ##### truck.odometer
 
-.
+The value of the truck's odometer in km.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	105809.25
 		CSS Class: 	truck-odometer
 
 ##### truck.gear
 
-.
+Gear that is currently selected in the engine (physical gear). Positive values reflect forward gears, negative - reverse.
 
-		Type: 		.
-		Example: 	.
+		Type: 		integer
+		Example: 	9
 		CSS Class: 	truck-gear
 
 ##### truck.displayedGear
 
-.
+Gear that is currently displayed on the main dashboard inside the game. Positive values reflect forward gears, negative - reverse.
 
-		Type: 		.
-		Example: 	.
+		Type: 		integer
+		Example: 	9
 		CSS Class: 	truck-displayedGear
 
 ##### truck.forwardGears
 
-.
+Number of forward gears on undamaged truck.
 
-		Type: 		.
-		Example: 	.
+		Type: 		integer
+		Example: 	12
 		CSS Class: 	truck-forwardGears
 
 ##### truck.reverseGears
 
-.
+Number of reverse gears on undamaged truck.
 
-		Type: 		.
-		Example: 	.
+		Type: 		integer
+		Example: 	1
 		CSS Class: 	truck-reverseGears
 
 ##### truck.shifterType
 
-.
+Type of the shifter selected in the game's settings. One of the following values: "arcade", "automatic", "manual", "hshifter".
 
-		Type: 		.
-		Example: 	.
+		Type: 		string
+		Example: 	"arcade"
 		CSS Class: 	truck-shifterType
 
 ##### truck.engineRpm
 
-.
+Current RPM value of the truck's engine (rotates per minute).
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	2490.033
 		CSS Class: 	truck-engineRpm
 
 ##### truck.engineRpmMax
 
-.
+Maximal RPM value of the truck's engine.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	2500
 		CSS Class: 	truck-engineRpmMax
 
 ##### truck.fuel
 
-.
+Current amount of fuel in liters.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	696.7544
 		CSS Class: 	truck-fuel
 
 ##### truck.fuelCapacity
 
-.
+Fuel tank capacity in litres.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	700
 		CSS Class: 	truck-fuelCapacity
 
 ##### truck.fuelAverageConsumption
 
-.
+Average consumption of the fuel in liters/km.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0.4923077
 		CSS Class: 	truck-fuelAverageConsumption
 
 ##### truck.fuelWarningFactor
 
-.
+Fraction of the fuel capacity bellow which is activated the fuel warning.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0.15
 		CSS Class: 	truck-fuelWarningFactor
 
 ##### truck.fuelWarningOn
 
-.
+Indicates whether low fuel warning is active or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-fuelWarningOn
 
 ##### truck.wearEngine
 
-.
+Current level of truck's engine wear/damage between 0 (min) and 1 (max).
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0.00675457
 		CSS Class: 	truck-wearEngine
 
 ##### truck.wearTransmission
 
-.
+Current level of truck's transmission wear/damage between 0 (min) and 1 (max).
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0.047
 		CSS Class: 	truck-wearTransmission
 
 ##### truck.wearCabin
 
-.
+Current level of truck's cabin wear/damage between 0 (min) and 1 (max).
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0.044
 		CSS Class: 	truck-wearCabin
 
 ##### truck.wearChassis
 
-.
+Current level of truck's chassis wear/damage between 0 (min) and 1 (max).
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0.043
 		CSS Class: 	truck-wearChassis
 
 ##### truck.wearWheels
 
-.
+Current level of truck's wheel wear/damage between 0 (min) and 1 (max).
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0.041
 		CSS Class: 	truck-wearWheels
 
 ##### truck.userSteer
 
-.
+Steering received from input (-1;1). Note that it is interpreted counterclockwise. If the user presses the steer right button on digital input (e.g. keyboard) this value goes immediatelly to -1.0.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	-1.0
 		CSS Class: 	truck-userSteer
 
 ##### truck.userThrottle
 
-.
+Throttle received from input (-1;1). If the user presses the forward button on digital input (e.g. keyboard) this value goes immediatelly to 1.0.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0
 		CSS Class: 	truck-userThrottle
 
 ##### truck.userBrake
 
-.
+Brake received from input (-1;1). If the user presses the brake button on digital input (e.g. keyboard) this value goes immediatelly to 1.0.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0
 		CSS Class: 	truck-userBrake
 
 ##### truck.userClutch
 
-.
+Clutch received from input (-1;1). If the user presses the clutch button on digital input (e.g. keyboard) this value goes immediatelly to 1.0.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0
 		CSS Class: 	truck-userClutch
 
 ##### truck.gameSteer
 
-.
+Steering as used by the simulation (-1;1). Note that it is interpreted counterclockwise. Accounts for interpolation speeds and simulated counterfoces for digital inputs.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	-0.423521
 		CSS Class: 	truck-gameSteer
 
 ##### truck.gameThrottle
 
-.
+Throttle pedal input as used by the simulation (0;1). Accounts for the press attack curve for digital inputs or cruise-control input.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0.17161
 		CSS Class: 	truck-gameThrottle
 
 ##### truck.gameBrake
 
-.
+Brake pedal input as used by the simulation (0;1). Accounts for the press attack curve for digital inputs. Does not contain retarder, parking or motor brake.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0
 		CSS Class: 	truck-gameBrake
 
 ##### truck.gameClutch
 
-.
+Clutch pedal input as used by the simulation (0;1). Accounts for the automatic shifting or interpolation of player input.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0
 		CSS Class: 	truck-gameClutch
 
 ##### truck.shifterSlot
 
-.
+Gearbox slot the h-shifter handle is currently in. 0 means that no slot is selected.
 
-		Type: 		.
-		Example: 	.
+		Type: 		integer
+		Example: 	4
 		CSS Class: 	truck-shifterSlot
 
 ##### truck.engineOn
 
-.
+Indicates whether the engine is currently turned on or off.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	true
 		CSS Class: 	truck-engineOn
 
 ##### truck.electricOn
 
-.
+Indicates whether the electric is enabled or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	true
 		CSS Class: 	truck-electricOn
 
 ##### truck.wipersOn
 
-.
+Indicates whether wipers are currently turned on or off.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-wipersOn
 
 ##### truck.retarderBrake
 
-.
+Current level of the retarder brake. Ranges from 0 to RetarderStepCount.
 
-		Type: 		.
-		Example: 	.
+		Type: 		integer
+		Example: 	0
 		CSS Class: 	truck-retarderBrake
 
 ##### truck.retarderStepCount
 
-.
+Number of steps in the retarder. Set to zero if retarder is not mounted to the truck.
 
-		Type: 		.
-		Example: 	.
+		Type: 		integer
+		Example: 	3
 		CSS Class: 	truck-retarderStepCount
 
 ##### truck.parkBrakeOn
 
-.
+Is the parking brake enabled or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-parkBrakeOn
 
 ##### truck.motorBrakeOn
 
-.
+Is the motor brake enabled or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	true
 		CSS Class: 	truck-motorBrakeOn
 
 ##### truck.brakeTemperature
 
-.
+Temperature of the brakes in degrees celsius.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	15.9377184
 		CSS Class: 	truck-brakeTemperature
 
 ##### truck.adblue
 
-.
+Amount of [AdBlue](http://en.wikipedia.org/wiki/Diesel_exhaust_fluid) in liters.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0
 		CSS Class: 	truck-adblue
 
 ##### truck.adblueCapacity
 
-.
+AdBlue tank capacity in litres.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0
 		CSS Class: 	truck-adblueCapacity
 
 ##### truck.adblueAverageConsumpton
 
-.
+Average consumption of the adblue in liters/km.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0
 		CSS Class: 	truck-adblueAverageConsumpton
 
 ##### truck.adblueWarningOn
 
-.
+Is the low adblue warning active or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-adblueWarningOn
 
 ##### truck.airPressure
 
-.
+Pressure in the brake air tank in psi.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	133.043961
 		CSS Class: 	truck-airPressure
 
 ##### truck.airPressureWarningOn
 
-.
+Is the air pressure warning active or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-airPressureWarningOn
 
 ##### truck.airPressureWarningValue
 
-.
+Pressure of the air in the tank bellow which the warning activates.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	65
 		CSS Class: 	truck-airPressureWarningValue
 
 ##### truck.airPressureEmergencyOn
 
-.
+Are the emergency brakes active as result of low air pressure or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-airPressureEmergencyOn
 
 ##### truck.airPressureEmergencyValue
 
-.
+Pressure of the air in the tank bellow which the emergency brakes activate.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	30
 		CSS Class: 	truck-airPressureEmergencyValue
 
 ##### truck.oilTemperature
 
-.
+Temperature of the oil in degrees celsius.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	16.2580566
 		CSS Class: 	truck-oilTemperature
 
 ##### truck.oilPressure
 
-.
+Pressure of the oil in psi.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	36.4550362
 		CSS Class: 	truck-oilPressure
 
 ##### truck.oilPressureWarningOn
 
-.
+Is the oil pressure warning active or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	true
 		CSS Class: 	truck-oilPressureWarningOn
 
 ##### truck.oilPressureWarningValue
 
-.
+Pressure of the oil bellow which the warning activates.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	10
 		CSS Class: 	truck-oilPressureWarningValue
 
 ##### truck.waterTemperature
 
-.
+Temperature of the water in degrees celsius.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	16.1623955
 		CSS Class: 	truck-waterTemperature
 
 ##### truck.waterTemperatureWarningOn
 
-.
+Is the water temperature warning active or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	true
 		CSS Class: 	truck-waterTemperatureWarningOn
 
 ##### truck.waterTemperatureWarningValue
 
-.
+Temperature of the water above which the warning activates.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	105
 		CSS Class: 	truck-waterTemperatureWarningValue
 
 ##### truck.batteryVoltage
 
-.
+Voltage of the battery in volts.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	23.4985161
 		CSS Class: 	truck-batteryVoltage
 
 ##### truck.batteryVoltageWarningOn
 
-.
+Is the battery voltage/not charging warning active or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	true
 		CSS Class: 	truck-batteryVoltageWarningOn
 
 ##### truck.batteryVoltageWarningValue
 
-.
+Voltage of the battery bellow which the warning activates.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	22
 		CSS Class: 	truck-batteryVoltageWarningValue
 
 ##### truck.lightsDashboardValue
 
-.
+Intensity of the dashboard backlight between 0 (off) and 1 (max).
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	1
 		CSS Class: 	truck-lightsDashboardValue
 
 ##### truck.lightsDashboardOn
 
-.
+Is the dashboard backlight currently turned on or off.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	true
 		CSS Class: 	truck-lightsDashboardOn
 
 ##### truck.blinkerLeftActive
 
-.
+Indicates whether the left blinker currently emits light or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-blinkerLeftActive
 
 ##### truck.blinkerRightActive
 
-.
+Indicates whether the right blinker currently emits light or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-blinkerRightActive
 
 ##### truck.blinkerLeftOn
 
-.
+Is left blinker currently turned on or off.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-blinkerLeftOn
 
 ##### truck.blinkerRightOn
 
-.
+Is right blinker currently turned on or off.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-blinkerRightOn
 
 ##### truck.lightsParkingOn
 
-.
+Are parking lights enabled or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-lightsParkingOn
 
 ##### truck.lightsBeamLowOn
 
-.
+Are low beam lights enabled or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-lightsBeamLowOn
 
 ##### truck.lightsBeamHighOn
 
-.
+Are high beam lights enabled or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-lightsBeamHighOn
 
 ##### truck.lightsAuxFrontOn
 
-.
+Are auxiliary front lights active or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-lightsAuxFrontOn
 
 ##### truck.lightsAuxRoofOn
 
-.
+Are auxiliary roof lights active or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-lightsAuxRoofOn
 
 ##### truck.lightsBeaconOn
 
-.
+Are beacon lights enabled or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-lightsBeaconOn
 
 ##### truck.lightsBrakeOn
 
-.
+Is brake light active or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-lightsBrakeOn
 
 ##### truck.lightsReverseOn
 
-.
+Is reverse light active or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	false
 		CSS Class: 	truck-lightsReverseOn
 
 ##### truck.placement
 
-.
+Current truck placement in the game world.
 
-		Type: 		.
-		Example: 	.
-		CSS Class: 	truck-placement
+		Type: 			placement
+		Example: 		-
+		CSS Classes: 	truck-placement-x
+						truck-placement-y
+						truck-placement-z
+						truck-placement-heading
+						truck-placement-pitch
+						truck-placement-roll
 
 ##### truck.acceleration
 
-.
+Represents vehicle space linear acceleration of the truck measured in meters per second^2.
 
-		Type: 		.
-		Example: 	.
-		CSS Class: 	truck-acceleration
+		Type: 			vector
+		Example: 		-
+		CSS Classes: 	truck-acceleration-x
+						truck-acceleration-y
+						truck-acceleration-z
 
 ##### truck.head
 
-.
+Default position of the head in the cabin space.
 
-		Type: 		.
-		Example: 	.
-		CSS Class: 	truck-head
+		Type: 			vector
+		Example: 		-
+		CSS Classes: 	truck-head-x
+						truck-head-y
+						truck-head-z
 
 ##### truck.cabin
 
-.
+Position of the cabin in the vehicle space. This is position of the joint around which the cabin rotates. This attribute might be not present if the vehicle does not have a separate cabin.
 
-		Type: 		.
-		Example: 	.
-		CSS Class: 	truck-cabin
+		Type: 			vector
+		Example: 		-
+		CSS Classes: 	truck-cabin-x
+						truck-cabin-y
+						truck-cabin-z
 
 ##### truck.hook
 
-.
+Position of the trailer connection hook in vehicle space.
 
-		Type: 		.
-		Example: 	.
-		CSS Class: 	truck-hook
+		Type: 			vector
+		Example: 		-
+		CSS Classes: 	truck-hook-x
+						truck-hook-y
+						truck-hook-z
 
 ## Trailer
 
 ##### trailer.attached
 
-.
+Is the trailer attached to the truck or not.
 
-		Type: 		.
-		Example: 	.
+		Type: 		boolean
+		Example: 	true
 		CSS Class: 	trailer-attached
 
 ##### trailer.id
 
-.
+Id of the cargo (internal).
 
-		Type: 		.
-		Example: 	.
+		Type: 		string
+		Example: 	"derrick"
 		CSS Class: 	trailer-id
 
 ##### trailer.name
 
-.
+Localized name of the current trailer for display purposes.
 
-		Type: 		.
-		Example: 	.
+		Type: 		string
+		Example: 	"Derrick"
 		CSS Class: 	trailer-name
 
 ##### trailer.mass
 
-.
+Mass of the cargo in kilograms.
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	22000.5
 		CSS Class: 	trailer-mass
 
 ##### trailer.wear
 
-.
+Current level of trailer wear/damage between 0 (min) and 1 (max).
 
-		Type: 		.
-		Example: 	.
+		Type: 		float
+		Example: 	0.0314717
 		CSS Class: 	trailer-wear
 
 ##### trailer.placement
 
-.
+Current trailer placement in the game world.
 
-		Type: 		.
-		Example: 	.
-		CSS Class: 	trailer-placement
+		Type: 			placement
+		Example: 		-
+		CSS Classes: 	trailer-placement-x
+						trailer-placement-y
+						trailer-placement-z
+						trailer-placement-heading
+						trailer-placement-pitch
+						trailer-placement-roll
 
 ## Job
 
 ##### job.income
 
-.
+Reward in internal game-specific currency.
 
-		Type: 		.
-		Example: 	.
+		Type: 		integer
+		Example: 	2310
 		CSS Class: 	job-income
 
 ##### job.deadlineTime
 
-.
+Absolute in-game time of end of job delivery window. Delivering the job after this time will cause it be late.
 
-		Type: 		.
-		Example: 	.
+		Type: 		date
+		Example: 	"0001-01-09T03:34:00Z"
 		CSS Class: 	job-deadlineTime
 
 ##### job.remainingTime
 
-.
+Relative remaining in-game time left before deadline.
 
-		Type: 		.
-		Example: 	.
+		Type: 		date
+		Example: 	"0001-01-01T07:06:00Z"
 		CSS Class: 	job-remainingTime
 
 ##### job.sourceCity
 
-.
+Localized name of the source city for display purposes.
 
-		Type: 		.
-		Example: 	.
+		Type: 		string
+		Example: 	"Linz"
 		CSS Class: 	job-sourceCity
 
 ##### job.sourceCompany
 
-.
+Localized name of the source company for display purposes.
 
-		Type: 		.
-		Example: 	.
+		Type: 		string
+		Example: 	"DHL"
 		CSS Class: 	job-sourceCompany
 
 ##### job.destinationCity
 
-.
+Localized name of the destination city for display purposes.
 
-		Type: 		.
-		Example: 	.
+		Type: 		string
+		Example: 	"Salzburg"
 		CSS Class: 	job-destinationCity
 
 ##### job.destinationCompany
 
-.
+Localized name of the destination company for display purposes.
 
-		Type: 		.
-		Example: 	.
+		Type: 		string
+		Example: 	"JCB"
 		CSS Class: 	job-destinationCompany
 
 ## Navigation
 
 ##### navigation.estimatedTime
 
-.
+Relative estimated time of arrival.
 
-		Type: 		.
-		Example: 	.
+		Type: 		date
+		Example: 	"0001-01-01T02:05:00Z"
 		CSS Class: 	navigation-estimatedTime
 	
 ##### navigation.estimatedDistance
 
-.
+Estimated distance to the destination in meters.
 
-		Type: 		.
-		Example: 	.
+		Type: 		integer
+		Example: 	132500
 		CSS Class: 	navigation-estimatedDistance
 
 ##### navigation.speedLimit
 
-.
+Current value of the "Route Advisor speed limit" in km/h.
 
-		Type: 		.
-		Example: 	.
+		Type: 		integer
+		Example: 	50
 		CSS Class: 	navigation-speedLimit
