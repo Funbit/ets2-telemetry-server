@@ -272,7 +272,7 @@
 .dashboard.game-connected.yes ._trailerWearInfo,
 .dashboard.game-connected.yes .truck-odometer,
 .dashboard.game-connected.yes .truck-speedRounded,
-.dashboard.game-connected.yes .cruiseControlSpeedRounded:not([data-value="0"]) {
+.dashboard.game-connected.yes .truck-cruiseControlSpeedRounded:not([data-value="0"]) {
   visibility: visible;
 }
 .hasJob.yes .trailer-mass,

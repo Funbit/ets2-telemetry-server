@@ -1,16 +1,9 @@
 ﻿/* 
-    Dashboard skin template.
-
-    If you want to create your own dashboard skin (or tweak something)
-    create a copy of the "/skins/template" directory and rename it
-    to something like: "/skins/your_skin_name" and edit config.json file inside.
-    
-    *** For more information see skin tutorial PDF ***
-
     CSS naming convention:
 
     - Dashboard core script maps all telemetry data properties to respective class names,
-      so truck's speed will be .truck-speed and current gear is .truck-gear (see JSON).
+      so truck's speed will be .truck-speed and current gear is .truck-gear 
+      (see complete reference in Telemetry.md markdown file).
     - All boolean telemetry properties will have a special ".yes" class added 
       when the value is true (will be removed if value is false).
     - When dashboard core script updates DOM it will always add 
@@ -18,6 +11,8 @@
       can use it to have custom css selectors based on the actual data 
       (for example, this skin uses .truck-gear[data-value="N"] to define
       different style for neutral or reverse gear, see below).
+
+    For more information go to home page: https://github.com/Funbit/ets2-telemetry-server
 
 */
 .hidden {
