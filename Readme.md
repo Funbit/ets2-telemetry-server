@@ -1,6 +1,6 @@
-## ETS2 Telemetry Web Server 2.2.6 + Mobile Dashboard
+## ETS2 Telemetry Web Server 3.0.0 + Mobile Dashboard
 
-This is a free Telemetry Web Server for Euro Truck Simulator 2 written in C# based on WebSockets and REST API. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
+This is a free Telemetry Web Server for [Euro Truck Simulator 2](http://www.eurotrucksimulator2.com/) written in C# based on WebSockets and REST API. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
 
 ## Main Features
 
@@ -15,33 +15,29 @@ This is a free Telemetry Web Server for Euro Truck Simulator 2 written in C# bas
   
     GET http://localhost:25555/api/ets2/telemetry
 
-Returns JSON object with the latest telemetry data read from the game: 
+Returns structured JSON object with the latest telemetry data read from the game: 
 
     {    
-    	"connected": true,
-	    "gameTime": "0001-01-05T05:11:00Z",
-	    "gamePaused": false,
-	    "telemetryPluginVersion": "3",
-	    "gameVersion": "1.10",
-	    "trailerAttached": true,
-	    "truckSpeed": 20.007518805,
-	    "accelerationX": 5.598413e-7,
-	    "accelerationY": -9.40614e-7,
-	    "accelerationZ": -0.00000337752863,
-	    "coordinateX": 24901.9629,
-	    "coordinateY": 63.69309,
-	    "coordinateZ": 14775.623,
-	    "rotationX": 0.7503047,
-	    ... 
+		"game": {
+			"connected": true,
+			"paused": false,
+			"time": "0001-01-08T21:09:00Z",
+			"timeScale": 19.0,
+			"nextRestStopTime": "0001-01-01T10:11:00Z",
+			"version": "1.10",
+			"telemetryPluginVersion": "4"
+		},
+		"truck":{
+			"id": "man",
+			"make": "MAN",
+			"model": "TGX",
+			"speed": 53.82604,
+			... 
     }
 
-The state is updated upon every API call. You may use this REST API for your own Applications. Here is a short explanation of some telemetry properties:
+The state is updated upon every API call. You may use this REST API for your own Applications. 
 
-- DateTime values are serialized to ISO 8601 strings in UTC time zone. 
-- Dates always start from 0001 year when 1st January is Monday.    
-- Gear values: -1 = R, 0 = N, 1 = D1, 2 = D2, etc.
-- Mass is expressed in kilograms
-- Speed is expressed in km/sec
+**The complete telemetry property reference is available [here](Telemetry.md).**
 
 Please note that GET responses may be cached by your HTTP client. To avoid caching you may use some random query string parameter or POST method which returns exactly the same result.
 
@@ -69,7 +65,7 @@ As you can see dashboard design is completely customizable. With some basic know
 
 ### Supported games
 
-- Euro Truck Simulator 2 (32-bit or 64-bit) version 1.15+. Multiplayer versions are supported as well. 
+- Euro Truck Simulator 2 (32-bit or 64-bit) version 1.15+ (Steam or Standalone). Multiplayer versions are supported as well. 
 
 ### Tested browsers
 
@@ -97,7 +93,7 @@ Android users may install the provided "Ets2 Dashboard" application. The APK fil
 
 The server also reports everything to the log file (Ets2Telemetry.log), so you may see the details there as well.
 
-Also, if you don't trust my compiled ets2-telemetry-server.dll you may compile it by yourself from [the official telemetry SDK](https://github.com/nlhans/ets2-sdk-plugin).
+Also, if you don't trust my compiled ets2-telemetry-server.dll you may compile it by yourself using [plugin's source code](https://github.com/Funbit/ets2-sdk-plugin) and Visual Studio 2013+.
 
 ### Skin Installation
 
@@ -169,17 +165,31 @@ No. There is a chance that it will work, but it won't be supported.
 
 > Is it possible to include sleep indicator, remaining distance, ETA, current speed limit (or whatever else)?
 
-Unfortunately, all this information is not currently available via telemetry SDK. I hope it will be fixed soon.
-
-> Sometimes D1 gear is not properly displayed on the dashboard. What is wrong?
-
-Unfortunately, this is a telemetry SDK limitation. I hope it will be fixed soon.
+Starting from version 3.0.0 this is possible, but I haven't yet had time to update the default skins to display it. But I will ;)
 
 ## Dashboard skin tutorial
 
 The tutorial is included in the ZIP package (see "Dashboard Skin Tutorial.pdf"). You may download it separately from [here](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/Dashboard%20Skin%20Tutorial.pdf).
 
+## Support
+
+The ETS2 Telemetry Web Server has evolved into a pretty complex open-source project that requires singificant amount of time to support. If you are interested in its future you may provide the author with some material support by clicking the button below ^_^
+
+[![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/server/html/images/donate-link.png)](http://funbit.info/ets2/donate.htm)
+
+Thank you!
+
 ## Version history
+
+### 3.0.0
+
+- Changed telemetry JSON object structure by introducing complex nested types. If you develop or use 3rd party custom skin please note that it will not work as is with the new server version! You will have to update your skin files first. I have created a handy tool that will do 99% (or usually even 100%) work for you. You may [download the tool here](http://funbit.info/ets2/Telemetry-Dashboard-3.0.0-Skin-Upgrader.zip). Just drop your skin files to the  SkinFileUpgrader.exe and you will get the updated version of it. The source code is included in the ZIP files as well, just in case.
+- New telemetry JSON structure. All properties are now structurized in several categories: game, truck, trailer, job and navigation. To understand the new system better please refer to the [updated skin tutorial](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/Dashboard%20Skin%20Tutorial.pdf).
+- Removed hasJob property. You should use trailer.attached property instead now (or add data.hasJob = data.trailer.attached; to your dashboard.js).
+- Added support for new telemetry properties: game.nextRestStopTime, game.timeScale, truck.forwardGears, truck.reverseGears, navigation.estimatedTime, navigation.estimatedDistance, navigation.speedLimit.
+- Fixed aux light indicators (roof and front indicators didn't work)
+- [Forked ETS2 telemetry plugin](https://github.com/Funbit/ets2-sdk-plugin) to make it a custom part of the server.
+- Some bug fixes and improvements.
 
 ### 2.2.6
 
