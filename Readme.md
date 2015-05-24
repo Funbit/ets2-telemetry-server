@@ -173,7 +173,7 @@ The tutorial is included in the ZIP package (see "Dashboard Skin Tutorial.pdf").
 
 ## Support
 
-The ETS2 Telemetry Web Server has evolved into a pretty complex open-source project that requires singificant amount of time to support. If you are interested in its future you may provide the author with some material support by clicking the button below ^_^
+The ETS2 Telemetry Web Server has evolved into a pretty complex open-source project that requires singificant amount of time to support. If you are interested in its future you may provide the author with some material support by clicking the button below.
 
 [![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/server/html/images/donate-link.png)](http://funbit.info/ets2/donate.htm)
 
