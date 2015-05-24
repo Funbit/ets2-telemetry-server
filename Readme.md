@@ -187,6 +187,7 @@ Thank you!
 - New telemetry JSON structure. All properties are now structurized in several categories: game, truck, trailer, job and navigation. To understand the new system better please refer to the [updated skin tutorial](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/Dashboard%20Skin%20Tutorial.pdf) and [complete telemetry property reference](Telemetry.md). 
 - Removed hasJob property. You should use *trailer.attached* property instead (or add a custom *data.hasJob = data.trailer.attached;* to your dashboard.js).
 - Added support for new telemetry properties: game.nextRestStopTime, game.timeScale, truck.forwardGears, truck.reverseGears, navigation.estimatedTime, navigation.estimatedDistance, navigation.speedLimit.
+- Added [complete telemetry property reference](Telemetry.md). 
 - Fixed aux light indicators (roof and front indicators didn't work)
 - [Forked ETS2 telemetry plugin](https://github.com/Funbit/ets2-sdk-plugin) to make it a custom part of the server.
 - Some bug fixes and improvements.
