@@ -18,7 +18,16 @@ A floating point value. Example: 40.1233
 
 #### date
 
-Date types are always serialized to [ISO 8601 ](http://en.wikipedia.org/wiki/ISO_8601)string in [UTC](http://en.wikipedia.org/wiki/Coordinated_Universal_Time) time zone. Counting starts from 0001 year when 1st January is Monday. Example: "0001-01-05T05:11:00Z"
+Date types are always serialized to [ISO 8601 ](http://en.wikipedia.org/wiki/ISO_8601)string in [UTC](http://en.wikipedia.org/wiki/Coordinated_Universal_Time) time zone. Counting starts from 0001 year when 1st January is Monday. Example: "0001-01-05T05:11:00Z".
+
+If you want to convert date string to Javascript date object inside dashboard.js skin file you may use the following technique:
+
+    var nextRestStopTimeDate = new Date(data.game.nextRestStopTime);
+    var hours = nextRestStopTimeDate.getUTCHours();   
+    var minutes = nextRestStopTimeDate.getUTCMinutes();
+	...
+
+For more information about Javascript date object see [the reference](https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Global_Objects/Date).
 
 #### string
 
