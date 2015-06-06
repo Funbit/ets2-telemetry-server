@@ -119,6 +119,10 @@
     </Content>
     <Content Include="images\app-icon.png" />
     <Content Include="images\disclosure.png" />
+    <Content Include="images\donate-link.png">
+      <CopyToOutputDirectory>
+      </CopyToOutputDirectory>
+    </Content>
     <Content Include="images\menu-background.png" />
     <Content Include="index.html" />
     <Content Include="index.css">

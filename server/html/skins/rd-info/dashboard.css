@@ -1,0 +1,342 @@
+@font-face {
+	font-family: 'DSDIGI';
+	src: url('fonts/DSDIGI.eot');
+	src: local('DSDIGI'), url('fonts/DSDIGI.woff') format('woff'), url('fonts/DSDIGI.ttf') format('truetype');
+}
+
+.hidden {
+  visibility: hidden;
+}
+.visible {
+  visibility: visible;
+}
+.dashboard {
+	background-image: url("images/bg-off.png"); 
+}
+.dashboard.game-connected.yes {
+	background-image: url("images/bg-on.png");
+}
+
+.trailer-name{
+	color: #FF0000;
+	font-size: 60px;
+	font-weight: bold;
+	position: absolute;
+	left: 25px;
+	top: 290px;
+}
+.job-sourceCity{
+	color: #FF0000;
+	font-size: 60px;
+	font-weight: bold;
+	position: absolute;
+	left: 25px;
+	top: 440px;
+}
+.job-destinationCity{
+	color: #FF0000;
+	font-size: 60px;
+	font-weight: bold;
+	position: absolute;
+	left: 25px;
+	top: 590px;
+}
+.job-remainingTime{
+	color: #FF0000;
+	font-size: 60px;
+	font-weight: bold;
+	position: absolute;
+	left: 25px;
+	top: 750px;
+	text-align: center;
+}
+._jobIncome {
+	color: #FF0000;
+	font-size: 60px;
+	font-weight: bold;
+	position: absolute;
+	left: 25px;
+	top: 910px;
+}
+.truck-fuel {
+	color: #FF0000;
+	font-size: 80px;
+	font-weight: bold;
+	position: absolute;
+	left: 150px;
+	top: 1100px;
+	font-family: Arial, Helvetica, sans-serif;
+}
+.truck-fuelAverageConsumption {
+	color: #FF0000;
+	font-size: 80px;
+	font-weight: bold;
+	position: absolute;
+	left: 150px;
+	top: 1280px;
+} 
+._fuelAvg {
+	color: #FF0000;
+	font-size: 50px;
+	font-weight: bold;
+	position: absolute;
+	left: 150px;
+	top: 1350px;
+}
+.truck-make {
+	color: #FF0000;
+	font-size: 60px;
+	font-weight: bold;
+	position: absolute;
+	left: 1000px;
+	top: 290px;
+}
+.truck-displayedGear {
+	color: #FF0000;
+	font-size: 150px;
+	font-weight: bold;
+	position: absolute;
+	left: 870px;
+	top: 40px;
+}
+.truck-wearEngine {
+	color: #FF0000;
+	font-size: 60px;
+	font-weight: bold;
+	position: absolute;
+	left: 1200px;
+	top: 440px;
+}
+.truck-wearCabin {
+	color: #FF0000;
+	font-size: 60px;
+	font-weight: bold;
+	position: absolute;
+	left: 1200px;
+	top: 590px;
+}
+.truck-wearWheels {
+	color: #FF0000;
+	font-size: 60px;
+	font-weight: bold;
+	position: absolute;
+	left: 1200px;
+	top: 750px;
+}
+.truck-wearTransmission {
+	color: #FF0000;
+	font-size: 60px;
+	font-weight: bold;
+	position: absolute;
+	left: 1700px;
+	top: 440px;
+}
+.truck-wearChassis {
+	color: #FF0000;
+	font-size: 60px;
+	font-weight: bold;
+	position: absolute;
+	left: 1700px;
+	top: 590px;
+}
+.trailer-wear {
+	color: #FF0000;
+	font-size: 60px;
+	font-weight: bold;
+	position: absolute;
+	left: 1700px;
+	top: 750px;
+}
+
+.truck-lightsParkingOn {
+	background-image: url("images/auxlights-off.png");
+	position: absolute;
+	left: 1000px;
+	top: 950px;
+	width: 200px;
+	height: 200px;
+}
+.truck-lightsParkingOn.yes {
+	background-image: url("images/parklight-on.png");
+}
+.truck-lightsBeamLowOn {
+	background-image: url("images/auxlights-off.png");
+	position: absolute;
+	left: 1225px;
+	top: 950px;
+	width: 200px;
+	height: 200px;
+}
+.truck-lightsBeamLowOn.yes {
+	background-image: url("images/lowbeam-on.png");
+}
+.truck-lightsBeamHighOn {
+	background-image: url("images/auxlights-off.png");
+	position: absolute;
+	left: 1450px;
+	top: 950px;
+	width: 200px;
+	height: 200px;
+}
+.truck-lightsBeamHighOn.yes {
+	background-image: url("images/highbeam-on.png");
+}
+._auxLights {
+	background-image: url("images/auxlights-off.png");
+	position: absolute;
+	left: 1675px;
+	top: 950px;
+	width: 200px;
+	height: 200px;
+}
+._auxLights.yes {
+	background-image: url("images/auxlights-on.png");
+}
+.truck-parkBrakeOn {
+	background-image: url("images/dashalert-off.png");
+	position: absolute;
+	left: 1000px;
+	top: 1200px;
+	width: 200px;
+	height: 200px;
+}
+.truck-parkBrakeOn.yes {
+	background-image: url("images/parkbrake-on.png");
+}
+.truck-cruiseControlOn {
+	background-image: url("images/dashalert-off.png");
+	position: absolute;
+	left: 1225px;
+	top: 1200px;
+	width: 200px;
+	height: 200px;
+}
+.truck-cruiseControlOn.yes {
+	background-image: url("images/cruisecontrol-on.png");
+}
+._airPressureOn {
+	background-image: url("images/dashalert-off.png");
+	position: absolute;
+	left: 1450px;
+	top: 1200px;
+	width: 200px;
+	height: 200px;
+}
+._airPressureOn.yes {
+	background-image: url("images/airpressure-on.png");
+}
+._dangerWarning {
+	background-image: url("images/dashalert-off.png");
+	position: absolute;
+	left: 1675px;
+	top: 1200px;
+	width: 200px;
+	height: 200px;
+}
+._dangerWarning.yes {
+	background-image: url("images/warning-on.png");
+}
+
+._gameBrakeBar {
+	background-image: url("images/sidebar01.png");
+	position: absolute;
+	left: 132px;
+	top: 52px;
+	width: 606px;
+	height: 56px;
+}
+._userBrakeBar {
+	background-image: url("images/sidebar02.png");
+	position: absolute;
+	left: 132px;
+	top: 162px;
+	width: 606px;
+	height: 56px;
+}
+._gameThrottleBar {
+	background-image: url("images/sidebar01.png");
+	position: absolute;
+	left: 1270px;
+	top: 52px;
+	width: 606px;
+	height: 56px;
+}
+._userThrottleBar {
+	background-image: url("images/sidebar02.png");
+	position: absolute;
+	left: 1270px;
+	top: 162px;
+	height: 56px;
+}
+
+.trailer-name,
+.job-sourceCity,
+.job-destinationCity,
+.job-remainingTime,
+._jobIncome,
+.truck-fuel,
+.truck-fuelAverageConsumption,
+._fuelAvg,
+.truck-make,
+.truck-displayedGear,
+.truck-wearEngine,
+.truck-wearTransmission,
+.truck-wearCabin,
+.truck-wearChassis,
+.truck-wearWheels,
+.trailer-wear,
+._userThrottleBar,
+._userBrakeBar,
+._gameBrakeBar,
+.navigation-speedLimit,
+._gameThrottleBar {
+	visibility: hidden;
+	font-family: 'DSDIGI', Arial, Helvetica, sans-serif;
+	font-size:85px;
+}
+
+.truck-displayedGear {
+	font-family: 'DSDIGI';
+	font-size: 200px;
+	font-weight: bold;
+	position: absolute;
+	left: 870px;
+	top: 40px;
+}
+.navigation-speedLimit {
+	position: absolute;
+	left: 610px;
+	color: #FF0000;
+	top: 1140px;
+	font-size: 200px;
+	font-weight: bold;
+	text-align: center;
+	width: 205px;
+}
+
+
+.dashboard.game-connected.yes .truck-displayedGear,
+.dashboard.game-connected.yes ._userThrottleBar,
+.dashboard.game-connected.yes ._userBrakeBar,
+.dashboard.game-connected.yes ._gameBrakeBar,
+.dashboard.game-connected.yes ._gameThrottleBar,
+.dashboard.game-connected.yes .truck-make,
+.dashboard.game-connected.yes .truck-wearEngine,
+.dashboard.game-connected.yes .truck-wearTransmission,
+.dashboard.game-connected.yes .truck-wearCabin,
+.dashboard.game-connected.yes .truck-wearWheels,
+.dashboard.game-connected.yes .truck-wearChassis,
+.dashboard.game-connected.yes .truck-fuel,
+.dashboard.game-connected.yes .truck-fuelAverageConsumption,
+.dashboard.game-connected.yes .navigation-speedLimit,
+.dashboard.game-connected.yes ._fuelAvg {
+	visibility: visible;
+}
+.hasJob.yes .trailer-name,
+.hasJob.yes .job-sourceCity,
+.hasJob.yes .job-destinationCity,
+.hasJob.yes .job-remainingTime,
+.hasJob.yes .trailer-wear,
+.hasJob.yes ._jobIncome {
+	visibility: visible;
+}

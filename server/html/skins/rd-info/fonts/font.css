@@ -1,0 +1,11 @@
+@font-face {
+	font-family: 'DSDIGI';
+	src: url('./DSDIGI.eot');
+	src: local('DSDIGI'), url('./DSDIGI.woff') format('woff'), url('./DSDIGI.ttf') format('truetype');
+}
+/* use this class to attach this font to any element i.e. <p class="fontsforweb_fontid_1091">Text with this font applied</p> */
+.fontsforweb_fontid_1091 {
+	font-family: 'DSDIGI' !important;
+}
+
+/* Font downloaded from FontsForWeb.com */

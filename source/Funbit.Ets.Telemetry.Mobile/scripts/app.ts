@@ -51,15 +51,17 @@ module Funbit.Ets.Telemetry {
             // reload page when orientation changes
             $(window).on('orientationchange', () => {
                 window.location.reload();
-            });
-
-            // setup resize timer (after 1/4 sec delay)
-            $(window).resize(() => {
-                clearTimeout(this.resizeTimer);
-                this.resizeTimer = setTimeout(() => {
-                    window.location.reload();
-                }, 250);
-            });
+            });    
+            
+            // setup window size tracking timer (after 1/4 sec delay)
+            if (!ios) { // (Safari on iOS goes crazy with resize event, so we disable it)
+                $(window).resize(() => {
+                    clearTimeout(this.resizeTimer);
+                    this.resizeTimer = setTimeout(() => {
+                        window.location.reload();
+                    }, 250);
+                });
+            }
 
             // prevent iOS device from sleeping
             if (ios && !Configuration.isCordovaAvailable()) {

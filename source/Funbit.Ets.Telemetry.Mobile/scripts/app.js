@@ -42,12 +42,14 @@
                         window.location.reload();
                     });
 
-                    $(window).resize(function () {
-                        clearTimeout(_this.resizeTimer);
-                        _this.resizeTimer = setTimeout(function () {
-                            window.location.reload();
-                        }, 250);
-                    });
+                    if (!ios) {
+                        $(window).resize(function () {
+                            clearTimeout(_this.resizeTimer);
+                            _this.resizeTimer = setTimeout(function () {
+                                window.location.reload();
+                            }, 250);
+                        });
+                    }
 
                     if (ios && !Telemetry.Configuration.isCordovaAvailable()) {
                         setInterval(function () {
