@@ -342,12 +342,12 @@
                             var $meters = $e.filter('[data-type="meter"]');
                             if ($meters.length > 0) {
                                 var minValue = $meters.data('min');
-                                if (/[a-z\-]/i.test(minValue)) {
-                                    minValue = this.resolveObjectByPath(this.latestData, this.replaceAll(minValue, cssPropertySplitter, propSplitter));
+                                if (/^[a-z\.]+$/i.test(minValue)) {
+                                    minValue = this.resolveObjectByPath(this.latestData, minValue);
                                 }
                                 var maxValue = $meters.data('max');
-                                if (/[a-z\-]/i.test(maxValue)) {
-                                    maxValue = this.resolveObjectByPath(this.latestData, this.replaceAll(maxValue, cssPropertySplitter, propSplitter));
+                                if (/^[a-z\.]+$/i.test(maxValue)) {
+                                    maxValue = this.resolveObjectByPath(this.latestData, maxValue);
                                 }
                                 this.setMeter($meters, value, parseFloat(minValue), parseFloat(maxValue));
                             } else {

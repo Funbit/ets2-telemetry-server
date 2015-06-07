@@ -356,20 +356,18 @@ module Funbit.Ets.Telemetry {
                         // then we use this HTML element 
                         // as a rotating meter "arrow"
                         var minValue = $meters.data('min');
-                        if (/[a-z\-]/i.test(minValue)) {
+                        if (/^[a-z\.]+$/i.test(minValue)) {
                             // if data-min attribute points
                             // to a property name then we use its value
                             minValue = this.resolveObjectByPath(
-                                this.latestData,
-                                this.replaceAll(minValue, cssPropertySplitter, propSplitter));
+                                this.latestData, minValue);
                         }
                         var maxValue = $meters.data('max');
-                        if (/[a-z\-]/i.test(maxValue)) {
+                        if (/^[a-z\.]+$/i.test(maxValue)) {
                             // if data-max attribute points
                             // to a property name then we use its value
                             maxValue = this.resolveObjectByPath(
-                                this.latestData,
-                                this.replaceAll(maxValue, cssPropertySplitter, propSplitter));
+                                this.latestData, maxValue);
                         }
                         this.setMeter($meters, value,
                             parseFloat(minValue), parseFloat(maxValue));
