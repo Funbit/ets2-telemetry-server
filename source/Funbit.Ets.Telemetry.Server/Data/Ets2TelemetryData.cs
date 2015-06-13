@@ -329,11 +329,6 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return _rawData.Struct.shifterToggle; }
         }
 
-        public bool EngineOn
-        {
-            get { return _rawData.Struct.engineEnabled != 0; }
-        }
-
         public bool ElectricOn
         {
             get { return _rawData.Struct.electricEnabled != 0; }

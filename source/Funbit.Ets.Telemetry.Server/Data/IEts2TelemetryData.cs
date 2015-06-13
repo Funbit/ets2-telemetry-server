@@ -422,10 +422,6 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// Is the electric enabled or not.
         /// </summary>
         bool ElectricOn { get; }
-        /// <summary>
-        /// Is engine turned on or off.
-        /// </summary>
-        bool EngineOn { get; }
 
         /// <summary>
         /// Is left blinker currently emits light or not.
