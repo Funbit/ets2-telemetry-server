@@ -419,6 +419,10 @@ namespace Funbit.Ets.Telemetry.Server.Data
         bool MotorBrakeOn { get; }
 
         /// <summary>
+        /// Is the engine enabled or not.
+        /// </summary>
+        bool EngineOn { get; }
+        /// <summary>
         /// Is the electric enabled or not.
         /// </summary>
         bool ElectricOn { get; }

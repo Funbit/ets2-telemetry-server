@@ -397,6 +397,14 @@ Gearbox slot the h-shifter handle is currently in. 0 means that no slot is selec
 		Example: 	4
 		CSS Class: 	truck-shifterSlot
 
+##### truck.engineOn
+
+Indicates whether the engine is currently turned on or off.
+
+		Type: 		boolean
+		Example: 	false
+		CSS Class: 	truck-engineOn
+
 ##### truck.electricOn
 
 Indicates whether the electric is enabled or not.
