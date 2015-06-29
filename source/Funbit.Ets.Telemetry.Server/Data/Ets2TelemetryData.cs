@@ -690,7 +690,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
         public int SpeedLimit
         {
-            get { return _rawData.Struct.navigationSpeedLimit > 0 ? ((int)(_rawData.Struct.navigationSpeedLimit * 3.6f)) : 0; }
+            get { return _rawData.Struct.navigationSpeedLimit > 0 ? ((int)Math.Round(_rawData.Struct.navigationSpeedLimit * 3.6f)) : 0; }
         }
     }
 

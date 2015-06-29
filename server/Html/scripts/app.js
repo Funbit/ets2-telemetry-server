@@ -27,7 +27,7 @@
                     if ((windowHeight / dashboardHeight) > (windowWidth / dashboardWidth)) {
                         ratio = windowWidth / dashboardWidth;
                     }
-                    var scale = 'scale(' + (ratio * 0.99) + ')';
+                    var scale = 'scale(' + ratio + ')';
                     var $body = $('body');
                     $body.css('transform', scale);
                     if (firefox) {
