@@ -324,10 +324,10 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get { return _rawData.Struct.shifterSlot; }
         }
 
-        public int ShifterToggle
-        {
-            get { return _rawData.Struct.shifterToggle; }
-        }
+        //public int ShifterToggle
+        //{
+        //    get { return _rawData.Struct.shifterToggle; }
+        //}
 
         public bool EngineOn
         {
