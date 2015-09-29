@@ -1,4 +1,4 @@
-﻿/* 
+/* 
     Dashboard skin template.
 
     If you want to create your own dashboard skin (or tweak something)
@@ -22,6 +22,10 @@
     For more information go to home page: https://github.com/Funbit/ets2-telemetry-server
 
 */
+
+body {
+  cursor: pointer;
+}
 
 .dashboard {
 	background-image: url("images/bg-off.jpg");

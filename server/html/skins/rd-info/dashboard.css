@@ -4,6 +4,9 @@
 	src: local('DSDIGI'), url('fonts/DSDIGI.woff') format('woff'), url('fonts/DSDIGI.ttf') format('truetype');
 }
 
+body {
+  cursor: pointer;
+}
 .hidden {
   visibility: hidden;
 }

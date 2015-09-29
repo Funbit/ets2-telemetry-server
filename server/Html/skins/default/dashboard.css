@@ -1,4 +1,4 @@
-﻿/* 
+/* 
     CSS naming convention:
 
     - Dashboard core script maps all telemetry data properties to respective class names,
@@ -15,6 +15,9 @@
     For more information go to home page: https://github.com/Funbit/ets2-telemetry-server
 
 */
+body {
+  cursor: pointer;
+}
 .hidden {
   visibility: hidden;
 }
