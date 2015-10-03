@@ -10,7 +10,7 @@ module Funbit.Ets.Telemetry {
         private dashboard: Dashboard;
         private anticacheSeed: number = Date.now();
         private resizeTimer: any;
-        
+
         public static instance: App;
 
         constructor() {
@@ -23,11 +23,16 @@ module Funbit.Ets.Telemetry {
         }
 
         private initializeViewport() {
+            // If the skin defines positive dimensions, we honor those.
+            // If the skin defines zero or negative dimensions, it means the skin will handle the viewport by itself.
+            if (this.skinConfig.width < 1 || this.skinConfig.height < 1) {
+                return;
+            }
 
             var ie = /Trident/.test(navigator.userAgent);
             var firefox = /Firefox/i.test(navigator.userAgent);
             var ios = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-            
+
             // fit viewport into the screen
             var dashboardWidth: number = this.skinConfig.width * 1.0;
             var dashboardHeight: number = this.skinConfig.height * 1.0;
@@ -47,12 +52,12 @@ module Funbit.Ets.Telemetry {
             } else {
                 $body.css('-webkit-transform', scale);
             }
-            
+
             // reload page when orientation changes
             $(window).on('orientationchange', () => {
                 window.location.reload();
-            });    
-            
+            });
+
             // setup window size tracking timer (after 1/4 sec delay)
             if (!ios) { // (Safari on iOS goes crazy with resize event, so we disable it)
                 $(window).resize(() => {
@@ -75,9 +80,9 @@ module Funbit.Ets.Telemetry {
                     }, 0);
                 }, 30000);
             }
-            
+
         }
-        
+
         public initializeDashboard() {
             var skinCssUrl = this.config.getSkinResourceUrl(this.skinConfig, 'dashboard.css');
             var skinHtmlUrl = this.config.getSkinResourceUrl(this.skinConfig, 'dashboard.html');
@@ -96,13 +101,18 @@ module Funbit.Ets.Telemetry {
                 html += '<script src="' + signalrUrl + '"></script>';
                 html += '<script src="' + skinJsUrl + '"></script>';
                 $('body').append(html);
-                $('.dashboard').css({
-                    position: 'absolute',
-                    left: '0px',
-                    top: '0px',
-                    width: this.skinConfig.width + 'px',
-                    height: this.skinConfig.height + 'px'
-                });
+
+                // If the skin defines positive dimensions, we honor those.
+                // If the skin defines zero or negative dimensions, it means the skin will handle the viewport by itself.
+                if (this.skinConfig.width > 0 && this.skinConfig.height > 0) {
+                    $('.dashboard').css({
+                        position: 'absolute',
+                        left: '0px',
+                        top: '0px',
+                        width: this.skinConfig.width + 'px',
+                        height: this.skinConfig.height + 'px'
+                    });
+                }
                 this.dashboard = new Funbit.Ets.Telemetry.Dashboard(
                     Configuration.getUrl('/api/ets2/telemetry'), this.skinConfig);
             }).fail(() => {
