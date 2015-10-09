@@ -45,7 +45,11 @@
             <td class="skin-desc">
                 <div><strong>Title</strong>: {{=it.title}}</div>
                 <div><strong>Author</strong>: {{=it.author}}</div>
+                {{? it.width === -1 && it.height === -1}}
+                <div><strong>Size</strong>: Dynamic</div>
+                {{??}}
                 <div><strong>Size</strong>: {{=it.width}} x {{=it.height}}</div>
+                {{?}}
             </td>
         </tr>
     </script>
