@@ -1,4 +1,7 @@
-﻿.hidden {
+body {
+  cursor: pointer;
+}
+.hidden {
   visibility: hidden;
 }
 .visible {
