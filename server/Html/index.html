@@ -1,8 +1,8 @@
 ﻿<!DOCTYPE html>
 <html>
-<!----------------------------------------------------------------
-            *** DO NOT CHANGE THIS HTML FILE *** 
------------------------------------------------------------------->
+<!--==============================================================
+            *** DO NOT CHANGE THIS HTML FILE ***
+================================================================-->
 <head>
     <title>ETS2 Dashboard Menu</title>
     <link rel="apple-touch-icon" href="images/app-icon.png" />
@@ -45,7 +45,11 @@
             <td class="skin-desc">
                 <div><strong>Title</strong>: {{=it.title}}</div>
                 <div><strong>Author</strong>: {{=it.author}}</div>
+                {{? it.width === -1 && it.height === -1}}
+                <div><strong>Size</strong>: Dynamic</div>
+                {{??}}
                 <div><strong>Size</strong>: {{=it.width}} x {{=it.height}}</div>
+                {{?}}
             </td>
         </tr>
     </script>

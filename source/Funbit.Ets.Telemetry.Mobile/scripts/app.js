@@ -1,4 +1,4 @@
-﻿var Funbit;
+var Funbit;
 (function (Funbit) {
     (function (Ets) {
         (function (Telemetry) {
@@ -14,6 +14,12 @@
                     });
                 }
                 App.prototype.initializeViewport = function () {
+                    // If the skin defines positive dimensions, we honor those.
+                    // If the skin defines zero or negative dimensions, it means the skin will handle the viewport by itself.
+                    if (this.skinConfig.width < 1 || this.skinConfig.height < 1) {
+                        return;
+                    }
+
                     var _this = this;
                     var ie = /Trident/.test(navigator.userAgent);
                     var firefox = /Firefox/i.test(navigator.userAgent);
@@ -78,13 +84,19 @@
                         html += '<script src="' + signalrUrl + '"></script>';
                         html += '<script src="' + skinJsUrl + '"></script>';
                         $('body').append(html);
-                        $('.dashboard').css({
-                            position: 'absolute',
-                            left: '0px',
-                            top: '0px',
-                            width: _this.skinConfig.width + 'px',
-                            height: _this.skinConfig.height + 'px'
-                        });
+
+                        // If the skin defines positive dimensions, we honor those.
+                        // If the skin defines zero or negative dimensions, it means the skin will handle the viewport by itself.
+                        if (_this.skinConfig.width > 0 && _this.skinConfig.height > 0) {
+                            $('.dashboard').css({
+                                position: 'absolute',
+                                left: '0px',
+                                top: '0px',
+                                width: _this.skinConfig.width + 'px',
+                                height: _this.skinConfig.height + 'px'
+                            });
+                        }
+
                         _this.dashboard = new Funbit.Ets.Telemetry.Dashboard(Telemetry.Configuration.getUrl('/api/ets2/telemetry'), _this.skinConfig);
                     }).fail(function () {
                         alert(Telemetry.Strings.dashboardHtmlLoadFailed + _this.skinConfig.name);
