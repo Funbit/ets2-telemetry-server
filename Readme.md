@@ -60,7 +60,7 @@ As you can see dashboard design is completely customizable. With some basic know
 
 ### Supported OS
 
-- **Windows Vista, Windows 7 or Windows 8 (32-bit or 64-bit)**. Windows XP is not supported.
+- **Windows Vista, Windows 7, 8 or 10 (32-bit or 64-bit)**. Windows XP is not supported.
 - **.NET Framework 4.5** (pre-installed in Windows 8+). If it is not installed you will be prompted to install it when you run the server. 
 
 ### Supported games
