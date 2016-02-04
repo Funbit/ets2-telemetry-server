@@ -11,6 +11,12 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
         static bool _cachedRunningFlag;
 
         /// <summary>
+        /// The current simulator that is running. If both are running for some reason, this will return whichever simulator it checks first.
+        /// </summary>
+        /// <returns>"Euro Truck Simulator 2" if ETS2 is running, or "American Truck Simulator" is running.</returns>
+        public static string RunningGame { get; set; }
+
+        /// <summary>
         /// Checks whether ETS2 game process is running right now. The maximum check frequency is restricted to 1 second.
         /// </summary>
         /// <returns>True if ETS2 process is run, false otherwise.</returns>
@@ -26,10 +32,14 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
                     {
                         try
                         {
-                            bool running = process.MainWindowTitle.StartsWith("Euro Truck Simulator 2") &&
-                                           process.ProcessName == "eurotrucks2";
+                            bool running = (process.MainWindowTitle.StartsWith("Euro Truck Simulator 2") &&
+                                           process.ProcessName == "eurotrucks2")
+                                           || (process.MainWindowTitle.StartsWith("American Truck Simulator") &&
+                                           process.ProcessName == "amtrucks");
+
                             if (running)
                             {
+                                RunningGame = process.MainWindowTitle;
                                 _cachedRunningFlag = true;
                                 return _cachedRunningFlag;
                             }
