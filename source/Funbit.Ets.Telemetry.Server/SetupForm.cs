@@ -106,7 +106,7 @@ namespace Funbit.Ets.Telemetry.Server
             // update UI 
             foreach (var step in SetupManager.Steps)
             {
-                if (step is PluginSetup)
+                if (step is Ets2PluginSetup)
                     _setupStatusImages.Add(step, pluginStatusImage);
                 else if (step is FirewallSetup)
                     _setupStatusImages.Add(step, firewallStatusImage);

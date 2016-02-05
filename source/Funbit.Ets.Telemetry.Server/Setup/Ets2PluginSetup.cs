@@ -9,7 +9,7 @@ using Microsoft.Win32;
 
 namespace Funbit.Ets.Telemetry.Server.Setup
 {
-    public class PluginSetup : ISetup
+    public class Ets2PluginSetup : ISetup
     {
         static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -68,7 +68,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             }
         }
 
-        public PluginSetup()
+        public Ets2PluginSetup()
         {
             try
             {

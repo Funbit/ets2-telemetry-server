@@ -150,9 +150,10 @@
     <Compile Include="SetupForm.Designer.cs">
       <DependentUpon>SetupForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="Setup\AtsPluginSetup.cs" />
     <Compile Include="Setup\FirewallSetup.cs" />
     <Compile Include="Setup\ISetup.cs" />
-    <Compile Include="Setup\PluginSetup.cs" />
+    <Compile Include="Setup\Ets2PluginSetup.cs" />
     <Compile Include="Setup\SetupManager.cs" />
     <Compile Include="Setup\SetupStatus.cs" />
     <Compile Include="Setup\UrlReservationSetup.cs" />
