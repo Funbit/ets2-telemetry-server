@@ -190,14 +190,19 @@ namespace Funbit.Ets.Telemetry.Server
                     statusLabel.Text = "Connected to Ets2TestTelemetry.json";
                     statusLabel.ForeColor = Color.DarkGreen;
                 } 
-                else if (Ets2ProcessHelper.IsEts2OrAtsRunning && Ets2TelemetryDataReader.Instance.IsConnected)
+                else if ((Ets2ProcessHelper.IsEts2Running || Ets2ProcessHelper.IsAtsRunning) && Ets2TelemetryDataReader.Instance.IsConnected)
                 {
                     statusLabel.Text = "Connected to the simulator";
                     statusLabel.ForeColor = Color.DarkGreen;
                 }
-                else if (Ets2ProcessHelper.IsEts2OrAtsRunning)
+                else if (Ets2ProcessHelper.IsEts2Running)
                 {
-                    statusLabel.Text = string.Format("Simulator is running for {0}", Ets2ProcessHelper.RunningGame);
+                    statusLabel.Text = "Simulator is running for Euro Truck Simulator 2";
+                    statusLabel.ForeColor = Color.Teal;
+                }
+                else if (Ets2ProcessHelper.IsAtsRunning)
+                {
+                    statusLabel.Text = "Simulator is running for American Truck Simulator";
                     statusLabel.ForeColor = Color.Teal;
                 }
                 else

@@ -64,7 +64,7 @@ namespace Funbit.Ets.Telemetry.Server
             Text += " " + AssemblyHelper.Version + " - Setup";
 
             // make sure that game is not running
-            if (Ets2ProcessHelper.IsEts2OrAtsRunning)
+            if (Ets2ProcessHelper.IsEts2Running || Ets2ProcessHelper.IsAtsRunning)
             {
                 MessageBox.Show(this,
                     "In order to proceed, both ETS2 and ATS must not be running." + Environment.NewLine +

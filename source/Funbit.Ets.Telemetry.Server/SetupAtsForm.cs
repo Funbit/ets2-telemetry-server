@@ -63,11 +63,10 @@ namespace Funbit.Ets.Telemetry.Server
             Text += @" " + AssemblyHelper.Version + @" - Setup";
 
             // make sure that game is not running
-            //TODO Don't couple ETS2 and ATS together
-            if (Ets2ProcessHelper.IsEts2OrAtsRunning)
+            if (Ets2ProcessHelper.IsAtsRunning)
             {
                 MessageBox.Show(this,
-                    @"In order to proceed, both ETS2 and ATS must not be running." + Environment.NewLine +
+                    @"In order to proceed, ATS must not be running." + Environment.NewLine +
                     @"Please exit both games and try again.", @"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Abort;
                 return;
