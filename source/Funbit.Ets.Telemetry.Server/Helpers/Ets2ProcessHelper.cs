@@ -20,7 +20,7 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
         /// Checks whether ETS2 game process is running right now. The maximum check frequency is restricted to 1 second.
         /// </summary>
         /// <returns>True if ETS2 process is run, false otherwise.</returns>
-        public static bool IsEts2Running
+        public static bool IsEts2OrAtsRunning
         {
             get
             {

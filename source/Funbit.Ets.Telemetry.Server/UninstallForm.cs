@@ -11,7 +11,7 @@ using Funbit.Ets.Telemetry.Server.Setup;
 
 namespace Funbit.Ets.Telemetry.Server
 {
-    public partial class SetupForm : Form
+    public partial class UninstallForm : Form
     {
         static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
@@ -19,27 +19,18 @@ namespace Funbit.Ets.Telemetry.Server
 
         readonly Dictionary<ISetup, PictureBox> _setupStatusImages = new Dictionary<ISetup, PictureBox>();
 
-        public SetupForm()
+        public UninstallForm()
         {
             InitializeComponent();
 
             DialogResult = DialogResult.OK;
 
             string port = ConfigurationManager.AppSettings["Port"];
-            if (Program.UninstallMode)
-            {
-                pluginStatusLabel.Text = @"Uninstall ETS2 telemetry plugin DLL";
-                firewallStatusLabel.Text = string.Format(@"Delete firewall rule for {0} port", port);
-                urlReservationStatusLabel.Text = string.Format(@"Delete ACL rule for http://+:{0}/", port);
-                okButton.Text = @"Uninstall";
-            }
-            else
-            {
-                pluginStatusLabel.Text = @"Install ETS2 telemetry plugin DLL";
-                firewallStatusLabel.Text = string.Format(@"Add firewall rule for {0} port", port);
-                urlReservationStatusLabel.Text = string.Format(@"Add ACL rule for http://+:{0}/", port);
-                okButton.Text = @"Install";
-            }
+
+            pluginStatusLabel.Text = "Uninstall ETS2 telemetry plugin DLL";
+            firewallStatusLabel.Text = string.Format("Delete firewall rule for {0} port", port);
+            urlReservationStatusLabel.Text = string.Format("Delete ACL rule for http://+:{0}/", port);
+            okButton.Text = "Uninstall";
         }
 
         void SetStepStatus(ISetup step, SetupStatus status)
@@ -70,14 +61,14 @@ namespace Funbit.Ets.Telemetry.Server
         private void SetupForm_Load(object sender, EventArgs e)
         {
             // show application version 
-            Text += @" " + AssemblyHelper.Version + @" - Setup";
+            Text += " " + AssemblyHelper.Version + " - Setup";
 
             // make sure that game is not running
-            if (Ets2ProcessHelper.IsEts2Running)
+            if (Ets2ProcessHelper.IsEts2OrAtsRunning)
             {
                 MessageBox.Show(this,
-                    @"In order to proceed the ETS2 game must not be running." + Environment.NewLine +
-                    @"Please exit the game and try again.", @"Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    "In order to proceed, both ETS2 and ATS must not be running." + Environment.NewLine +
+                    "Please exit both games and try again.", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 DialogResult = DialogResult.Abort;
                 return;
             }
@@ -104,7 +95,7 @@ namespace Funbit.Ets.Telemetry.Server
             }
             
             // update UI 
-            foreach (var step in SetupManager.Steps)
+            foreach (var step in SetupManager.Ets2Steps)
             {
                 if (step is Ets2PluginSetup)
                     _setupStatusImages.Add(step, pluginStatusImage);
@@ -121,7 +112,7 @@ namespace Funbit.Ets.Telemetry.Server
             okButton.Enabled = false;
             _setupFinished = true;
 
-            foreach (var step in SetupManager.Steps)
+            foreach (var step in SetupManager.Ets2Steps)
             {
                 try
                 {
@@ -138,19 +129,13 @@ namespace Funbit.Ets.Telemetry.Server
             string message;
             if (_setupFinished)
             {
-                message = Program.UninstallMode
-                              ? @"Server has been successfully uninstalled. " + Environment.NewLine +
-                                @"Press OK to exit."
-                              : @"Server has been successfully installed. " + Environment.NewLine +
-                                "Press OK to start the server.";
+                message = @"Server has been successfully uninstalled. " + Environment.NewLine +
+                      @"Press OK to exit.";
             }
             else
             {
-                message = Program.UninstallMode
-                              ? @"Server has been uninstalled with errors. " + Environment.NewLine +
-                                @"Press OK to exit."
-                              : @"Server has been installed with errors. " + Environment.NewLine +
-                                "Press OK to start the server.";
+                message = @"Server has been uninstalled with errors. " + Environment.NewLine +
+                      @"Press OK to exit.";
             }
 
             if (Program.UninstallMode)

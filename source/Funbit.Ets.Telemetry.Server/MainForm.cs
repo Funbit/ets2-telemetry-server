@@ -26,6 +26,9 @@ namespace Funbit.Ets.Telemetry.Server
         static readonly bool UseTestTelemetryData = Convert.ToBoolean(
             ConfigurationManager.AppSettings["UseEts2TestTelemetryData"]);
 
+        private const int WindowHeightNoInstallButton = 291;
+        private const int WindowHeightWithInstallButton = 342;
+
         public MainForm()
         {
             InitializeComponent();
@@ -40,19 +43,39 @@ namespace Funbit.Ets.Telemetry.Server
         {
             try
             {
-                if (Program.UninstallMode && SetupManager.Steps.All(s => s.Status == SetupStatus.Uninstalled))
+                if (Program.UninstallMode)
                 {
-                    MessageBox.Show(this, @"Server is not installed, nothing to uninstall.", @"Done",
+                    if (SetupManager.Ets2Steps.All(s => s.Status == SetupStatus.Uninstalled))
+                    {
+                        MessageBox.Show(this, @"Server is not installed, nothing to uninstall.", @"Done",
                         MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    Environment.Exit(0);
-                }
-
-                if (Program.UninstallMode || SetupManager.Steps.Any(s => s.Status != SetupStatus.Installed))
-                {
-                    // we wait here until setup is complete
-                    var result = new SetupForm().ShowDialog(this);
-                    if (result == DialogResult.Abort)
                         Environment.Exit(0);
+                    }
+                    else
+                    {
+                        // we wait here until uninstall is complete
+                        var result = new UninstallForm().ShowDialog(this);
+                        if (result == DialogResult.Abort)
+                        {
+                            Environment.Exit(0);
+                        }
+                    }
+                }
+                else
+                {
+                    // none of the steps have been installed, so display the setup screen
+                    if (SetupManager.Ets2Steps.All(s => s.Status != SetupStatus.Installed))
+                    {
+                        // display setup screen
+                        var form = new InitialSetupForm().ShowDialog(this);
+                        if (form == DialogResult.Abort)
+                        {
+                            Environment.Exit(1);
+                        }
+                    }
+                    
+                    // otherwise we'll continue onto the main application. If the user wants to install an additional
+                    // plugin, they can do so at the main view.
                 }
 
                 // raise priority to make server more responsive (it does not eat CPU though!)
@@ -61,7 +84,7 @@ namespace Funbit.Ets.Telemetry.Server
             catch (Exception ex)
             {
                 Log.Error(ex);
-                ex.ShowAsMessageBox(this, @"Setup error");
+                ex.ShowAsMessageBox(this, "Setup error");
             }
         }
 
@@ -97,24 +120,42 @@ namespace Funbit.Ets.Telemetry.Server
 
                 // show tray icon
                 trayIcon.Visible = true;
-                
+
+                // determine if we should show or hide the "Install Telemetry Plugin" button
+                UpdateFormSize();
+
                 // make sure that form is visible
                 Activate();
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
-                ex.ShowAsMessageBox(this, @"Network error", MessageBoxIcon.Exclamation);
+                ex.ShowAsMessageBox(this, "Network error", MessageBoxIcon.Exclamation);
             }
         }
-        
+
+        private void UpdateFormSize()
+        {
+            if (SetupHelper.IsEts2TelemetryPluginInstalled(SetupHelper.GetEts2InstallDirectory())
+                && SetupHelper.IsAtsTelemetryPluginInstalled(SetupHelper.GetAtsInstallDirectory()))
+            {
+                Size = new Size(Size.Width, WindowHeightNoInstallButton);
+            }
+        }
+
+        private void installTelemetryPlugin_Click(object sender, EventArgs e)
+        {
+            new InitialSetupForm().ShowDialog();
+            UpdateFormSize();
+        }
+
         private void MainForm_Load(object sender, EventArgs e)
         {
             // log current version for debugging
             Log.InfoFormat("Running application on {0} ({1}) {2}", Environment.OSVersion, 
                 Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit",
                 Program.UninstallMode ? "[UNINSTALL MODE]" : "");
-            Text += @" " + AssemblyHelper.Version;
+            Text += " " + AssemblyHelper.Version;
 
             // install or uninstall server if needed
             Setup();
@@ -146,29 +187,29 @@ namespace Funbit.Ets.Telemetry.Server
             {
                 if (UseTestTelemetryData)
                 {
-                    statusLabel.Text = @"Connected to Ets2TestTelemetry.json";
+                    statusLabel.Text = "Connected to Ets2TestTelemetry.json";
                     statusLabel.ForeColor = Color.DarkGreen;
                 } 
-                else if (Ets2ProcessHelper.IsEts2Running && Ets2TelemetryDataReader.Instance.IsConnected)
+                else if (Ets2ProcessHelper.IsEts2OrAtsRunning && Ets2TelemetryDataReader.Instance.IsConnected)
                 {
-                    statusLabel.Text = @"Connected to the simulator";
+                    statusLabel.Text = "Connected to the simulator";
                     statusLabel.ForeColor = Color.DarkGreen;
                 }
-                else if (Ets2ProcessHelper.IsEts2Running)
+                else if (Ets2ProcessHelper.IsEts2OrAtsRunning)
                 {
                     statusLabel.Text = string.Format("Simulator is running for {0}", Ets2ProcessHelper.RunningGame);
                     statusLabel.ForeColor = Color.Teal;
                 }
                 else
                 {
-                    statusLabel.Text = @"Simulator is not running";
+                    statusLabel.Text = "Simulator is not running";
                     statusLabel.ForeColor = Color.FromArgb(240, 55, 30);
                 }
             }
             catch (Exception ex)
             {
                 Log.Error(ex);
-                ex.ShowAsMessageBox(this, @"Process error");
+                ex.ShowAsMessageBox(this, "Process error");
                 statusUpdateTimer.Enabled = false;
             }
         }
@@ -188,7 +229,7 @@ namespace Funbit.Ets.Telemetry.Server
             ShowInTaskbar = WindowState != FormWindowState.Minimized;
             if (!ShowInTaskbar && trayIcon.Tag == null)
             {
-                trayIcon.ShowBalloonTip(1000, @"ETS2 Telemetry Server", @"Double-click to restore.", ToolTipIcon.Info);
+                trayIcon.ShowBalloonTip(1000, "ETS2/ATS Telemetry Server", "Double-click to restore.", ToolTipIcon.Info);
                 trayIcon.Tag = "Already shown";
             }
         }

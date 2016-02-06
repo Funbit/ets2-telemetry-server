@@ -142,13 +142,32 @@
     <Compile Include="Helpers\JsonHelper.cs" />
     <Compile Include="Helpers\ProcessHelper.cs" />
     <Compile Include="Helpers\Settings.cs" />
+    <Compile Include="Helpers\SetupHelper.cs" />
     <Compile Include="Helpers\Win32Uac.cs" />
     <Compile Include="Helpers\NetworkHelper.cs" />
-    <Compile Include="SetupForm.cs">
+    <Compile Include="InitialSetupForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="SetupForm.Designer.cs">
-      <DependentUpon>SetupForm.cs</DependentUpon>
+    <Compile Include="InitialSetupForm.Designer.cs">
+      <DependentUpon>InitialSetupForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SetupAtsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetupAtsForm.Designer.cs">
+      <DependentUpon>SetupAtsForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="UninstallForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="UninstallForm.Designer.cs">
+      <DependentUpon>UninstallForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SetupEts2Form.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SetupEts2Form.Designer.cs">
+      <DependentUpon>SetupEts2Form.cs</DependentUpon>
     </Compile>
     <Compile Include="Setup\AtsPluginSetup.cs" />
     <Compile Include="Setup\FirewallSetup.cs" />
@@ -375,8 +394,17 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\app.ico" />
-    <EmbeddedResource Include="SetupForm.resx">
-      <DependentUpon>SetupForm.cs</DependentUpon>
+    <EmbeddedResource Include="InitialSetupForm.resx">
+      <DependentUpon>InitialSetupForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SetupAtsForm.resx">
+      <DependentUpon>SetupAtsForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="UninstallForm.resx">
+      <DependentUpon>UninstallForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SetupEts2Form.resx">
+      <DependentUpon>SetupEts2Form.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
@@ -388,6 +416,10 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Content Include="Resources\ats_logo.png" />
+    <Content Include="Resources\ats_logo_grayscale.png" />
+    <Content Include="Resources\ets2_logo.png" />
+    <Content Include="Resources\ets2_logo_grayscale.png" />
     <Content Include="Uninstall.bat">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

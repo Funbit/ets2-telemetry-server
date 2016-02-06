@@ -15,7 +15,7 @@ namespace Funbit.Ets.Telemetry.Server
         private static extern int GetLastError();
         private const int ErrorAlreadyExists = 183;
 
-        public static bool UninstallMode = false;
+        public static bool UninstallMode;
 
         /// <summary>
         /// The main entry point for the application.
