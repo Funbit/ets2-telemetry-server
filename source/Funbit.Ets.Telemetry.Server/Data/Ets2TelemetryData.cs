@@ -78,7 +78,15 @@ namespace Funbit.Ets.Telemetry.Server.Data
             }
         }
 
-        // TODO Add GameName Property
+        public string GameName
+        {
+            get { return Connected ? GetGameName() : null; }
+        }
+
+        private string GetGameName()
+        {
+            return Ets2ProcessHelper.IsEts2Running ? "ets2" : "ats";
+        }
 
         public bool Paused
         {
