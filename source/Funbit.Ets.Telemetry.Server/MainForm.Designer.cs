@@ -49,8 +49,10 @@
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.broadcastTimer = new System.Windows.Forms.Timer(this.components);
             this.installTelemetryPlugin = new System.Windows.Forms.Button();
+            this.runningGamePicture = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.runningGamePicture)).BeginInit();
             this.SuspendLayout();
             // 
             // trayIcon
@@ -83,6 +85,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.runningGamePicture);
             this.groupBox1.Controls.Add(this.helpLabel);
             this.groupBox1.Controls.Add(this.ipAddressLabel);
             this.groupBox1.Controls.Add(this.interfacesDropDown);
@@ -250,6 +253,15 @@
             this.installTelemetryPlugin.UseVisualStyleBackColor = true;
             this.installTelemetryPlugin.Click += new System.EventHandler(this.installTelemetryPlugin_Click);
             // 
+            // runningGamePicture
+            // 
+            this.runningGamePicture.Location = new System.Drawing.Point(413, 24);
+            this.runningGamePicture.Name = "runningGamePicture";
+            this.runningGamePicture.Size = new System.Drawing.Size(100, 50);
+            this.runningGamePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.runningGamePicture.TabIndex = 23;
+            this.runningGamePicture.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -269,6 +281,7 @@
             this.contextMenuStrip.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.runningGamePicture)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -294,6 +307,7 @@
         private System.Windows.Forms.Timer broadcastTimer;
         private System.Windows.Forms.LinkLabel helpLabel;
         private System.Windows.Forms.Button installTelemetryPlugin;
+        private System.Windows.Forms.PictureBox runningGamePicture;
     }
 }
 

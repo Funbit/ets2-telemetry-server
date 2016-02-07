@@ -10,8 +10,10 @@ using System.Windows.Forms;
 using Funbit.Ets.Telemetry.Server.Controllers;
 using Funbit.Ets.Telemetry.Server.Data;
 using Funbit.Ets.Telemetry.Server.Helpers;
+using Funbit.Ets.Telemetry.Server.Properties;
 using Funbit.Ets.Telemetry.Server.Setup;
 using Microsoft.Owin.Hosting;
+using Settings = Funbit.Ets.Telemetry.Server.Helpers.Settings;
 
 namespace Funbit.Ets.Telemetry.Server
 {
@@ -140,6 +142,12 @@ namespace Funbit.Ets.Telemetry.Server
                 && SetupHelper.IsAtsTelemetryPluginInstalled(SetupHelper.GetAtsInstallDirectory()))
             {
                 Size = new Size(Size.Width, WindowHeightNoInstallButton);
+                installTelemetryPlugin.Visible = false;
+            }
+            else
+            {
+                Size = new Size(Size.Width, WindowHeightWithInstallButton);
+                installTelemetryPlugin.Visible = true;
             }
         }
 
@@ -189,26 +197,33 @@ namespace Funbit.Ets.Telemetry.Server
                 {
                     statusLabel.Text = "Connected to Ets2TestTelemetry.json";
                     statusLabel.ForeColor = Color.DarkGreen;
+
+                    runningGamePicture.Image = null;
                 } 
                 else if ((Ets2ProcessHelper.IsEts2Running || Ets2ProcessHelper.IsAtsRunning) && Ets2TelemetryDataReader.Instance.IsConnected)
                 {
                     statusLabel.Text = "Connected to the simulator";
                     statusLabel.ForeColor = Color.DarkGreen;
+
+                    runningGamePicture.Image = Ets2ProcessHelper.IsEts2Running
+                        ? Resources.ets2_logo
+                        : Resources.ats_logo;
                 }
-                else if (Ets2ProcessHelper.IsEts2Running)
+                else if (Ets2ProcessHelper.IsEts2Running || Ets2ProcessHelper.IsAtsRunning)
                 {
-                    statusLabel.Text = "Simulator is running for Euro Truck Simulator 2";
+                    statusLabel.Text = "Simulator is running";
                     statusLabel.ForeColor = Color.Teal;
-                }
-                else if (Ets2ProcessHelper.IsAtsRunning)
-                {
-                    statusLabel.Text = "Simulator is running for American Truck Simulator";
-                    statusLabel.ForeColor = Color.Teal;
+
+                    runningGamePicture.Image = Ets2ProcessHelper.IsEts2Running
+                        ? Resources.ets2_logo
+                        : Resources.ats_logo;
                 }
                 else
                 {
                     statusLabel.Text = "Simulator is not running";
                     statusLabel.ForeColor = Color.FromArgb(240, 55, 30);
+
+                    runningGamePicture.Image = null;
                 }
             }
             catch (Exception ex)

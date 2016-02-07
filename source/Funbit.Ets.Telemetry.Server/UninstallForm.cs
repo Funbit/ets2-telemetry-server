@@ -27,7 +27,7 @@ namespace Funbit.Ets.Telemetry.Server
 
             string port = ConfigurationManager.AppSettings["Port"];
 
-            pluginStatusLabel.Text = "Uninstall ETS2 telemetry plugin DLL";
+            pluginStatusLabel.Text = "Uninstall ETS2/ATS telemetry plugin DLL";
             firewallStatusLabel.Text = string.Format("Delete firewall rule for {0} port", port);
             urlReservationStatusLabel.Text = string.Format("Delete ACL rule for http://+:{0}/", port);
             okButton.Text = "Uninstall";
@@ -95,7 +95,7 @@ namespace Funbit.Ets.Telemetry.Server
             }
             
             // update UI 
-            foreach (var step in SetupManager.Ets2Steps)
+            foreach (var step in SetupManager.UninstallSteps)
             {
                 if (step is Ets2PluginSetup)
                     _setupStatusImages.Add(step, pluginStatusImage);
@@ -112,7 +112,7 @@ namespace Funbit.Ets.Telemetry.Server
             okButton.Enabled = false;
             _setupFinished = true;
 
-            foreach (var step in SetupManager.Ets2Steps)
+            foreach (var step in SetupManager.UninstallSteps)
             {
                 try
                 {

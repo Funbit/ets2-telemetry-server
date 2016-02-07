@@ -7,6 +7,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
     {
         public static ISetup[] Ets2Steps;
         public static ISetup[] AtsSteps;
+        public static ISetup[] UninstallSteps;
 
         static SetupManager()
         {
@@ -19,6 +20,14 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             
             AtsSteps = new ISetup[]
             {
+                new AtsPluginSetup(), 
+                new FirewallSetup(), 
+                new UrlReservationSetup()
+            };
+
+            UninstallSteps = new ISetup[]
+            {
+                new Ets2PluginSetup(), 
                 new AtsPluginSetup(), 
                 new FirewallSetup(), 
                 new UrlReservationSetup()

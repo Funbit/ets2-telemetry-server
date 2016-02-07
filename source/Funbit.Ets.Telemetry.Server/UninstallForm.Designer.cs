@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SetupEts2Form));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(UninstallForm));
             this.okButton = new System.Windows.Forms.Button();
             this.groupBox = new System.Windows.Forms.GroupBox();
             this.urlReservationStatusImage = new System.Windows.Forms.PictureBox();
@@ -127,9 +127,9 @@
             this.pluginStatusLabel.Font = new System.Drawing.Font("Segoe UI Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pluginStatusLabel.Location = new System.Drawing.Point(78, 48);
             this.pluginStatusLabel.Name = "pluginStatusLabel";
-            this.pluginStatusLabel.Size = new System.Drawing.Size(132, 17);
+            this.pluginStatusLabel.Size = new System.Drawing.Size(162, 17);
             this.pluginStatusLabel.TabIndex = 2;
-            this.pluginStatusLabel.Text = "ETS2 Telemetry Plugin";
+            this.pluginStatusLabel.Text = "ETS2/ATS Telemetry Plugins";
             // 
             // helpLabel
             // 
@@ -143,7 +143,7 @@
             this.helpLabel.Text = "Help";
             this.helpLabel.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.helpLabel_LinkClicked);
             // 
-            // SetupEts2Form
+            // UninstallForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -155,7 +155,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
-            this.Name = "SetupEts2Form";
+            this.Name = "UninstallForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "ETS2/ATS Telemetry Server";
             this.TopMost = true;
