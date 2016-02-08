@@ -181,7 +181,7 @@ The tutorial is included in the ZIP package (see "Dashboard Skin Tutorial.pdf").
 
 The ETS2 Telemetry Web Server has evolved into a pretty complex open-source project that requires singificant amount of time to support. If you are interested in its future you may provide the author with some material support by clicking the button below.
 
-[![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/server/Html/images/donate-link.png)](https://www.paypal.me/mikekoch)
+[![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/server/Html/images/donate-link.png)](http://funbit.info/ets2/donate.htm)
 
 (disclaimer: This fork has a donation link to mike-koch instead of Funbit. If you wish to donate to Funbit (the original creator) instead, visit https://github.com/Funbit/ets2-telemetry-server)
 
