@@ -1,0 +1,21 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "me.apla.cordova.app-preferences": {
+            "PACKAGE_NAME": "info.funbit.ets.telemetry"
+        },
+        "org.apache.cordova.splashscreen": {
+            "PACKAGE_NAME": "info.funbit.ets.telemetry"
+        },
+        "nl.x-services.plugins.insomnia": {
+            "PACKAGE_NAME": "info.funbit.ets.telemetry"
+        }
+    },
+    "dependent_plugins": {}
+}

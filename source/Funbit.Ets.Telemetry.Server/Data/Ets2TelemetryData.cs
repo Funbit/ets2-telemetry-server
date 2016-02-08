@@ -73,9 +73,19 @@ namespace Funbit.Ets.Telemetry.Server.Data
             get
             {
                 return _rawData.Struct.ets2_telemetry_plugin_revision != 0 &&
-                    Ets2ProcessHelper.IsEts2Running &&
+                    (Ets2ProcessHelper.IsEts2Running || Ets2ProcessHelper.IsAtsRunning) &&
                     _rawData.Struct.timeAbsolute != 0;
             }
+        }
+
+        public string GameName
+        {
+            get { return Connected ? GetGameName() : null; }
+        }
+
+        private string GetGameName()
+        {
+            return Ets2ProcessHelper.IsEts2Running ? "ets2" : "ats";
         }
 
         public bool Paused

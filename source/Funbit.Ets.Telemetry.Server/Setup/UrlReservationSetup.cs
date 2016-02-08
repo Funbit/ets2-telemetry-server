@@ -58,11 +58,19 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             }
             catch (Exception ex)
             {
-                Log.Error(ex);
-                _status = SetupStatus.Failed;
-                Settings.Instance.UrlReservationSetupHadErrors = true;
-                Settings.Instance.Save();
-                throw;
+                // When installing the ATS plugin, this can fail since we already have the URL ACL added. We don't want to consider this an error, though!
+                if (ex.Message !=
+                    "Failed to add URL ACL: \r\nUrl reservation add failed, Error: 183\r\nCannot create a file when that file already exists.\r\n\r\n\r\n")
+                {
+                    Log.Error(ex);
+                    _status = SetupStatus.Failed;
+                    Settings.Instance.UrlReservationSetupHadErrors = true;
+                    Settings.Instance.Save();
+                    throw;
+                }
+                
+                _status = SetupStatus.Installed;
+
             }
             return _status;
         }

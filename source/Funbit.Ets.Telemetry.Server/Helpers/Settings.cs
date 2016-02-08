@@ -11,13 +11,14 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
 
         public string DefaultNetworkInterfaceId { get; set; }
         public string Ets2GamePath { get; set; }
+        public string AtsGamePath { get; set; }
 
         public bool FirewallSetupHadErrors { get; set; }
         public bool UrlReservationSetupHadErrors { get; set; }
 
         #endregion
 
-        const string ApplicationName = "Ets2 Telemetry Server";
+        const string ApplicationName = "ETS2-ATS Telemetry Server";
         const string SettingsName = "Settings.json";
 
         public static readonly string SettingsDirectory = Path.Combine(

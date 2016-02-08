@@ -1,0 +1,21 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {}
+    },
+    "installed_plugins": {
+        "me.apla.cordova.app-preferences": {
+            "PACKAGE_NAME": "ETS2 Dashboard"
+        },
+        "nl.x-services.plugins.insomnia": {
+            "PACKAGE_NAME": "ETS2 Dashboard"
+        },
+        "org.apache.cordova.splashscreen": {
+            "PACKAGE_NAME": "ETS2 Dashboard"
+        }
+    },
+    "dependent_plugins": {}
+}

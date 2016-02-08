@@ -21,7 +21,7 @@ Prevent the screen of the mobile device from falling asleep.
 * After making your app practically a zombie, you can allow it to sleep again by calling `allowSleepAgain`.
 * Works on Android, probably every version you'd care about.
 * Works on iOS, probably every version you'd care about.
-* Works on wp8.
+* Works on Windows and WP8.
 
 ## 2. Installation
 
@@ -84,11 +84,11 @@ wp8: Copy `Insomnia.cs` to `platforms/wp8/Plugins/nl.x-services.plugins.insomnia
 Insomnia works with PhoneGap build too, look for Insomnia here: https://build.phonegap.com/plugins/
 Just add the following xml to your `config.xml` to always use the latest version of this plugin:
 ```xml
-<gap:plugin name="nl.x-services.plugins.insomnia" />
+<plugin name="cordova-plugin-insomnia" />
 ```
 or to use this exact version:
 ```xml
-<gap:plugin name="nl.x-services.plugins.insomnia" version="4.0.0" />
+<plugin name="cordova-plugin-insomnia" version="4.1.0" source="npm" />
 ```
 
 The plugin's  javascript file is brought in automatically. Make sure though you include a reference to cordova.js in your index.html's head:
@@ -113,7 +113,7 @@ The Android code was entirely created by the author.
 
 The iOS code was heavily inspired by [Wolfgang Koller](https://github.com/simplec-dev/powermanagement).
 
-Many thanks to [Jesse MacFadyen](https://github.com/purplecabbage) for implementing the wp8 version!
+Many thanks to [Jesse MacFadyen](https://github.com/purplecabbage) for implementing the wp8 and windows versions!
 
 ## 5. License
 

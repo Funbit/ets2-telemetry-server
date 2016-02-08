@@ -48,8 +48,11 @@
             this.statusTitleLabel = new System.Windows.Forms.Label();
             this.toolTip = new System.Windows.Forms.ToolTip(this.components);
             this.broadcastTimer = new System.Windows.Forms.Timer(this.components);
+            this.installTelemetryPlugin = new System.Windows.Forms.Button();
+            this.runningGamePicture = new System.Windows.Forms.PictureBox();
             this.contextMenuStrip.SuspendLayout();
             this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.runningGamePicture)).BeginInit();
             this.SuspendLayout();
             // 
             // trayIcon
@@ -82,6 +85,7 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.runningGamePicture);
             this.groupBox1.Controls.Add(this.helpLabel);
             this.groupBox1.Controls.Add(this.ipAddressLabel);
             this.groupBox1.Controls.Add(this.interfacesDropDown);
@@ -212,7 +216,7 @@
             this.apiEndpointUrlTitleLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.apiEndpointUrlTitleLabel.Location = new System.Drawing.Point(21, 194);
             this.apiEndpointUrlTitleLabel.Name = "apiEndpointUrlTitleLabel";
-            this.apiEndpointUrlTitleLabel.Size = new System.Drawing.Size(117, 17);
+            this.apiEndpointUrlTitleLabel.Size = new System.Drawing.Size(116, 17);
             this.apiEndpointUrlTitleLabel.TabIndex = 12;
             this.apiEndpointUrlTitleLabel.Text = "Telemetry API URL:";
             // 
@@ -239,11 +243,31 @@
             this.broadcastTimer.Interval = 1000;
             this.broadcastTimer.Tick += new System.EventHandler(this.broadcastTimer_Tick);
             // 
+            // installTelemetryPlugin
+            // 
+            this.installTelemetryPlugin.Location = new System.Drawing.Point(406, 250);
+            this.installTelemetryPlugin.Name = "installTelemetryPlugin";
+            this.installTelemetryPlugin.Size = new System.Drawing.Size(133, 41);
+            this.installTelemetryPlugin.TabIndex = 12;
+            this.installTelemetryPlugin.Text = "Install Telemetry Plugin";
+            this.installTelemetryPlugin.UseVisualStyleBackColor = true;
+            this.installTelemetryPlugin.Click += new System.EventHandler(this.installTelemetryPlugin_Click);
+            // 
+            // runningGamePicture
+            // 
+            this.runningGamePicture.Location = new System.Drawing.Point(413, 24);
+            this.runningGamePicture.Name = "runningGamePicture";
+            this.runningGamePicture.Size = new System.Drawing.Size(100, 50);
+            this.runningGamePicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.runningGamePicture.TabIndex = 23;
+            this.runningGamePicture.TabStop = false;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(552, 258);
+            this.ClientSize = new System.Drawing.Size(552, 303);
+            this.Controls.Add(this.installTelemetryPlugin);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -257,6 +281,7 @@
             this.contextMenuStrip.ResumeLayout(false);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.runningGamePicture)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -281,6 +306,8 @@
         private System.Windows.Forms.ToolTip toolTip;
         private System.Windows.Forms.Timer broadcastTimer;
         private System.Windows.Forms.LinkLabel helpLabel;
+        private System.Windows.Forms.Button installTelemetryPlugin;
+        private System.Windows.Forms.PictureBox runningGamePicture;
     }
 }
 

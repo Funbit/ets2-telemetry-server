@@ -1,16 +1,34 @@
 ﻿using System.Linq;
+using System.Windows.Forms;
 
 namespace Funbit.Ets.Telemetry.Server.Setup
 {
     public static class SetupManager
     {
-        public static ISetup[] Steps;
+        public static ISetup[] Ets2Steps;
+        public static ISetup[] AtsSteps;
+        public static ISetup[] UninstallSteps;
 
         static SetupManager()
         {
-            Steps = new ISetup[]
+            Ets2Steps = new ISetup[]
             {
-                new PluginSetup(), 
+                new Ets2PluginSetup(),
+                new FirewallSetup(), 
+                new UrlReservationSetup()
+            };
+            
+            AtsSteps = new ISetup[]
+            {
+                new AtsPluginSetup(), 
+                new FirewallSetup(), 
+                new UrlReservationSetup()
+            };
+
+            UninstallSteps = new ISetup[]
+            {
+                new Ets2PluginSetup(), 
+                new AtsPluginSetup(), 
                 new FirewallSetup(), 
                 new UrlReservationSetup()
             };

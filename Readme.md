@@ -1,12 +1,12 @@
-## ETS2 Telemetry Web Server 3.0.7 + Mobile Dashboard
+## ETS2 Telemetry Web Server 3.1.0 + Mobile Dashboard
 
-This is a free Telemetry Web Server for [Euro Truck Simulator 2](http://www.eurotrucksimulator2.com/) written in C# based on WebSockets and REST API. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
+This is a free Telemetry Web Server for [Euro Truck Simulator 2](http://www.eurotrucksimulator2.com/) and [American Truck Simulator](http://www.americantrucksimulator.com) written in C# based on WebSockets and REST API. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
 
 ## Main Features
 
 - Free and open source
 - Automated installation
-- REST API for ETS2 telemetry data
+- REST API for ETS2/ATS telemetry data
 - HTML5 dashboard application for live telemetry data streaming based on WebSockets 
 - Powerful support for custom dashboard skins (skin tutorial included)
 - Telemetry data broadcasting to a given URL via HTTP protocol
@@ -20,6 +20,7 @@ Returns structured JSON object with the latest telemetry data read from the game
     {    
 		"game": {
 			"connected": true,
+			"gameName": "ets2",
 			"paused": false,
 			"time": "0001-01-08T21:09:00Z",
 			"timeScale": 19.0,
@@ -65,7 +66,8 @@ As you can see dashboard design is completely customizable. With some basic know
 
 ### Supported games
 
-- Euro Truck Simulator 2 (32-bit or 64-bit) version 1.15+ (Steam or Standalone). Multiplayer versions are supported as well. 
+- Euro Truck Simulator 2 (32-bit or 64-bit) version 1.15+ (Steam or Standalone). Multiplayer versions are supported as well.
+- American Truck Simulator version 1.0.0+. Multiplayer versions are supported as well.
 
 ### Tested browsers
 
@@ -86,14 +88,14 @@ Android users may install the provided "Ets2 Dashboard" application. The APK fil
 
 ***Security notes***: The installation must be done only once and requires Administrator privileges. If you mind what exactly server does to the system at this point here is the detailed information:
 
-1. Tries to find your ETS2 game directory and copy ets2-telemetry-server.dll plugin there
+1. Tries to find your ETS2 and ATS game directories and copy ets2-telemetry-server.dll plugin there
 2. Creates a new Firewall rule for 25555 port named "ETS2 TELEMETRY SERVER (PORT 25555)" opened only for local subnet (i.e. it won't be visible from Internet, so you are safe)
 3. Creates a new ACL rule for HTTP URL bound on 25555 port for OWIN's HttpListener ([more details](http://msdn.microsoft.com/en-us/library/ms733768%28v=vs.110%29.aspx))
 4. Creates a new file for storing application settings inside "\Users\USERNAME\AppData\Local\Ets2 Telemetry Server".
 
 The server also reports everything to the log file (Ets2Telemetry.log), so you may see the details there as well.
 
-Also, if you don't trust my compiled ets2-telemetry-server.dll you may compile it by yourself using [plugin's source code](https://github.com/Funbit/ets2-sdk-plugin) and Visual Studio 2013+.
+Also, if you don't trust my compiled ets2-telemetry-server.dll you may compile it by yourself using [plugin's source code](https://github.com/Funbit/ets2-sdk-plugin) and Visual Studio 2015+.
 
 ### Skin Installation
 
@@ -109,7 +111,7 @@ However, please keep in mind that if you plan to return back to previous version
 
 If server hasn't fulfilled your expectations and you decide to uninstall it, then:
 
-1. Exit from the Euro Truck Simulator
+1. Exit from Euro Truck Simulator 2 and American Truck Simulator
 1. Run **server\Uninstall.bat**
 2. Click "**Uninstall**" button
 3. **Done**
@@ -119,7 +121,7 @@ At this moment your system will be in exactly the same state as it were before t
 ## Usage
 
 1. Run **server/Ets2Telemetry.exe**  
-2. Run Euro Truck Simulator 2 (the order is not important though).
+2. Run Euro Truck Simulator 2 or American Truck Simulator (the order is not important though). If you are running both games for some reason, the telemetry server will only detect one of the two games.
 3. **Desktop users**: connect your notebook to the same Wi-Fi/LAN network as your PC, open Firefox, Chrome or IE and navigate to the "*HTML5 App URL*" displayed by the server. 
 3. **iOS users**: connect your iPhone or iPad to the same Wi-Fi network as your PC, open Safari and navigate to the "*HTML5 App URL*" displayed by the server. 
 4. **Android users**: run "*Ets2 Dashboard*" application, enter server IP (*without http and port*, exactly in the same format as displayed by the server) and press OK. If IP address is correct it will be remembered for the next time.
@@ -167,6 +169,10 @@ No. There is a chance that it will work, but it won't be supported.
 
 Starting from version 3.0.0 this is possible, but I haven't yet had time to update the default skins to display it. But I will ;)
 
+> When I click "Install Telemetry Plugin", the application restarts.  Why?
+
+In order to install the .dlls to your game directories, the telemetry server must be running as an administrator. If you click the Install button and are not running the server as an administrator, the server will restart in administrator mode. Just click "Install Telemetry Plugin" to continue with installation.
+
 ## Dashboard skin tutorial
 
 The tutorial is included in the ZIP package (see "Dashboard Skin Tutorial.pdf"). You may download it separately from [here](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/Dashboard%20Skin%20Tutorial.pdf).
@@ -177,9 +183,16 @@ The ETS2 Telemetry Web Server has evolved into a pretty complex open-source proj
 
 [![](https://raw.githubusercontent.com/Funbit/ets2-telemetry-server/master/server/Html/images/donate-link.png)](http://funbit.info/ets2/donate.htm)
 
+(disclaimer: This fork has a donation link to mike-koch instead of Funbit. If you wish to donate to Funbit (the original creator) instead, visit https://github.com/Funbit/ets2-telemetry-server)
+
 Thank you!
 
 ## Version history
+
+### 3.1.0
+
+- Add American Truck Simulator support
+- Add `game.gameName` property to return whether `ets2` or `ats` is running.
 
 ### 3.0.7
 

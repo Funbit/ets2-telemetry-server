@@ -14,13 +14,13 @@
   <preference name="KeepRunning" value="False" />
   <preference name="InAppBrowserStorageEnabled" value="True" />
   <preference name="deployment-target" value="8.0" />
-  <preference name="android-minSdkVersion" value="10" />
-  <preference name="android-targetSdkVersion" value="10" />
+  <preference name="android-minSdkVersion" value="14" />
+  <preference name="android-targetSdkVersion" value="14" />
   <vs:plugin name="org.apache.cordova.splashscreen" version="0.3.3" />
-  <vs:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
+  <vs:plugin name="cordova-plugin-insomnia" />
   <vs:plugin name="me.apla.cordova.app-preferences" version="0.4.2" />
   <vs:platformSpecificValues>
-    <vs:platformSpecificWidget platformName="windows" id="info.funbit.ets.telemetry" version="3.0.7.0">
+    <vs:platformSpecificWidget platformName="windows" id="info.funbit.ets.telemetry" version="3.1.0.0">
       <vs:name>ETS2 Dashboard</vs:name>
     </vs:platformSpecificWidget>
   </vs:platformSpecificValues>
