@@ -1,0 +1,53 @@
+{
+  "name": "cordova-plugin-app-preferences",
+  "version": "0.7.7",
+  "description": "Application preferences plugin and preference pane generator",
+  "cordova": {
+    "id": "cordova-plugin-app-preferences",
+    "platforms": [
+      "android",
+      "ios",
+      "osx",
+      "wp7",
+      "wp8",
+      "windows8",
+      "windows",
+      "blackberry10"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/apla/me.apla.cordova.app-preferences.git"
+  },
+  "bin": {
+    "cordova-app-preferences-generator": "bin/build-app-settings.js"
+  },
+  "devDependencies": {
+    "cordova": ">=5.4.1",
+    "elementtree": "^0.1.6",
+    "ios-sim": ">=5.0.5",
+    "jasmine": "^2.3.2",
+    "plist": "1.1.0",
+    "q": "^1.4.1",
+    "serve-me": "^0.8.2"
+  },
+  "keywords": [
+    "preferences",
+    "settings",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-osx",
+    "cordova-wp7",
+    "cordova-wp8",
+    "cordova-windows",
+    "cordova-windows8",
+    "cordova-blackberry10"
+  ],
+  "author": "Ivan Baktsheev",
+  "license": "Apache",
+  "bugs": {
+    "url": "https://github.com/apla/me.apla.cordova.app-preferences/issues"
+  },
+  "homepage": "https://github.com/apla/me.apla.cordova.app-preferences"
+}

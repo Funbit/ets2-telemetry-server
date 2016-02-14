@@ -1,0 +1,359 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.Default.props')" />
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Android">
+      <Configuration>Debug</Configuration>
+      <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|iOS">
+      <Configuration>Debug</Configuration>
+      <Platform>iOS</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Windows-AnyCPU">
+      <Configuration>Debug</Configuration>
+      <Platform>Windows-AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Windows-x64">
+      <Configuration>Debug</Configuration>
+      <Platform>Windows-x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Windows-x86">
+      <Configuration>Debug</Configuration>
+      <Platform>Windows-x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Windows-ARM">
+      <Configuration>Debug</Configuration>
+      <Platform>Windows-ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Windows Phone 8">
+      <Configuration>Debug</Configuration>
+      <Platform>Windows Phone 8</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|Windows Phone (Universal)">
+      <Configuration>Debug</Configuration>
+      <Platform>Windows Phone (Universal)</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Android">
+      <Configuration>Release</Configuration>
+      <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|iOS">
+      <Configuration>Release</Configuration>
+      <Platform>iOS</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Windows-AnyCPU">
+      <Configuration>Release</Configuration>
+      <Platform>Windows-AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Windows-x64">
+      <Configuration>Release</Configuration>
+      <Platform>Windows-x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Windows-x86">
+      <Configuration>Release</Configuration>
+      <Platform>Windows-x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Windows-ARM">
+      <Configuration>Release</Configuration>
+      <Platform>Windows-ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Windows Phone 8">
+      <Configuration>Release</Configuration>
+      <Platform>Windows Phone 8</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Windows Phone (Universal)">
+      <Configuration>Release</Configuration>
+      <Platform>Windows Phone (Universal)</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|Android">
+      <Configuration>Distribution</Configuration>
+      <Platform>Android</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|iOS">
+      <Configuration>Distribution</Configuration>
+      <Platform>iOS</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|Windows-AnyCPU">
+      <Configuration>Distribution</Configuration>
+      <Platform>Windows-AnyCPU</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|Windows-x64">
+      <Configuration>Distribution</Configuration>
+      <Platform>Windows-x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|Windows-x86">
+      <Configuration>Distribution</Configuration>
+      <Platform>Windows-x86</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|Windows-ARM">
+      <Configuration>Distribution</Configuration>
+      <Platform>Windows-ARM</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|Windows Phone 8">
+      <Configuration>Distribution</Configuration>
+      <Platform>Windows Phone 8</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Distribution|Windows Phone (Universal)">
+      <Configuration>Distribution</Configuration>
+      <Platform>Windows Phone (Universal)</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>2cb2e074-3458-4089-bc8f-56ccab4c58a8</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup>
+    <DefaultReferenceGroup>Implicit (Multi-Device Apps)</DefaultReferenceGroup>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup Condition="'$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '12.0'">
+    <VisualStudioVersion>12.0</VisualStudioVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="dashboard-host.css">
+      <DependentUpon>dashboard-host.less</DependentUpon>
+    </Content>
+    <Content Include="dashboard-host.less" />
+    <Content Include="dashboard-host.min.css">
+      <DependentUpon>dashboard-host.css</DependentUpon>
+    </Content>
+    <Content Include="images\app-icon.png" />
+    <Content Include="images\disclosure.png" />
+    <Content Include="images\donate-link.png">
+      <CopyToOutputDirectory>
+      </CopyToOutputDirectory>
+    </Content>
+    <Content Include="images\menu-background.png" />
+    <Content Include="index.html" />
+    <Content Include="index.css">
+      <DependentUpon>index.less</DependentUpon>
+    </Content>
+    <Content Include="index.less" />
+    <Content Include="index.min.css">
+      <DependentUpon>index.css</DependentUpon>
+    </Content>
+    <Content Include="merges\android\scripts\android2.3-jscompat.js" />
+    <Content Include="merges\android\scripts\platformOverrides.js" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\.fetch.json" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\app-settings.json" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\bin\build-app-settings.js" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\bin\package.json" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\LICENSE" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\plugin.xml" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\README.md" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\src\android\AppPreferences.java" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\src\android\libs\android-support-v4.jar" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\src\android\PreferencesActivity.java" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\src\android\xml\pref_data_sync.xml" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\src\android\xml\pref_general.xml" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\src\android\xml\pref_headers.xml" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\src\android\xml\pref_notification.xml" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\src\blackberry10\platform.js" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\src\ios\AppPreferences.h" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\src\ios\AppPreferences.m" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\src\platform.js" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\src\test.js" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\src\windows8\platform.js" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\src\wp\AppPreferences.cs" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\www\apppreferences.js" />
+    <Content Include="plugins\me.apla.cordova.app-preferences\www\task\AppPreferences.js" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\.fetch.json" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\plugin.xml" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\README.md" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\src\android\nl\xservices\plugins\Insomnia.java" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\src\firefoxos\insomnia.js" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\src\ios\Insomnia.h" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\src\ios\Insomnia.m" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\src\wp8\Insomnia.cs" />
+    <Content Include="plugins\nl.x-services.plugins.insomnia\www\Insomnia.js" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\.fetch.json" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\CONTRIBUTING.md" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\doc\de\index.md" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\doc\es\index.md" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\doc\fr\index.md" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\doc\index.md" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\doc\it\index.md" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\doc\ja\index.md" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\doc\ko\index.md" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\doc\pl\index.md" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\doc\ru\index.md" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\doc\zh\index.md" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\LICENSE" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\NOTICE" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\package.json" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\plugin.xml" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\README.md" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\RELEASENOTES.md" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\src\android\SplashScreen.java" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\src\blackberry10\index.js" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\src\ios\CDVSplashScreen.h" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\src\ios\CDVSplashScreen.m" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\src\tizen\SplashScreenProxy.js" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\src\ubuntu\splashscreen.cpp" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\src\ubuntu\splashscreen.h" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\src\wp\SplashScreen.cs" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\tests\plugin.xml" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\tests\tests.js" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\www\splashscreen.js" />
+    <Content Include="plugins\org.apache.cordova.splashscreen\www\windows8\SplashScreenProxy.js" />
+    <Content Include="scripts\app.js" />
+    <Content Include="scripts\config.js" />
+    <Content Include="scripts\doT.js" />
+    <Content Include="scripts\jquery.min.js">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="scripts\jquery.signalR-2.2.0.min.js" />
+    <Content Include="scripts\menu.js" />
+    <Content Include="skins\default\config.json" />
+    <Content Include="skins\default\dashboard.css">
+      <DependentUpon>dashboard.less</DependentUpon>
+    </Content>
+    <Content Include="skins\default\dashboard.html" />
+    <Content Include="skins\default\dashboard.jpg" />
+    <Content Include="skins\default\dashboard.js" />
+    <Content Include="skins\default\dashboard.less" />
+    <Content Include="skins\default\dashboard.min.css">
+      <DependentUpon>dashboard.css</DependentUpon>
+    </Content>
+    <Content Include="skins\default\images\bg-off.png" />
+    <Content Include="skins\default\images\bg-on.png" />
+    <Content Include="skins\default\images\blinker-left-off.png" />
+    <Content Include="skins\default\images\blinker-left-on.png" />
+    <Content Include="skins\default\images\blinker-right-off.png" />
+    <Content Include="skins\default\images\blinker-right-on.png" />
+    <Content Include="skins\default\images\cruise-off.png" />
+    <Content Include="skins\default\images\cruise-on.png" />
+    <Content Include="skins\default\images\highbeam-off.png" />
+    <Content Include="skins\default\images\highbeam-on.png" />
+    <Content Include="skins\default\images\lowbeam-off.png" />
+    <Content Include="skins\default\images\lowbeam-on.png" />
+    <Content Include="skins\default\images\parklights-off.png" />
+    <Content Include="skins\default\images\parklights-on.png" />
+    <Content Include="skins\default\images\trailer-off.png" />
+    <Content Include="skins\default\images\trailer-on.png" />
+    <Content Include="skins\template\config.json" />
+    <Content Include="skins\template\dashboard.css" />
+    <Content Include="skins\template\dashboard.html" />
+    <Content Include="skins\template\dashboard.jpg" />
+    <Content Include="skins\template\dashboard.js" />
+    <Content Include="skins\template\images\bg-off.jpg" />
+    <Content Include="skins\template\images\bg-on.jpg" />
+    <Folder Include="merges\ios\" />
+    <Content Include="merges\windows\scripts\platformOverrides.js" />
+    <Content Include="merges\windows\scripts\winstore-jscompat.js" />
+    <Folder Include="merges\wp8\" />
+    <Folder Include="res\icons\android\" />
+    <Folder Include="res\icons\ios\" />
+    <Folder Include="res\icons\wp8\" />
+    <Folder Include="res\icons\windows\" />
+    <Folder Include="res\screens\android\" />
+    <Folder Include="res\screens\ios\" />
+    <Folder Include="res\screens\windows\" />
+    <Folder Include="res\screens\wp8\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="config.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="dashboard-host.html" />
+    <Content Include="scripts\dashboard-core.js" />
+    <Content Include="scripts\platformOverrides.js" />
+    <Content Include="res\icons\android\icon-36-ldpi.png" />
+    <Content Include="res\icons\android\icon-48-mdpi.png" />
+    <Content Include="res\icons\android\icon-72-hdpi.png" />
+    <Content Include="res\icons\android\icon-96-xhdpi.png" />
+    <Content Include="res\icons\ios\icon-40.png" />
+    <Content Include="res\icons\ios\icon-40-2x.png" />
+    <Content Include="res\icons\ios\icon-50.png" />
+    <Content Include="res\icons\ios\icon-50-2x.png" />
+    <Content Include="res\icons\ios\icon-57.png" />
+    <Content Include="res\icons\ios\icon-57-2x.png" />
+    <Content Include="res\icons\ios\icon-60.png" />
+    <Content Include="res\icons\ios\icon-60-2x.png" />
+    <Content Include="res\icons\ios\icon-72.png" />
+    <Content Include="res\icons\ios\icon-72-2x.png" />
+    <Content Include="res\icons\ios\icon-76.png" />
+    <Content Include="res\icons\ios\icon-76-2x.png" />
+    <Content Include="res\icons\ios\icon-small.png" />
+    <Content Include="res\icons\ios\icon-small-2x.png" />
+    <Content Include="res\icons\windows\logo.png" />
+    <Content Include="res\icons\windows\smalllogo.png" />
+    <Content Include="res\icons\windows\Square150x150Logo.scale-240.png" />
+    <Content Include="res\icons\windows\Square44x44Logo.scale-240.png" />
+    <Content Include="res\icons\windows\Square71x71Logo.scale-240.png" />
+    <Content Include="res\icons\windows\storelogo.png" />
+    <Content Include="res\icons\windows\StoreLogo.scale-240.png" />
+    <Content Include="res\icons\windows\Wide310x150Logo.scale-240.png" />
+    <Content Include="res\icons\wp8\icon-62-tile.png" />
+    <Content Include="res\icons\wp8\icon-173-tile.png" />
+    <Content Include="res\native\android\ant.properties" />
+    <Content Include="res\screens\android\screen-hdpi-landscape.png" />
+    <Content Include="res\screens\android\screen-hdpi-portrait.png" />
+    <Content Include="res\screens\android\screen-ldpi-landscape.png" />
+    <Content Include="res\screens\android\screen-ldpi-portrait.png" />
+    <Content Include="res\screens\android\screen-mdpi-landscape.png" />
+    <Content Include="res\screens\android\screen-mdpi-portrait.png" />
+    <Content Include="res\screens\android\screen-xhdpi-landscape.png" />
+    <Content Include="res\screens\android\screen-xhdpi-portrait.png" />
+    <Content Include="res\screens\ios\screen-ipad-landscape.png" />
+    <Content Include="res\screens\ios\screen-ipad-landscape-2x.png" />
+    <Content Include="res\screens\ios\screen-ipad-portrait.png" />
+    <Content Include="res\screens\ios\screen-ipad-portrait-2x.png" />
+    <Content Include="res\screens\ios\screen-iphone-568h-2x.png" />
+    <Content Include="res\screens\ios\screen-iphone-portrait.png" />
+    <Content Include="res\screens\ios\screen-iphone-portrait-2x.png" />
+    <Content Include="res\screens\windows\splashscreen.png" />
+    <Content Include="res\screens\windows\SplashScreen.scale-240.png" />
+    <Content Include="res\screens\wp8\screen-portrait.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <TypeScriptCompile Include="scripts\app.ts" />
+    <TypeScriptCompile Include="scripts\config.ts" />
+    <TypeScriptCompile Include="scripts\dashboard-core.ts" />
+    <TypeScriptCompile Include="scripts\menu.ts" />
+    <TypeScriptCompile Include="scripts\typings\dot.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\jquery.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\jqueryui.d.ts" />
+    <TypeScriptCompile Include="scripts\typings\signalr.d.ts" />
+  </ItemGroup>
+  <PropertyGroup>
+    <TypeScriptToolsVersion>1.0</TypeScriptToolsVersion>
+    <DefaultReferenceGroup>Implicit (Multi-Device Apps)</DefaultReferenceGroup>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
+    <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptRemoveComments>false</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>true</TypeScriptSourceMap>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Distribution'">
+    <TypeScriptCompileOnSaveEnabled>false</TypeScriptCompileOnSaveEnabled>
+    <TypeScriptRemoveComments>true</TypeScriptRemoveComments>
+    <TypeScriptSourceMap>false</TypeScriptSourceMap>
+  </PropertyGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CordovaTools\vs-mda-targets\Microsoft.MDA.targets" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\CordovaTools\vs-mda-targets\Microsoft.TypeScript.MDA.targets" />
+  <PropertyGroup>
+    <ProjectUISubcaption>Tools for Apache Cordova</ProjectUISubcaption>
+  </PropertyGroup>
+  <PropertyGroup>
+    <TargetPlatformIdentifier>MDD</TargetPlatformIdentifier>
+  </PropertyGroup>
+  <Target Name="EnsureBuildPrerequisites">
+    <!-- These errors will trigger if building from inside Visual Studio and requirements could not be determined -->
+    <Error Condition="$(MDAPropertiesEvaluated) == 'true' And $(NodeJsDir) == ''" Text="Path to NodeJs could not be determined. Please check that NodeJs has been installed." />
+    <Error Condition="$(MDAPropertiesEvaluated) == 'true' And $(MDAVsixDir) == ''" Text="Path to the Visual Studio Extension for Tools for Apache Cordova could not be determined. Please check that the extension has been installed." />
+    <!-- These errors will trigger if building from outside Visual Studio (e.g. command line) and environment variables have not been set -->
+    <Error Condition="$(MDAPropertiesEvaluated) == '' And $(NodeJsDir) == ''" Text="Path to NodeJs has not been specified. Please check that NodeJs has been installed and set the NodeJsDir environment variable before building." />
+    <Error Condition="$(MDAPropertiesEvaluated) == '' And $(MDAVsixDir) == ''" Text="Path to Visual Studio Extension for Tools for Apache Cordova has not been specified. Please install it and set the MDAVsixDir environment variable before building." />
+    <!-- Sanity check that things exist in the specified places. These are more likely to fail if building outside Visual Studio and the required environment variables have not been set, or set incorrectly. -->
+    <Error Condition="!Exists('$(NodeJsDir)') Or !Exists('$(NodeJsDir)\node.exe')" Text="The specified NodeJs directory $(NodeJsDir) either does not exist, or does not contain node.exe. Please check that NodeJs has been installed, and set the NodeJsDir variable to the correct directory." />
+    <Error Condition="!Exists('$(MDAVsixDir)') Or !Exists('$(MDAVsixDir)\packages\vs-mda')" Text="The specified directory to the Visual Studio extension $(MDAVsixDir)\node.exe either does not exist, or does not contain a packages\vs-mda sub-directory. Please check that the extension directory exists and set the MDAVsixDir variable to the correct directory." />
+    <!-- Installs (if necessary) the supporting Nodejs module -->
+    <Exec Command="&quot;$(MDAVsixDir)&quot;\packages\vs-mda\install &quot;$(NodeJsDir)&quot; &quot;$(MDAVsixDir)&quot;\packages\vs-mda" />
+  </Target>
+</Project>

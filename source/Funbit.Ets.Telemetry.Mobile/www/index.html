@@ -1,0 +1,63 @@
+﻿<!DOCTYPE html>
+<html>
+<!--==============================================================
+            *** DO NOT CHANGE THIS HTML FILE ***
+================================================================-->
+<head>
+    <title>ETS2 Dashboard Menu</title>
+    <link rel="apple-touch-icon" href="images/app-icon.png" />
+    <link rel="shortcut icon" href="images/app-icon.png">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge;" />
+    <link rel="stylesheet" href="index.css" />
+    <meta id="viewport" name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+</head>
+<body>
+    <header><h1><img class="app-icon" src="images/app-icon.png" /> ETS2 Mobile Dashboard</h1></header>
+    <table class="settings">
+        <tr>
+            <th>Server IP:</th>
+            <td>
+                <span class="server-ip"></span>
+                <input class="edit-server-ip" type="button" value="Edit"/>
+            </td>
+        </tr>
+        <tr>
+            <th>Status:</th>
+            <td class="server-status disconnected">Connecting...</td>
+        </tr>
+    </table>
+    <h2>Select a skin to start</h2>
+    <table class="skins"></table>
+    <footer>Version 3.0.7<br/>Copyright © 2015, All Rights Reserved</footer>
+    <script id="skin-empty-row-template" type="text/html">
+        <tr>
+            <td class="skin-empty">Not available.<br/>Please connect to the server first.</td>
+        </tr>
+    </script>
+    <script id="skin-row-template" type="text/html">
+        <tr data-name="{{=it.name}}">
+            <td class="skin-image">
+                <img src="{{=it.splashUrl}}" />
+            </td>
+            <td class="skin-desc">
+                <div><strong>Title</strong>: {{=it.title}}</div>
+                <div><strong>Author</strong>: {{=it.author}}</div>
+                {{? it.width === -1 && it.height === -1}}
+                <div><strong>Size</strong>: Dynamic</div>
+                {{??}}
+                <div><strong>Size</strong>: {{=it.width}} x {{=it.height}}</div>
+                {{?}}
+            </td>
+        </tr>
+    </script>
+    <script src="scripts/jquery.min.js"></script>
+    <script src="cordova.js"></script>
+    <script src="scripts/platformOverrides.js"></script>
+    <script src="scripts/doT.js"></script>
+    <script src="scripts/config.js"></script>
+    <script src="scripts/menu.js"></script>
+</body>
+</html>

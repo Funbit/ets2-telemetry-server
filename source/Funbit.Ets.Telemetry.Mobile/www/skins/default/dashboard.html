@@ -1,0 +1,51 @@
+﻿<div class="dashboard game-connected">
+    <div class="hasJob">
+        <!-- meters -->
+        <!--
+            Attributes:
+            data-min-angle: angle in degress for the arrow for data-min value (0 = vertical, negative = left, positive = right)
+            data-max-angle: angle in degress for the arrow for data-max value (0 = vertical, negative = left, positive = right)
+            data-min: minimal possible value (as in JSON response), you may also use any telemetry property name for dynamic values
+            data-max: maximum possible value (as in JSON response), you may also use any telemetry property name for dynamic values
+            -->
+        <div class="truck-speed" data-type="meter" data-min="0" data-max="140" data-min-angle="-114" data-max-angle="+114"></div>
+        <div class="truck-speedRounded"></div>
+        <div class="truck-engineRpm" data-type="meter" data-min="0" data-max="24" data-min-angle="-97" data-max-angle="+97"></div>
+        <div class="truck-fuel" data-type="meter" data-min="0" data-max="truck.fuelCapacity" data-min-angle="-96" data-max-angle="0"></div>
+        <div class="truck-waterTemperature" data-type="meter" data-min="0" data-max="100" data-min-angle="-96" data-max-angle="0"></div>
+        <div class="truck-odometer"></div>
+        <div class="truck-cruiseControlSpeedRounded"></div>
+        <div class="truck-gear"></div>
+        <!-- indicators -->
+        <div class="truck-blinkerLeftOn"></div>
+        <div class="truck-blinkerRightOn"></div>
+        <div class="truck-cruiseControlOn"></div>
+        <div class="truck-lightsBeamHighOn"></div>
+        <div class="truck-lightsBeamLowOn"></div>
+        <div class="truck-lightsParkingOn"></div>
+        <div class="trailer-attached"></div>
+        <div class="trailer-mass"><span class="ton">t</span></div>
+        <div class="trailer-name"></div>
+        <!-- job information -->
+        <table class="_job">
+            <tr>
+                <th>Time:</th>
+                <td><span class="game-time"></span><span class="statusMessage"></span></td>
+            </tr>
+            <tr>
+                <th>Source:</th>
+                <td><span class="hasJob _jobSource"><span class="job-sourceCity"></span> (<span class="job-sourceCompany"></span>)</span></td>
+            </tr>
+            <tr>
+                <th>Destination:</th>
+                <td><span class="hasJob _jobDestionation"><span class="job-destinationCity"></span> (<span class="job-destinationCompany"></span>)</span></td>
+            </tr>
+            <tr>
+                <th>Deadline in:</th>
+                <td><span class="job-remainingTime"></span> <span class="_jobIncome">(€<span class="job-income"></span>)</span></td>
+            </tr>
+        </table>
+        <div class="_truckWearInfo">Truck <br/>wear: <span class="truck-wearSum"></span></div>
+        <div class="_trailerWearInfo">Trailer <br/>damage: <span class="trailer-wear"></span></div>
+    </div>
+</div>

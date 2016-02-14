@@ -1,8 +1,4 @@
-﻿/* 
-    *** DO NOT CHANGE THIS SCRIPT ***
-*/
-
-// Polyfill for Function.prototype.bind() support on Android 2.3
+﻿// Polyfill for Function.prototype.bind() support on Android 2.3
 (function () {
     if (!Function.prototype.bind) {
         Function.prototype.bind = function (thisValue) {

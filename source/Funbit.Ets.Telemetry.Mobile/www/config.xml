@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<widget xmlns:cdv="http://cordova.apache.org/ns/1.0" xmlns:vs="http://schemas.microsoft.com/appx/2014/htmlapps" id="info.funbit.ets.telemetry" android-versionCode="19" version="3.0.7.0" xmlns="http://www.w3.org/ns/widgets">
+  <name>ETS2 Dashboard</name>
+  <description>Mobile dashboard for Euro Truck Simulator 2.</description>
+  <author href="http://cordova.io" email="dev@cordova.apache.org">Funbit</author>
+  <content src="index.html" />
+  <access origin="*" />
+  <preference name="SplashScreen" value="screen" />
+  <preference name="windows-target-version" value="8.1" />
+  <preference name="windows-phone-target-version" value="8.1" />
+  <preference name="Orientation" value="default" />
+  <preference name="Fullscreen" value="true" />
+  <preference name="BackupWebStorage" value="cloud" />
+  <preference name="KeepRunning" value="False" />
+  <preference name="InAppBrowserStorageEnabled" value="True" />
+  <preference name="deployment-target" value="8.0" />
+  <preference name="android-minSdkVersion" value="10" />
+  <preference name="android-targetSdkVersion" value="10" />
+  <vs:plugin name="org.apache.cordova.splashscreen" version="0.3.3" />
+  <vs:plugin name="nl.x-services.plugins.insomnia" version="4.0.1" />
+  <vs:plugin name="me.apla.cordova.app-preferences" version="0.4.2" />
+  <vs:platformSpecificValues>
+    <vs:platformSpecificWidget platformName="windows" id="info.funbit.ets.telemetry" version="3.0.7.0">
+      <vs:name>ETS2 Dashboard</vs:name>
+    </vs:platformSpecificWidget>
+  </vs:platformSpecificValues>
+</widget>

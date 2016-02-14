@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://cordova.apache.org/ns/plugins/1.0"
+	xmlns:android="http://schemas.android.com/apk/res/android"
+	id="cordova-plugin-app-preferences"
+	version="0.7.7">
+
+	<name>AppPreferences</name>
+	<description>Application preferences plugin and preference pane generator</description>
+	<license>Apache</license>
+	<keywords>preferences, settings</keywords>
+	<repo>https://github.com/apla/me.apla.cordova.app-preferences</repo>
+	<issue>https://github.com/apla/me.apla.cordova.app-preferences/issues</issue>
+
+	<js-module src="www/apppreferences.js">
+		<clobbers target="plugins.appPreferences" />
+	</js-module>
+	<js-module src="src/platform.js">
+	</js-module>
+
+	<asset src="www/task/AppPreferences.js" target="task/AppPreferences.js" />
+
+	<hook type="after_prepare" src="bin/after_prepare.js" />
+	<hook type="after_plugin_install" src="bin/after_plugin_install.js" />
+	<hook type="before_plugin_uninstall" src="bin/before_plugin_uninstall.js" />
+
+	<!-- android -->
+	<platform name="android">
+		<config-file target="res/xml/config.xml" parent="/*">
+			<feature name="AppPreferences" >
+				<param name="android-package" value="me.apla.cordova.AppPreferences"/>
+			</feature>
+		</config-file>
+		<config-file target="AndroidManifest.xml" parent="/manifest/application">
+			<activity android:name="me.apla.cordova.AppPreferencesActivity" />
+		</config-file>
+		<source-file src="src/android/AppPreferences.java" target-dir="src/me/apla/cordova" />
+	</platform>
+
+	<!-- ios -->
+	<platform name="ios">
+		<config-file target="config.xml" parent="/*">
+			<feature name="AppPreferences">
+				<param name="ios-package" value="AppPreferences"/>
+			</feature>
+		</config-file>
+
+		<header-file src="src/ios/AppPreferences.h" />
+		<source-file src="src/ios/AppPreferences.m" />
+
+	</platform>
+
+	<!-- osx -->
+	<platform name="osx">
+		<config-file target="config.xml" parent="/*">
+			<feature name="AppPreferences">
+				<param name="ios-package" value="AppPreferences"/>
+			</feature>
+		</config-file>
+
+		<header-file src="src/osx/AppPreferences.h" />
+		<source-file src="src/osx/AppPreferences.m" />
+
+	</platform>
+
+	<!-- wp7 -->
+	<platform name="wp7">
+		<config-file target="config.xml" parent="/*">
+			<feature name="AppPreferences">
+				<param name="wp-package" value="AppPreferences"/>
+			</feature>
+		</config-file>
+
+		<source-file src="src/wp/AppPreferences.cs" />
+	</platform>
+
+	<!-- wp8 -->
+	<platform name="wp8">
+		<config-file target="config.xml" parent="/*">
+			<feature name="AppPreferences">
+				<param name="wp-package" value="AppPreferences"/>
+			</feature>
+		</config-file>
+
+		<source-file src="src/wp/AppPreferences.cs" />
+	</platform>
+
+	<!-- windows8 -->
+	<platform name="windows8">
+		<js-module src="src/windows8/platform.js" name="platform">
+			<merges target="" />
+		</js-module>
+	</platform>
+
+	<!-- windows universal platform -->
+	<platform name="windows">
+		<js-module src="src/windows8/platform.js" name="platform">
+			<merges target="" />
+		</js-module>
+	</platform>
+
+	<!-- browser -->
+	<platform name="browser">
+		<js-module src="src/platform.js" name="platform">
+			<merges target="" />
+		</js-module>
+	</platform>
+
+	<!-- blackberry10 -->
+	<!-- using localStorage fallback -->
+	<platform name="blackberry10">
+		<js-module src="src/blackberry10/platform.js">
+		</js-module>
+	</platform>
+
+
+</plugin>

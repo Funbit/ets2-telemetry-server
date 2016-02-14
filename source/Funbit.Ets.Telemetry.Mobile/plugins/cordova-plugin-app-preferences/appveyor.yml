@@ -1,0 +1,32 @@
+# appveyor file
+# http://www.appveyor.com/docs/appveyor-yml
+
+#environment:
+#  NODE_PATH: %CD%\node_modules;%NODE_PATH%
+#  my_var2: value2
+
+install:
+  - SET PATH=%CD%\node_modules\.bin;%PATH%
+  - SET NODE_PATH=%CD%\node_modules;%CD%\node_modules\cordova\node_modules;%NODE_PATH%
+  - SET __COMPAT_LAYER=RunAsInvoker
+  - npm install
+  - cordova create app-preferences-app
+
+build: off
+
+test_script:
+  # testing basic functionality of preference generator
+  - echo running jasmine test
+  - cd bin
+  - jasmine
+  - cd ..
+  # let's create cordova app, add and remove plugin a few times
+  - echo test plugin within cordova app
+  - cd app-preferences-app
+  - cordova platform add windows
+  - cordova plugin add https://github.com/apla/me.apla.cordova.app-preferences
+  - cp plugins/cordova-plugin-app-preferences/src/test.js www/js/apppreferences-test.js
+  - patch -p0 -i plugins/cordova-plugin-app-preferences/src/test.patch
+  - cordova -d build --debug --emulator windows
+# cannot emulate on appveyor, need too much work https://github.com/appveyor/ci/issues/201
+#  - node ../bin/test-server.js windows

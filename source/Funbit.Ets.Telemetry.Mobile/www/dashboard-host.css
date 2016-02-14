@@ -1,0 +1,21 @@
+﻿/*
+    *** DO NOT CHANGE THIS STYLESHEET ***
+*/
+body {
+  background-color: #1d1d1d;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  -moz-transform-origin: left top;
+  -ms-transform-origin: left top;
+  -o-transform-origin: left top;
+  -webkit-transform-origin: left top;
+  transform-origin: left top;
+  -moz-transform: scale(1);
+  -ms-transform: scale(1);
+  -o-transform: scale(1);
+  -webkit-transform: scale(1);
+  transform: scale(1);
+  overflow: hidden;
+}

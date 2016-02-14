@@ -1,0 +1,49 @@
+#
+# Build configuration for Circle CI
+#
+
+machine:
+  environment:
+    ANDROID_HOME: /usr/local/android-sdk-linux
+    ANDROID_NDK_HOME: $ANDROID_NDK
+    NODE_ENV: test
+    NODE_PATH: $NODE_PATH:$HOME/$CIRCLE_PROJECT_REPONAME/node_modules:$HOME/$CIRCLE_PROJECT_REPONAME/node_modules/cordova/node_modules
+    PATH: $PATH:$HOME/$CIRCLE_PROJECT_REPONAME/node_modules/.bin
+
+dependencies:
+  override:
+    - npm install
+    - cordova create app-preferences-app
+
+#dependencies:
+#  override:
+#    - echo y | android update sdk --no-ui --all --filter tools,platform-tools,build-tools-21.1.2,android-21,extra-google-m2repository,extra-google-google_play_services,extra-android-support
+#    - ANDROID_HOME=/usr/local/android-sdk-linux ./gradlew dependencies
+
+test:
+  pre:
+    - emulator -avd circleci-android22 -no-audio -no-window:
+        background: true
+        parallel: true
+    - circle-android wait-for-boot
+  override:
+    - echo running jasmine test
+    - jasmine:
+        pwd: bin
+    - echo test plugin within cordova app
+    - cordova platform add android:
+        pwd: app-preferences-app
+    - cordova plugin add https://github.com/apla/me.apla.cordova.app-preferences:
+        pwd: app-preferences-app
+    - (if [ ! -f app-settings.json ]; then exit 0; fi):
+        pwd: app-preferences-app
+    - cp plugins/cordova-plugin-app-preferences/src/test.js www/js/apppreferences-test.js:
+        pwd: app-preferences-app
+    - patch -p0 -i plugins/cordova-plugin-app-preferences/src/test.patch:
+        pwd: app-preferences-app
+    - cordova prepare:
+        pwd: app-preferences-app
+    - cordova -d build --debug --emulator android:
+        pwd: app-preferences-app
+    - node ../bin/test-server.js android circleci-android22:
+        pwd: app-preferences-app

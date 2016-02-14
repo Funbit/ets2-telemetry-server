@@ -1,0 +1,20 @@
+{
+  "name": "build-app-settings",
+  "version": "0.0.0",
+  "description": "Generate an iOS info.plist",
+  "main": "build-app-settings.js",
+  "scripts": {
+    "test": "node_modules/.bin/jasmine-node spec"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "plist": "~1.0.1",
+    "q": "~1.4.1",
+    "elementtree": "~0.1.6",
+    "xcode": "~0.8.2"
+  },
+  "devDependencies": {
+    "jasmine-node": "^1.14.5"
+  }
+}

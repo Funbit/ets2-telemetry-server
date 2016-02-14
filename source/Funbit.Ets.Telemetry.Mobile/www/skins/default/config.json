@@ -1,0 +1,24 @@
+{
+    "comments": [
+        "==============================",
+        "     SKIN CONFIGURATION       ",
+        "==============================",
+
+        "Required properties:",
+
+        "           name: name of the skin (directory name: /skins/name)",
+        "          title: human readable skin title",
+        "         author: author name",
+        "          width: width of the skin in pixels (same as defined in the CSS)",
+        "         height: height of the skin in pixels (same as defined in the CSS)"
+    ],
+
+    "config": {
+        "name": "default",
+        "title": "Generic Dashboard / KMH",
+        "author": "Funbit",
+        "width": 2048,
+        "height": 1152
+    }    
+
+}

@@ -1,0 +1,77 @@
+﻿/*
+    Dashboard skin template.
+
+    If you want to create your own dashboard skin (or tweak something)
+    create a copy of the "/skins/template" directory and rename it
+    to something like: "/skins/your_skin_name" and edit config.json file inside.
+
+    See skin tutorial PDF file for more information.
+
+    CSS naming convention:
+
+    - Dashboard core script maps all telemetry data properties to respective class names,
+      so truck's speed will be .truck-speed and current gear is .truck-gear (see JSON).
+    - All boolean telemetry properties will have a special ".yes" class added
+      when the value is true (will be removed if value is false).
+    - When dashboard core script updates DOM it will always add
+      data-value attribute containing current value, so you
+      can use it to have custom css selectors based on the actual data
+      (for example, this skin uses .truck-gear[data-value="N"] to define
+      different style for neutral or reverse gear, see below).
+
+    For more information go to home page: https://github.com/Funbit/ets2-telemetry-server
+
+*/
+
+body {
+  cursor: pointer;
+}
+
+.dashboard {
+	background-image: url("images/bg-off.jpg");
+}
+
+.dashboard.game-connected.yes {
+	background-image: url("images/bg-on.jpg");
+}
+
+._speed {
+    visibility: hidden;
+}
+
+/* hide speed when not connected to the simulator */
+
+.game-connected.yes ._speed {
+    visibility: visible;
+    color: white;
+    font-family: Courier New, Courier, monospace;
+    font-weight: bold;
+    font-size: 300px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    text-align: center;
+    line-height: 1152px;
+}
+
+.truck-speedRounded {
+    color: green;
+}
+
+.game-connected.yes .statusMessage {
+    visibility: hidden;
+}
+
+.statusMessage {
+    font-size: 70px;
+    text-align: center;
+    line-height: 1152px;
+    position: absolute;
+    left: 0;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    color: orange;
+}
