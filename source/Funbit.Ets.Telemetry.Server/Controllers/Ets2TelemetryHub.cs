@@ -1,6 +1,5 @@
-﻿using System;
-using System.Collections.Concurrent;
-using System.Collections.Generic;
+﻿using System.Collections.Concurrent;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNet.SignalR;
 
@@ -10,15 +9,21 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
     {
         static readonly ConcurrentDictionary<string, bool> ConnectedIds = new ConcurrentDictionary<string, bool>();
 
-        public static bool HasConnections
+        public static bool HasConnections => ConnectedIds.Count > 0;
+        
+        static void ThrottleRequests()
         {
-            get { return ConnectedIds.Count > 0; }
+            // add some delay to throttle websocket requests to avoid CPU overhead
+            Thread.Sleep(1);
         }
 
         public void RequestData()
         {
             if (HasConnections)
+            {
                 Clients.Caller.updateData(Ets2TelemetryController.GetEts2TelemetryJson());
+                ThrottleRequests();
+            }
         }
 
         public override Task OnConnected()
