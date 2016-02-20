@@ -97,7 +97,7 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
 
             int code = RunAndWait(out output, out error, netShellExe, arguments);
             if (code != 0)
-                throw new Exception(string.Format("{0}: {1}", errorMessage, output));
+                throw new Exception($"{errorMessage}: {output}");
             return output;
         }
 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
+﻿using System.Diagnostics;
 
 namespace Funbit.Ets.Telemetry.Server.Helpers
 {
@@ -13,8 +10,7 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
             {
                 FileVersionInfo versionInfo = FileVersionInfo.GetVersionInfo(
                     Process.GetCurrentProcess().MainModule.FileName);
-                string version = string.Format("{0}.{1}.{2}",
-                    versionInfo.FileMajorPart, versionInfo.FileMinorPart, versionInfo.ProductBuildPart);
+                string version = $"{versionInfo.FileMajorPart}.{versionInfo.FileMinorPart}.{versionInfo.ProductBuildPart}";
                 return version;
             }
         }

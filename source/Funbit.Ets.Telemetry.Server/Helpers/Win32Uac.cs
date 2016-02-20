@@ -111,14 +111,9 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
             finally
             {
                 // Centralized cleanup for all allocated resources. 
-                if (hToken != null)
-                {
-                    hToken.Close();
-                }
+                hToken?.Close();
                 if (pTokenElevation != IntPtr.Zero)
-                {
                     Marshal.FreeHGlobal(pTokenElevation);
-                }
             }
 
             return fIsElevated;
@@ -384,7 +379,7 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
         [DllImport("advapi32", CharSet = CharSet.Auto, SetLastError = true)]
         [return: MarshalAs(UnmanagedType.Bool)]
         public static extern bool OpenProcessToken(IntPtr hProcess,
-            UInt32 desiredAccess, out SafeTokenHandle hToken);
+            uint desiredAccess, out SafeTokenHandle hToken);
 
 
         /// <summary>
@@ -403,7 +398,7 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
         /// </param>
         /// <returns></returns>
         [DllImport("advapi32.dll", CharSet = CharSet.Auto, SetLastError = true)]
-        public extern static bool DuplicateToken(
+        public static extern bool DuplicateToken(
             SafeTokenHandle ExistingTokenHandle, 
             SECURITY_IMPERSONATION_LEVEL ImpersonationLevel,
             out SafeTokenHandle DuplicateTokenHandle);

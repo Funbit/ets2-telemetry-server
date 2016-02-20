@@ -20,15 +20,9 @@ namespace Funbit.Ets.Telemetry.Server.Data
         // ReSharper disable once InconsistentNaming
         static readonly Lazy<Ets2TelemetryDataReader> instance = new Lazy<Ets2TelemetryDataReader>(
             () => new Ets2TelemetryDataReader());
-        public static Ets2TelemetryDataReader Instance
-        {
-            get { return instance.Value; }
-        }
+        public static Ets2TelemetryDataReader Instance => instance.Value;
 
-        public bool IsConnected
-        {
-            get { return _sharedMemory.IsConnected; }
-        }
+        public bool IsConnected => _sharedMemory.IsConnected;
 
         public IEts2TelemetryData Read()
         {
@@ -43,8 +37,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         
         public void Dispose()
         {
-            if (_sharedMemory != null)
-                _sharedMemory.Dispose();
+            _sharedMemory?.Dispose();
         }
     }
 }

@@ -33,7 +33,7 @@ namespace Funbit.Ets.Telemetry.Server
 
         static string IpToEndpointUrl(string host)
         {
-            return string.Format("http://{0}:{1}", host, ConfigurationManager.AppSettings["Port"]);
+            return $"http://{host}:{ConfigurationManager.AppSettings["Port"]}";
         }
 
         void Setup()
@@ -125,8 +125,7 @@ namespace Funbit.Ets.Telemetry.Server
 
         private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
-            if (_server != null)
-                _server.Dispose();
+            _server?.Dispose();
             trayIcon.Visible = false;
         }
     

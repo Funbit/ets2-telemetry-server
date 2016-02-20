@@ -21,9 +21,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
         static string GetDefaultSteamPath()
         {
             var steamKey = Registry.CurrentUser.OpenSubKey(@"Software\Valve\Steam");
-            if (steamKey != null)
-                return steamKey.GetValue("SteamPath") as string;
-            return null;
+            return steamKey?.GetValue("SteamPath") as string;
         }
 
         static bool ValidateEts2Path(string ets2Path)
@@ -50,23 +48,11 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             return Path.Combine(path, TelemetryDllName);
         }
 
-        static string LocalEts2X86TelemetryPluginDllFileName
-        {
-            get
-            {
-                return Path.Combine(
-                    AppDomain.CurrentDomain.BaseDirectory, @"Ets2Plugins\win_x86\plugins\", TelemetryDllName);
-            }
-        }
+        static string LocalEts2X86TelemetryPluginDllFileName => Path.Combine(
+            AppDomain.CurrentDomain.BaseDirectory, @"Ets2Plugins\win_x86\plugins\", TelemetryDllName);
 
-        static string LocalEts2X64TelemetryPluginDllFileName
-        {
-            get
-            {
-                return Path.Combine(
-                    AppDomain.CurrentDomain.BaseDirectory, @"Ets2Plugins\win_x64\plugins", TelemetryDllName);
-            }
-        }
+        static string LocalEts2X64TelemetryPluginDllFileName => Path.Combine(
+            AppDomain.CurrentDomain.BaseDirectory, @"Ets2Plugins\win_x64\plugins", TelemetryDllName);
 
         public PluginSetup()
         {
@@ -93,10 +79,7 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             }
         }
 
-        public SetupStatus Status
-        {
-            get { return _status; }
-        }
+        public SetupStatus Status => _status;
 
         public SetupStatus Install(IWin32Window owner)
         {
@@ -207,8 +190,8 @@ namespace Funbit.Ets.Telemetry.Server.Setup
             using (var provider = new MD5CryptoServiceProvider())
             {
                 var bytes = File.ReadAllBytes(fileName);
-                byte[] hash = provider.ComputeHash(bytes);
-                var result = string.Concat(hash.Select(b => string.Format("{0:x02}", b)));
+                var hash = provider.ComputeHash(bytes);
+                var result = string.Concat(hash.Select(b => $"{b:x02}"));
                 return result;
             }
         }

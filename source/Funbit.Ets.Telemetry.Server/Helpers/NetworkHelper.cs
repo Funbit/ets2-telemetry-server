@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
@@ -17,7 +16,7 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
 
             Log.InfoFormat("Found following network interfaces: {0}{1}", Environment.NewLine,
                 string.Join(", " + Environment.NewLine,
-                    interfaces.Select(a => string.Format("'{0}': '{1}' ({2})", a.Id, a.Name, a.OperationalStatus))));
+                    interfaces.Select(a => $"'{a.Id}': '{a.Name}' ({a.OperationalStatus})")));
 
             var foundInterfaces = interfaces.Where(
                     a => a.OperationalStatus.ToString() == "Up" &&
