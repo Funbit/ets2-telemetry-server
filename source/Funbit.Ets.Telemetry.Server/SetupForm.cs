@@ -28,14 +28,16 @@ namespace Funbit.Ets.Telemetry.Server
             string port = ConfigurationManager.AppSettings["Port"];
             if (Program.UninstallMode)
             {
-                pluginStatusLabel.Text = @"Uninstall ETS2 telemetry plugin DLL";
+                ets2PluginStatusLabel.Text = @"Uninstall ETS2 telemetry plugin DLL";
+                atsPluginStatusLabel.Text = @"Uninstall ATS telemetry plugin DLL";
                 firewallStatusLabel.Text = $@"Delete firewall rule for {port} port";
                 urlReservationStatusLabel.Text = $@"Delete ACL rule for http://+:{port}/";
                 okButton.Text = @"Uninstall";
             }
             else
             {
-                pluginStatusLabel.Text = @"Install ETS2 telemetry plugin DLL";
+                ets2PluginStatusLabel.Text = @"Install ETS2 telemetry plugin DLL";
+                atsPluginStatusLabel.Text = @"Install ATS telemetry plugin DLL";
                 firewallStatusLabel.Text = $@"Add firewall rule for {port} port";
                 urlReservationStatusLabel.Text = $@"Add ACL rule for http://+:{port}/";
                 okButton.Text = @"Install";
@@ -107,7 +109,7 @@ namespace Funbit.Ets.Telemetry.Server
             foreach (var step in SetupManager.Steps)
             {
                 if (step is PluginSetup)
-                    _setupStatusImages.Add(step, pluginStatusImage);
+                    _setupStatusImages.Add(step, ets2PluginStatusImage);
                 else if (step is FirewallSetup)
                     _setupStatusImages.Add(step, firewallStatusImage);
                 else if (step is UrlReservationSetup)
