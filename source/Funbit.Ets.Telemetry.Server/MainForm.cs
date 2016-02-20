@@ -187,7 +187,7 @@ namespace Funbit.Ets.Telemetry.Server
             ShowInTaskbar = WindowState != FormWindowState.Minimized;
             if (!ShowInTaskbar && trayIcon.Tag == null)
             {
-                trayIcon.ShowBalloonTip(1000, @"ETS2 Telemetry Server", @"Double-click to restore.", ToolTipIcon.Info);
+                trayIcon.ShowBalloonTip(1000, @"ETS2/ATS Telemetry Server", @"Double-click to restore.", ToolTipIcon.Info);
                 trayIcon.Tag = "Already shown";
             }
         }

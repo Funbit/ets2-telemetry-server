@@ -1,6 +1,4 @@
-﻿using System.Linq;
-
-namespace Funbit.Ets.Telemetry.Server.Setup
+﻿namespace Funbit.Ets.Telemetry.Server.Setup
 {
     public static class SetupManager
     {
