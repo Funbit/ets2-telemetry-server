@@ -212,7 +212,7 @@
             this.apiEndpointUrlTitleLabel.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.apiEndpointUrlTitleLabel.Location = new System.Drawing.Point(21, 194);
             this.apiEndpointUrlTitleLabel.Name = "apiEndpointUrlTitleLabel";
-            this.apiEndpointUrlTitleLabel.Size = new System.Drawing.Size(117, 17);
+            this.apiEndpointUrlTitleLabel.Size = new System.Drawing.Size(116, 17);
             this.apiEndpointUrlTitleLabel.TabIndex = 12;
             this.apiEndpointUrlTitleLabel.Text = "Telemetry API URL:";
             // 
@@ -250,7 +250,7 @@
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "ETS2 Telemetry Server";
+            this.Text = "ETS2/ATS Telemetry Server";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.MainForm_FormClosed);
             this.Load += new System.EventHandler(this.MainForm_Load);
             this.Resize += new System.EventHandler(this.MainForm_Resize);

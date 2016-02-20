@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Linq;
 using System.Threading;
 
 namespace Funbit.Ets.Telemetry.Server.Helpers
@@ -9,6 +8,11 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
     {
         static long _lastCheckTime;
         static bool _cachedRunningFlag;
+
+        /// <summary>
+        /// Returns last running game name: "ETS2" or "ATS".
+        /// </summary>
+        public static string LastRunningGameName { get; set; }
 
         /// <summary>
         /// Checks whether ETS2 game process is running right now. The maximum check frequency is restricted to 1 second.
@@ -27,10 +31,13 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
                         try
                         {
                             bool running = process.MainWindowTitle.StartsWith("Euro Truck Simulator 2") &&
-                                           process.ProcessName == "eurotrucks2";
+                                           process.ProcessName == "eurotrucks2"
+                                           || (process.MainWindowTitle.StartsWith("American Truck Simulator") &&
+                                           process.ProcessName == "amtrucks");
                             if (running)
                             {
                                 _cachedRunningFlag = true;
+                                LastRunningGameName = process.ProcessName == "eurotrucks2" ? "ETS2" : "ATS";
                                 return _cachedRunningFlag;
                             }
                         }

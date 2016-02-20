@@ -17,7 +17,7 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
 
         #endregion
 
-        const string ApplicationName = "Ets2 Telemetry Server";
+        const string ApplicationName = "ETS2/ATS Telemetry Server";
         const string SettingsName = "Settings.json";
 
         public static readonly string SettingsDirectory = Path.Combine(

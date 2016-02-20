@@ -150,12 +150,12 @@ namespace Funbit.Ets.Telemetry.Server
                 } 
                 else if (Ets2ProcessHelper.IsEts2Running && Ets2TelemetryDataReader.Instance.IsConnected)
                 {
-                    statusLabel.Text = @"Connected to the simulator";
+                    statusLabel.Text = $"Connected to the simulator ({Ets2ProcessHelper.LastRunningGameName})";
                     statusLabel.ForeColor = Color.DarkGreen;
                 }
                 else if (Ets2ProcessHelper.IsEts2Running)
                 {
-                    statusLabel.Text = @"Simulator is running";
+                    statusLabel.Text = $"Simulator is running ({Ets2ProcessHelper.LastRunningGameName})";
                     statusLabel.ForeColor = Color.Teal;
                 }
                 else
