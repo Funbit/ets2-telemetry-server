@@ -39,6 +39,11 @@ namespace Funbit.Ets.Telemetry.Server.Data
         bool Connected { get; }
 
         /// <summary>
+        /// Returns the acronym of the currently running game (ETS2, ATS), or null if game name could not be detected.
+        /// </summary>
+        string GameName { get; }
+
+        /// <summary>
         /// Current game time. 
         /// Serializes to ISO 8601 string in JSON.
         /// Example: "0001-01-05T05:11:00Z"

@@ -83,6 +83,14 @@ Indicates whether the telemetry server is connected to the simulator (ETS) or no
 		Example: 	true
 		CSS Class: 	game-connected
 
+##### game.gameName
+
+Returns the acronym of the currently running game (ETS2, ATS), or null if game name could not be detected.
+
+		Type: 		string
+		Example: 	"ATS"
+		CSS Class: 	game-gameName
+
 ##### game.paused 
 
 True if game is currently paused, false otherwise.

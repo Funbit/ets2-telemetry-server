@@ -10,7 +10,7 @@ namespace Funbit.Ets.Telemetry.Server.Helpers
         static bool _cachedRunningFlag;
 
         /// <summary>
-        /// Returns last running game name: "ETS2" or "ATS".
+        /// Returns last running game name: "ETS2", "ATS" or null if undefined.
         /// </summary>
         public static string LastRunningGameName { get; set; }
 
