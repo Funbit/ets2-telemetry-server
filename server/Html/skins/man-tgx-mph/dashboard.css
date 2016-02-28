@@ -1,0 +1,332 @@
+body {
+  cursor: pointer;
+}
+.hidden {
+  visibility: hidden;
+}
+.visible {
+  visibility: visible;
+}
+.dashboard {
+  background-image: url("images/bg-on.jpg");
+}
+.truck-speed[data-type="meter"] {
+  visibility: visible;
+  position: absolute;
+  left: 1563px;
+  top: 415px;
+  width: 29px;
+  height: 177px;
+  background-image: url("images/arrow.png");
+  -webkit-transform: rotate(-114deg);
+  -moz-transform: rotate(-114deg);
+  -ms-transform: rotate(-114deg);
+  -o-transform: rotate(-114deg);
+  transform: rotate(-114deg);
+  -webkit-transform-origin: 50% 212px;
+  -moz-transform-origin: 50% 212px;
+  -ms-transform-origin: 50% 212px;
+  -o-transform-origin: 50% 212px;
+  transform-origin: 50% 212px;
+}
+.truck-engineRpm {
+  position: absolute;
+  left: 495px;
+  top: 396px;
+  width: 29px;
+  height: 177px;
+  background-image: url("images/arrow.png");
+  -webkit-transform: rotate(-114deg);
+  -moz-transform: rotate(-114deg);
+  -ms-transform: rotate(-114deg);
+  -o-transform: rotate(-114deg);
+  transform: rotate(-114deg);
+  -webkit-transform-origin: 50% 212px;
+  -moz-transform-origin: 50% 212px;
+  -ms-transform-origin: 50% 212px;
+  -o-transform-origin: 50% 212px;
+  transform-origin: 50% 212px;
+}
+.truck-fuel {
+  position: absolute;
+  left: 308px;
+  top: 916px;
+  width: 13px;
+  height: 77px;
+  background-image: url("images/arrow-s.png");
+  -webkit-transform: rotate(-96deg);
+  -moz-transform: rotate(-96deg);
+  -ms-transform: rotate(-96deg);
+  -o-transform: rotate(-96deg);
+  transform: rotate(-96deg);
+  -webkit-transform-origin: 50% 112px;
+  -moz-transform-origin: 50% 112px;
+  -ms-transform-origin: 50% 112px;
+  -o-transform-origin: 50% 112px;
+  transform-origin: 50% 112px;
+}
+.truck-waterTemperature {
+  position: absolute;
+  left: 671px;
+  top: 914px;
+  width: 13px;
+  height: 77px;
+  background-image: url("images/arrow-s.png");
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transform-origin: 50% 112px;
+  -moz-transform-origin: 50% 112px;
+  -ms-transform-origin: 50% 112px;
+  -o-transform-origin: 50% 112px;
+  transform-origin: 50% 112px;
+}
+.truck-waterTemperature {
+  position: absolute;
+  left: 671px;
+  top: 914px;
+  width: 13px;
+  height: 77px;
+  background-image: url("images/arrow-s.png");
+  -webkit-transform: rotate(0deg);
+  -moz-transform: rotate(0deg);
+  -ms-transform: rotate(0deg);
+  -o-transform: rotate(0deg);
+  transform: rotate(0deg);
+  -webkit-transform-origin: 50% 112px;
+  -moz-transform-origin: 50% 112px;
+  -ms-transform-origin: 50% 112px;
+  -o-transform-origin: 50% 112px;
+  transform-origin: 50% 112px;
+}
+.truck-speedRounded {
+  color: #B2B5AF;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 70px;
+  position: absolute;
+  left: 1010px;
+  top: 314px;
+  width: 190px;
+  height: 66px;
+  text-align: left;
+}
+.truck-gear {
+  color: #B2B5AF;
+  font-family: Courier New, Courier, monospace;
+  font-weight: bold;
+  font-size: 70px;
+  position: absolute;
+  left: 841px;
+  top: 314px;
+  width: 135px;
+  height: 89px;
+  text-align: center;
+}
+.truck-gear[data-value="N"] {
+  color: #B2B5AF;
+}
+.truck-gear[data-value="R"] {
+  color: #B2B5AF;
+}
+.truck-odometer {
+  color: #B3A099;
+  font-family: Courier New, Courier, monospace;
+  
+  font-size: 30px;
+  position: absolute;
+  left: 362px;
+  top: 743px;
+  width: 232px;
+  height: 41px;
+  text-align: right;
+}
+.truck-blinkerLeftOn {
+  background-image: url("images/blinker-left-off.png");
+  position: absolute;
+  left: 687px;
+  top: 280px;
+  width: 102px;
+  height: 92px;
+}
+.truck-blinkerLeftOn.yes {
+  background-image: url("images/blinker-left-on.png");
+}
+.truck-blinkerRightOn {
+  background-image: url("images/blinker-right-off.png");
+  position: absolute;
+  left: 1288px;
+  top: 309px;
+  width: 102px;
+  height: 92px;
+}
+.truck-blinkerRightOn.yes {
+  background-image: url("images/blinker-right-on.png");
+}
+.truck-cruiseControlOn {
+  background-image: url("images/cruise-on.png");
+  position: absolute;
+  left: 1145px;
+  top: 322px;
+  width: 92px;
+  height: 69px;
+}
+.truck-cruiseControlOn.yes {
+  background-image: url("images/cruise-on.png");
+}
+.truck-lightsBeamHighOn {
+  background-image: url("images/highbeam-off.png");
+  position: absolute;
+  left: 532px;
+  top: 786px;
+  width: 47px;
+  height: 41px;
+}
+.truck-lightsBeamHighOn.yes {
+  background-image: url("images/highbeam-on.png");
+}
+.truck-lightsBeamLowOn {
+  background-image: url("images/lowbeam-off.png");
+  position: absolute;
+  left: 474px;
+  top: 786px;
+  width: 48px;
+  height: 38px;
+}
+.truck-lightsBeamLowOn.yes {
+  background-image: url("images/lowbeam-on.png");
+}
+.truck-lightsParkingOn {
+  background-image: url("images/parklights-off.png");
+  position: absolute;
+  left: 418px;
+  top: 788px;
+  width: 49px;
+  height: 42px;
+}
+.truck-lightsParkingOn.yes {
+  background-image: url("images/parklights-on.png");
+}
+.trailer-mass {
+  color: #B2B5AF;
+  font-family: Courier New, Courier, monospace;
+  font-size: 30px;
+  font-weight: bold;
+  position: absolute;
+  left: 980px;
+  top: 455px;
+  width: 142px;
+  height: 40px;
+  text-align: left;
+}
+.truck-parkBrakeOn {
+  background-image: url("images/parking-brake-off.png");
+  font-family: Arial, Tahoma;
+  font-size: 40px;
+  font-weight: bold;
+  position: absolute;
+  left: 916px;
+  top: 680px;
+  width: 45px;
+  height: 45px;
+  text-align: left;
+  overflow: hidden;
+}
+.truck-parkBrakeOn.yes {
+  background-image: url("images/parking-brake.png");
+}
+.truck-airPressureWarningOn {
+  background-image: url("images/air-warning-off.png");
+  font-family: Arial, Tahoma;
+  font-size: 40px;
+  font-weight: bold;
+  position: absolute;
+  left: 1449px;
+  top: 959px;
+  width: 38px;
+  height: 29px;
+  text-align: left;
+  overflow: hidden;
+}
+.truck-airPressureWarningOn.yes {
+  background-image: url("images/air-warning.png");
+}
+.truck-retarderBrake {
+  color: #B2B5AF;
+  font-family: Courier New, Courier, monospace;
+  font-size: 35px;
+  font-weight: bold;
+  position: absolute;
+  left: 985px;
+  top: 409px;
+  width: 45px;
+  height: 45px;
+  text-align: left;
+}
+.truck-oilTemperature {
+  color: #B2B5AF;
+  font-family: Courier New, Courier, monospace;
+  font-size: 30px;
+  font-weight: bold;
+  position: absolute;
+  left: 1176px;
+  top: 412px;
+  width: 40px;
+  height: 66px;
+  text-align: left;
+  overflow: hidden;
+
+}
+.truck-batteryVoltage {
+  color: #B2B5AF;
+  font-family: Courier New, Courier, monospace;
+  font-size: 30px;
+  font-weight: bold;
+  position: absolute;
+  left: 1176px;
+  top: 455px;
+  width: 40px;
+  height: 66px;
+  text-align: left;
+  overflow: hidden;
+}
+.game-time {
+  color: #B3A099;
+  position: absolute;
+  left: 1500px;
+  top: 714px;
+  width: 100px;
+  height: 57px;
+  font-size: 27px;
+}
+.truck-airPressure {
+  position: absolute;
+  left: 1408px;
+  top: 914px;
+  width: 13px;
+  height: 77px;
+  background-image: url("images/arrow-s.png");
+  -webkit-transform: rotate(-0deg);
+  -moz-transform: rotate(-0deg);
+  -ms-transform: rotate(-0deg);
+  -o-transform: rotate(-0deg);
+  transform: rotate(-0deg);
+  -webkit-transform-origin: 50% 112px;
+  -moz-transform-origin: 50% 112px;
+  -ms-transform-origin: 50% 112px;
+  -o-transform-origin: 50% 112px;
+  transform-origin: 50% 112px;
+}
+.truck-airPressureEmergencyOn {
+  background-image: url("images/warning-off.png");
+  position: absolute;
+  left: 1017px;
+  top: 685px;
+  width: 45px;
+  height: 45px;
+}
+.truck-airPressureEmergencyOn.yes {
+  background-image: url("images/warning.png");
+}

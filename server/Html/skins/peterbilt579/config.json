@@ -14,11 +14,11 @@
     ],
 
     "config": {
-        "name": "man-tgx",
-        "title": "MAN TGX Dashboard / KMH",
-        "author": "Klauzzy",
-        "width": 2048,
-        "height": 1152
+        "name": "peterbilt579",
+        "title": "Peterbilt 579 / MPH",
+        "author": "NightstalkerPL, Lisek Chytrusek (by WEBX.PL)",
+        "width": 1920,
+        "height": 1080
     }    
 
 }
