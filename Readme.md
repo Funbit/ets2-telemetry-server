@@ -1,12 +1,12 @@
-## ETS2 Telemetry Web Server 3.0.7 + Mobile Dashboard
+## ETS2 Telemetry Web Server 3.2.0 + Mobile Dashboard
 
-This is a free Telemetry Web Server for [Euro Truck Simulator 2](http://www.eurotrucksimulator2.com/) written in C# based on WebSockets and REST API. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
+This is a free Telemetry Web Server for [Euro Truck Simulator 2](http://www.eurotrucksimulator2.com/) and [American Truck Simulator](http://www.americantrucksimulator.com/) written in C# based on WebSockets and REST API. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
 
 ## Main Features
 
 - Free and open source
 - Automated installation
-- REST API for ETS2 telemetry data
+- REST API for telemetry data
 - HTML5 dashboard application for live telemetry data streaming based on WebSockets 
 - Powerful support for custom dashboard skins (skin tutorial included)
 - Telemetry data broadcasting to a given URL via HTTP protocol
@@ -21,6 +21,7 @@ Returns structured JSON object with the latest telemetry data read from the game
 		"game": {
 			"connected": true,
 			"paused": false,
+			"gameName": "ETS2",
 			"time": "0001-01-08T21:09:00Z",
 			"timeScale": 19.0,
 			"nextRestStopTime": "0001-01-01T10:11:00Z",
@@ -66,6 +67,7 @@ As you can see dashboard design is completely customizable. With some basic know
 ### Supported games
 
 - Euro Truck Simulator 2 (32-bit or 64-bit) version 1.15+ (Steam or Standalone). Multiplayer versions are supported as well. 
+- American Truck Simulator (Steam or Standalone)
 
 ### Tested browsers
 
@@ -109,17 +111,17 @@ However, please keep in mind that if you plan to return back to previous version
 
 If server hasn't fulfilled your expectations and you decide to uninstall it, then:
 
-1. Exit from the Euro Truck Simulator
-1. Run **server\Uninstall.bat**
-2. Click "**Uninstall**" button
-3. **Done**
+1. Exit from the Euro Truck Simulator / American Truck Simulator
+2. Select from the server's menu: Server -> Uninstall
+3. Click "**Uninstall**" button in the popped up window
+4. **Done**
 
 At this moment your system will be in exactly the same state as it were before the installation. 
 
 ## Usage
 
 1. Run **server/Ets2Telemetry.exe**  
-2. Run Euro Truck Simulator 2 (the order is not important though).
+2. Run Euro Truck Simulator 2 / American Truck Simulator.
 3. **Desktop users**: connect your notebook to the same Wi-Fi/LAN network as your PC, open Firefox, Chrome or IE and navigate to the "*HTML5 App URL*" displayed by the server. 
 3. **iOS users**: connect your iPhone or iPad to the same Wi-Fi network as your PC, open Safari and navigate to the "*HTML5 App URL*" displayed by the server. 
 4. **Android users**: run "*Ets2 Dashboard*" application, enter server IP (*without http and port*, exactly in the same format as displayed by the server) and press OK. If IP address is correct it will be remembered for the next time.
@@ -180,6 +182,15 @@ The ETS2 Telemetry Web Server has evolved into a pretty complex open-source proj
 Thank you!
 
 ## Version history
+
+### 3.2.0
+
+- Added support for American Truck Simulator
+- Added two new skins: MAN TGX (MPH) and Peterbilt 579 by NightstalkerPL, Lisek Chytrusek (by WEBX.PL)
+- Added application menu to ease uninstallation and extending for future updates
+- Added new GameName property to the telemetry (proposed by mkoch227)
+- Fixed CPU overhead issue for some users (when CPU goes above 1%)
+- Updated all project files for Visual Studio 2015 and C# 6.0
 
 ### 3.0.7
 
