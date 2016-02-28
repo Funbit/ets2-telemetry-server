@@ -127,9 +127,9 @@
             this.pluginStatusLabel.Font = new System.Drawing.Font("Segoe UI Light", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.pluginStatusLabel.Location = new System.Drawing.Point(78, 48);
             this.pluginStatusLabel.Name = "pluginStatusLabel";
-            this.pluginStatusLabel.Size = new System.Drawing.Size(131, 17);
+            this.pluginStatusLabel.Size = new System.Drawing.Size(156, 17);
             this.pluginStatusLabel.TabIndex = 2;
-            this.pluginStatusLabel.Text = "ETS2 telemetry plugin";
+            this.pluginStatusLabel.Text = "ETS2/ATS telemetry plugin";
             // 
             // helpLabel
             // 
