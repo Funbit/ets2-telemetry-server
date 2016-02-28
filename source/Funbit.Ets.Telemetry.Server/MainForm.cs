@@ -108,7 +108,7 @@ namespace Funbit.Ets.Telemetry.Server
             }
         }
         
-        private void MainForm_Load(object sender, EventArgs e)
+        void MainForm_Load(object sender, EventArgs e)
         {
             // log current version for debugging
             Log.InfoFormat("Running application on {0} ({1}) {2}", Environment.OSVersion, 
@@ -123,23 +123,23 @@ namespace Funbit.Ets.Telemetry.Server
             Start();
         }
 
-        private void MainForm_FormClosed(object sender, FormClosedEventArgs e)
+        void MainForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             _server?.Dispose();
             trayIcon.Visible = false;
         }
     
-        private void closeToolStripMenuItem_Click(object sender, EventArgs e)
+        void closeToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Close();
         }
 
-        private void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
+        void trayIcon_MouseDoubleClick(object sender, MouseEventArgs e)
         {
             WindowState = FormWindowState.Normal;
         }
 
-        private void statusUpdateTimer_Tick(object sender, EventArgs e)
+        void statusUpdateTimer_Tick(object sender, EventArgs e)
         {
             try
             {
@@ -172,17 +172,17 @@ namespace Funbit.Ets.Telemetry.Server
             }
         }
 
-        private void apiUrlLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        void apiUrlLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             ProcessHelper.OpenUrl(((LinkLabel)sender).Text);
         }
 
-        private void appUrlLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        void appUrlLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             ProcessHelper.OpenUrl(((LinkLabel)sender).Text);
         }
         
-        private void MainForm_Resize(object sender, EventArgs e)
+        void MainForm_Resize(object sender, EventArgs e)
         {
             ShowInTaskbar = WindowState != FormWindowState.Minimized;
             if (!ShowInTaskbar && trayIcon.Tag == null)
@@ -192,7 +192,7 @@ namespace Funbit.Ets.Telemetry.Server
             }
         }
 
-        private void interfaceDropDown_SelectedIndexChanged(object sender, EventArgs e)
+        void interfaceDropDown_SelectedIndexChanged(object sender, EventArgs e)
         {
             var selectedInterface = (NetworkInterfaceInfo) interfacesDropDown.SelectedItem;
             appUrlLabel.Text = IpToEndpointUrl(selectedInterface.Ip) + Ets2AppController.TelemetryAppUriPath;
@@ -202,7 +202,7 @@ namespace Funbit.Ets.Telemetry.Server
             Settings.Instance.Save();
         }
 
-        private async void broadcastTimer_Tick(object sender, EventArgs e)
+        async void broadcastTimer_Tick(object sender, EventArgs e)
         {
             try
             {
@@ -216,10 +216,34 @@ namespace Funbit.Ets.Telemetry.Server
             }
             broadcastTimer.Enabled = true;
         }
+        
+        void uninstallToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            string exeFileName = Process.GetCurrentProcess().MainModule.FileName;
+            var startInfo = new ProcessStartInfo
+            {
+                Arguments = $"/C ping 127.0.0.1 -n 2 && \"{exeFileName}\" -uninstall",
+                WindowStyle = ProcessWindowStyle.Hidden,
+                CreateNoWindow = true,
+                FileName = "cmd.exe"
+            };
+            Process.Start(startInfo);
+            Application.Exit();
+        }
 
-        private void helpLabel_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        void donateToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ProcessHelper.OpenUrl("http://funbit.info/ets2/donate.htm");
+        }
+
+        void helpToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ProcessHelper.OpenUrl("https://github.com/Funbit/ets2-telemetry-server");
+        }
+
+        void aboutToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            // TODO: implement later
         }
     }
 }
