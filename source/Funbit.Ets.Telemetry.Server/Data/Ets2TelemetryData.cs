@@ -163,7 +163,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public float BrakeTemperature => _rawData.Struct.brakeTemperature;
         public float Adblue => _rawData.Struct.adblue;
         public float AdblueCapacity => _rawData.Struct.adblueCapacity;
-        public float AdblueAverageConsumpton => _rawData.Struct.adblueConsumption;
+        public float AdblueAverageConsumption => _rawData.Struct.adblueConsumption;
         public bool AdblueWarningOn => _rawData.Struct.adblueWarning != 0;
         public float AirPressure => _rawData.Struct.airPressure;
         public bool AirPressureWarningOn => _rawData.Struct.airPressureWarning != 0;

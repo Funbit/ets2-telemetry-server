@@ -71,7 +71,7 @@ module Funbit.Ets.Telemetry {
         brakeTemperature: number = 0;
         adblue: number = 0;
         adblueCapacity: number = 0;
-        adblueAverageConsumpton: number = 0;
+        adblueAverageConsumption: number = 0;
         adblueWarningOn: boolean = false;
         airPressure: number = 0;
         airPressureWarningOn: boolean = false;

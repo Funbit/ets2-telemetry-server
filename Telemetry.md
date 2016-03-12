@@ -485,13 +485,13 @@ AdBlue tank capacity in litres.
 		Example: 	0
 		CSS Class: 	truck-adblueCapacity
 
-##### truck.adblueAverageConsumpton
+##### truck.adblueAverageConsumption
 
 Average consumption of the adblue in liters/km.
 
 		Type: 		float
 		Example: 	0
-		CSS Class: 	truck-adblueAverageConsumpton
+		CSS Class: 	truck-adblueAverageConsumption
 
 ##### truck.adblueWarningOn
 

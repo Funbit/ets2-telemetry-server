@@ -74,7 +74,7 @@
                     this.brakeTemperature = 0;
                     this.adblue = 0;
                     this.adblueCapacity = 0;
-                    this.adblueAverageConsumpton = 0;
+                    this.adblueAverageConsumption = 0;
                     this.adblueWarningOn = false;
                     this.airPressure = 0;
                     this.airPressureWarningOn = false;

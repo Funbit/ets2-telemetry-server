@@ -327,7 +327,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         /// Average consumption of the adblue in liters/km.
         /// Example: 0
         /// </summary>
-        float AdblueAverageConsumpton { get; }
+        float AdblueAverageConsumption { get; }
         /// <summary>
         /// Pressure of the oil in psi.
         /// Example: 36.4550362
