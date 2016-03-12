@@ -302,7 +302,16 @@ namespace Funbit.Ets.Telemetry.Server.Data
 
         public int Income => _rawData.Struct.jobIncome;
         public DateTime DeadlineTime => Ets2TelemetryData.MinutesToDate(_rawData.Struct.jobDeadline);
-        public DateTime RemainingTime => Ets2TelemetryData.MinutesToDate(_rawData.Struct.jobDeadline - _rawData.Struct.timeAbsolute);
+        public DateTime RemainingTime 
+        {
+            get
+            {
+                if (_rawData.Struct.jobDeadline > 0)
+                    return Ets2TelemetryData.MinutesToDate(_rawData.Struct.jobDeadline - _rawData.Struct.timeAbsolute);
+                return Ets2TelemetryData.MinutesToDate(0);
+            }
+        }
+
         public string SourceCity => Ets2TelemetryData.BytesToString(_rawData.Struct.jobCitySource);
         public string SourceCompany => Ets2TelemetryData.BytesToString(_rawData.Struct.jobCompanySource);
         public string DestinationCity => Ets2TelemetryData.BytesToString(_rawData.Struct.jobCityDestination);

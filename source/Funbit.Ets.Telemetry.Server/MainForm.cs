@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Configuration;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Net.Http;
 using System.Reflection;
+using System.Text;
 using System.Windows.Forms;
 using Funbit.Ets.Telemetry.Server.Controllers;
 using Funbit.Ets.Telemetry.Server.Data;
@@ -20,7 +20,13 @@ namespace Funbit.Ets.Telemetry.Server
         IDisposable _server;
         static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
 
+        readonly HttpClient _broadcastHttpClient = new HttpClient();
+        static readonly Encoding Utf8 = new UTF8Encoding(false);
         static readonly string BroadcastUrl = ConfigurationManager.AppSettings["BroadcastUrl"];
+        static readonly string BroadcastUserId = Convert.ToBase64String(
+            Utf8.GetBytes(ConfigurationManager.AppSettings["BroadcastUserId"] ?? ""));
+        static readonly string BroadcastUserPassword = Convert.ToBase64String(
+            Utf8.GetBytes(ConfigurationManager.AppSettings["BroadcastUserPassword"] ?? ""));
         static readonly int BroadcastRateInSeconds = Math.Min(Math.Max(1, 
             Convert.ToInt32(ConfigurationManager.AppSettings["BroadcastRate"])), 86400);
         static readonly bool UseTestTelemetryData = Convert.ToBoolean(
@@ -91,6 +97,8 @@ namespace Funbit.Ets.Telemetry.Server
                 // turn on broadcasting if set
                 if (!string.IsNullOrEmpty(BroadcastUrl))
                 {
+                    _broadcastHttpClient.DefaultRequestHeaders.Add("X-UserId", BroadcastUserId);
+                    _broadcastHttpClient.DefaultRequestHeaders.Add("X-UserPassword", BroadcastUserPassword);
                     broadcastTimer.Interval = BroadcastRateInSeconds * 1000;
                     broadcastTimer.Enabled = true;
                 }
@@ -207,8 +215,7 @@ namespace Funbit.Ets.Telemetry.Server
             try
             {
                 broadcastTimer.Enabled = false;
-                using (var client = new HttpClient())
-                    await client.PostAsJsonAsync(BroadcastUrl, Ets2TelemetryDataReader.Instance.Read());
+                await _broadcastHttpClient.PostAsJsonAsync(BroadcastUrl, Ets2TelemetryDataReader.Instance.Read());
             }
             catch (Exception ex)
             {

@@ -66,7 +66,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
         string Version { get; }
 
         /// <summary>
-        /// When the fatique simulation is disabled, the behavior of this channel
+        /// When the fatigue simulation is disabled, the behavior of this channel
         /// is implementation dependent. The game might provide the value which would
         /// apply if it was enabled or provide no value at all.
         /// Example: "0001-01-01T10:52:00Z"
@@ -652,7 +652,7 @@ namespace Funbit.Ets.Telemetry.Server.Data
     public interface IEts2Wheel
     {
         /// <summary>
-        /// Is the wheel physicaly simulated or not.
+        /// Is the wheel physically simulated or not.
         /// </summary>
         bool Simulated { get; }
         /// <summary>
