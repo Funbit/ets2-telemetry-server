@@ -1,4 +1,4 @@
-## ETS2 Telemetry Web Server 3.2.0 + Mobile Dashboard
+## ETS2 Telemetry Web Server 3.2.1 + Mobile Dashboard
 
 This is a free Telemetry Web Server for [Euro Truck Simulator 2](http://www.eurotrucksimulator2.com/) and [American Truck Simulator](http://www.americantrucksimulator.com/) written in C# based on WebSockets and REST API. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
 
@@ -26,7 +26,7 @@ Returns structured JSON object with the latest telemetry data read from the game
 			"timeScale": 19.0,
 			"nextRestStopTime": "0001-01-01T10:11:00Z",
 			"version": "1.10",
-			"telemetryPluginVersion": "4"
+			"telemetryPluginVersion": "7"
 		},
 		"truck":{
 			"id": "man",
@@ -182,6 +182,12 @@ The ETS2 Telemetry Web Server has evolved into a pretty complex open-source proj
 Thank you!
 
 ## Version history
+
+### 3.2.1
+
+- Updated telemetry plugin DLL and fixed job information reset when job is done (trailer detached).
+- Added support for sending UserId/Password for telemetry broadcaster to allow user identification.
+- Fixed typo in property name: adblueAverageConsumption (was adblueAverageConsumpton).
 
 ### 3.2.0
 
