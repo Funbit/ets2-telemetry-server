@@ -112,8 +112,8 @@ namespace Funbit.Ets.Telemetry.Server.Setup
         {
             const string InstallationSkippedPath = "N/A";
             const string TelemetryDllName = "ets2-telemetry-server.dll";
-            const string TelemetryX64DllMd5 = "8fc76a61e7f5e4044fd66570e46d01c6";
-            const string TelemetryX86DllMd5 = "67f5409c1a4625b857e42258fbbe2657";
+            const string TelemetryX64DllMd5 = "464ccf0eb2b216823846d391388c2b91";
+            const string TelemetryX86DllMd5 = "53e44375e52ee0d7df12af8cf987232e";
 
             readonly string _gameName;
 
