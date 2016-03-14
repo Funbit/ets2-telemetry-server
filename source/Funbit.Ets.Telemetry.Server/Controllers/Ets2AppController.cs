@@ -5,7 +5,9 @@ using System.Net.Http;
 using System.Net.Http.Formatting;
 using System.Reflection;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web.Http;
+using Funbit.Ets.Telemetry.Server.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -47,9 +49,13 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
 
         [HttpGet]
         [Route("", Name = "GetRoot")]
-        public HttpResponseMessage GetRoot()
+        public async Task<HttpResponseMessage> GetRoot()
         {
-            return ServeStaticFile("", "index.html");
+            var rootResponse = ServeStaticFile("", "index.html");
+            string rootContent = await rootResponse.Content.ReadAsStringAsync();
+            rootContent = rootContent.Replace("%SERVER_VERSION%", AssemblyHelper.Version);
+            rootResponse.Content = new StringContent(rootContent, Encoding.UTF8, "text/html");
+            return rootResponse;
         }
 
         [HttpGet]
