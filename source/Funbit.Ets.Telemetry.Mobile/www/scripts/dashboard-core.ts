@@ -8,6 +8,7 @@ module Funbit.Ets.Telemetry {
    
     class Ets2Game {
         connected: boolean = false;
+        gameName: string = "";
         paused: boolean = false;
         time: string = "";
         timeScale: number = 0;
