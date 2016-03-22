@@ -81,7 +81,8 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
         public HttpResponseMessage GetResourceFile2(
             string dirName1, string dirName2, string fileName)
         {
-            return ServeStaticFile(dirName1 + "/" + dirName2, fileName);
+            return ServeStaticFile(dirName1 + 
+                "/" + dirName2, fileName);
         }
 
         [HttpGet]
@@ -89,7 +90,9 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
         public HttpResponseMessage GetResourceFile3(
             string dirName1, string dirName2, string dirName3, string fileName)
         {
-            return ServeStaticFile(dirName1 + "/" + dirName2 + "/" + dirName3, fileName);
+            return ServeStaticFile(dirName1 + 
+                "/" + dirName2 + 
+                "/" + dirName3, fileName);
         }
 
         [HttpGet]
@@ -97,15 +100,85 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
         public HttpResponseMessage GetResourceFile4(
             string dirName1, string dirName2, string dirName3, string dirName4, string fileName)
         {
-            return ServeStaticFile(dirName1 + "/" + dirName2 + "/" + dirName3 + "/" + dirName4, fileName);
+            return ServeStaticFile(dirName1 + 
+                "/" + dirName2 + 
+                "/" + dirName3 + 
+                "/" + dirName4, fileName);
         }
 
         [HttpGet]
         [Route("{dirName1:regex(^(?!.*api))}/{dirName2}/{dirName3}/{dirName4}/{dirName5}/{fileName}", Name = "GetResourceFile5")]
         public HttpResponseMessage GetResourceFile5(
-            string dirName1, string dirName2, string dirName3, string dirName4, string dirName5, string fileName)
+            string dirName1, string dirName2, string dirName3, string dirName4, 
+            string dirName5, string fileName)
         {
-            return ServeStaticFile(dirName1 + "/" + dirName2 + "/" + dirName3 + "/" + dirName4 + "/" + dirName5, fileName);
+            return ServeStaticFile(dirName1 + 
+                "/" + dirName2 + 
+                "/" + dirName3 + 
+                "/" + dirName4 + 
+                "/" + dirName5, fileName);
+        }
+
+        [HttpGet]
+        [Route("{dirName1:regex(^(?!.*api))}/{dirName2}/{dirName3}/{dirName4}/{dirName5}/{dirName6}/{fileName}", Name = "GetResourceFile6")]
+        public HttpResponseMessage GetResourceFile6(
+            string dirName1, string dirName2, string dirName3, string dirName4, 
+            string dirName5, string dirName6, string fileName)
+        {
+            return ServeStaticFile(dirName1 + 
+                "/" + dirName2 + 
+                "/" + dirName3 + 
+                "/" + dirName4 + 
+                "/" + dirName5 + 
+                "/" + dirName6, fileName);
+        }
+
+        [HttpGet]
+        [Route("{dirName1:regex(^(?!.*api))}/{dirName2}/{dirName3}/{dirName4}/{dirName5}/{dirName6}/{dirName7}/{fileName}", Name = "GetResourceFile7")]
+        public HttpResponseMessage GetResourceFile7(
+            string dirName1, string dirName2, string dirName3, string dirName4, 
+            string dirName5, string dirName6, string dirName7, string fileName)
+        {
+            return ServeStaticFile(dirName1 + 
+                "/" + dirName2 + 
+                "/" + dirName3 + 
+                "/" + dirName4 + 
+                "/" + dirName5 + 
+                "/" + dirName6 + 
+                "/" + dirName7, fileName);
+        }
+
+        [HttpGet]
+        [Route("{dirName1:regex(^(?!.*api))}/{dirName2}/{dirName3}/{dirName4}/{dirName5}/{dirName6}/{dirName7}/{dirName8}/{fileName}", Name = "GetResourceFile8")]
+        public HttpResponseMessage GetResourceFile8(
+            string dirName1, string dirName2, string dirName3, string dirName4,
+            string dirName5, string dirName6, string dirName7, string dirName8, string fileName)
+        {
+            return ServeStaticFile(dirName1 +
+                "/" + dirName2 +
+                "/" + dirName3 +
+                "/" + dirName4 +
+                "/" + dirName5 +
+                "/" + dirName6 +
+                "/" + dirName7 +
+                "/" + dirName8, fileName);
+        }
+
+        [HttpGet]
+        [Route("{dirName1:regex(^(?!.*api))}/{dirName2}/{dirName3}/{dirName4}/{dirName5}/{dirName6}/{dirName7}/{dirName8}/{dirName9}/{fileName}", Name = "GetResourceFile9")]
+        public HttpResponseMessage GetResourceFile9(
+            string dirName1, string dirName2, string dirName3, string dirName4,
+            string dirName5, string dirName6, string dirName7, string dirName8, string dirName9, string fileName)
+        {
+            return ServeStaticFile(dirName1 +
+                "/" + dirName2 +
+                "/" + dirName3 +
+                "/" + dirName4 +
+                "/" + dirName5 +
+                "/" + dirName6 +
+                "/" + dirName7 +
+                "/" + dirName8 +
+                "/" + dirName9, fileName);
         }
     }
 }
