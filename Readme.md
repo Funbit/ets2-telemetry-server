@@ -1,4 +1,4 @@
-## ETS2 Telemetry Web Server 3.2.2 + Mobile Dashboard
+## ETS2 Telemetry Web Server 3.2.3 + Mobile Dashboard
 
 This is a free Telemetry Web Server for [Euro Truck Simulator 2](http://www.eurotrucksimulator2.com/) and [American Truck Simulator](http://www.americantrucksimulator.com/) written in C# based on WebSockets and REST API. The client side consists of a skinnable HTML5 mobile dashboard application that works in any modern desktop or mobile browser. Android users may also use provided native Android application.   
 
@@ -182,6 +182,11 @@ The ETS2 Telemetry Web Server has evolved into a pretty complex open-source proj
 Thank you!
 
 ## Version history
+
+### 3.2.3
+
+- Added support for up to 9 levels of sub directories for skins to use (previous version allowed only 5).
+- Minor code refactoring.
 
 ### 3.2.2
 
