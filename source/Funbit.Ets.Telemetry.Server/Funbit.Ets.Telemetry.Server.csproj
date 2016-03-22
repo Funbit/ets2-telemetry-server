@@ -140,6 +140,7 @@
     <Compile Include="Data\Reader\SharedProcessMemory.cs" />
     <Compile Include="Helpers\ExceptionExtensions.cs" />
     <Compile Include="Helpers\JsonHelper.cs" />
+    <Compile Include="Helpers\KeyboardHelper.cs" />
     <Compile Include="Helpers\ProcessHelper.cs" />
     <Compile Include="Helpers\Settings.cs" />
     <Compile Include="Helpers\Win32Uac.cs" />
