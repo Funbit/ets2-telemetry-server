@@ -39,6 +39,11 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
                         contentType = "image/png";
                         break;
                     }
+                case ".gif":
+                    {
+                        contentType = "image/gif";
+                        break;
+                    }
                 case ".css":
                     {
                         contentType = "text/css";
@@ -52,6 +57,21 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
                 case ".json":
                     {
                         contentType = "application/json";
+                        break;
+                    }
+                case ".woff":
+                    {
+                        contentType = "application/font-woff";
+                        break;
+                    }
+                case ".ttf":
+                    {
+                        contentType = "application/font-sfnt";
+                        break;
+                    }
+                case ".svg":
+                    {
+                        contentType = "image/svg+xml";
                         break;
                     }
                 default:
