@@ -316,6 +316,7 @@
                     data.game.time = this.timeToReadableString(data.game.time);
                     data.job.deadlineTime = this.timeToReadableString(data.job.deadlineTime);
                     data.job.remainingTime = this.timeDifferenceToReadableString(data.job.remainingTime);
+                    data.game.nextRestStopTime = this.timeDifferenceToReadableString(data.game.nextRestStopTime);
                     return data;
                 };
 
