@@ -21,7 +21,10 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
         static readonly bool UseTestTelemetryData = Convert.ToBoolean(
             ConfigurationManager.AppSettings["UseEts2TestTelemetryData"]);
 
-        public static string GetEts2TelemetryJson()
+		static readonly string AccessControlAllowOrigin = Convert.ToString(
+			ConfigurationManager.AppSettings["AccessControlAllowOrigin"]);
+
+		public static string GetEts2TelemetryJson()
         {
             // if we have test data defined in the app.config then use it
             if (UseTestTelemetryData)
@@ -47,8 +50,12 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
             var telemetryJson = GetEts2TelemetryJson();
             var response = Request.CreateResponse(HttpStatusCode.OK);
             response.Content = new StringContent(telemetryJson, Encoding.UTF8, "application/json");
-            response.Headers.CacheControl = new CacheControlHeaderValue { NoCache = true };    
-            return response;
+            response.Headers.CacheControl = new CacheControlHeaderValue { NoCache = true };
+			if (AccessControlAllowOrigin != "")
+			{
+				response.Headers.Add("Access-Control-Allow-Origin", AccessControlAllowOrigin);
+			}
+			return response;
         }
     }
 }
