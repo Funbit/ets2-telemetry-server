@@ -51,8 +51,8 @@ namespace Funbit.Ets.Telemetry.Server.Data
         public bool Connected => _rawData.Struct.ets2_telemetry_plugin_revision != 0 &&
                                  Ets2ProcessHelper.IsEts2Running &&
                                  _rawData.Struct.timeAbsolute != 0;
-
-        public string GameName => Ets2ProcessHelper.LastRunningGameName;
+		public bool Started => Ets2ProcessHelper.IsEts2Running;
+		public string GameName => Ets2ProcessHelper.LastRunningGameName;
         public bool Paused => _rawData.Struct.paused != 0;
         public DateTime Time => Ets2TelemetryData.MinutesToDate(_rawData.Struct.timeAbsolute);
         public float TimeScale => _rawData.Struct.localScale;
