@@ -314,6 +314,7 @@
 
                 Dashboard.prototype.internalFilter = function (data) {
                     data.game.time = this.timeToReadableString(data.game.time);
+					data.navigation.estimatedTime = this.timeToReadableHourString(data.navigation.estimatedTime);
                     data.job.deadlineTime = this.timeToReadableString(data.job.deadlineTime);
                     data.job.remainingTime = this.timeDifferenceToReadableString(data.job.remainingTime);
                     return data;
@@ -433,6 +434,14 @@
                     if (this.isIso8601(date)) {
                         var d = new Date(date);
                         return Telemetry.Strings.dayOfTheWeek[d.getUTCDay()] + ' ' + this.formatInteger(d.getUTCHours(), 2) + ':' + this.formatInteger(d.getUTCMinutes(), 2);
+                    }
+                    return date;
+                };
+				
+				Dashboard.prototype.timeToReadableHourString = function (date) {
+                    if (this.isIso8601(date)) {
+                        var d = new Date(date);
+                        return this.formatInteger(d.getUTCHours(), 2) + ':' + this.formatInteger(d.getUTCMinutes(), 2);
                     }
                     return date;
                 };
