@@ -10,6 +10,7 @@ using System.Web.Http;
 using Funbit.Ets.Telemetry.Server.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace Funbit.Ets.Telemetry.Server.Controllers
 {
@@ -56,6 +57,14 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
             rootContent = rootContent.Replace("%SERVER_VERSION%", AssemblyHelper.Version);
             rootResponse.Content = new StringContent(rootContent, Encoding.UTF8, "text/html");
             return rootResponse;
+        }
+
+        [HttpGet]
+        [Route("chart/{dbname}/{tablename}")]
+        public IHttpActionResult GetData(string dbname, string tablename)
+        {
+            var result = new[] { "hello", "world" };
+            return Ok(result);
         }
 
         [HttpGet]
