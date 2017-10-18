@@ -127,6 +127,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ChartController.cs" />
     <Compile Include="Controllers\Ets2AppController.cs" />
     <Compile Include="Controllers\Ets2TelemetryHub.cs" />
     <Compile Include="Controllers\StaticFileController.cs" />

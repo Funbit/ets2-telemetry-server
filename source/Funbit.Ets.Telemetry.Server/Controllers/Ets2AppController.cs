@@ -10,11 +10,12 @@ using System.Web.Http;
 using Funbit.Ets.Telemetry.Server.Helpers;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
 
 namespace Funbit.Ets.Telemetry.Server.Controllers
 {
     [RoutePrefix("")]
-    public class Ets2AppController : StaticFileController
+    public partial class Ets2AppController : StaticFileController
     {
         static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public const string TelemetryAppUriPath = "/";
