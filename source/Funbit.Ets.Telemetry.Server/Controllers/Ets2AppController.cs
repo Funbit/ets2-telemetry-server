@@ -15,7 +15,7 @@ using System.Collections.Generic;
 namespace Funbit.Ets.Telemetry.Server.Controllers
 {
     [RoutePrefix("")]
-    public class Ets2AppController : StaticFileController
+    public partial class Ets2AppController : StaticFileController
     {
         static readonly log4net.ILog Log = log4net.LogManager.GetLogger(MethodBase.GetCurrentMethod().DeclaringType);
         public const string TelemetryAppUriPath = "/";
@@ -57,14 +57,6 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
             rootContent = rootContent.Replace("%SERVER_VERSION%", AssemblyHelper.Version);
             rootResponse.Content = new StringContent(rootContent, Encoding.UTF8, "text/html");
             return rootResponse;
-        }
-
-        [HttpGet]
-        [Route("chart/{dbname}/{tablename}")]
-        public IHttpActionResult GetData(string dbname, string tablename)
-        {
-            var result = new[] { "hello", "world" };
-            return Ok(result);
         }
 
         [HttpGet]
