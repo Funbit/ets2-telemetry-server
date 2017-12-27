@@ -47,7 +47,8 @@ namespace Funbit.Ets.Telemetry.Server.Controllers
             var telemetryJson = GetEts2TelemetryJson();
             var response = Request.CreateResponse(HttpStatusCode.OK);
             response.Content = new StringContent(telemetryJson, Encoding.UTF8, "application/json");
-            response.Headers.CacheControl = new CacheControlHeaderValue { NoCache = true };    
+            response.Headers.CacheControl = new CacheControlHeaderValue { NoCache = true };
+            response.Headers.Add("Access-Control-Allow-Origin", "*");
             return response;
         }
     }
