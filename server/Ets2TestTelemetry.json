@@ -1,12 +1,13 @@
 {
    "game":{
       "connected":true,
-      "paused":true,
+      "paused":false,
+      "gameName": "ETS2",
       "time":"0001-01-08T21:09:00Z",
       "timeScale":19.0,
       "nextRestStopTime":"0001-01-01T10:11:00Z",
       "version":"1.10",
-      "telemetryPluginVersion":"4"
+      "telemetryPluginVersion":"7"
    },
    "truck":{
       "id":"man",
