@@ -50,7 +50,7 @@ module Funbit.Ets.Telemetry {
         public static noTimeLeft = 'Overdue';
         public static disconnectedFromServer = 'Disconnected from server';
         public static couldNotConnectToServer = 'Could not connect to the server';
-        public static connectedAndWaitingForDrive = 'Connected, waiting for the drive...';
+        public static connectedAndWaitingForDrive = 'Connected, waiting for the driver...';
         public static connectingToServer = 'Connecting to the server...';
     }
 

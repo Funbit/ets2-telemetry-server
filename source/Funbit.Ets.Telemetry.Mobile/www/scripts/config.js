@@ -27,7 +27,7 @@
                 Strings.noTimeLeft = 'Overdue';
                 Strings.disconnectedFromServer = 'Disconnected from server';
                 Strings.couldNotConnectToServer = 'Could not connect to the server';
-                Strings.connectedAndWaitingForDrive = 'Connected, waiting for the drive...';
+                Strings.connectedAndWaitingForDrive = 'Connected, waiting for the driver...';
                 Strings.connectingToServer = 'Connecting to the server...';
                 return Strings;
             })();
