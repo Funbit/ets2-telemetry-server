@@ -1,0 +1,30 @@
+{
+    "configurations": [
+        {
+            "name": "Cloud Run: Run/Debug Locally",
+            "type": "cloudcode.cloudrun",
+            "request": "launch",
+            "build": {
+                "buildpacks": {
+                    "path": "source/Funbit.Ets.Telemetry.Server/Funbit.Ets.Telemetry.Server.csproj",
+                    "builder": "gcr.io/buildpacks/builder:v1"
+                }
+            },
+            "image": "ets2-telemetry-server",
+            "service": {
+                "name": "ets2-telemetry-server",
+                "containerPort": 8080,
+                "resources": {
+                    "limits": {
+                        "memory": "256Mi"
+                    }
+                }
+            },
+            "target": {
+                "minikube": {}
+            },
+            "watch": true,
+            "externalPortForward": 3000
+        }
+    ]
+}
