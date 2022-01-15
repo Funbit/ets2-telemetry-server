@@ -11,3 +11,4 @@
 *.log
 /_WorkingFiles
 source/.vs/Funbit.Ets.Telemetry/v14/*
+source/Funbit.Ets.Telemetry.Mobile/plugins/cordova-plugin-app-preferences/bin/chicago-green-roofs.map.kgl.json
